@@ -1,0 +1,18 @@
+- week three of learning React; wanted to build a site from scratch, torn between CSS modules and styled-components
+- chose styled-components after a YouTube tutorial on it + props; built a simple practice site "Home Made" (healthy meal kit concept)
+- flow: Figma wireframes -> design -> code; code at https://github.com/muchirijane/Home-made-React
+- had to google global styles, importing a font, importing local images; googling is a real skill, didn't feel like wasted time
+- still need to refactor/clean up; recipe section code is the worst ("hurts my eyes")
+- next: another site with a data file + map method
+- suggested VS Code extensions: https://marketplace.visualstudio.com/items?itemName=jpoissonnier.vscode-styled-components , https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets
+- styled-components https://styled-components.com/ ; props for button variants (primary orange #E38B06 vs black)
+- font: Nunito; createGlobalStyle docs + Styled-components Spectrum community (https://spectrum.chat/styled-components?tab=posts) helped
+- navbar took longer than expected, especially the click/menu toggle; used react-router-dom, react-icons (Boxicons), useState, IconContext.Provider
+- placed things via Chrome dev tools inspection, not from memory
+- error without Router: "Invariant failed: You should not use <Link> outside a <Router>"
+- sections: navbar, hero, how it works (3 cards), welcome, recipes (idea from Dribbble; responsive was painful), personalize meals, footer
+- mostly flexbox; grid would be easier for some layouts; admits bad at naming folders
+- trick: view layout as big blocks within blocks, like Pesticide Chrome extension
+- style gists: https://gist.github.com/muchirijane/d34e08fb862862c3bc674930e16052e1 , https://gist.github.com/muchirijane/bfb2d4f390c2eb84a2c16350e61e240a , https://gist.github.com/muchirijane/80b39f5bf728868fe284c8f750c57c59 , https://gist.github.com/muchirijane/0b6abe7560af665a4207f153b9509aac , https://gist.github.com/muchirijane/7e9558564ed00ba80982df3a77c5d5a9 , https://gist.github.com/muchirijane/3d8eb92ab4b6c6141a4603a43ba931d3
+- not all code in post (too long); expect to laugh at this code in 5 years
+- Buy Me a Coffee: https://www.buymeacoffee.com/janetracy

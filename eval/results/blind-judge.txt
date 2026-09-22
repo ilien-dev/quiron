@@ -1,0 +1,21 @@
+Blind pairwise judge (Opus, one fresh judge per condition), 12 pairs each: human original vs AI version, same title.
+raw: 9/12 correct; v0: 9/12; v1: 9/12. Identical picks in all three conditions (misses on pairs 07, 11, 12, all
+where the judge took the human post for AI). Clues cited: generic content, no personal context/links/typos/emoji,
+tidy numbered sections, parallel headings, checklist or summary closer, "invites comments", "Happy coding".
+Round 2: v3 (skill with specifics and loosen-structure guidance), fresh Opus judge: 12/12 correct.
+Clues: "clean, trimmed tutorial", "exhaustive tidy tutorial", "reassuring, generic structure".
+Round 3: v4 (skill plus two real posts by the same author as voice samples), fresh Opus judge: 12/12 correct.
+Clues: "generic tidy explainer with checklist ending", "no concrete specifics or links", "polished and balanced; the other has typos, emojis and personal anecdotes".
+Summary: untouched 9/12, v0 9/12, v1 9/12, v3 12/12, v4 12/12. A side-by-side judge who sees the real human post keys on content
+(real links, anecdotes, typos, emoji, unpolished structure), which no rewrite without new information supplies.
+Round 4: v5 (skill plus the author's real notes as specifics plus two voice samples), fresh Opus judge: 12/12 correct.
+Clues now almost all on the human side: typos ("and and"), profanity, liquid tags, emoji, run-on paragraphs, raw notes.
+
+Single-text judges (each sees 12 posts one at a time, mixed human and AI, gives P(AI)):
+Round A (3 judges): human mean 6, 0/12 judged AI; untouched AI 90, 12/12; v5 53, 7/12.
+Round B (4 judges): human 4.6, 0/12; v3 81.5, 12/12; v4 80.8, 12/12; v5 36.8, 3/12.
+Keys and scores: single-key.json, single-scores.txt, single2-key.json, single2-scores.txt.
+Round C, fresh data (8 held-out titles never used while developing, final skill + notes + samples),
+2 judges, 4 human + 4 rewritten each: human mean 7.5, 0/8 judged AI; final mean 67.5, 8/8 judged AI
+(60-75, low confidence). Judges quoted coined maxims the rewriter added ("That's a favor, not a liability",
+"isn't a strategy", "earn its spot"), which led to the "Do not coin maxims" rule and the A1b tail pattern.

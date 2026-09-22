@@ -1,0 +1,14 @@
+- author's first Hacktoberfest (2020), as code newbie
+- once thought it was about hacking servers — blames Mr. Robot; didn't know HTML then
+- first PR rejected: forgot to create a branch; later PRs mostly merged
+- now opens issues too, mostly accessibility: contrast, missing input labels, duplicate alt text
+- register with GitHub account; 14-day review window
+- 2020 rule change (from Oct 3): repo needs hacktoberfest topic; author's PR marked Ineligible Repository for this; rules https://hacktoberfest.digitalocean.com/hacktoberfest-update
+- PR counts if merged, labeled hacktoberfest-accepted, or approved
+- find projects: https://hacktoberfest.digitalocean.com/, https://github.com/topics/hacktoberfest; or start own project (maintainer guide https://hacktoberfest.digitalocean.com/details#maintainers); WAVE checker https://wave.webaim.org/extension/
+- etiquette: https://dev.to/devteam/hacktoberfest-etiquette-for-contributors-ec6
+- demo repo (author's): https://github.com/muchirijane/learning-code-through-github-repos — add resource to readme, branch feature/react-resource, PR against develop
+- author uses cmder terminal
+- unsure how crucial hacktoberfest-accepted label is
+- against spam PRs for T-shirt/tree; saw bad commits on Twitter
+- links: https://dev.to/devteam, earlier post https://dev.to/tracycss/git-and-github-for-beginners-po3, Discord https://discord.com/invite/hacktoberfest, https://www.buymeacoffee.com/janetracy

@@ -1,0 +1,14 @@
+- topic: wrap a Preact component in a Stimulus controller, lazy-load Preact + component, talk to it via custom events
+- builds on Suzanne Aitchison's (@s_aitchison) work from last February: https://github.com/forem/forem/pull/12511 and https://github.com/forem/forem/blob/main/app/javascript/admin/controllers/modal_controller.js
+- Forem: public site = Preact + vanilla JS; some Admin views = Stimulus
+- yesterday, doing Admin interactions, wanted to reuse Forem's Snackbar: https://storybook.dev.to/?path=/story/app-components-snackbar-snackbar--simulate-adding-snackbar-items
+- haven't looked at Snackbar internals; only know module exports Snackbar + addSnackbarItem
+- resembles Material snackbar https://material.io/components/snackbars
+- container = Stimulus target (snackZoneTarget); kept Forem's "snackZone" name; targets docs https://stimulus.hotwire.dev/reference/targets
+- connect()/disconnect() lifecycle https://stimulus.hotwire.dev/reference/lifecycle-callbacks: async import Preact render (https://preactjs.com/guide/v10/api-reference#render) + Snackbar, render; unmount on disconnect
+- decoupling via CustomEvent: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent , https://developer.mozilla.org/en-US/docs/Web/Events/Creating_and_triggering_events#adding_custom_data_%E2%80%93_customevent
+- body gets data-controller="snackbar" and data-action="snackbar:add@document->snackbar#addItem"
+- addItem pulls message + dismissible flag from payload, imports addSnackbarItem, calls it
+- publisher = EventTarget.dispatchEvent https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent; can be any JS, needn't live in Stimulus
+- could extend to a global event bus like the now-removed Vue Events API https://v3.vuejs.org/guide/migration/events-api.html#events-api (out of scope)
+- assumes reader knows Preact and Stimulus; includes GIF demo

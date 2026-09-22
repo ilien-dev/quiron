@@ -1,0 +1,16 @@
+- 2023 revised version: https://isaaclyman.com/blog/posts/junior-developers/
+- Netflix quote: no juniors/interns, puppy-mess analogy: https://www.quora.com/Why-aren%E2%80%99t-there-interns-at-Netflix ; I find it absurd, puppies are great
+- common excuses: too fast-moving, can afford seniors, stakes too high, too much autonomy for hand-holding, product first
+- 100,000+ US tech companies (https://www.selectusa.gov/software-and-information-technology-services-industry-united-states); none admit mistakes don't matter; senior-only gives no edge, signals bad management
+- embedded tweets: 892398893203202048, 1040061861817868288, 1041714965781073920, 892025080355708930, 1041483156656807936
+- "no messes" = no-mistakes culture, fear; good process (tests, QA, failovers, access control, reversible changes) is the real answer; juniors just surface process gaps earlier
+- Indeed avg salary: junior $55,394 https://www.indeed.com/salaries/Junior-Software-Engineer-Salaries vs senior $117,374 https://www.indeed.com/salaries/Senior-Software-Engineer-Salaries; >2x
+- glue code: $28/hr vs $59/hr, same result; glue + domain code >= half of work
+- junior with 6 months on team often beats a brand-new senior
+- 1 junior + 1 senior ~ 2 seniors at under 75% cost; should be the basic unit
+- seniors burn payroll hours arguing trivia (algorithms, micro-optimizations, style); juniors rarely do
+- most devs want to grow into architect, lead, CTO, founder; no-juniors = no career path, stagnancy
+- rare, impressive: team lead 8 years in, started as intern (~1/10 of a lifespan)
+- juniors: optimism, willingness to follow, no baggage; as a junior I did prototypes/new-tool trials; results incl. order-of-magnitude page-load gains, merged pages saving weeks of maintenance, ruling out weak tech
+- juniors curb overengineered senior code; mix -> simpler codebase
+- payoff: lower turnover, more diversity, less overhead; not the only factor

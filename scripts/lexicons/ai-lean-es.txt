@@ -1,0 +1,10 @@
+# Palabras sobreusadas por la IA en español. Candidatas: LexA (Juzek 2026,
+# arXiv:2605.25358), noticias en español, GPT-4.1-mini, razón IA/humano de 8 o más.
+# Se quedaron solo las que, en la medición de este skill, aparecieron en como mucho el 4%
+# de 180 posts humanos de dev.to en español anteriores a 2022 y en al menos el 10% de 32
+# posts escritos por asistentes en 2026. De 130 candidatas pasaron tres: la lista de
+# noticias (solidez, entrelazar, fortalecer, enfatizar, fomentar...) no aparece en posts
+# técnicos, ni en los humanos ni en los de los modelos.
+fundamental fundamentales
+estricta estricto estrictas estrictos
+vulnerabilidad vulnerabilidades

@@ -1,17 +1,8 @@
-used
-use
-uses
-different
-important
-people
-way
-ways
-thing
-things
-got
-get
-lot
-made
-make
-know
-think
+# Words humans use and assistant models under-use. Source: LexA (Juzek 2026,
+# arXiv:2605.25358, CC0 data), English news, GPT-4.1-mini vs human continuations of
+# 100k texts: every word with at least 300 human occurrences and an AI/human ratio of
+# 0.3 or less, minus news-topic words (coronavirus, president, money, deaths, ...).
+# Scored as plain_words_1k, a rate against the band, never a list to stuff.
+about get able least do very because asked told thinking said big running lot little
+so things too went have at put out you after want back try than again what much never
+something happened really same another looking old should was when would actually quite

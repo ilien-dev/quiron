@@ -1,0 +1,14 @@
+- follow-up to last week's ESLint piece: https://laurieontech.com/posts/eslint/
+- goal: automate ESLint so main branch always matches the team ruleset
+- lint-staged https://www.npmjs.com/package/lint-staged, config lives in package.json, glob -> command(s), e.g. "*.js": ["eslint", "prettier --write"]
+- prettier https://prettier.io/
+- lint-staged only touches staged (changed/new, uncommitted) files; runs pre-commit; fewer files = faster
+- relies on husky https://www.npmjs.com/package/husky under the hood
+- husky used to be a "hooks" block in package.json for years; v6 switched to separate shell files per hook name
+- setup: npx husky-init && npm install; npx husky add .husky/pre-commit "npm test"
+- init script makes sure coworkers get husky before they commit
+- generated file calls husky.sh first; removable but I'd keep it (enables --no-verify bypass)
+- I swapped npm test for npm lint-staged
+- gotcha that tripped me up for a while: lint-staged in a pre-push hook finds 0 files, since committed files aren't staged anymore
+- pre-push alternatives: lint everything (eslint '*.js') or diff vs main: eslint --no-error-on-unmatched-pattern $(git diff main... --name-only --- '*.js'); diff approach depends heavily on project
+- git-hook checks = fail fast, but not a substitute for CI; run in both

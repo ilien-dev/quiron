@@ -1,0 +1,9 @@
+- author watches talks (Ruby, Rails, JS, React, tech writing) for growth; now publishing notes
+- talk: "Implicit to Explicit: Decoding Ruby's Magical Syntax", Justin Gordon (https://twitter.com/railsonmaui), RailsConf 2021, author attending
+- impression: mostly about pry; blown away by Justin's ~/.pryrc; loved his calm, kind explanations
+- must re-watch pry demo and code along
+- Rails leans on Ruby implicitness: self, variable declarations, parentheses
+- goal: read code like interpreter; understand, don't copy-paste
+- JS explicit: parens required, `this` rarely implicit, explicit return
+- Ruby implicit: optional parens (user.first = method or attribute), self explicit for writers else new local var, implicit returns
+- links: https://shakacode.com/talks; slides https://drive.google.com/file/d/1UUePkLINNN-Gpm5x5kPGBjNafrn29DdK/view?usp=sharing; pryrc https://gist.github.com/justin808/1fe1dfbecc00a18e7f2a; https://forum.shakacode.com/search?q=pry; https://forum.shakacode.com/t/running-puma-for-debugging-with-pry/2018

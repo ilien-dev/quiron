@@ -1,0 +1,13 @@
+- tutorial: paid membership site — Stripe checkout -> Lambda (via AWS Amplify) creates Cognito user -> login unlocks gated content
+- disclosure: author = Developer Advocate, AWS Amplify team; feedback via discord.gg/amplify
+- fits course/membership sites; could be adapted to email digital goods
+- prereqs: intermediate React, Amplify, Node.js; backend usable with any frontend
+- links: https://welearncode.com/beginners-guide-react-2020/, https://docs.amplify.aws/, https://stripe.com/, https://dashboard.stripe.com/settings/checkout, https://stripe.com/docs/webhooks/signatures, https://dashboard.stripe.com/test/developers
+- Stripe: enable client-only checkout (faster than fullstack); author's product = $20/mo subscription
+- test card 4242 4242 4242 4242
+- packages: aws-amplify, @stripe/stripe-js; function side aws-sdk + stripe; Lambda named stripedemofunction, REST path /webhook, secret stripe_key
+- webhook event: payment_intent.succeeded; endpoint URL from aws-exports.js + /webhook
+- author skipped an error page; success redirects home
+- caveat: prod app should verify Stripe signature on webhook
+- cleanup: amplify delete tears down resources
+- video version on YouTube (id DLGF8neT8d0)

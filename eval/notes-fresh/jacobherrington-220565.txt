@@ -1,0 +1,13 @@
+- lightly edited version of my November newsletter email (my first one): https://narvi-software-llc.ck.page/674caf55d4
+- written in a coffee shop right before RubyConf, playing 2112 by Rush: https://www.youtube.com/watch?time_continue=180&v=w5jwxrTqoEA&feature=emb_logo
+- got a Twitter DM from a 20-year game industry vet (Blizzard, Twitch, others), remote from Portugal, esports rough lately
+- he runs a hosting service at cost as a hobby; job hunting, wants technical roles (started as SysAdmin); I think he'd suit an SRE team, DM me if hiring
+- he's afraid of rejection; advice I've given ~100 times, never written down
+- I have social anxiety, actually very introverted, often mistaken for extrovert because I push networking/transparency
+- cold-shower method: began at 30 s cold, add 10 s per day; now 3-4 min is easy; homemade exposure therapy
+- same for rejection: years ago cold calls + LinkedIn outreach; after a few dozen rejections it stung less; wrote about it on DEV: https://dev.to/jacobherrington/how-i-got-hired-at-dev-and-every-other-tech-job-10hf
+- job "requirements" are a wish list (seen as applicant and as hiring engineers); I mostly skip that section
+- "90%" of applicants don't meet requirements - disclaimer: I invented that stat
+- probably never met requirements for any tech job I've held
+- applies to dates, clubs, promotions, raises; worst case is a "no", which is just more practice
+- links: articles https://jh.codes, podcast https://www.devpath.fm, digest https://pages.convertkit.com/674caf55d4/f30f7753a7, Twitter https://twitter.com/jakeherrington (memes)

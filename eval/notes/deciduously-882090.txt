@@ -1,0 +1,14 @@
+- Nix (https://nixos.org/): declarative, reproducible, unified env management
+- use case: Python + Jupyter (https://jupyter.org/) for a class author recently started; first assignment imported numpy + pandas
+- author's gripe: pip installs globally; virtualenv + requirements = brittle, non-portable, clutter
+- Nix runs on Linux (i686, x86_64, aarch64), macOS x86_64 only for now (ARM expected); Quick Start https://nixos.org/manual/nix/stable/#chap-quick-start
+- uses Nix Flakes, must enable — https://nixos.wiki/wiki/Flakes ("Non-NixOS" section)
+- opinion: NixOS best way to use Nix; author recently wiped drive, one command restored identical system; config https://github.com/deciduously/nixos-config
+- flake.nix inputs: nixpkgs (nixos-unstable), flake-utils (numtide) eachDefaultSystem; author's system x86_64-linux
+- devShell via mkShell; python3.withPackages ipython/jupyter/numpy/pandas; shellHook launches jupyter notebook; run with nix develop
+- whole config under 30 lines; pin Python e.g. python39
+- package search: https://search.nixos.org/packages; mkShell docs https://nixos.wiki/wiki/Development_environment_with_nix-shell
+- caveats: first run slow (downloads); store grows -> nix-collect-garbage; nix flake update refreshes flake.lock hashes
+- joke: cool_file.txt in shellHook
+- planned follow-ups: packaging, whole-OS flakes, Nix internals
+- cover photo CHUTTERSNAP on Unsplash

@@ -8,7 +8,11 @@
 #
 #   check.sh FILE                       run an iteration
 #   check.sh FILE --ruled "note"        same, and record that you read and ruled
-#                                       on every READ item this pass
+#                                       on every READ and TELL item this pass
+#   check.sh FILE --source ORIGINAL     also list what the rewrite states that the
+#                                       original does not (new numbers and links fail);
+#                                       repeat it for the writer's notes
+#   check.sh FILE --sample PATH         the writer's own texts: their habits are not TELLs
 #   check.sh FILE --status              print the state without running
 #   check.sh FILE --reset               start the count again
 set -uo pipefail
@@ -21,14 +25,28 @@ case "${1:-}" in
   --status) [ -f "$STATE" ] && cat "$STATE" || echo "no state yet"; exit 0 ;;
   --reset)  rm -f "$STATE"; echo "count reset"; exit 0 ;;
 esac
-RULED=""; [ "${1:-}" = "--ruled" ] && RULED="${2:-yes}"
+RULED=""; SOURCE=(); SAMPLE=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --ruled)  RULED="${2:-yes}"; shift 2 || shift ;;
+    --source) SOURCE+=("${2:?--source needs the original file}"); shift 2 ;;
+    --sample) SAMPLE+=(--sample "${2:?--sample needs a file or folder}"); shift 2 ;;
+    *) shift ;;
+  esac
+done
 
 echo "=== rates"
-python3 "$HERE/aimeter.py" "$FILE" | sed -n '3,25p'
+python3 "$HERE/aimeter.py" "${SAMPLE[@]}" "$FILE" | sed -n '3,/features inside/p'
 echo
 echo "=== checklist"
-python3 "$HERE/audit.py" --brief "$FILE"
+python3 "$HERE/audit.py" --brief "${SAMPLE[@]}" "$FILE"
 FAILS=$?
+if [ ${#SOURCE[@]} -gt 0 ]; then
+  echo
+  echo "=== against the source (new numbers or links fail; the rest need a ruling)"
+  python3 "$HERE/factdiff.py" "${SOURCE[@]}" "$FILE"
+  FAILS=$(( FAILS + $? ))
+fi
 
 python3 - "$STATE" "$FILE" "$FAILS" "$RULED" <<'PY'
 import hashlib, json, os, sys
@@ -49,10 +67,14 @@ print()
 if not clean:
     print(f"NOT CONVERGED: {fails} fail(s) above. Fix them and run again. Streak reset to 0.")
 elif st["clean_streak"] < 2:
-    print(f"CLEAN PASS {st['clean_streak']} of 2. Rule on every READ item, then run again"
-          f"{' with --ruled' if not ruled else ''}. One clean pass is not convergence.")
+    if ruled:
+        print(f"CLEAN PASS 1 of 2, ruled. Re-read the text, revisit the rulings, and run again with"
+              f" --ruled.")
+    else:
+        print(f"CLEAN PASS 1 of 2, not ruled. Rule on every READ and TELL item and run again with"
+              f" --ruled \"your rulings\"; both of the last two runs must be ruled.")
 elif not ruled_twice:
-    print(f"CLEAN PASS {st['clean_streak']}, but the READ items were not recorded as ruled on "
+    print(f"CLEAN PASS {st['clean_streak']}, but the READ and TELL items were not recorded as ruled on "
           f"in both passes. Re-run with --ruled \"what you decided\".")
 else:
     print(f"CONVERGED after {len(st['runs'])} run(s): {st['clean_streak']} consecutive clean "

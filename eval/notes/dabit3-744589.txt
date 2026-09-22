@@ -1,0 +1,15 @@
+- V2 (2022) of NFT marketplace tutorial; video https://www.youtube.com/watch?v=GKJBEEXUha0; V1 https://gist.github.com/dabit3/ce61bb1593c9aeae31f2a31bcad7f5da
+- follows author's earlier guide https://dev.to/dabit3/the-complete-guide-to-full-stack-ethereum-development-3j13
+- stack: Next.js, Tailwind, Solidity, Hardhat, Ethers.js, IPFS, Polygon; source https://github.com/dabit3/polygon-ethereum-nextjs-marketplace/
+- opinion: L2/scaling (Polygon, Arbitrum, Optimism) gaining fast; little content exists -> author plans series starting with Polygon
+- Polygon ~10x faster, >10x cheaper than Ethereum (https://twitter.com/ChainLinkGod/status/1405688790241316864); formerly Matic, name still used for token/network
+- prereqs: Node 16.14.0+, via nvm or fnm; MetaMask
+- app "Metaverse Marketplace": single contract NFTMarketplace.sol (ERC721 via OpenZeppelin), listing fee 0.025 ether to owner; token "Metaverse Tokens"/METT
+- Hardhat chainId 1337, Solidity 0.8.4, optimizer 200 runs; local node = 20 accounts x 10000 ETH; import 2–3 into MetaMask
+- gotcha: if npx hardhat errors on README.md, delete it and rerun
+- Mumbai testnet: RPC https://rpc-mumbai.maticvigil.com, chain ID 80001, symbol Matic; faucet https://faucet.matic.network/
+- warning: never commit/share private keys; use test wallet
+- public RPC may be congested/rate-limited -> Infura, Alchemy, QuickNode, Figment DataHub, Chainstack, Ankr, MaticVigil
+- bug author hit: Hardhat may print wrong contract address; check https://mumbai.polygonscan.com/
+- The Graph (https://thegraph.com/) for pagination/filtering/sorting; separate Polygon + Graph post coming
+- author's take: almost no extra learning vs Ethereum; skills transfer

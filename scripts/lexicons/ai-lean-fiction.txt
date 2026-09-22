@@ -1,0 +1,12 @@
+# AI-lean words for fiction. Candidates from Antislop (Paech et al. 2025, over-used
+# words across 67 models) and the stock names in Antislop and Russell et al. (2025).
+# Kept only if, on this skill's run, they appeared in at most 5% of 117 human
+# WritingPrompts stories (Reddit, 2018) and at least 8% of 32 assistant stories written
+# in 2026 on other prompts. Held-out result: one or more in 0% of human stories and in
+# 20-30% of assistant stories. Most of the Antislop list (flickered, gaze, unreadable,
+# thrummed) and Reinhart's fiction words (tapestry, solace, palpable) did not pass.
+murmured
+blinked
+hummed
+faintly
+marcus

@@ -1,0 +1,10 @@
+- context: Forem (open source software behind DEV) — admin-configurable display units with images
+- problem: images without height/width cause content jumping; Google penalizes as cumulative layout shift
+- earlier post on CLS: https://dev.to/ben/fixing-cumulative-layout-shift-41ja
+- images are user-generated; don't want admins entering sizes by hand — error-prone, waste of their time
+- tool: FastImage gem, https://github.com/sdsykes/fastimage — reads minimal bytes to get dimensions
+- Forem already proxies images through CDN; FastImage slotted into that step
+- author added option synchronous_detail_detection
+- sync is simplest; fine since only admins use it
+- for member posts, detection should be async so e.g. a post with 15 images saves without timeout
+- PR with changes + cleanup: https://github.com/forem/forem/pull/14789

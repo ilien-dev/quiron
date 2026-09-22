@@ -1,0 +1,16 @@
+- built custom landing page for my eBook "Design Faster, Design Better": https://designfaster.netlify.app/
+- purpose: drive sales + explain what the book covers; creators increasingly ditching Gumroad default pages
+- 7-step process; free; mine needed HTML/CSS/Tailwind, but no-code routes exist
+- step 1 goal; I've skipped this before and regretted the wasted time; one goal per page. Mine: promote book, let people buy, low cost, hand-build to practice web dev
+- target audience I settled on: people wanting to get better at design productively (kept broad deliberately)
+- audience resources: https://www.marketingevolution.com/marketing-essentials/target-audience , https://blog.hubspot.com/marketing/target-audience , https://www.singlemindconsulting.com/blog/ux-identifying-your-target-audience/
+- copywriting is still my weak spot; learned from Twitter: Jeremy Moser https://twitter.com/jmoserr, Charles Floate https://twitter.com/Charles_SEO, Alex Garcia https://twitter.com/alexgarcia_atx, Nicolas Cole https://twitter.com/Nicolascole77
+- design inspiration: https://twitter.com/luisthewiz, https://twitter.com/LoftedLearning, https://twitter.com/camduncannnn, https://twitter.com/tailwindui, ConvertKit examples https://convertkit.com/product-landing-pages
+- write copy before designing; my draft: hero title "Create Brilliant Designs In Half The Time", CTA "Get My Copy", intro (pain point + fix), chapter breakdown, free sample download, final CTA
+- stack: HTML, CSS, Tailwind https://tailwindcss.com/, hosted free on Netlify https://www.netlify.com/ (Netlify subdomain for now)
+- no-code alternatives: ThemeForest https://themeforest.net/ / Gumroad https://gumroad.com/ templates, Carrd https://carrd.co/ (best if clueless), Webflow https://webflow.com/, fromNotion https://fromnotion.com/; opinion: use what you already know
+- hitting publish was hard for me, kept finding tweaks/typos; set a realistic launch date
+- test on phone/tablet/computer, get friends to check, proofread
+- still missing: testimonials/reviews; want to put book on Amazon via KDP and link it
+- keep a running improvements list
+- original Twitter thread: https://twitter.com/MishaCreatrix/status/1454412085459361796 ; first published at https://www.mishacreatrix.com/book-landing-page

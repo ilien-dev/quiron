@@ -1,9 +1,10 @@
+# TextPulse Modelometry (2026), Claude's over-used academic words, one-vs-rest.
+# 'frameworks' removed: it is in 10% of human dev.to posts, a field term there.
 through
 substantially
 across
 mechanisms
 institutional
-frameworks
 documented
 populations
 fundamentally

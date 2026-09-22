@@ -1,60 +1,51 @@
-thereby
-consequently
-utilized
-utilizing
-utilize
-employed
-constitutes
-within
-meticulously
-meticulous
-pivotal
-underscore
-underscores
-underscoring
-furthermore
-moreover
-foster
-fosters
-fostering
-notably
-additionally
-multifaceted
-delineates
-nuanced
-leverage
-leveraging
-seamless
-seamlessly
-comprehensive
-realm
-tapestry
-landscape
-showcase
-showcases
-showcasing
-intricate
-intricacies
-commendable
-versatile
-innovative
-robust
-enhance
-enhances
-enhancing
-facilitate
-facilitates
-ensure
-ensuring
-significantly
-crucial
-delve
-delves
-delving
-testament
-underpin
-underpins
-myriad
-plethora
-paradigm
-holistic
+# AI-lean words. Every entry comes from a published list with a measured human
+# baseline (source after '#': lexa = Juzek 2026, arXiv:2605.25358, by model and
+# register; kobak2025 = Science Advances 11:eadt3813; reinhart2025 = PNAS; liang2024
+# = ICML; wikipedia2026 = WikiProject AI Cleanup; legacy = Kobak, Liang, TextPulse and
+# Wikipedia words this file held before). An entry was kept only if, on this skill's
+# own run, it appeared in at most 4% of 125 pre-2022 dev.to posts and in at least 10%
+# of 48 assistant posts written in 2026 on other titles; a legacy entry was kept if it
+# appeared in at most 2% of the human posts. Forms on one line count as one entry.
+# Nouns that name technical things (architecture, infrastructure, integration, handling,
+# complexity, capabilities, primary, identical) passed that test but were removed: they
+# are the vocabulary of the field, and rewrites had to cut real terms to clear B1.
+additionally                                     # legacy
+careful                                          # lexa-sci-claude3haiku
+carefully                                        # lexa-sci-claude3haiku
+commendable                                      # legacy
+comprehensive                                    # legacy
+consequently                                     # legacy
+consistency                                      # lexa-news-gpt4.1mini
+consistently                                     # lexa-sci-gpt5.2
+constitutes                                      # legacy
+delineates                                       # legacy
+delve                                            # legacy
+delves                                           # legacy
+delving                                          # legacy
+employed                                         # legacy
+facilitate facilitates                           # legacy
+furthermore                                      # legacy
+holistic                                         # legacy
+increasingly                                     # lexa-sci-gemini3
+innovative                                       # legacy
+intricacies intricate                            # legacy
+maintaining                                      # kobak2025
+meaningful                                       # lexa-sci-gpt5.2
+merely                                           # lexa-sci-gemini3,lexa-sci-gpt5.2
+meticulous meticulously                          # legacy
+moreover                                         # legacy
+multifaceted                                     # legacy
+myriad                                           # legacy
+notably                                          # legacy
+pivotal                                          # legacy
+realm                                            # legacy
+remains                                          # kobak2025
+significantly                                    # ai-lean(current),lexa-news-gpt4.1mini
+subtle                                           # lexa-sci-gemini3
+tapestry                                         # legacy
+testament                                        # legacy
+thereby                                          # legacy
+underpin underpins                               # legacy
+underscores underscoring                         # legacy; bare "underscore" dropped, it names the _ character in technical text
+utilize utilized utilizing                       # legacy
+versatile                                        # legacy

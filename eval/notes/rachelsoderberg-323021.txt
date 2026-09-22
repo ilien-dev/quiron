@@ -1,0 +1,15 @@
+- series "Salesforce REST API Services"; follows author's earlier Salesforce SOAP API series
+- why REST: not every stack/team can deal with SOAP
+- C# .NET Core examples, also work in .NET Framework; Salesforce Lightning Experience, Spring 2020 release
+- step 1: Connected App via Setup > Apps > App Manager > New Connected App; do it in Test/Dev before Production
+- callback URL can be dummy — using resource owner password grant (https://tools.ietf.org/html/rfc6749#section-4.3)
+- enable OAuth, scope "Access and manage your data (api)"
+- Consumer Key/Secret shown only once — record them; wait several minutes before using new app
+- endpoints: https://test.salesforce.com/services/oauth2/token, /services/data/v36.0/ (use your org's version)
+- HttpClient + FormUrlEncodedContent (Salesforce requires it); bad request -> check FormUrlEncodedContent
+- credentials must be stored securely
+- security error -> add TLS 1.1/1.2 via ServicePointManager.SecurityProtocol
+- invalid_client_id -> check user's Profile has the Connected App under Connected App Access
+- response gives access_token + instance_url -> AuthToken, ServiceUrl; sample values altered
+- next post: query an Account
+- Twitter https://twitter.com/RachSoderberg, LinkedIn https://www.linkedin.com/in/rachelsoderberg/

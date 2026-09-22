@@ -1,0 +1,17 @@
+# Palabras que la gente usa y los modelos usan poco, en español. Fuente: LexA (Juzek
+# 2026, arXiv:2605.25358, datos CC0), noticias en español, GPT-4.1-mini frente a
+# continuaciones humanas de 100k textos: cada lema con al menos 300 apariciones humanas
+# y una razón IA/humano de 0.3 o menos, sin palabras de tema periodístico (coronavirus,
+# presidente, euro, muertes, millones). LexA da lemas; aquí van con sus formas comunes.
+# Se mide como tasa (plain_words_1k) contra la banda, nunca como lista para rellenar.
+decir dice dicen dijo dijeron digo dicho diciendo
+casi algo cual porque hay había ninguna ninguno muy te ya después menos si
+ir va van voy iba iban
+querer quiere quieren quiero quería
+pasar pasa pasan pasó pasado pasando
+dio dar da dan doy
+hacer hace hacen hizo hago hecho haciendo
+tener tiene tienen tuvo tengo tenía teniendo
+pedir pide piden pidió
+queda quedan quedó
+vuelve vuelven volvió

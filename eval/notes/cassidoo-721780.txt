@@ -1,0 +1,13 @@
+- React 18 alpha released (2021-06-08); most gains need little code change
+- ReactDOM.render now "Legacy Root API", same as React 17, deprecated eventually
+- New Root API: ReactDOM.createRoot(...) then root.render(<App />)
+- hydrate method removed -> option on createRoot; render callback removed
+- migration examples: https://github.com/reactwg/react-18/discussions/5
+- client-only React users: switching root = whole upgrade
+- Suspense: partial support since React 16, confusing; now full; author very excited
+- behavior change: nothing inside Suspense renders until data resolves — https://github.com/reactwg/react-18/discussions/7; sandbox https://codesandbox.io/s/romantic-architecture-ht3qi?file=/src/App.js
+- opt-in concurrent features: startTransition (https://github.com/reactwg/react-18/discussions/41), useDeferredValue, SuspenseList, SSR selective hydration (https://github.com/reactwg/react-18/discussions/37); not all documented yet
+- author likes that features are adoptable piecemeal
+- install: npm install react@alpha react-dom@alpha
+- caveat: months until beta, longer to stable; roadmap https://github.com/reactwg/react-18/discussions/9
+- React Working Group https://github.com/reactwg/react-18/discussions; announcement https://reactjs.org/blog/2021/06/08/the-plan-for-react-18.html

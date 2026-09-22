@@ -1,0 +1,13 @@
+- Honeypot.io video this week, my "5 Tips For Junior Developers": https://www.youtube.com/watch?v=n18iJYxWy3w&t=41s
+- commenter Stefan: title promised breaking in, content was post-IBM-hire; he was right, I skipped getting the first job
+- caveat: privileged - IBM internship turned into internal IBM role, no mass applying
+- later for LogMeIn (2nd job) then Spotify I applied everywhere; ~9 of 10 companies never replied
+- recruiters spend ~7.4 s per resume: https://www.hrdive.com/news/eye-tracking-study-shows-recruiters-look-at-resumes-for-7-seconds/541582/
+- resume: fun design, key info + contact up top, no photo, impact + numbers in bullets; I made a LinkedIn Learning course: https://www.linkedin.com/learning/writing-a-tech-resume/color?autoplay=true ; shows my own resume
+- courses with certificates: FreeCodeCamp http://freecodecamp.org/, LinkedIn Learning, Coursera https://www.coursera.org/
+- in interviews say you haven't used X but eager to learn it
+- after college (plus IBM internship) my ego was huge; hurt my growth for several years
+- relevant CS degree = privilege; without one, have 2-3 GitHub projects; bootcamps usually give 1-2
+- working on a full course on technical interviews
+- never learned problem solving, big handicap in interviews; tips: clarify, requirements, options w/ tradeoffs, think aloud, admit gaps, optimize, test, improvements; I'm no expert
+- you will get discouraged; take breaks, mental health first

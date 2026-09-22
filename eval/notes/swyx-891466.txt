@@ -1,0 +1,15 @@
+- advice author repeats to founders: get good at events; draft from newsletter braindump
+- Apple example: teases "Special Event", journalists clear schedule, rivals delay launches, millions in earned attention
+- inspired by watching Next.js Conf; chat with Lee Robinson (Vercel) on YouTube (mlsTlFW7BSo)
+- "community heat" (borrowed from McLuhan): async = cold (forums, mailing lists), chat = mixed, IRL = white-hot; cold bigger, less engaged
+- author tired of waiting on chat typing indicators for "haha"
+- thesis: alternate hot/cold like annealing (https://www.swyx.io/blogpost-annealing/); Slack vs Discord question matters little without events
+- online:offline ~90/10 or 80/20; pick 5–10 IRL events, make them memorable; book IRL 3–6 months out
+- tools: Hopin, Vercel Event Starter Kit (React Conf used it), Svelte Summit on YouTube only, Gather.town (novelty may fade); Zoom <100, Webinars above 100
+- cadence: Cloudflare Birthday Week (https://www.swyx.io/cloudflare-go/) yearly — but rushes launches; AWS pre-re:Invent dumps; WorkOS quarterly; Temporal monthly meetup (https://temporal.io/meetup) building mailing list ("GitNation strategy"); weekly: Learn with Jason, Containers from the Couch
+- naming: hates "webinar", attends "workshop"; also "teach-ins", "office hours"
+- Covid: conferences copied 8-hour days online; nobody watches 8 hrs; Windows mobile port analogy, ~10 yrs to go native
+- Svelte Summit 2020 copied old format; now accept all, curate finished videos, 4-hr main stage, rest released through the year
+- opinion: blind CFPs miss invite-only great speakers; curators should reach out
+- marketing: push registrations above all (reflexivity https://www.swyx.io/mimicry-reflexivity/); async:live ~0.5:1 bad, 10:1 good, 1000:1 legendary; 70,000 signups example
+- post-production worth it; wants trailer tips; not claiming expertise
