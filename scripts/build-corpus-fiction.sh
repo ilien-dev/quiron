@@ -8,7 +8,7 @@
 #
 # Usage: build-corpus-fiction.sh [OUTDIR]        NO_CALIBRATE=1 to skip calibration
 set -euo pipefail
-OUT="${1:-$HOME/.cache/im-human/fiction}"
+OUT="${1:-$HOME/.cache/quiron/fiction}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 mkdir -p "$OUT"
 python3 - "$OUT" <<'PY'
@@ -32,7 +32,7 @@ def detok(s):
 n = 0
 with open(os.path.join(out, "prompts.tsv"), "w") as idx:
     for offset in (5000, 20000, 40000, 80000):
-        req = urllib.request.Request(API.format(offset), headers={"User-Agent": "im-human-corpus/1.0"})
+        req = urllib.request.Request(API.format(offset), headers={"User-Agent": "quiron-corpus/1.0"})
         for wait in (1, 3, 9, 27):
             try:
                 rows = json.load(urllib.request.urlopen(req, timeout=30))["rows"]

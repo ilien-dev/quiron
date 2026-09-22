@@ -12,7 +12,7 @@
 # Usage: build-corpus.sh [OUTDIR] [author ...]
 #        CAP=12 NO_CALIBRATE=1 build-corpus.sh ...
 set -euo pipefail
-OUT="${1:-$HOME/.cache/im-human/corpus}"; shift || true
+OUT="${1:-$HOME/.cache/quiron/corpus}"; shift || true
 AUTHORS=("$@")
 [ ${#AUTHORS[@]} -eq 0 ] && AUTHORS=(aspittel emmabostian laurieontech rachelsoderberg
   swyx dabit3 heymichellemac tracycss kentcdodds ben jess nickytonline alvaromontoro
@@ -26,7 +26,7 @@ out, cap, authors = sys.argv[1], int(sys.argv[2]), sys.argv[3:]
 def get(url):
     for wait in (1, 3, 9, 27):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "im-human-corpus/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": "quiron-corpus/1.0"})
             with urllib.request.urlopen(req, timeout=20) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:

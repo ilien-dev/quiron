@@ -1,4 +1,8 @@
-# im-human
+# Quirón
+
+Named after Chiron (Quirón), the immortal centaur who gave up his immortality and
+spent his life teaching humans. The skill does the same job for prose: it teaches a
+model to write the way people do, and measures whether it did.
 
 A Claude Code skill that writes or rewrites prose so it reads as a person wrote it,
 then checks the result with measurements instead of impressions.
@@ -17,5 +21,5 @@ then checks the result with measurements instead of impressions.
 Link this repository into your skills directory:
 
 ```sh
-ln -s "$PWD" ~/.claude/skills/im-human
+ln -s "$PWD" ~/.claude/skills/quiron
 ```

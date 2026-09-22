@@ -1,9 +1,9 @@
 ---
-name: im-human
+name: quiron
 description: Write or rewrite prose so it reads as a person wrote it, then verify with measurements instead of impressions. Use when drafting or editing any text a human audience will read (posts, articles, essays, stories, docs, READMEs, emails, PRs), when asked to remove "AI slop" or AI-sounding writing, when text needs to stop sounding like a chatbot, or when reviewing prose for AI tells. Replaces the humanizer skill.
 ---
 
-# im-human
+# Quirón
 
 Two jobs. Remove the habits that mark text as machine-written, and verify the result
 with a measurement rather than a feeling. The patterns come from studies with published
@@ -45,7 +45,7 @@ Two band files ship:
 
 - `bands.json` (default): technical and personal blog posts, articles, essays.
 - `bands-fiction.json`: short stories and narrative prose. Select it with
-  `IM_HUMAN_BANDS=~/.claude/skills/im-human/scripts/bands-fiction.json` before any
+  `QUIRON_BANDS=~/.claude/skills/quiron/scripts/bands-fiction.json` before any
   command below.
 - `bands-es.json`: blog posts and articles in Spanish (Part B, *Spanish*).
 
@@ -125,7 +125,7 @@ writing, and misspelling is never the goal. Correct, plain and specific is.
    citation or personal experience that is not in the source or from the user. If a
    sentence needs a detail you lack, ask, or cut the sentence. An opinion or reaction is
    fine where the voice calls for one. Fiction is exempt: invented detail is the task.
-2. **Measure.** `python3 ~/.claude/skills/im-human/scripts/aimeter.py FILE`
+2. **Measure.** `python3 ~/.claude/skills/quiron/scripts/aimeter.py FILE`
 3. **Fix what it flags**, in this order: `AI side` first, then `overshot`, then the
    checklist. Re-measure. Two or three passes is normal.
 4. **Stop at the human range, not above it.** `overshot` means a rule was applied past
@@ -540,7 +540,7 @@ ones is a TELL. Claude Sonnet also used em dashes in every post on this skill's 
 **Spanish (español).** `bands-es.json` is built by `build-corpus-es.sh` from 241 Spanish
 dev.to posts by 118 authors, all before 2022, and measured against 62 posts written in
 Spanish by the same four assistants in 2026. Select it with
-`IM_HUMAN_BANDS=~/.claude/skills/im-human/scripts/bands-es.json`; the meter then counts
+`QUIRON_BANDS=~/.claude/skills/quiron/scripts/bands-es.json`; the meter then counts
 Spanish forms (nominalizaciones en -ción/-miento/-dad, adverbios en -mente, pasiva con
 *ser*, gerundio tras coma, conectores como *Sin embargo* o *Además*, listas con *y/o*).
 What separates assistant Spanish from human Spanish on held-out posts:
@@ -710,8 +710,8 @@ ideally before 2023, one file each, and if you can, 20 or more assistant texts o
 kind; then:
 
 ```
-python3 ~/.claude/skills/im-human/scripts/aimeter.py --calibrate HUMAN_DIR --ai AI_DIR --out bands-mine.json
-IM_HUMAN_BANDS=bands-mine.json python3 ~/.claude/skills/im-human/scripts/aimeter.py FILE
+python3 ~/.claude/skills/quiron/scripts/aimeter.py --calibrate HUMAN_DIR --ai AI_DIR --out bands-mine.json
+QUIRON_BANDS=bands-mine.json python3 ~/.claude/skills/quiron/scripts/aimeter.py FILE
 ```
 
 Without `--ai` the defaults in `AI_REF` apply: directions from the literature, checked

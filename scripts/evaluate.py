@@ -111,7 +111,7 @@ def main():
     tmp = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
     json.dump(bands, tmp)
     tmp.close()
-    os.environ["IM_HUMAN_BANDS"] = tmp.name
+    os.environ["QUIRON_BANDS"] = tmp.name
     import audit  # reads the band file through aimeter, so import after the override
 
     rows = {"human-heldout": test}

@@ -37,9 +37,9 @@ scripts/build-corpus-es.sh ~/corpus/es           # 241 Spanish dev.to posts
 
 python3 scripts/evaluate.py --human ~/corpus/blog --ai-train eval/ai/blog/train \
     opus=eval/ai/blog/test-opus sonnet=eval/ai/blog/test-sonnet gpt=eval/ai/blog/test-gpt
-IM_HUMAN_BANDS=scripts/bands-fiction.json python3 scripts/evaluate.py \
+QUIRON_BANDS=scripts/bands-fiction.json python3 scripts/evaluate.py \
     --human ~/corpus/fiction --ai-train eval/ai/fiction/train opus=eval/ai/fiction/test-opus ...
-IM_HUMAN_BANDS=scripts/bands-es.json python3 scripts/evaluate.py \
+QUIRON_BANDS=scripts/bands-es.json python3 scripts/evaluate.py \
     --human ~/corpus/es --ai-train eval/ai/es/train opus=eval/ai/es/test-opus ...
 ```
 

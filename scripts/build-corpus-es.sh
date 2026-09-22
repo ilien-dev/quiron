@@ -9,7 +9,7 @@
 #
 # Usage: build-corpus-es.sh [OUTDIR]        CAP=8 NO_CALIBRATE=1 build-corpus-es.sh ...
 set -euo pipefail
-OUT="${1:-$HOME/.cache/im-human/es}"
+OUT="${1:-$HOME/.cache/quiron/es}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 mkdir -p "$OUT"
 python3 - "$OUT" "${CAP:-5}" <<'PY'
@@ -19,7 +19,7 @@ out, cap = sys.argv[1], int(sys.argv[2])
 def get(url):
     for wait in (2, 5, 15, 45, 90):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "im-human-corpus/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": "quiron-corpus/1.0"})
             with urllib.request.urlopen(req, timeout=30) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One iteration of the im-human loop: measure, audit, record, say whether it converged.
+# One iteration of the quiron loop: measure, audit, record, say whether it converged.
 #
 # Convergence is deliberately not "one clean run". A single pass can be clean
 # because a check silently failed to fire, or because the last edit happened to
@@ -19,7 +19,7 @@ set -uo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 FILE="${1:?usage: check.sh FILE [--ruled \"note\"] [--status] [--reset]}"; shift || true
 [ -f "$FILE" ] || { echo "no such file: $FILE"; exit 2; }
-STATE="$(dirname "$FILE")/.$(basename "$FILE").im-human.json"
+STATE="$(dirname "$FILE")/.$(basename "$FILE").quiron.json"
 
 case "${1:-}" in
   --status) [ -f "$STATE" ] && cat "$STATE" || echo "no state yet"; exit 0 ;;

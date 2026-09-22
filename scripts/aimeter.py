@@ -37,7 +37,7 @@ import json, os, re, statistics as st, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LEX = os.path.join(HERE, "lexicons")
-BANDS_FILE = os.environ.get("IM_HUMAN_BANDS") or os.path.join(HERE, "bands.json")
+BANDS_FILE = os.environ.get("QUIRON_BANDS") or os.path.join(HERE, "bands.json")
 
 
 def _load(name):
