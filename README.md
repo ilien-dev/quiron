@@ -32,9 +32,9 @@
 
 ## What it does
 
-Ask a model for a blog post and you get a recognisable shape: lists of three, a dash in
-every paragraph, a heading every hundred words, a quotable line to close each section,
-words like *seamless* and *robust*. Quirón gives the model a checklist of 33 such
+Ask a model for a blog post and you get a recognisable shape: lists of three, about
+twice the headings a person would use, a summary section at the end, words like
+*comprehensive* and *increasingly*. Quirón gives the model a checklist of 33 such
 patterns and a meter that says, in numbers, whether the fix landed or went too far.
 
 Here is the meter on an assistant-written Stripe tutorial from `eval/ai/blog/`:
@@ -72,8 +72,8 @@ repo. Nothing ships on "this reads better".
 - **Blind judges.** Fresh model judges read posts one at a time and guessed which were
   AI. That test produced the most important finding below.
 
-How each number was measured, and where every rule comes from, is in [`SKILL.md`](SKILL.md) and
-[`eval/README.md`](eval/README.md).
+How each number was measured, and where every rule comes from, is in
+[`SKILL.md`](SKILL.md) and [`eval/README.md`](eval/README.md).
 
 ## Tips for text that reads human
 
@@ -82,10 +82,10 @@ the human band was still judged AI 12 times out of 12. What moved them was the w
 own material. So:
 
 - **Start from something real.** Your notes, a rough draft, a Slack thread, a post-mortem.
-  A model writing from a blank prompt has to invent everything, and invented text reads
-  invented.
+  A model writing from a blank prompt has to invent everything. The judges' reasons for
+  calling a post AI were things like "no concrete events" and "generic trend summary".
 - **Give it the specifics.** What happened, the real names, the numbers you know, the
-  links, what went wrong. These are what readers notice.
+  links, what went wrong.
 - **Say what you think.** Your opinion, what you are unsure of, the mistake you made.
   The model cannot supply that without making it up.
 - **Hand over a sample of your writing** so the model can match how you write.
@@ -94,8 +94,8 @@ own material. So:
 
 ## The name
 
-Chiron (*Quirón* in Spanish) was the one centaur in Greek myth known for wisdom rather
-than violence. He taught Achilles, Asclepius and Jason, and he healed. When a poisoned
+Most centaurs in Greek myth were wild and violent. Chiron (*Quirón* in Spanish) was the
+wise one: he taught Achilles, Asclepius and Jason, and he was a healer. When a poisoned
 arrow wounded him, his immortality meant he could not die from it, so he gave it up,
 and Zeus set him among the stars. The logo shows him holding that star.
 
@@ -124,7 +124,7 @@ For fiction or Spanish, set `QUIRON_BANDS=scripts/bands-fiction.json` or
 
 ## License
 
-Free to use, copy and change, under the [GNU AGPL v3](LICENSE) with one added term
+Free to use and change, under the [GNU AGPL v3](LICENSE) with one added term
 in [`NOTICE`](NOTICE). Any work built on Quirón has to stay open under the same license,
 including a modified version offered as a network service, and has to credit the
 original: "Based on Quirón by ilien", with a link to this repository.
