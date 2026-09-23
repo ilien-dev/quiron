@@ -127,4 +127,29 @@ magick "$brand_dir/icon/quiron-icon-dark-512.png" \
   -define icon:auto-resize=64,48,32,16 \
   "$brand_dir/favicon/quiron-favicon-dark.ico"
 
-echo "Brand assets rebuilt in $brand_dir"
+# Social preview cards (GitHub and Open Graph want 1280x640): the hero, scaled, with
+# the tagline under the wordmark.
+mkdir -p "$brand_dir/social"
+tagline_font="$project_dir/assets/demo/fonts/Alegreya.ttf"
+for theme in light dark; do
+  if [[ $theme == light ]]; then bg=$light_bg; quiet="#6B665C"; else bg=$dark_bg; quiet="#A8A08F"; fi
+  magick "$brand_dir/hero/quiron-hero-$theme.png" -depth 8 -resize 1280x512 \
+    -background "$bg" -gravity center -extent 1280x640 \
+    -gravity NorthWest -font "$tagline_font" -pointsize 34 -fill "$quiet" \
+    -annotate +662+420 'An AI humanizer skill that' -annotate +662+462 'measures its own work' \
+    -strip "$brand_dir/social/quiron-social-$theme.png"
+done
+
+# Copies for the GitHub Pages site in docs/.
+site_dir="$project_dir/docs"
+mkdir -p "$site_dir/img"
+for theme in light dark; do
+  magick "$brand_dir/hero/quiron-hero-$theme.png" -depth 8 -resize 1200x -strip -quality 82 \
+    "$site_dir/img/hero-$theme.webp"
+done
+cp "$brand_dir/social/quiron-social-light.png" "$site_dir/img/og.png"
+cp "$brand_dir/favicon/quiron-favicon-light-32.png" "$site_dir/img/favicon-32.png"
+cp "$brand_dir/favicon/quiron-favicon-light.ico" "$site_dir/favicon.ico"
+cp "$brand_dir/icon/apple-touch-icon-light.png" "$site_dir/img/apple-touch-icon.png"
+
+echo "Brand assets rebuilt in $brand_dir and $site_dir"

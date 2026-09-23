@@ -17,6 +17,7 @@ color theme, background, and output size.
 | 192 px app icon | `icon/quiron-icon-light-192.png` | `icon/quiron-icon-dark-192.png` |
 | Apple touch icon | `icon/apple-touch-icon-light.png` | `icon/apple-touch-icon-dark.png` |
 | Browser favicon | `favicon/quiron-favicon-light.ico` | `favicon/quiron-favicon-dark.ico` |
+| GitHub social preview (Settings → General) | `social/quiron-social-light.png` | `social/quiron-social-dark.png` |
 
 PNG favicons are also available at 16, 32, 48, and 64 px.
 
