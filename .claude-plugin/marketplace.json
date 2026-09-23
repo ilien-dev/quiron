@@ -12,7 +12,8 @@
       "version": "1.0.0",
       "description": "Makes AI-written prose read like a person wrote it, and checks the result against measured human baselines.",
       "author": {
-        "name": "ilien"
+        "name": "ilien",
+        "url": "https://github.com/ilien-dev"
       },
       "homepage": "https://github.com/ilien-dev/quiron",
       "repository": "https://github.com/ilien-dev/quiron",
