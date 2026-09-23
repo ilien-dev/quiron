@@ -1,0 +1,26 @@
+{
+  "skill_name": "quiron",
+  "evals": [
+    {
+      "id": 1,
+      "name": "blog-rewrite-with-notes",
+      "prompt": "Rewrite this dev.to blog post draft so it reads like I wrote it. My notes about what actually happened are in blog-notes.txt.",
+      "expected_output": "A rewrite built on the notes: no FAIL, no figure or link absent from draft and notes, headings reduced, check.sh converged.",
+      "files": ["eval/ai/blog/test-gpt/tracycss-513257.md", "eval/notes-fresh/tracycss-513257.txt"]
+    },
+    {
+      "id": 2,
+      "name": "spanish-rewrite-no-material",
+      "prompt": "Reescribe este post para dev.to para que no suene a IA.",
+      "expected_output": "Spanish bands selected, no FAIL, no invented facts, and the user told the draft needs their own material.",
+      "files": ["eval/ai/es/test-gpt/cescquintero-208261.md"]
+    },
+    {
+      "id": 3,
+      "name": "fiction-rewrite",
+      "prompt": "This short story I generated for a WritingPrompts reply sounds like AI. Rewrite it so it reads human.",
+      "expected_output": "Fiction bands selected, no FAIL, no title heading, fewer AI-side rates, no overshoot.",
+      "files": ["eval/ai/fiction/test-gpt/wp-40000.md"]
+    }
+  ]
+}

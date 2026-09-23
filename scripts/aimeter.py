@@ -157,6 +157,24 @@ def band_meta():
 
 LANG = band_meta().get("_lang", "en")
 
+# The most frequent function words of each language. A text whose words are mostly from
+# the other list is being measured against the wrong band file, and every verdict is off.
+_FUNCTION = {"en": {"the", "and", "of", "to", "is", "in", "that", "it", "with", "for"},
+             "es": {"el", "la", "de", "que", "y", "en", "los", "las", "por", "para", "una", "es"}}
+
+
+def lang_warning(text):
+    """A line telling the user to switch band files, or '' when the language matches."""
+    words = re.findall(r"[a-záéíóúñü]+", text.lower())
+    hits = {k: sum(w in v for w in words) for k, v in _FUNCTION.items()}
+    guess = max(hits, key=hits.get)
+    if guess == LANG or hits[guess] < 2 * max(hits[LANG], 1):
+        return ""
+    name = {"es": "bands-es.json", "en": "bands.json or bands-fiction.json"}[guess]
+    return (f"WARNING: this text looks {'Spanish' if guess == 'es' else 'English'} but "
+            f"{os.path.basename(BANDS_FILE)} is for {'Spanish' if LANG == 'es' else 'English'}. "
+            f"Set QUIRON_BANDS={os.path.join(HERE, name.split(' ')[0])} and run again.")
+
 HEDGE = re.compile(
     r"\b(?:it is important to note|it is worth noting|in conclusion|in summary|"
     r"that said|at its core|the real question is|what really matters|let's dive|"
@@ -418,6 +436,9 @@ def report(path, as_json=False, sample=None):
         return
     print(f"\n{os.path.basename(path)}  {m['_words']} words, "
           f"{m['_sentences']} sentences, {m['_paragraphs']} paragraphs\n")
+    warn = lang_warning(open(path, encoding="utf-8").read())
+    if warn:
+        print(warn + "\n")
     if not bands:
         sys.exit("no bands.json; run --calibrate DIR first")
     print(f"{'feature':30}{'this':>9}{'human band':>18}{'AI':>8}   verdict")
@@ -465,11 +486,19 @@ if __name__ == "__main__":
         sample_paths = []
         while "--sample" in args:
             i = args.index("--sample")
-            target = args[i + 1]
+            target = args[i + 1] if i + 1 < len(args) else ""
+            if not os.path.exists(target):
+                sys.exit(f"--sample needs an existing file or directory, got: {target or 'nothing'}")
             sample_paths += ([os.path.join(target, n) for n in sorted(os.listdir(target))
                               if n.endswith((".md", ".txt"))]
                              if os.path.isdir(target) else [target])
             del args[i:i + 2]
+        missing = [a for a in args if a != "--json" and not os.path.isfile(a)]
+        if missing:
+            sys.exit(f"no such file: {', '.join(missing)}")
+        if not os.path.exists(BANDS_FILE):
+            sys.exit(f"band file not found: {BANDS_FILE}\nSet QUIRON_BANDS to bands.json, "
+                     f"bands-fiction.json or bands-es.json in {HERE}, or build one with --calibrate DIR.")
         sample = sample_medians(sample_paths) if sample_paths else None
         as_json = "--json" in args
         for p in [a for a in args if a != "--json"]:

@@ -1,7 +1,8 @@
 # eval
 
-Everything needed to rerun the measurements in `SKILL.md`, except the human corpora,
-which are fetched by the `scripts/build-corpus*.sh` scripts and not redistributed.
+Everything needed to rerun the measurements in `SKILL.md` and `references/`, except the
+human corpora, which are fetched by the `scripts/build-corpus*.sh` scripts and not
+redistributed.
 
 ## What is here
 
@@ -27,6 +28,10 @@ which are fetched by the `scripts/build-corpus*.sh` scripts and not redistribute
 - `lexicon-pool-*.tsv`: the published candidate words each lexicon was selected from.
 - `results/`: evaluate.py output per register, and the blind-judge rounds with their
   answer keys and scores.
+- `evals.json`: the task prompts used to check that a new version of `SKILL.md` does no
+  worse than the old one. Each prompt is run once per Claude model with each version, so
+  both get the same inputs, and the outputs are scored with the scripts used everywhere
+  else here.
 
 ## Rerun
 

@@ -6,11 +6,11 @@ A skill that makes any AI model's prose read like a person wrote it, checked aga
 
 A change to the skill ships only if it is measured and the measurement shows an improvement. Opinion, intuition and "this reads better" do not count.
 
-- Every pattern, lexicon word, band and number traces to research with a published corpus or to a run of the scripts. New claims get a source in `SKILL.md` § Sources. No source, no change.
+- Every pattern, lexicon word, band and number traces to research with a published corpus or to a run of the scripts. New claims get a source in `references/sources.md`. No source, no change.
 - Measure before and after on the same texts. Report both numbers.
 - An improvement moves assistant-register text toward the band and keeps known-human text inside it. A change that starts flagging human texts is a regression, even if it catches more AI text.
 - Overshoot is a failure, not a win (TextPulse finding, top of `SKILL.md`). Prefer `overshot` getting rarer over a higher score.
-- A number in `SKILL.md` the scripts can reproduce is rerun when the code or bands change. A figure with no measurement behind it is removed.
+- A number in `SKILL.md` or `references/` the scripts can reproduce is rerun when the code or bands change. A figure with no measurement behind it is removed.
 
 ## User-facing Markdown goes through /quiron
 
@@ -39,6 +39,6 @@ Texts under ~120 words or 8 sentences return no measurement.
 - `audit.py` `CHECKS`: one entry per Part A pattern, states PASS / FAIL / TELL / READ. FAIL only where ≤~5% of held-out human texts trip it (`evaluate.py` shows the rate), or the loop can never converge.
 - `check.sh` keeps a streak in `.FILE.quiron.json`. Convergence is two consecutive clean passes with READ items ruled on in both.
 
-`SKILL.md`, `CHECKS` and `AI_REF` describe the same patterns and numbers; change one, update the others. The band table in `SKILL.md` Part C mirrors `bands.json`.
+`SKILL.md` (index), `references/patterns.md`, `CHECKS` and `AI_REF` describe the same patterns and numbers; change one, update the others. The band table in `references/numbers.md` mirrors `bands.json`. `SKILL.md` stays under 500 lines; detail goes in `references/`, one level deep.
 
 Band files: `bands.json` (blog), `bands-fiction.json`, `bands-es.json`, built by `build-corpus*.sh`; each may carry `_lang`, `_lexicon`, `_plain`, `_thresholds` and learned AI directions. Human corpora are not committed; `eval/ai/` samples are.

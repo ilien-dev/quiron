@@ -23,7 +23,7 @@ Code blocks and inline code are ignored on both sides.
 Usage:
   factdiff.py SOURCE [SOURCE ...] REWRITE     e.g. the draft and the writer's notes
 """
-import re, sys
+import os, re, sys
 
 NUM_WORDS = set("""two three four five six seven eight nine ten eleven twelve
 twenty thirty forty fifty hundred thousand million billion half dozen
@@ -63,7 +63,8 @@ def facts(text):
         for tok in toks[1:]:
             if tok[0].isupper() and tok not in ("I", "I'm", "I've", "I'd", "I'll"):
                 names.add(re.sub(r"'s$", "", tok.strip(".'")))
-    links = set(re.findall(r"https?://[^\s)>\]]+", t))
+    # a URL ending a sentence or clause keeps its punctuation in the regex match; drop it
+    links = {u.rstrip(".,;:!?'\"") for u in re.findall(r"https?://[^\s)>\]]+", t)}
     time = {m.group(0).lower() for m in TIME.finditer(t)}
     first = {m.group(0).lower() for m in FIRST.finditer(t)}
     return {"numbers": nums, "number words": num_words, "names": names, "links": links,
@@ -74,6 +75,9 @@ def facts(text):
 def main():
     if len(sys.argv) < 3:
         sys.exit(__doc__)
+    missing = [p for p in sys.argv[1:] if not os.path.isfile(p)]
+    if missing:
+        sys.exit(f"no such file: {', '.join(missing)}")
     src = facts("\n\n".join(open(p, encoding="utf-8").read() for p in sys.argv[1:-1]))
     new = facts(open(sys.argv[-1], encoding="utf-8").read())
     hard = 0

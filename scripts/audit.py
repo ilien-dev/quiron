@@ -32,11 +32,11 @@ import json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from aimeter import prose, lexicon_name, BANDS_FILE, LANG  # noqa: E402
+from aimeter import prose, lexicon_name, lang_warning, BANDS_FILE, LANG  # noqa: E402
 
 # Thresholds for the combined checks. Chosen from a grid over held-out human posts and
 # 2026 assistant posts: the setting that kept human texts failing the whole checklist
-# near 5% while catching the most assistant posts (SKILL.md Part C has the numbers).
+# near 5% while catching the most assistant posts (references/numbers.md has the numbers).
 # A band file for another register can override any of them under "_thresholds".
 AI_SIDE_MAX = 5      # C1 fails at this many rates outside the band on the AI side
 OVERSHOT_MAX = 6     # C2 fails at this many rates outside the band on the far side
@@ -333,11 +333,16 @@ def main():
     samples = []
     while "--sample" in args:
         i = args.index("--sample")
-        target = args[i + 1]
+        target = args[i + 1] if i + 1 < len(args) else ""
+        if not os.path.exists(target):
+            sys.exit(f"--sample needs an existing file or directory, got: {target or 'nothing'}")
         samples += ([os.path.join(target, n) for n in sorted(os.listdir(target))
                      if n.endswith((".md", ".txt"))] if os.path.isdir(target) else [target])
         del args[i:i + 2]
     paths = [a for a in args if not a.startswith("--")]
+    missing = [p for p in paths if not os.path.isfile(p)]
+    if missing:
+        sys.exit(f"no such file: {', '.join(missing)}")
     fails = 0
     for path in paths:
         res = run(path, samples)
@@ -349,6 +354,9 @@ def main():
                                         for r in res]}, indent=1))
             continue
         print(f"\n{os.path.basename(path)}")
+        warn = lang_warning(open(path, encoding="utf-8").read())
+        if warn:
+            print(warn)
         print(f"{'':4}{'check':40}{'state':7}detail")
         for cid, name, state, detail, note in res:
             if brief and state == "PASS":
