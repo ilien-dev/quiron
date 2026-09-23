@@ -1,6 +1,6 @@
 {
   "name": "quiron",
-  "description": "Quirón, a writing skill that checks prose against measured human baselines.",
+  "description": "Quirón, an AI humanizer skill that checks prose against measured human baselines.",
   "owner": {
     "name": "ilien",
     "url": "https://github.com/ilien-dev"
@@ -10,7 +10,7 @@
       "name": "quiron",
       "source": "./",
       "version": "1.0.0",
-      "description": "Makes AI-written prose read like a person wrote it, and checks the result against measured human baselines.",
+      "description": "AI humanizer skill: removes AI slop and the signs of AI writing from prose, then measures the rewrite against human baselines.",
       "author": {
         "name": "ilien",
         "url": "https://github.com/ilien-dev"
@@ -19,11 +19,18 @@
       "repository": "https://github.com/ilien-dev/quiron",
       "license": "AGPL-3.0-only",
       "keywords": [
+        "humanizer",
+        "ai-humanizer",
+        "humanize-ai-text",
+        "ai-slop",
+        "anti-slop",
+        "deslop",
+        "ai-writing",
         "writing",
         "prose",
-        "ai-slop",
-        "humanize",
-        "style"
+        "style",
+        "stylometry",
+        "agent-skills"
       ],
       "category": "productivity"
     }

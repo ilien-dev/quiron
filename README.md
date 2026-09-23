@@ -6,8 +6,10 @@
   </picture>
 </p>
 
+<h1 align="center">Quirón: an AI humanizer skill that measures its own work</h1>
+
 <p align="center">
-  <b>A writing skill for AI models. It strips the habits that mark prose as machine-written,<br>
+  <b>An agent skill for Claude Code, Codex and Cursor. It strips the AI slop that marks prose as machine-written,<br>
   then checks the result against measured human writing instead of a hunch.</b>
 </p>
 
@@ -15,16 +17,25 @@
   <img alt="Python 3 standard library only" src="https://img.shields.io/badge/python-3%20stdlib%20only-20201E?style=flat-square">
   <img alt="Registers: blog, fiction, Spanish" src="https://img.shields.io/badge/registers-blog%20%C2%B7%20fiction%20%C2%B7%20es-B5563A?style=flat-square">
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-F7EEDB?style=flat-square&labelColor=20201E">
-  <a href="https://skills.sh/ilien-dev/quiron"><img alt="skills.sh installs" src="https://skills.sh/b/ilien-dev/quiron"></a>
+  <a href="https://skills.sh/ilien-dev/quiron/quiron"><img alt="skills.sh installs" src="https://skills.sh/b/ilien-dev/quiron"></a>
+  <a href="https://ilien-dev.github.io/quiron/"><img alt="Website" src="https://img.shields.io/badge/website-ilien--dev.github.io%2Fquiron-B5563A?style=flat-square"></a>
 </p>
+
+Hand it a draft and ask it to humanize the text, or to make a README sound less like
+ChatGPT. It rewrites the prose, then measures the result. You get the rewrite and a
+measurement that says whether it now reads like a person wrote it.
 
 ## Install
 
-With the [skills](https://skills.sh) CLI, for Claude Code and the other agents it supports:
+With the [skills](https://skills.sh) CLI, for Claude Code and every other agent it
+supports, Gemini CLI and GitHub Copilot among them:
 
 ```sh
 npx skills add ilien-dev/quiron
 ```
+
+It needs no API key. It runs on the model you already use, and the scripts need nothing
+beyond the Python 3 standard library.
 
 ### As a Claude Code plugin
 
@@ -63,13 +74,20 @@ The plugin puts the skill under its own name, so you call it as `/quiron:quiron`
 > to know who wrote it. Never use it to deceive or defraud anyone. It also does not beat
 > AI detectors that read token probabilities, and it was not built to.
 
-## What it does
+## What it catches
 
-Ask a model for a blog post and you get a recognisable shape: lists of three, about
-twice the headings a person would use, a summary section at the end, words like
-*comprehensive* and *increasingly*. Quirón gives the model a checklist of 33 such
-patterns and a meter that says, in numbers, whether the fix landed or went too far.
+Ask a model for a blog post and you get a shape you learn to spot: lists of three, about
+twice the headings a person would use, a summary section at the end, "it's not just X,
+it's Y" and em dashes where a comma would do. Quirón gives the model a checklist of 33 of
+these signs of AI writing and a meter that says in numbers whether the fix landed or went
+too far.
 
+*Delve* is not on the list anymore. On this repo's 2026 run it turned up in 1% of
+assistant posts or fewer, roughly as often as in human ones. The words that give 2026
+models away are ordinary ones you'd never flag by eye, used at many times the human rate
+(the list is in [`references/word-choice.md`](references/word-choice.md)). The
+other half of the signal is what's missing: models rarely write *very* or *able*, and
+people use both all the time.
 
 Here is the meter on an assistant-written Stripe tutorial from `eval/ai/blog/`:
 
@@ -89,6 +107,19 @@ plain words /1k          33.88    43.19 - 95.24   below band, AI side
 ```
 
 The rewrite of the same post, built from the author's own notes, scores 23 of 23.
+
+## How it differs from other humanizer skills
+
+The best-known humanizer skills, [humanizer](https://github.com/blader/humanizer) and
+[stop-slop](https://github.com/hardikpandya/stop-slop), give the model a list of AI
+writing patterns to remove, and they work. So does [no-ai-slop](https://github.com/petergyang/no-ai-slop).
+Stop-slop also has the model score its own draft from 1 to 10 on five questions.
+
+Quirón has a pattern list too, but the model doesn't grade itself. A script measures 23
+rates in the text and compares each one with the range found in human writing published
+before ChatGPT. That catches a failure a checklist can't see. Tell a model to write like a
+person and it usually overshoots: choppier and plainer than any person writes. The meter flags that as
+loudly as the AI side.
 
 ## What backs it
 
@@ -126,21 +157,17 @@ own material. So:
 - **Stop at the human range.** Two or three passes of the meter is normal. Chasing 23 of
   23 is how you overshoot.
 
-## The name
-
-Most centaurs in Greek myth were wild and violent. Chiron (*Quirón* in Spanish) was the
-wise one: he taught Achilles, Asclepius and Jason, and he was a healer. When a poisoned
-arrow wounded him, his immortality meant he could not die from it, so he gave it up,
-and Zeus set him among the stars. The logo shows him holding that star.
-
-He fits the skill in two ways. He was a teacher of people, and this skill teaches a
-model how people write. And he was half man, half horse: the text Quirón helps produce
-is a hybrid too. The model does the drafting, and the human part has to come from you.
-
 ## Use
 
-Ask Claude Code to write or rewrite something, or call `/quiron`. The scripts run on
-their own too, from a clone of this repository:
+Ask your agent in plain words, or call `/quiron`:
+
+```text
+Humanize this post: [paste the text]
+Make docs/launch.md sound less like AI. Here are my notes: [notes]
+Check this email for AI tells, don't rewrite it yet.
+```
+
+The scripts run on their own too, from a clone of this repository:
 
 ```sh
 python3 scripts/aimeter.py FILE        # 23 rates against the human bands
@@ -154,6 +181,37 @@ For fiction or Spanish, set `QUIRON_BANDS=scripts/bands-fiction.json` or
 Other languages get the same checklist as a best effort. There is no human baseline for
 them yet. The meter says so and shows only the numbers that don't depend on the words,
 such as paragraph length and headings.
+
+## FAQ
+
+**Does it get text past AI detectors like GPTZero or Turnitin?** No. Those tools read
+token probabilities, and Quirón doesn't touch them. It works only on what a human reader
+actually notices.
+
+**Which models does it work with?** Any model behind an agent that loads skills. It was
+tested on text from three Claude models and one GPT model.
+
+**Does it make things up to sound human?** Its instructions forbid it. A rewrite may use only
+facts from your text or your notes. `scripts/factdiff.py` lists the numbers and links in
+the rewrite that the source doesn't have. When it needs detail it lacks, it asks.
+
+## En español
+
+Quirón también humaniza textos en español. Tiene sus propias bandas, medidas sobre 241
+posts de dev.to escritos por personas antes de ChatGPT, y su propia lista de palabras que
+delatan a un modelo. Pídele que quite el tono de IA a un borrador, o usa
+`QUIRON_BANDS=scripts/bands-es.json` para medirlo tú.
+
+## The name
+
+Most centaurs in Greek myth were wild and violent. Chiron (*Quirón* in Spanish) was the
+wise one: he taught Achilles, Asclepius and Jason, and he was a healer. When a poisoned
+arrow wounded him, his immortality meant he could not die from it, so he gave it up,
+and Zeus set him among the stars. The logo shows him holding that star.
+
+He fits the skill in two ways. He was a teacher of people, and this skill teaches a
+model how people write. And he was half man, half horse: the text Quirón helps produce
+is a hybrid too. The model does the drafting, and the human part has to come from you.
 
 ## License
 
