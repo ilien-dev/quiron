@@ -23,6 +23,9 @@
     <source media="(prefers-color-scheme: light)" srcset="assets/demo/quiron-demo-light.gif">
     <img alt="Animation: an AI-written Stripe tutorial scores 13 of 23 features in the human band with one FAIL; the author's notes come in, the rewrite is typed, and the meter climbs to 23 of 23 with no FAIL. A last note says that without notes the skill asks for them." src="assets/demo/quiron-demo-light.gif" width="720">
   </picture>
+  <br>
+  <sub>The animation shows what the skill does in the background. You won't see this screen when you run it,
+  and it doesn't start a server or open a report: the model edits your text in the chat and gives you the meter's result there.</sub>
 </p>
 
 ---
