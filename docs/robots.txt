@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ilien-dev.github.io/quiron/sitemap.xml
+Sitemap: https://quiron.ilien.dev/sitemap.xml

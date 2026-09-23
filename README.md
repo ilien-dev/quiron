@@ -18,7 +18,7 @@
   <img alt="Registers: blog, fiction, Spanish" src="https://img.shields.io/badge/registers-blog%20%C2%B7%20fiction%20%C2%B7%20es-B5563A?style=flat-square">
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-F7EEDB?style=flat-square&labelColor=20201E">
   <a href="https://skills.sh/ilien-dev/quiron/quiron"><img alt="skills.sh installs" src="https://skills.sh/b/ilien-dev/quiron"></a>
-  <a href="https://ilien-dev.github.io/quiron/"><img alt="Website" src="https://img.shields.io/badge/website-ilien--dev.github.io%2Fquiron-B5563A?style=flat-square"></a>
+  <a href="https://quiron.ilien.dev/"><img alt="Website" src="https://img.shields.io/badge/website-quiron.ilien.dev-B5563A?style=flat-square"></a>
 </p>
 
 Hand it a draft and ask it to humanize the text, or to make a README sound less like
