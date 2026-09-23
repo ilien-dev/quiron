@@ -182,7 +182,11 @@ in September 2026.
   rates did not move. Many of the sentences it removed were ordinary ones from the
   author's notes ("The page isn't finished yet."), and the judges' reasons for the
   rewrites with the check were "too even" and "uniformly polished". It is kept as a review item
-  the writer rules on (`audit.py --review`), outside the loop, T1 and `check.sh`.
+  the writer rules on (`audit.py --review`), outside the loop, T1 and `check.sh`. With
+  that version of the skill, 40 more rewrites of the same 20 titles (two per title,
+  headless, so no review questions) gave mean P(AI) 43.7 against 43.6 without it (+1.3
+  per title, 95% CI -2.0 to +4.7, Wilcoxon p = 0.42), and the countable rates did not
+  move. Negated setups were left in 5 of 40 rewrites, against 11 of 52 before.
 
 ### Calibrating for another register
 
