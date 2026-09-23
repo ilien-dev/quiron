@@ -160,7 +160,8 @@ Quirón progress:
 - [ ] 4. Meter: AI side fixed, then overshot
 - [ ] 5. Checklist: no FAIL, every READ and TELL ruled on
 - [ ] 6. check.sh converged (two clean runs in a row, with --source when rewriting)
-- [ ] 7. Final message follows the step 6 template (never "ready to publish")
+- [ ] 7. Review items asked one at a time, if the writer is in the conversation
+- [ ] 8. Final message follows the step 7 template (never "ready to publish")
 ```
 
 1. **Write or rewrite.** Apply the points above, the pattern index below, and the word
@@ -177,7 +178,8 @@ Quirón progress:
    have a median of 20 of 23 features in band. The goal is a clean checklist, not 23 of 23.
 5. **Converge** with `check.sh` (next section). When rewriting, pass the draft and any
    notes with `--source`; a number, date or link the sources do not have fails the run.
-6. **Report honestly**, with this template, in the user's language:
+6. **Review with the writer** (section below): `audit.py --review`, one question at a time.
+7. **Report honestly**, with this template, in the user's language:
 
    ```
    Result: <N> of 23 features in the human band; checklist <F> FAIL, <T> TELL; converged: yes/no.
@@ -249,6 +251,33 @@ FAIL is kept narrow on purpose. The first version failed any em dash, any "rathe
 any Title Case heading and any rate outside the band; it failed every one of 42 held-out
 human posts. The current rules pass 98% of them clean and still fail 86% of the Claude
 Sonnet and 93% of the GPT posts written on the same titles.
+
+## Review with the writer
+
+`scripts/audit.py --review [--json] FILE` lists sentences a reader may take for AI that
+the loop must not fix on its own. Today that is the negated setup: a short "X isn't Y."
+opening a paragraph or right before the point ("What surprised me most wasn't a
+number."). It is in 31% of assistant posts and 7% of human ones, but removing it inside
+the loop made rewrites read more AI to blind judges, because many of these sentences are
+ordinary ones (`references/numbers.md`). So the writer decides, sentence by sentence,
+and you leave these sentences exactly as they are while writing, rewriting and looping.
+
+Do this only when the writer is in the conversation, after `check.sh` converged; skip it
+in batch or headless runs. Ask about one item at a time, never as a list, and wait for
+the answer before the next. Each question carries:
+
+- the sentence, quoted, and which paragraph it is in;
+- why a reader may take it for AI: the reasons `--review` prints, in the writer's language;
+- your suggested change, written out: a rewrite that states the point, or deleting the
+  sentence when the paragraph works without it;
+- four choices: **Keep**, **Use the suggestion**, **Delete**, **Write my own**.
+
+Use the host's question tool when it has one (in Claude Code, AskUserQuestion: the first
+three as options with the suggestion in the preview, and its free-text answer as "Write
+my own", used word for word); otherwise ask in plain text with the same four choices.
+Apply each answer before asking the next. A suggestion adds no fact and is not another
+negated setup. After the last answer, if the text changed, run `check.sh` once more and
+report the result; never undo the writer's choice to clear a TELL.
 
 ## Pattern index
 

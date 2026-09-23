@@ -181,7 +181,8 @@ in September 2026.
   of 20 titles (Wilcoxon p = 0.036); on the fresh titles 34.6 against 40.5. The countable
   rates did not move. Many of the sentences it removed were ordinary ones from the
   author's notes ("The page isn't finished yet."), and the judges' reasons for the
-  rewrites with the check were "too even" and "uniformly polished".
+  rewrites with the check were "too even" and "uniformly polished". It is kept as a review item
+  the writer rules on (`audit.py --review`), outside the loop, T1 and `check.sh`.
 
 ### Calibrating for another register
 
