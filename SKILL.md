@@ -1,6 +1,6 @@
 ---
 name: quiron
-description: Writes, rewrites or reviews prose so it reads as a person wrote it, and verifies the result with measurements (a meter against human baselines and a pattern checklist) instead of impressions. Use it, not humanizer:humanizer, whenever text a person will read needs to stop sounding like AI, such as blog posts, articles, essays, stories, guides, docs, READMEs, emails, messages to a boss or a team, PR descriptions. That includes removing "AI slop", making text sound less like ChatGPT or a chatbot, humanizing a draft, and reviewing or checking prose for AI tells such as em dashes, "not just X but Y", lists of three, headings everywhere or a summary at the end. Works in any language; English and Spanish have measured baselines, other languages get the same patterns as a best effort.
+description: Writes, rewrites or reviews prose so it reads as a person wrote it, and verifies the result with measurements (a meter against human baselines and a pattern checklist) instead of impressions. Use it whenever text a person will read needs to stop sounding like AI, such as blog posts, articles, essays, stories, guides, docs, READMEs, emails, messages to a boss or a team, PR descriptions. That includes removing "AI slop", making text sound less like ChatGPT or a chatbot, humanizing a draft, and reviewing or checking prose for AI tells such as em dashes, "not just X but Y", lists of three, headings everywhere or a summary at the end. Works in any language; English and Spanish have measured baselines, other languages get the same patterns as a best effort.
 license: AGPL-3.0-only. See LICENSE and NOTICE.
 compatibility: Python 3 standard library only. The scripts need a shell and file access.
 ---
@@ -357,9 +357,7 @@ discussing the phrase rather than using it. Salutations and sign-offs predate ch
 Text written before 30 November 2022 is not AI-written. Human writing keeps absorbing AI
 habits, so several tells together is the safeguard, which is what T1 counts.
 
-## Replacing the humanizer skill
+## One pass only
 
-This skill contains all 25 patterns from `humanizer:humanizer`, eight more from the
-2025–2026 research, Spanish checks, and the measurement loop. If both are installed, use
-this one; do not run both on the same text, since the second pass is where overshoot
-comes from.
+Do not run a second AI-cleanup skill or prompt over text this skill has already edited.
+The second pass is where overshoot comes from.

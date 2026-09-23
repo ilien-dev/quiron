@@ -42,7 +42,7 @@ Every study and dataset behind a number in this skill.
 - *Prompt to Press* (IUI 2026), 150 readers, human articles edited by AI.
 - Alonso Simón et al. (2025), *RAEL*: Spanish human and GPT-3.5/4 texts in three genres.
 - TextPulse Research (2026), six self-published working papers with Zenodo DOIs, not
-  peer reviewed, from a company that sells a humanizer. Four use one paired corpus of
+  peer reviewed, from a company that sells a tool for rewriting AI text. Four use one paired corpus of
   60,786 human academic texts and AI rewrites of them (the vocabulary fingerprint, the
   sentence-length burstiness study, the 49-feature stylometric fingerprint, the
   human-vs-AI classification study). *Do AI Models Speak Human?* uses ten PMC passages
