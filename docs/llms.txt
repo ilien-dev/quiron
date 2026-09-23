@@ -1,0 +1,18 @@
+# Quirón
+
+> An AI humanizer skill for Claude Code, Codex, Cursor and other agents that load skills. It removes AI slop and the signs of AI writing from prose, then measures the rewrite against human writing published before ChatGPT. Open source (GNU AGPL v3), no API key, Python 3 standard library only.
+
+Install with `npx skills add ilien-dev/quiron`, or in Claude Code with `/plugin marketplace add ilien-dev/quiron` and `/plugin install quiron@quiron`. English and Spanish have measured baselines; other languages get the checklist as a best effort. It does not try to beat AI detectors such as GPTZero or Turnitin.
+
+## Docs
+
+- [README](https://raw.githubusercontent.com/ilien-dev/quiron/main/README.md): what it does, install, usage, FAQ
+- [SKILL.md](https://raw.githubusercontent.com/ilien-dev/quiron/main/SKILL.md): the skill's instructions to the model
+- [Patterns](https://raw.githubusercontent.com/ilien-dev/quiron/main/references/patterns.md): the 33 signs of AI writing, each with its measured rate and fix
+- [Word choice](https://raw.githubusercontent.com/ilien-dev/quiron/main/references/word-choice.md): the AI word lists and the plain words models leave out
+- [Numbers](https://raw.githubusercontent.com/ilien-dev/quiron/main/references/numbers.md): every band and how it was measured
+- [Sources](https://raw.githubusercontent.com/ilien-dev/quiron/main/references/sources.md): the studies behind each rule
+
+## Optional
+
+- [Evaluation](https://raw.githubusercontent.com/ilien-dev/quiron/main/eval/README.md): how to rerun the measurements

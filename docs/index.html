@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quirón: AI humanizer skill for Claude Code, Codex and Cursor</title>
+<meta name="description" content="Quirón is an open-source AI humanizer skill. It removes AI slop and the signs of AI writing from your drafts, then measures the rewrite against human writing.">
+<link rel="canonical" href="https://ilien-dev.github.io/quiron/">
+<meta name="author" content="ilien">
+<meta name="theme-color" content="#FDF8EE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#181817" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Quirón">
+<meta property="og:title" content="Quirón: an AI humanizer skill that measures its own work">
+<meta property="og:description" content="Removes AI slop and the signs of AI writing from your drafts, then measures the rewrite against human writing. For Claude Code, Codex and Cursor.">
+<meta property="og:url" content="https://ilien-dev.github.io/quiron/">
+<meta property="og:image" content="https://ilien-dev.github.io/quiron/img/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Quirón: a centaur holding up an eight-point star, with the words An AI humanizer skill that measures its own work">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quirón: an AI humanizer skill that measures its own work">
+<meta name="twitter:description" content="Removes AI slop and the signs of AI writing from your drafts, then measures the rewrite against human writing.">
+<meta name="twitter:image" content="https://ilien-dev.github.io/quiron/img/og.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://github.com/ilien-dev/quiron",
+      "name": "Quirón",
+      "alternateName": "quiron",
+      "description": "An AI humanizer skill for Claude Code, Codex and Cursor. It removes AI slop and the signs of AI writing from prose, then measures the rewrite against human baselines.",
+      "url": "https://ilien-dev.github.io/quiron/",
+      "codeRepository": "https://github.com/ilien-dev/quiron",
+      "programmingLanguage": "Python",
+      "runtimePlatform": "Python 3",
+      "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "keywords": "AI humanizer, humanize AI text, AI slop, signs of AI writing, Claude Code skill, agent skills, stylometry",
+      "image": "https://ilien-dev.github.io/quiron/img/og.png",
+      "author": { "@type": "Person", "name": "ilien", "url": "https://github.com/ilien-dev" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does it get text past AI detectors like GPTZero or Turnitin?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Those tools read token probabilities, and Quirón doesn't touch them. It works only on what a human reader actually notices." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work in Spanish?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. It has its own bands, measured on 241 Spanish dev.to posts, and its own word lists. Other languages get the checklist as a best effort." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it make things up to sound human?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Its instructions forbid it. A rewrite may use only facts from your text or your notes, and a script lists the numbers and links in the rewrite that the source doesn't have. When the text needs detail it lacks, the skill asks you for it." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FDF8EE; --ink: #20201E; --quiet: #6B665C; --rule: #DDD3C0; --star: #B1502F; --code: #F4ECDC;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #181817; --ink: #F7EEDB; --quiet: #A8A08F; --rule: #3A3732; --star: #DB7A56; --code: #22211F; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 400 1.1875rem/1.6 "Alegreya", Georgia, serif; font-variant-numeric: lining-nums;
+  }
+  main, footer { max-width: 42rem; margin: 0 auto; padding: 0 16px; }
+  .hero { display: block; width: 100%; max-width: 60rem; height: auto; margin: 0 auto; }
+  h1, h2 { font-family: "Young Serif", Georgia, serif; font-weight: 400; line-height: 1.15; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin: 0.5rem 0 1rem; letter-spacing: -0.01em; }
+  h2 { font-size: 1.5rem; margin: 2.75rem 0 0.75rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+  p { margin: 0 0 1rem; }
+  a { color: var(--star); text-underline-offset: 0.15em; }
+  ul { padding-left: 1.2rem; }
+  li { margin-bottom: 0.35rem; }
+  li::marker { color: var(--star); }
+  pre, code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 0.85em; }
+  pre { background: var(--code); border: 1px solid var(--rule); border-radius: 6px; padding: 0.9rem 1rem; overflow-x: auto; line-height: 1.45; }
+  .lead { font-size: 1.3rem; }
+  .cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0 0; }
+  .btn {
+    display: inline-block; padding: 0.55rem 1.1rem; border: 1px solid var(--ink); border-radius: 999px;
+    color: var(--ink); text-decoration: none; font-weight: 700;
+  }
+  .btn.primary { background: var(--ink); color: var(--paper); }
+  .btn:focus-visible, a:focus-visible { outline: 2px solid var(--star); outline-offset: 3px; }
+  dt { font-weight: 700; margin-top: 1.1rem; }
+  dd { margin: 0.25rem 0 0; }
+  .note { color: var(--quiet); font-size: 1rem; }
+  footer { margin-top: 3.5rem; padding-bottom: 3rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; color: var(--quiet); font-size: 1rem; }
+</style>
+</head>
+<body>
+<header>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="img/hero-dark.webp">
+    <img class="hero" src="img/hero-light.webp" width="1200" height="480" alt="Quirón: a centaur holding up an eight-point star">
+  </picture>
+</header>
+<main>
+  <h1>Quirón, an AI humanizer skill that measures its own work</h1>
+  <p class="lead">Quirón is a skill for Claude Code, Codex and Cursor. Give your agent a draft and ask it to humanize the text, or to make a README sound less like ChatGPT. It takes out the AI slop and then measures the rewrite against human writing published before ChatGPT, so you get the new text along with a measurement that says whether it now reads like a person wrote it.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/ilien-dev/quiron">Get it on GitHub</a>
+    <a class="btn" href="https://skills.sh/ilien-dev/quiron/quiron">See it on skills.sh</a>
+  </div>
+
+  <h2 id="install">Install</h2>
+  <p>The skills CLI installs it in Claude Code and in every other agent it supports, Gemini CLI and GitHub Copilot among them. It needs no API key, because it runs on the model you already use, and the scripts need nothing beyond the Python 3 standard library.</p>
+  <pre><code>npx skills add ilien-dev/quiron</code></pre>
+  <p>In Claude Code you can also add it as a plugin from its own marketplace:</p>
+  <pre><code>/plugin marketplace add ilien-dev/quiron
+/plugin install quiron@quiron</code></pre>
+
+  <h2 id="what-it-catches">What it catches</h2>
+  <p>Ask a model for a blog post and you get a shape you learn to spot. Quirón's checklist has 33 of these signs of AI writing, and each one was tested against real posts before it was kept. A few of them:</p>
+  <ul>
+    <li>"It's not just X, it's Y", when nobody said it was just X</li>
+    <li>lists of three</li>
+    <li>em dashes where a comma would do</li>
+    <li>about twice the headings a person would use, and a summary section at the end</li>
+    <li>words people use all the time, like <em>very</em> and <em>able</em>, gone missing</li>
+  </ul>
+  <p>The famous marker words from 2023 barely show up anymore. In this project's 2026 run they turned up in 1% of assistant posts or fewer, roughly as often as in human ones. The words that give a 2026 model away are ordinary, and you would never flag them by eye.</p>
+
+  <h2 id="meter">A meter, not a self-grade</h2>
+  <p>Most humanizer skills hand the model a list of patterns and trust it to follow the instructions. Quirón has the list too, but it also ships a script that counts 23 rates in the text and compares each one with the range found in 167 dev.to posts written before ChatGPT existed. Fiction and Spanish have their own bands.</p>
+  <p>The meter catches something a checklist misses. Tell a model to write like a person and it usually overshoots: the sentences get choppier and the words plainer than any person's. The meter flags that as loudly as it flags the AI side, so you know when to stop.</p>
+  <p>On an assistant-written Stripe tutorial it finds 13 of 23 rates inside the human band. The rewrite, built from the author's own notes, gets all 23.</p>
+  <pre><code>$ python3 scripts/aimeter.py eval/ai/blog/e2e-raw/aspittel-782713.md
+
+feature                   this   human band      verdict
+long words (7+) /1k     353.83   159.68 - 250.46  above band, AI side
+nominalizations /1k      55.21     7.29 - 32.65   above band, AI side
+em dashes /1k             3.76     0.00 - 2.74    above band, AI side
+lists of three /1k       11.29     0.00 - 5.51    above band, AI side
+plain words /1k          33.88    43.19 - 95.24   below band, AI side
+...
+13/23 features inside the human band (p10-p90 of 167 human texts)</code></pre>
+
+  <h2 id="responsible-use">Use it on your own writing</h2>
+  <p>Quirón is meant for text you write for yourself or your team, such as internal documentation or the notes from a meeting. It is not for passing AI writing off as human where the reader has a right to know who wrote it, like schoolwork or a job application. It is free and open source under the GNU AGPL v3.</p>
+
+  <h2 id="faq">Questions</h2>
+  <dl>
+    <dt>Does it get text past AI detectors like GPTZero or Turnitin?</dt>
+    <dd>No. Those tools read token probabilities, and Quirón doesn't touch them. It works only on what a human reader actually notices.</dd>
+    <dt>Does it work in Spanish?</dt>
+    <dd>Yes. It has its own bands, measured on 241 Spanish dev.to posts, and its own word lists. Other languages get the checklist as a best effort.</dd>
+    <dt>Does it make things up to sound human?</dt>
+    <dd>Its instructions forbid it. A rewrite may use only facts from your text or your notes, and a script lists the numbers and links in the rewrite that the source doesn't have. When the text needs detail it lacks, the skill asks you for it.</dd>
+  </dl>
+</main>
+<footer>
+  <p><a href="https://github.com/ilien-dev/quiron">github.com/ilien-dev/quiron</a> · GNU AGPL v3 · Made by <a href="https://github.com/ilien-dev">ilien</a></p>
+</footer>
+</body>
+</html>
