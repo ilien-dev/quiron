@@ -17,6 +17,14 @@
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-F7EEDB?style=flat-square&labelColor=20201E">
 </p>
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/demo/quiron-demo-dark.gif">
+    <source media="(prefers-color-scheme: light)" srcset="assets/demo/quiron-demo-light.gif">
+    <img alt="Animation: an AI-written Stripe tutorial scores 13 of 23 features in the human band with one FAIL; the author's notes come in, the rewrite is typed, and the meter climbs to 23 of 23 with no FAIL. A last note says that without notes the skill asks for them." src="assets/demo/quiron-demo-light.gif" width="720">
+  </picture>
+</p>
+
 ---
 
 > [!IMPORTANT]
@@ -36,6 +44,7 @@ Ask a model for a blog post and you get a recognisable shape: lists of three, ab
 twice the headings a person would use, a summary section at the end, words like
 *comprehensive* and *increasingly*. Quirón gives the model a checklist of 33 such
 patterns and a meter that says, in numbers, whether the fix landed or went too far.
+
 
 Here is the meter on an assistant-written Stripe tutorial from `eval/ai/blog/`:
 

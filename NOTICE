@@ -26,3 +26,7 @@ Legal Notices it displays:
 
 Where the work has no such notices, the attribution goes in its README or
 equivalent documentation. This file must be kept with every copy.
+
+The fonts in assets/demo/fonts (Young Serif and Alegreya) are not covered by the
+terms above. They are under the SIL Open Font License 1.1; see the OFL files next
+to them.

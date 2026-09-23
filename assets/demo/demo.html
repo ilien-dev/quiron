@@ -1,0 +1,212 @@
+<!doctype html>
+<!--
+  Source of assets/demo/quiron-demo-{light,dark}.gif, rendered frame by frame by
+  scripts/build-demo-gif.sh. Open it with ?t=SECONDS&theme=light|dark to see one frame,
+  or with ?play to watch it loop. Every text and number below is real: the draft, the
+  notes and the rewrite are eval/ai/blog/e2e-raw, eval/notes and eval/ai/blog/e2e-v5 for
+  aspittel-782713, and the counts are what aimeter.py and audit.py print for those files.
+
+  The look follows the logo: ivory paper, charcoal ink, one terracotta star, a soft serif
+  (Young Serif for display, Alegreya for text; both SIL OFL, licenses in fonts/).
+  It is set like a proof sheet, with rules instead of boxes and proof marks on the tells.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Quirón demo</title>
+<style>
+  @font-face { font-family: "Young Serif"; src: url("fonts/YoungSerif-Regular.ttf") format("truetype"); }
+  @font-face { font-family: "Alegreya"; src: url("fonts/Alegreya.ttf") format("truetype"); font-style: normal; font-weight: 400 900; }
+  @font-face { font-family: "Alegreya"; src: url("fonts/Alegreya-Italic.ttf") format("truetype"); font-style: italic; font-weight: 400 900; }
+  :root {
+    --paper: #FDF8EE; --ink: #20201E; --quiet: #6B665C; --rule: #DDD3C0; --star: #B1502F; --mark: #B1502F;
+    --fs-xs: 11.5px; --fs-body: 14.5px; --fs-head: 17px; --fs-title: 24px; --fs-num: 46px;
+  }
+  :root[data-theme="dark"] {
+    --paper: #181817; --ink: #F7EEDB; --quiet: #A8A08F; --rule: #3A3732; --star: #B1502F; --mark: #DB7A56;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 960px; height: 560px; overflow: hidden; background: var(--paper); }
+  body {
+    font: 400 var(--fs-body)/1.42 "Alegreya", serif; color: var(--ink); position: relative;
+    font-variant-numeric: lining-nums;
+  }
+  .abs { position: absolute; }
+  h1, h2, .num { font-family: "Young Serif", serif; font-weight: 400; }
+  h1 { font-size: var(--fs-title); letter-spacing: -0.01em; line-height: 1; }
+  h2 { font-size: var(--fs-head); line-height: 1.1; margin-bottom: 10px; }
+  .src { font-style: italic; color: var(--quiet); font-size: var(--fs-xs); }
+  .rule-h { height: 1px; background: var(--rule); }
+  .rule-v { width: 1px; background: var(--rule); }
+  .tell { text-decoration: underline wavy transparent; text-decoration-thickness: 1.4px; text-underline-offset: 3px; }
+  .tell.on { text-decoration-color: var(--mark); }
+  .notes { list-style: none; font-style: italic; }
+  .notes li { padding-left: 16px; position: relative; margin-bottom: 4px; }
+  .notes li::before { content: ""; position: absolute; left: 0; top: .78em; width: 8px; height: 1px; background: var(--quiet); }
+  .num { font-size: var(--fs-num); line-height: .9; letter-spacing: -0.02em; font-variant-numeric: lining-nums tabular-nums; }
+  .of { font-style: italic; color: var(--quiet); font-size: var(--fs-head); margin-left: 4px; }
+  .cap { font-style: italic; color: var(--quiet); font-size: var(--fs-xs); margin-top: 6px; }
+  .check { display: grid; grid-template-columns: 44px 1fr; align-items: baseline; padding: 7px 0; border-top: 1px solid var(--rule); }
+  .check:last-child { border-bottom: 1px solid var(--rule); }
+  .state { font-size: var(--fs-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .state.fail { color: var(--mark); } .state.tell { color: var(--quiet); font-weight: 500; }
+  .caret { display: inline-block; width: 1.5px; height: 1em; background: var(--mark); vertical-align: -2px; margin-left: 1px; }
+  .station { font-size: var(--fs-xs); letter-spacing: .06em; text-transform: uppercase; color: var(--quiet); transform: translateX(-50%); white-space: nowrap; }
+  .station.done { color: var(--ink); }
+  .foot { font-size: var(--fs-xs); line-height: 1.45; }
+  .foot i { color: var(--quiet); }
+  img.symbol { height: 42px; }
+</style>
+</head>
+<body>
+  <!-- masthead -->
+  <img class="abs symbol" id="sym" style="left:40px; top:24px" src="../brand/symbol/quiron-symbol-light.png" alt="">
+  <h1 class="abs" style="left:96px; top:40px">One draft, before and after</h1>
+  <div class="abs src" style="right:40px; top:48px">A Stripe tutorial by an assistant, rewritten with the author’s notes</div>
+  <div class="abs rule-h" style="left:40px; right:40px; top:82px"></div>
+
+  <!-- column rules -->
+  <div class="abs rule-v" style="left:340px; top:100px; height:390px"></div>
+  <div class="abs rule-v" style="left:620px; top:100px; height:390px"></div>
+
+  <!-- the draft, then the notes -->
+  <section class="abs" id="draft" style="left:40px; top:102px; width:280px">
+    <h2>The draft</h2>
+    <p>The difficult part is everything around that payment<span class="tell" id="m1">—</span>authentication,
+      webhook handling, billing state, <span class="tell" id="m2">retries, cancellations, and preventing</span>
+      users from accessing features they no longer pay for.</p>
+    <p style="margin-top:8px"><span class="tell" id="m3">In this tutorial, we’ll</span> build the billing
+      foundation for a serverless subscription site.</p>
+  </section>
+  <div class="abs rule-h" id="notes-rule" style="left:40px; width:280px; top:310px"></div>
+  <section class="abs" id="notes" style="left:40px; top:324px; width:280px">
+    <h2>Your notes</h2>
+    <ul class="notes">
+      <li>Stripe Checkout, then a Lambda (via Amplify) makes a Cognito user</li>
+      <li>my product is a $20/month subscription</li>
+      <li>I’m a Developer Advocate on the Amplify team</li>
+      <li>there’s a video version on YouTube</li>
+    </ul>
+  </section>
+
+  <!-- the meter -->
+  <section class="abs" id="meter" style="left:360px; top:102px; width:240px">
+    <h2>The meter</h2>
+    <div><span class="num" id="num">0</span><span class="of">of 23</span></div>
+    <svg id="ruler" width="240" height="22" style="display:block; margin-top:12px"></svg>
+    <div class="cap">features inside the band of 167 human posts</div>
+    <div id="checks" style="margin-top:14px"></div>
+  </section>
+
+  <!-- the rewrite -->
+  <section class="abs" id="out" style="left:640px; top:102px; width:280px">
+    <h2>The rewrite</h2>
+    <p id="typed" style="min-height:190px"></p>
+  </section>
+  <div class="abs foot" id="result" style="left:640px; top:372px; width:280px">
+    <svg width="12" height="12" viewBox="-6 -6 12 12" style="vertical-align:-1px; margin-right:4px"><path class="star-path" fill="var(--star)"/></svg>
+    No FAIL. No number or link that isn’t in the notes.
+  </div>
+  <div class="abs foot" id="ask" style="left:640px; top:406px; width:280px">
+    <i>No notes? Quirón asks for them rather than invent a life for the author. Without them a rewrite still reads as generated.</i>
+  </div>
+
+  <!-- the path, with the logo's star moving along it -->
+  <div class="abs rule-h" style="left:40px; right:40px; top:510px"></div>
+  <div id="stations"></div>
+  <svg class="abs" id="traveller" width="22" height="22" viewBox="-11 -11 22 22" style="top:499px"><path class="star-path" fill="var(--star)"/></svg>
+
+<script>
+const q = new URLSearchParams(location.search);
+const theme = q.get("theme") || "light";
+document.documentElement.dataset.theme = theme;
+if (theme === "dark") document.getElementById("sym").src = "../brand/symbol/quiron-symbol-dark.png";
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const out = x => 1 - Math.pow(1 - x, 4);
+const inOut = x => x < .5 ? 8 * x ** 4 : 1 - Math.pow(-2 * x + 2, 4) / 2;
+
+// the eight-point star from the logo: long thin rays around a small core
+function starPath(R) {
+  const pts = [];
+  for (let i = 0; i < 16; i++) {
+    const r = i % 2 ? R * .26 : R, a = -Math.PI / 2 + i * Math.PI / 8;
+    pts.push(`${(r * Math.cos(a)).toFixed(2)},${(r * Math.sin(a)).toFixed(2)}`);
+  }
+  return "M" + pts.join("L") + "Z";
+}
+document.querySelector("#result .star-path").setAttribute("d", starPath(5.5));
+document.querySelector("#traveller .star-path").setAttribute("d", starPath(10));
+
+const REWRITE = "In this tutorial, we’ll build a paid membership site. Someone pays through Stripe Checkout, " +
+  "a Lambda function (created with AWS Amplify) makes them a Cognito user, and once they log in, the gated " +
+  "content is unlocked for them. … First, create a Stripe account and a product. Mine is a $20/month subscription.";
+const BEFORE = [["fail", "8 rates on the AI side"], ["tell", "em dashes"], ["tell", "curly quotes"], ["tell", "the word “remains”"]];
+const AFTER = [["pass", "0 rates on the AI side"], ["tell", "one “--” dash"], ["tell", "“In this tutorial”"], ["tell", "the word “through”"]];
+const NAMES = ["the draft", "measured", "your notes", "rewritten", "measured again"];
+const X = [110, 300, 480, 660, 850];     // where the star rests at each step
+const AT = [0.6, 2.4, 4.6, 6.6, 8.6];   // when it gets there
+
+$("stations").innerHTML = NAMES.map((s, i) =>
+  `<div class="abs station" id="st${i}" style="left:${X[i]}px; top:524px">${s}</div>`).join("");
+
+function ruler(n, done) {
+  let s = "";
+  for (let i = 0; i < 23; i++) {
+    const x = 1 + i * (238 / 22), on = i < n;
+    s += `<rect x="${x - 1}" y="${on ? 0 : 6}" width="2" height="${on ? 22 : 16}" fill="${on ? (done ? "var(--ink)" : "var(--mark)") : "var(--rule)"}"/>`;
+  }
+  $("ruler").innerHTML = s;
+}
+function checks(list, n) {
+  const tick = `<svg width="14" height="11" viewBox="0 0 14 11"><path d="M1 6 L5 10 L13 1" fill="none" stroke="var(--ink)" stroke-width="1.8"/></svg>`;
+  $("checks").innerHTML = list.slice(0, n).map(([k, s]) =>
+    `<div class="check"><span class="state ${k}">${k === "pass" ? tick : k}</span><span>${s}</span></div>`).join("");
+}
+function reveal(el, v, dy = 8) { el.style.opacity = v; el.style.transform = `translateY(${(1 - v) * dy}px)`; }
+
+function render(t) {
+  reveal($("draft"), out(seg(t, 0, .6)));
+  ["m1", "m2", "m3"].forEach((m, i) => $(m).classList.toggle("on", t > 1.0 + i * .35));
+  reveal($("meter"), out(seg(t, .2, .8)));
+  reveal($("out"), out(seg(t, .4, 1.0)));
+
+  // the meter: up to 13 with a FAIL, then 23 once the notes are in
+  const first = Math.round(13 * out(seg(t, 2.4, 3.6)));
+  const second = Math.round(10 * out(seg(t, 8.6, 9.6)));
+  const n = t < 8.6 ? first : 13 + second;
+  $("num").textContent = n;
+  ruler(n, t >= 8.6);
+  if (t < 8.6) checks(BEFORE, t < 2.8 ? 0 : Math.min(4, 1 + Math.floor((t - 2.8) / .3)));
+  else checks(AFTER, 4);
+
+  reveal($("notes"), out(seg(t, 4.0, 4.7)), 14);
+  $("notes-rule").style.opacity = out(seg(t, 4.0, 4.7));
+  const k = Math.round(REWRITE.length * seg(t, 6.4, 8.5));
+  $("typed").innerHTML = REWRITE.slice(0, k) + (t > 6.4 && t < 9.0 ? '<span class="caret"></span>' : "");
+  reveal($("result"), out(seg(t, 9.7, 10.2)), 6);
+  reveal($("ask"), out(seg(t, 10.2, 10.8)), 6);
+
+  // the star rests at each step and travels between them
+  let x = X[0];
+  for (let i = 1; i < X.length; i++) {
+    if (t >= AT[i] - .9) x = X[i - 1] + (X[i] - X[i - 1]) * inOut(seg(t, AT[i] - .9, AT[i]));
+  }
+  const trav = $("traveller");
+  trav.style.left = (x - 11) + "px";
+  trav.style.transform = `rotate(${(x / 40) * 22.5}deg)`;
+  AT.forEach((a, i) => $("st" + i).classList.toggle("done", t >= a));
+}
+
+if (q.has("play")) {
+  const t0 = performance.now(), LOOP = 15;
+  document.fonts.ready.then(() => (function tick() {
+    render(((performance.now() - t0) / 1000) % LOOP); requestAnimationFrame(tick);
+  })());
+} else {
+  document.fonts.ready.then(() => render(parseFloat(q.get("t") || "15")));
+}
+</script>
+</body>
+</html>
