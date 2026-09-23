@@ -7,13 +7,34 @@
 <meta name="description" content="Quirón is an open-source AI humanizer skill. It removes AI slop and the signs of AI writing from your drafts, then measures the rewrite against human writing.">
 <link rel="canonical" href="https://quiron.ilien.dev/">
 <meta name="author" content="ilien">
+<link rel="alternate" hreflang="en" href="https://quiron.ilien.dev/">
+<link rel="alternate" hreflang="es" href="https://quiron.ilien.dev/es/">
+<link rel="alternate" hreflang="x-default" href="https://quiron.ilien.dev/">
+<script>
+  // First visit from a browser that prefers Spanish over English: go to /es/.
+  // A choice made with the language switch always wins. Crawlers are left alone.
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("quiron-lang"); } catch (e) {}
+    if (saved === "en" || /bot|crawl|spider|slurp/i.test(navigator.userAgent)) return;
+    var langs = navigator.languages || [navigator.language || ""];
+    var first = null;
+    for (var i = 0; i < langs.length && !first; i++) {
+      var code = String(langs[i]).toLowerCase().slice(0, 2);
+      if (code === "es" || code === "en") first = code;
+    }
+    if (saved === "es" || first === "es") location.replace("/es/" + location.hash);
+  })();
+</script>
 <meta name="theme-color" content="#FDF8EE" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#181817" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" href="img/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_ES">
 <meta property="og:site_name" content="Quirón">
 <meta property="og:title" content="Quirón: an AI humanizer skill that measures its own work">
 <meta property="og:description" content="Removes AI slop and the signs of AI writing from your drafts, then measures the rewrite against human writing. For Claude Code, Codex and Cursor.">
@@ -38,6 +59,7 @@
       "alternateName": "quiron",
       "description": "An AI humanizer skill for Claude Code, Codex and Cursor. It removes AI slop and the signs of AI writing from prose, then measures the rewrite against human baselines.",
       "url": "https://quiron.ilien.dev/",
+      "inLanguage": ["en", "es"],
       "codeRepository": "https://github.com/ilien-dev/quiron",
       "programmingLanguage": "Python",
       "runtimePlatform": "Python 3",
@@ -73,51 +95,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=Young+Serif&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --paper: #FDF8EE; --ink: #20201E; --quiet: #6B665C; --rule: #DDD3C0; --star: #B1502F; --code: #F4ECDC;
-    color-scheme: light dark;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --paper: #181817; --ink: #F7EEDB; --quiet: #A8A08F; --rule: #3A3732; --star: #DB7A56; --code: #22211F; }
-  }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0; background: var(--paper); color: var(--ink);
-    font: 400 1.1875rem/1.6 "Alegreya", Georgia, serif; font-variant-numeric: lining-nums;
-  }
-  main, footer { max-width: 42rem; margin: 0 auto; padding: 0 16px; }
-  .hero { display: block; width: 100%; max-width: 60rem; height: auto; margin: 0 auto; }
-  h1, h2 { font-family: "Young Serif", Georgia, serif; font-weight: 400; line-height: 1.15; }
-  h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin: 0.5rem 0 1rem; letter-spacing: -0.01em; }
-  h2 { font-size: 1.5rem; margin: 2.75rem 0 0.75rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
-  p { margin: 0 0 1rem; }
-  a { color: var(--star); text-underline-offset: 0.15em; }
-  ul { padding-left: 1.2rem; }
-  li { margin-bottom: 0.35rem; }
-  li::marker { color: var(--star); }
-  pre, code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 0.85em; }
-  pre { background: var(--code); border: 1px solid var(--rule); border-radius: 6px; padding: 0.9rem 1rem; overflow-x: auto; line-height: 1.45; }
-  .lead { font-size: 1.3rem; }
-  .cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0 0; }
-  .btn {
-    display: inline-block; padding: 0.55rem 1.1rem; border: 1px solid var(--ink); border-radius: 999px;
-    color: var(--ink); text-decoration: none; font-weight: 700;
-  }
-  .btn.primary { background: var(--ink); color: var(--paper); }
-  .btn:focus-visible, a:focus-visible { outline: 2px solid var(--star); outline-offset: 3px; }
-  dt { font-weight: 700; margin-top: 1.1rem; }
-  dd { margin: 0.25rem 0 0; }
-  .note { color: var(--quiet); font-size: 1rem; }
-  footer { margin-top: 3.5rem; padding-bottom: 3rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; color: var(--quiet); font-size: 1rem; }
-</style>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <header>
+  <nav class="lang" aria-label="Language">
+    <a href="/" hreflang="en" lang="en" data-lang="en" aria-current="page" aria-label="English">EN</a>
+    <a href="/es/" hreflang="es" lang="es" data-lang="es" aria-label="Español">ES</a>
+  </nav>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="img/hero-dark.webp">
-    <img class="hero" src="img/hero-light.webp" width="1200" height="480" alt="Quirón: a centaur holding up an eight-point star">
+    <source media="(prefers-color-scheme: dark)" srcset="/img/hero-dark.webp">
+    <img class="hero" src="/img/hero-light.webp" width="1200" height="480" alt="Quirón: a centaur holding up an eight-point star">
   </picture>
 </header>
 <main>
@@ -177,5 +165,6 @@ plain words /1k          33.88    43.19 - 95.24   below band, AI side
 <footer>
   <p><a href="https://github.com/ilien-dev/quiron">github.com/ilien-dev/quiron</a> · GNU AGPL v3 · Made by <a href="https://github.com/ilien-dev">ilien</a></p>
 </footer>
+<script src="/lang.js"></script>
 </body>
 </html>

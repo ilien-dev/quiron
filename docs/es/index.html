@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quirón: skill para humanizar textos de IA en Claude Code, Codex y Cursor</title>
+<meta name="description" content="Quirón es un skill de código abierto para humanizar textos escritos con IA. Quita las señales de escritura con IA de tus borradores y mide el resultado contra escritura humana.">
+<link rel="canonical" href="https://quiron.ilien.dev/es/">
+<meta name="author" content="ilien">
+<link rel="alternate" hreflang="en" href="https://quiron.ilien.dev/">
+<link rel="alternate" hreflang="es" href="https://quiron.ilien.dev/es/">
+<link rel="alternate" hreflang="x-default" href="https://quiron.ilien.dev/">
+<meta name="theme-color" content="#FDF8EE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#181817" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:site_name" content="Quirón">
+<meta property="og:title" content="Quirón: un skill para humanizar textos de IA que mide su propio trabajo">
+<meta property="og:description" content="Quita las señales de escritura con IA de tus borradores y mide el resultado contra escritura humana. Para Claude Code, Codex y Cursor.">
+<meta property="og:url" content="https://quiron.ilien.dev/es/">
+<meta property="og:image" content="https://quiron.ilien.dev/img/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Quirón: un centauro que sostiene en alto una estrella de ocho puntas">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quirón: un skill para humanizar textos de IA que mide su propio trabajo">
+<meta name="twitter:description" content="Quita las señales de escritura con IA de tus borradores y mide el resultado contra escritura humana.">
+<meta name="twitter:image" content="https://quiron.ilien.dev/img/og.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://github.com/ilien-dev/quiron",
+      "name": "Quirón",
+      "alternateName": "quiron",
+      "description": "Un skill para Claude Code, Codex y Cursor que humaniza textos escritos con IA: quita las señales de escritura con IA y mide el resultado contra bases humanas.",
+      "url": "https://quiron.ilien.dev/es/",
+      "inLanguage": "es",
+      "codeRepository": "https://github.com/ilien-dev/quiron",
+      "programmingLanguage": "Python",
+      "runtimePlatform": "Python 3",
+      "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "keywords": "humanizar texto IA, humanizador de IA, quitar tono de IA, escritura con IA, skill de Claude Code, agent skills",
+      "image": "https://quiron.ilien.dev/img/og.png",
+      "author": { "@type": "Person", "name": "ilien", "url": "https://github.com/ilien-dev" }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "es",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Sirve para que un texto pase GPTZero o Turnitin?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Esas herramientas leen probabilidades de tokens, y Quirón no las toca. Trabaja únicamente sobre lo que realmente nota alguien al leer." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Funciona en otros idiomas?",
+          "acceptedAnswer": { "@type": "Answer", "text": "El español y el inglés tienen bandas medidas y sus propias listas de palabras. Los demás idiomas reciben la lista de patrones como mejor esfuerzo." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Se inventa cosas para sonar humano?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sus instrucciones se lo prohíben. Una nueva versión solo puede usar datos de tu texto o de tus notas, y un script lista los números y enlaces de la versión nueva que no están en el original. Cuando al texto le falta un detalle, el skill te lo pregunta." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=Young+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <nav class="lang" aria-label="Idioma">
+    <a href="/" hreflang="en" lang="en" data-lang="en" aria-label="English">EN</a>
+    <a href="/es/" hreflang="es" lang="es" data-lang="es" aria-current="page" aria-label="Español">ES</a>
+  </nav>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="/img/hero-dark.webp">
+    <img class="hero" src="/img/hero-light.webp" width="1200" height="480" alt="Quirón: un centauro que sostiene en alto una estrella de ocho puntas">
+  </picture>
+</header>
+<main>
+  <h1>Quirón, un skill para humanizar textos de IA que mide su propio trabajo</h1>
+  <p class="lead">Quirón es un skill para Claude Code, Codex y Cursor. Dale un borrador a tu agente y pídele que lo humanice, o que un README suene menos a ChatGPT. Quita los hábitos que delatan la escritura con IA y después compara la nueva versión con escritura humana publicada antes de ChatGPT, así que recibes el texto nuevo junto con una medición que dice si ya se lee como algo que escribió una persona.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/ilien-dev/quiron/blob/main/README.es.md">Descárgalo en GitHub</a>
+    <a class="btn" href="https://skills.sh/ilien-dev/quiron/quiron">Míralo en skills.sh</a>
+  </div>
+
+  <h2 id="instalacion">Instalación</h2>
+  <p>La CLI de skills lo instala en Claude Code y en los demás agentes que soporta, entre ellos Gemini CLI y GitHub Copilot. No hace falta ninguna API key, porque corre sobre el modelo que ya usas, y los scripts no piden nada fuera de la biblioteca estándar de Python 3.</p>
+  <pre><code>npx skills add ilien-dev/quiron</code></pre>
+  <p>En Claude Code también puedes añadirlo como plugin desde su propio marketplace:</p>
+  <pre><code>/plugin marketplace add ilien-dev/quiron
+/plugin install quiron@quiron</code></pre>
+
+  <h2 id="que-detecta">Qué detecta</h2>
+  <p>Pídele a un modelo un post de blog y te llega con una forma que se aprende a reconocer. La lista de Quirón tiene 33 de estas señales de escritura con IA, y cada una se probó contra posts reales antes de quedarse. Algunas:</p>
+  <ul>
+    <li>"No es X: es Y", cuando nadie dijo que fuera X</li>
+    <li>listas de tres</li>
+    <li>el doble de encabezados de los que pondría una persona</li>
+    <li>una sección de "Conclusión" al final</li>
+    <li>palabras que la gente usa todo el tiempo, como <em>muy</em>, <em>hay</em> o <em>porque</em>, que desaparecen</li>
+  </ul>
+  <p>Las expresiones famosas, como <em>cabe destacar</em> o <em>es importante señalar</em>, casi no aparecen ya. En la prueba de este proyecto salieron en 2 de 32 posts de IA en español, y en un 4 a 10% de los humanos. Lo que delata a un modelo en 2026 es bastante más discreto.</p>
+
+  <h2 id="medidor">Un medidor, no una autoevaluación</h2>
+  <p>La mayoría de los skills para humanizar texto le dan al modelo una lista de patrones y confían en que siga las instrucciones. Quirón también tiene su lista, pero además incluye un script que cuenta 23 tasas en el texto y compara cada una con el rango de 241 posts de dev.to en español escritos antes de 2022. El inglés y la ficción tienen sus propias bandas.</p>
+  <p>El medidor atrapa algo que una lista no ve. Si le dices a un modelo que escriba como una persona, normalmente se pasa: las frases salen más cortadas y las palabras más simples que las de cualquier persona. El medidor avisa de eso con la misma fuerza que avisa del lado de la IA, así que sabes cuándo parar.</p>
+  <p>En un tutorial de Stripe escrito por un asistente encuentra 13 de 23 tasas dentro de la banda humana. La nueva versión, hecha a partir de las notas del autor, consigue las 23.</p>
+  <pre><code>$ python3 scripts/aimeter.py eval/ai/blog/e2e-raw/aspittel-782713.md
+
+feature                   this   human band      verdict
+long words (7+) /1k     353.83   159.68 - 250.46  above band, AI side
+nominalizations /1k      55.21     7.29 - 32.65   above band, AI side
+em dashes /1k             3.76     0.00 - 2.74    above band, AI side
+lists of three /1k       11.29     0.00 - 5.51    above band, AI side
+plain words /1k          33.88    43.19 - 95.24   below band, AI side
+...
+13/23 features inside the human band (p10-p90 of 167 human texts)</code></pre>
+
+  <h2 id="uso-responsable">Úsalo con lo que escribes tú</h2>
+  <p>Quirón está pensado para lo que escribes para ti o para tu equipo, como documentación interna o las notas de una reunión. No sirve para hacer pasar texto de IA por humano cuando quien lee tiene derecho a saber quién lo escribió, como en una tarea de clase o una solicitud de empleo. Es gratuito y de código abierto bajo la GNU AGPL v3.</p>
+
+  <h2 id="preguntas">Preguntas</h2>
+  <dl>
+    <dt>¿Sirve para que un texto pase GPTZero o Turnitin?</dt>
+    <dd>No. Esas herramientas leen probabilidades de tokens, y Quirón no las toca. Trabaja únicamente sobre lo que realmente nota alguien al leer.</dd>
+    <dt>¿Funciona en otros idiomas?</dt>
+    <dd>El español y el inglés tienen bandas medidas y sus propias listas de palabras. Los demás idiomas reciben la lista de patrones como mejor esfuerzo.</dd>
+    <dt>¿Se inventa cosas para sonar humano?</dt>
+    <dd>Sus instrucciones se lo prohíben. Una nueva versión solo puede usar datos de tu texto o de tus notas, y un script lista los números y enlaces de la versión nueva que no están en el original. Cuando al texto le falta un detalle, el skill te lo pregunta.</dd>
+  </dl>
+</main>
+<footer>
+  <p><a href="https://github.com/ilien-dev/quiron">github.com/ilien-dev/quiron</a> · GNU AGPL v3 · Hecho por <a href="https://github.com/ilien-dev">ilien</a></p>
+</footer>
+<script src="/lang.js"></script>
+</body>
+</html>
