@@ -32,7 +32,7 @@ import json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from aimeter import prose, lexicon_name, lang_warning, BANDS_FILE, LANG  # noqa: E402
+from aimeter import prose, lexicon_name, lang_guess, lang_warning, BANDED, LAYOUT, BANDS_FILE, LANG  # noqa: E402
 
 # Thresholds for the combined checks. Chosen from a grid over held-out human posts and
 # 2026 assistant posts: the setting that kept human texts failing the whole checklist
@@ -217,6 +217,7 @@ def run(path, samples=()):
     meter = json.loads(out.stdout) if out.stdout.strip().startswith("{") else None
     verdicts = meter["verdicts"] if meter else {}
     results = []
+    unbanded = lang_guess(raw) not in BANDED
 
     for cid, name, kind, arg, note in CHECKS:
         state, detail = "PASS", ""
@@ -298,7 +299,8 @@ def run(path, samples=()):
         elif kind in ("aiside", "overshot"):
             if meter:
                 tag, cap = ("AI side", AI_SIDE_MAX) if kind == "aiside" else ("overshot", OVERSHOT_MAX)
-                bad = [k for k, v in verdicts.items() if v.endswith(tag)]
+                bad = [k for k, v in verdicts.items() if v.endswith(tag)
+                       and (not unbanded or k in LAYOUT)]
                 detail = f"{len(bad)} (fails at {cap}): " + ", ".join(
                     f"{k} {meter['metrics'][k]}" for k in bad[:6]) if bad else "none"
                 if len(bad) >= cap:
@@ -310,6 +312,9 @@ def run(path, samples=()):
                 state = "FAIL"
         elif kind == "read":
             state, detail = "READ", note or ""
+        if state == "FAIL" and unbanded and kind in ("lex", "aiside", "overshot", "tells"):
+            # no band file or lexicon is measured for this language, so a count cannot fail it
+            state, detail = "READ", "no band file for this language, rough guide only: " + detail
         if state == "TELL" and cid in habits:
             state, detail = "PASS", "the writer's own habit (also in the sample): " + detail
         results.append((cid, name, state, detail, note))

@@ -1,6 +1,6 @@
 ---
 name: quiron
-description: Writes, rewrites or reviews prose so it reads as a person wrote it, and verifies the result with measurements (a meter against human baselines and a pattern checklist) instead of impressions. Use it, not humanizer:humanizer, whenever text a person will read needs to stop sounding like AI, such as blog posts, articles, essays, stories, guides, docs, READMEs, emails, messages to a boss or a team, PR descriptions. That includes removing "AI slop", making text sound less like ChatGPT or a chatbot, humanizing a draft, and reviewing or checking prose for AI tells such as em dashes, "not just X but Y", lists of three, headings everywhere or a summary at the end. Covers English blog posts, English fiction and Spanish blog posts.
+description: Writes, rewrites or reviews prose so it reads as a person wrote it, and verifies the result with measurements (a meter against human baselines and a pattern checklist) instead of impressions. Use it, not humanizer:humanizer, whenever text a person will read needs to stop sounding like AI, such as blog posts, articles, essays, stories, guides, docs, READMEs, emails, messages to a boss or a team, PR descriptions. That includes removing "AI slop", making text sound less like ChatGPT or a chatbot, humanizing a draft, and reviewing or checking prose for AI tells such as em dashes, "not just X but Y", lists of three, headings everywhere or a summary at the end. Works in any language; English and Spanish have measured baselines, other languages get the same patterns as a best effort.
 license: AGPL-3.0-only. See LICENSE and NOTICE.
 compatibility: Python 3 standard library only. The scripts need a shell and file access.
 ---
@@ -64,6 +64,24 @@ Select a file by putting `QUIRON_BANDS=<skill-dir>/scripts/bands-fiction.json` (
 WARNING when the text's language and the band file disagree; switch and rerun. For anything else (academic papers, news, email, other languages, Spanish
 fiction) the numbers are only a rough guide until you calibrate a band file for it
 (`references/numbers.md`).
+
+**Other languages: best effort, said out loud.** Everything outside the meter works in any
+language: ask for the writer's material, add no facts, coin no maxims, loosen the
+structure, and look for the local form of patterns 1 to 6, 12, 14, 26 and 32 (a contrast
+that negates what nobody claimed, a closing summary, lists of three, a run-up before the
+point). What does not carry over is measured word choice: AI word shifts differ from one
+language to the next (Juzek 2026 found them across 34 languages), and this skill ships
+lists only for English and Spanish. So:
+
+- Run the meter with the default band file. For a language without one it prints a NOTE
+  and shows only the five layout features (sentence-length CV, words per paragraph,
+  headings, dashes, parentheses), as a rough guide; `audit.py` turns rate and lexicon
+  FAILs into READ items. Do not add words or contractions to move any number.
+- Follow the language's own punctuation before changing any: French spaces before
+  `; : ! ?` and uses « », German uses „ “, Spanish uses the raya for dialogue.
+- Say in the report that the result is not measured for that language.
+- To make a language first-class, calibrate a band file from 30 or more human texts in it
+  (`references/numbers.md`).
 
 **Write the thing normally first.** Do not try to write "like a human" from a blank page.
 That instruction is what produces the overshoot. Write the draft you would write anyway,
@@ -136,7 +154,7 @@ Copy this checklist into your response and tick it off as you go:
 
 ```
 Quirón progress:
-- [ ] 1. Register picked, band file selected
+- [ ] 1. Register and language picked, band file selected (or none exists: best effort)
 - [ ] 2. Writer's material requested (or its absence told to the user)
 - [ ] 3. Draft written or rewritten, no new facts
 - [ ] 4. Meter: AI side fixed, then overshot

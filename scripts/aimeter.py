@@ -158,22 +158,42 @@ def band_meta():
 LANG = band_meta().get("_lang", "en")
 
 # The most frequent function words of each language. A text whose words are mostly from
-# the other list is being measured against the wrong band file, and every verdict is off.
+# another list is being measured against the wrong band file, or against a language no
+# band file covers, and the word-based verdicts are off.
 _FUNCTION = {"en": {"the", "and", "of", "to", "is", "in", "that", "it", "with", "for"},
-             "es": {"el", "la", "de", "que", "y", "en", "los", "las", "por", "para", "una", "es"}}
+             "es": {"el", "la", "de", "que", "y", "en", "los", "las", "por", "para", "una", "es"},
+             "fr": {"le", "les", "des", "est", "et", "du", "une", "pour", "dans", "qui", "pas", "ce"},
+             "pt": {"não", "uma", "os", "do", "da", "em", "com", "para", "é", "um", "dos", "mas"},
+             "de": {"der", "die", "das", "und", "ist", "nicht", "ein", "eine", "zu", "mit", "den", "auf"},
+             "it": {"il", "che", "di", "non", "per", "una", "sono", "gli", "della", "con", "è", "un"}}
+_NAMES = {"en": "English", "es": "Spanish", "fr": "French", "pt": "Portuguese",
+          "de": "German", "it": "Italian"}
+BANDED = ("en", "es")  # languages with a measured band file
+# features that do not depend on the words of a language, only on layout and punctuation
+LAYOUT = ("cv_sentence_len", "para_words", "headings_1k", "em_dashes_1k", "parens_1k")
+
+
+def lang_guess(text):
+    """The text's language, when its function words clearly say so; else the band file's."""
+    words = re.findall(r"[^\W\d_]+", text.lower())
+    hits = {k: sum(w in v for w in words) for k, v in _FUNCTION.items()}
+    guess = max(hits, key=hits.get)
+    return guess if hits[guess] >= 2 * max(hits.get(LANG, 0), 1) else LANG
 
 
 def lang_warning(text):
-    """A line telling the user to switch band files, or '' when the language matches."""
-    words = re.findall(r"[a-záéíóúñü]+", text.lower())
-    hits = {k: sum(w in v for w in words) for k, v in _FUNCTION.items()}
-    guess = max(hits, key=hits.get)
-    if guess == LANG or hits[guess] < 2 * max(hits[LANG], 1):
+    """A line telling the user to switch band files or how far to trust the numbers."""
+    guess = lang_guess(text)
+    if guess == LANG:
         return ""
-    name = {"es": "bands-es.json", "en": "bands.json or bands-fiction.json"}[guess]
-    return (f"WARNING: this text looks {'Spanish' if guess == 'es' else 'English'} but "
-            f"{os.path.basename(BANDS_FILE)} is for {'Spanish' if LANG == 'es' else 'English'}. "
-            f"Set QUIRON_BANDS={os.path.join(HERE, name.split(' ')[0])} and run again.")
+    if guess in BANDED:
+        name = {"es": "bands-es.json", "en": "bands.json"}[guess]
+        return (f"WARNING: this text looks {_NAMES[guess]} but {os.path.basename(BANDS_FILE)} "
+                f"is for {_NAMES[LANG]}. Set QUIRON_BANDS={os.path.join(HERE, name)} and run again.")
+    return (f"NOTE: this text looks {_NAMES.get(guess, guess)}, and no band file is measured for it. "
+            f"Only the layout features are shown, compared with {_NAMES[LANG]} writing as a rough "
+            f"guide. Rate and lexicon FAILs are reported as READ.")
+
 
 HEDGE = re.compile(
     r"\b(?:it is important to note|it is worth noting|in conclusion|in summary|"
@@ -436,14 +456,18 @@ def report(path, as_json=False, sample=None):
         return
     print(f"\n{os.path.basename(path)}  {m['_words']} words, "
           f"{m['_sentences']} sentences, {m['_paragraphs']} paragraphs\n")
-    warn = lang_warning(open(path, encoding="utf-8").read())
+    raw = open(path, encoding="utf-8").read()
+    warn = lang_warning(raw)
     if warn:
         print(warn + "\n")
     if not bands:
         sys.exit("no bands.json; run --calibrate DIR first")
+    # Without a band file for the language only the layout features mean anything, so the
+    # word-based ones are not shown at all: a number on screen is a number someone chases.
+    keys = list(AI_REF) if lang_guess(raw) in BANDED else [k for k in AI_REF if k in LAYOUT]
     print(f"{'feature':30}{'this':>9}{'human band':>18}{'AI':>8}   verdict")
     bad = 0
-    for key in AI_REF:
+    for key in keys:
         b, got = bands[key], m[key]
         ai = b.get("ai", AI_REF[key][1])
         v = verdict(key, got, b)
@@ -456,8 +480,10 @@ def report(path, as_json=False, sample=None):
         band = f"{b['p10']} - {b['p90']}"
         print(f"{LABELS[key]:30}{got:>9}{band:>18}{(ai if ai is not None else '-'):>8}   "
               f"{'' if v == 'ok' else v}{hint}")
-    print(f"\n{len(AI_REF) - bad}/{len(AI_REF)} features inside the human band"
-          f" (p10-p90 of {bands['_texts']} human texts)\n")
+    print(f"\n{len(keys) - bad}/{len(keys)} {'features' if len(keys) == len(AI_REF) else 'layout features'}"
+          f" inside the human band (p10-p90 of {bands['_texts']} human texts)\n")
+    if len(keys) < len(AI_REF):
+        return  # the word flags below are English or Spanish patterns
     for label, v in m["_flags"].items():
         if LANG != "en" and label not in ("AI-lexicon words", "short closers"):
             continue  # the other flags are English patterns

@@ -122,6 +122,10 @@ scripts/check.sh FILE                  # one pass of the full loop
 For fiction or Spanish, set `QUIRON_BANDS=scripts/bands-fiction.json` or
 `scripts/bands-es.json`. Texts under about 120 words get no measurement.
 
+Other languages get the same checklist as a best effort. There is no human baseline for
+them yet. The meter says so and shows only the numbers that don't depend on the words,
+such as paragraph length and headings.
+
 ## License
 
 Free to use and change, under the [GNU AGPL v3](LICENSE) with one added term
