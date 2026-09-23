@@ -13,6 +13,9 @@ Name the branch `feature/` and then a few words that say what it does, joined by
 and hyphens only, and at least two words after the slash. Any other name fails a check on
 the pull request. You can't merge until you rename the branch.
 
+Every pull request also needs my approval, and once I've given it, either of us can merge
+it. A push after my approval has to be approved again.
+
 ## What a change needs
 
 I merge a change to the skill only when a measurement shows it helps. "This reads better"
