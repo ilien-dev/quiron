@@ -27,6 +27,9 @@ Usage:
   audit.py --json FILE
   audit.py --sample PATH FILE  a file or folder of the writer's own texts: a TELL that
                                fires there too is their habit and is not counted
+  audit.py --review [--json] FILE
+                           sentences for the writer to decide on, one at a time; never
+                           part of the checklist, T1 or check.sh, and the exit code is 0
 """
 import json, os, re, subprocess, sys
 
@@ -196,6 +199,41 @@ if LANG == "es":
         c for c in CHECKS if c[0] in ("C1", "C2", "T1", "V1", "V2")]
 
 SENT = re.compile(r"(?<=[.!?])\s+")
+
+# Review items: patterns a reader notices that the rewrite loop must not act on alone.
+# A1c (negated setup) is in 7% of held-out human posts and 31% of assistant posts, but
+# fixing it inside the loop made rewrites read more AI to blind judges (numbers.md,
+# "Checks measured and not shipped"), so only the writer decides, sentence by sentence.
+NEGSET = re.compile(r"\b(?:isn't|wasn't|aren't|weren't|is not|was not|are not|were not)\b", re.I)
+NEGSET_SKIP = re.compile(r"\b(?:but|because|if|when|unless|so)\b", re.I)
+REFRAME = re.compile(r"(?:it's|it is|it was|that's|that is|this is|what |the (?:real|actual|point|answer)|"
+                     r"instead|rather)", re.I)
+NEGSET_WHY = [
+    "It denies something nobody said, so the sentence after it sounds bigger than it is.",
+    "It sits where the point should be: {where}.",
+    "A short 'X isn't Y.' sentence like this is in 31% of assistant blog posts and 7% of "
+    "human ones (held-out dev.to posts).",
+]
+
+
+def review(path):
+    """Negated setups, with the reasons a reader may take them for AI. Blog bands only."""
+    if lexicon_name() != "ai-lean.txt":
+        return []
+    items = []
+    for n, para in enumerate(re.split(r"\n\s*\n", prose(open(path, encoding="utf-8").read()))):
+        ss = [s_.strip() for s_ in SENT.split(para.replace("\n", " ")) if s_.strip()]
+        for i, s_ in enumerate(ss):
+            nxt = ss[i + 1] if i + 1 < len(ss) else ""
+            opens, reframed = i == 0, bool(REFRAME.match(nxt))
+            if (len(s_.split()) <= 12 and s_.endswith(".") and NEGSET.search(s_)
+                    and not NEGSET_SKIP.search(s_) and (opens or reframed)):
+                where = ("it opens the paragraph, before the real point" if opens
+                         else "right before the sentence that makes the real point")
+                items.append({"id": "A1c", "name": "negated setup", "paragraph": n + 1,
+                              "sentence": s_, "next": nxt,
+                              "why": [w.format(where=where) for w in NEGSET_WHY]})
+    return items
 MINOR = set("a an the and or but of to in on for with vs at by from is as into via".split())
 
 
@@ -348,6 +386,19 @@ def main():
     missing = [p for p in paths if not os.path.isfile(p)]
     if missing:
         sys.exit(f"no such file: {', '.join(missing)}")
+    if "--review" in sys.argv:
+        for path in paths:
+            items = review(path)
+            if as_json:
+                print(json.dumps({"file": path, "items": items}, indent=1))
+                continue
+            print(f"\n{os.path.basename(path)}: {len(items)} to review")
+            for k, it in enumerate(items, 1):
+                print(f"\n{k}. {it['id']} {it['name']}, paragraph {it['paragraph']}")
+                print(f"   \"{it['sentence']}\"")
+                for w in it["why"]:
+                    print(f"   - {w}")
+        return 0
     fails = 0
     for path in paths:
         res = run(path, samples)

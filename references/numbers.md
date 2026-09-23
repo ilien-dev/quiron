@@ -10,6 +10,7 @@ The bands, the AI directions, what the whole apparatus does on held-out texts, h
 - Four counter-intuitive results
 - What the apparatus does on held-out texts
 - What the loop does to a text
+- Checks measured and not shipped
 - Calibrating for another register
 - Part D: what this does not do
 
@@ -154,6 +155,38 @@ generated, and neither makes a text indistinguishable from the writer's own roug
 python3 scripts/evaluate.py --human CORPUS --ai-train eval/ai/blog/train \
     opus=eval/ai/blog/test-opus sonnet=eval/ai/blog/test-sonnet gpt=eval/ai/blog/test-gpt
 ```
+
+### Checks measured and not shipped
+
+Each of these was measured with the same held-out split and left out, so it is not
+proposed again without new evidence. Human corpus: 176 dev.to posts (44 held out), rebuilt
+in September 2026.
+
+- **Stock phrases** (2 to 4 words, chosen on the training split). Phrases in at most 4% of
+  human and at least 10% of assistant training posts: 41% of held-out human posts carry
+  three or more, so the list flags people. Phrases in no human training post: AUC 0.53 to
+  0.57 against held-out assistant posts, close to chance. Rewrites by the skill already sit
+  at the human level on both lists (AUC 0.45 to 0.50).
+- **Length as verbosity.** Opus 5.5 and Sonnet 5 asked for a dev.to post with no length
+  wrote 1.41 and 1.27 times the words of the human post on the same title (AUC 0.67 and
+  0.59, 25 posts). The extra is code and headings: prose alone was shorter than the
+  human's (0.70 times), with shorter sentences. Headings are already a band; a length rule
+  has no human text to compare a single post against.
+- **Negated setup (A1c)**: a sentence of 12 words or fewer that only denies something,
+  opening a paragraph or followed by the reframe ("What surprised me most wasn't a
+  number."). As a checklist item it looked right: 7% of held-out human posts, 31% of
+  assistant posts, held-out humans still 0% T1 FAIL, T1 FAIL on GPT posts from 7% to 36%.
+  End to end it made rewrites worse. 20 titles (8 fresh), 52 rewrites per version, two
+  fresh Opus judges each: mean P(AI) 43.6 without the check and 46.4 with it, higher on 13
+  of 20 titles (Wilcoxon p = 0.036); on the fresh titles 34.6 against 40.5. The countable
+  rates did not move. Many of the sentences it removed were ordinary ones from the
+  author's notes ("The page isn't finished yet."), and the judges' reasons for the
+  rewrites with the check were "too even" and "uniformly polished". It is kept as a review item
+  the writer rules on (`audit.py --review`), outside the loop, T1 and `check.sh`. With
+  that version of the skill, 40 more rewrites of the same 20 titles (two per title,
+  headless, so no review questions) gave mean P(AI) 43.7 against 43.6 without it (+1.3
+  per title, 95% CI -2.0 to +4.7, Wilcoxon p = 0.42), and the countable rates did not
+  move. Negated setups were left in 5 of 40 rewrites, against 11 of 52 before.
 
 ### Calibrating for another register
 

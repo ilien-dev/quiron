@@ -47,12 +47,17 @@ State in brackets is what `audit.py` reports.
 
 **Watch for:** it's not X, it's Y; not just / not only / not merely X, but Y; X rather
 than Y; the contrast split across two sentences ("This does not mean X. It means Y.");
-the clipped negative tail ("…, no guessing", "That's a favor, not a liability.").
+the clipped negative tail ("…, no guessing", "That's a favor, not a liability."); the
+negated setup, a short sentence that only denies something, opening a paragraph or right
+before the point ("What surprised me most wasn't a number.").
 **Measured:** the family is in 38% of assistant training posts and 18% of human ones; "rather
 than" alone was in 35% and 8% on the training split. "It's not X, it's Y" is in 5% of
 human posts and 9% of assistant ones, so it cannot fail on sight. Across 22 models the
 slop-score benchmark (Paech 2025) finds the construction at 2 to 13 times the human rate;
-the rate, not a single use, is the tell.
+the rate, not a single use, is the tell. The negated setup is in 7% of held-out human posts
+and 31% of assistant ones, but fixing it inside the loop made rewrites read more AI to
+blind judges, so it is a review item only: `audit.py --review` lists it and the writer
+decides (SKILL.md, "Review with the writer"). Blog bands only.
 **Why it fails:** the negative half names something nobody claimed, so the positive half
 sounds larger. It adds weight without adding a claim.
 **Instead:** state the point. Keep the contrast only when the negative half corrects a
