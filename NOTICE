@@ -1,0 +1,28 @@
+Quirón
+Copyright (C) 2026 ilien
+https://github.com/ilien-dev/quiron
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License, version 3 only, as
+published by the Free Software Foundation, with the additional term below.
+See LICENSE for the full text. It covers every file in this repository,
+including SKILL.md, the scripts, the word lists, the evaluation data written
+for this project, and the brand assets.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+details.
+
+Additional term under section 7(b) of the GNU AGPL, version 3
+
+Anyone who conveys this work, a modified version of it, or a work based on
+it, or who lets users interact with a modified version over a network, must
+preserve this author attribution in that material and in the Appropriate
+Legal Notices it displays:
+
+    Based on Quirón by ilien
+    https://github.com/ilien-dev/quiron
+
+Where the work has no such notices, the attribution goes in its README or
+equivalent documentation. This file must be kept with every copy.

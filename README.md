@@ -121,3 +121,10 @@ scripts/check.sh FILE                  # one pass of the full loop
 
 For fiction or Spanish, set `QUIRON_BANDS=scripts/bands-fiction.json` or
 `scripts/bands-es.json`. Texts under about 120 words get no measurement.
+
+## License
+
+Free to use, copy and change, under the [GNU AGPL v3](LICENSE) with one added term
+in [`NOTICE`](NOTICE). Any work built on Quirón has to stay open under the same license,
+including a modified version offered as a network service, and has to credit the
+original: "Based on Quirón by ilien", with a link to this repository.
