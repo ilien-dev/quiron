@@ -1,6 +1,10 @@
 ## What this is
 
-A skill that makes any AI model's prose read like a person wrote it, checked against measured human baselines. `SKILL.md` is the skill, loaded as instructions; `scripts/` is the measuring apparatus. `~/.claude/skills/quiron` symlinks to this checkout, so every edit is live.
+A skill that makes any AI model's prose read like a person wrote it, checked against measured human baselines. `SKILL.md` is the skill, loaded as instructions; `scripts/` is the measuring apparatus. This checkout is the skill itself: any agent working here uses the root `SKILL.md` and `scripts/` directly, with no installed copy, so every edit is live.
+
+`AGENTS.md` is a symlink to this file; edit `CLAUDE.md` only.
+
+`main` is protected. Work on a `feature/<lowercase-words-with-hyphens>` branch and open a pull request against `main` (`CONTRIBUTING.md`).
 
 ## The rule for every change
 
@@ -12,9 +16,9 @@ A change to the skill ships only if it is measured and the measurement shows an 
 - Overshoot is a failure, not a win (TextPulse finding, top of `SKILL.md`). Prefer `overshot` getting rarer over a higher score.
 - A number in `SKILL.md` or `references/` the scripts can reproduce is rerun when the code or bands change. A figure with no measurement behind it is removed.
 
-## User-facing Markdown goes through /quiron
+## User-facing Markdown goes through the skill
 
-Any Markdown a person reads, new or edited (`README.md`, `assets/brand/README.md`, `eval/README.md`, any new one), is written with the `/quiron` skill and run through `scripts/check.sh` before commit. Not `SKILL.md` or `CLAUDE.md` (model instructions), and never `eval/ai/` (measurement data).
+Any Markdown a person reads, new or edited (`README.md`, `README.es.md`, `CONTRIBUTING.md`, `assets/brand/README.md`, `eval/README.md`, any new one), is written by reading and following the root `SKILL.md` of this checkout, then run through `scripts/check.sh` before commit. Do not rely on an installed `/quiron`; it may be an older version. Not `SKILL.md`, `CLAUDE.md` or `AGENTS.md` (model instructions), and never `eval/ai/` (measurement data).
 
 ## Commands
 
