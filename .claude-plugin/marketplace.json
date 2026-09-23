@@ -1,0 +1,30 @@
+{
+  "name": "quiron",
+  "description": "Quirón, a writing skill that checks prose against measured human baselines.",
+  "owner": {
+    "name": "ilien",
+    "url": "https://github.com/ilien-dev"
+  },
+  "plugins": [
+    {
+      "name": "quiron",
+      "source": "./",
+      "version": "1.0.0",
+      "description": "Makes AI-written prose read like a person wrote it, and checks the result against measured human baselines.",
+      "author": {
+        "name": "ilien"
+      },
+      "homepage": "https://github.com/ilien-dev/quiron",
+      "repository": "https://github.com/ilien-dev/quiron",
+      "license": "AGPL-3.0-only",
+      "keywords": [
+        "writing",
+        "prose",
+        "ai-slop",
+        "humanize",
+        "style"
+      ],
+      "category": "productivity"
+    }
+  ]
+}

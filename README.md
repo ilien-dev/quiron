@@ -1,3 +1,24 @@
+[![skills.sh](https://skills.sh/b/ilien-dev/quiron)](https://skills.sh/ilien-dev/quiron)
+
+## Install
+
+With the [skills](https://skills.sh) CLI, for Claude Code and the other agents it supports:
+
+```sh
+npx skills add ilien-dev/quiron
+```
+
+### As a Claude Code plugin
+
+Run these two commands inside Claude Code:
+
+```
+/plugin marketplace add ilien-dev/quiron
+/plugin install quiron@quiron
+```
+
+The plugin puts the skill under its own name, so you call it as `/quiron:quiron`.
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/brand/hero/quiron-hero-dark.png">
@@ -115,15 +136,10 @@ He fits the skill in two ways. He was a teacher of people, and this skill teache
 model how people write. And he was half man, half horse: the text Quirón helps produce
 is a hybrid too. The model does the drafting, and the human part has to come from you.
 
-## Install
+## Use
 
-```sh
-git clone <this repo> quiron
-ln -s "$PWD/quiron" ~/.claude/skills/quiron
-```
-
-Then ask Claude Code to write or rewrite something, or call `/quiron`. The scripts run
-on their own too:
+Ask Claude Code to write or rewrite something, or call `/quiron`. The scripts run on
+their own too, from a clone of this repository:
 
 ```sh
 python3 scripts/aimeter.py FILE        # 23 rates against the human bands
