@@ -1,24 +1,26 @@
 ## What this is
 
-A skill that makes any AI model's prose read like a person wrote it, checked against measured human baselines. `SKILL.md` is the skill, loaded as instructions; `scripts/` is the measuring apparatus. `~/.claude/skills/quiron` symlinks to this checkout, so every edit is live.
+A skill that makes any AI model's prose read like a person wrote it, checked against measured human baselines. This checkout is the skill: the root `SKILL.md` is the instructions, `scripts/` the measuring apparatus. Agents here use them directly, not an installed copy. `AGENTS.md` symlinks to this file.
+
+`main` is protected: work on a `feature/<lowercase-words-with-hyphens>` branch and open a pull request against `main`.
 
 ## The rule for every change
 
-A change to the skill ships only if it is measured and the measurement shows an improvement. Opinion, intuition and "this reads better" do not count.
+A change ships only if a measurement shows an improvement. Opinion and "this reads better" do not count.
 
-- Every pattern, lexicon word, band and number traces to research with a published corpus or to a run of the scripts. New claims get a source in `references/sources.md`. No source, no change.
-- Measure before and after on the same texts. Report both numbers.
-- An improvement moves assistant-register text toward the band and keeps known-human text inside it. A change that starts flagging human texts is a regression, even if it catches more AI text.
-- Overshoot is a failure, not a win (TextPulse finding, top of `SKILL.md`). Prefer `overshot` getting rarer over a higher score.
-- A number in `SKILL.md` or `references/` the scripts can reproduce is rerun when the code or bands change. A figure with no measurement behind it is removed.
+- Every pattern, lexicon word, band and number traces to research with a published corpus (source in `references/sources.md`) or to a run of the scripts.
+- Measure before and after on the same texts; report both numbers.
+- An improvement moves assistant-register text toward the band and keeps known-human text inside it. Flagging human texts is a regression, even if it catches more AI text.
+- Overshoot is a failure (TextPulse, top of `SKILL.md`): prefer `overshot` getting rarer over a higher score.
+- Rerun any reproducible number in `SKILL.md` or `references/` when code or bands change; remove figures with no measurement behind them.
 
-## User-facing Markdown goes through /quiron
+## User-facing Markdown
 
-Any Markdown a person reads, new or edited (`README.md`, `assets/brand/README.md`, `eval/README.md`, any new one), is written with the `/quiron` skill and run through `scripts/check.sh` before commit. Not `SKILL.md` or `CLAUDE.md` (model instructions), and never `eval/ai/` (measurement data).
+Any Markdown a person reads (READMEs, `CONTRIBUTING.md`, any new one) is written by following the root `SKILL.md`, then run through `scripts/check.sh` before commit. Not model instructions (`SKILL.md`, `CLAUDE.md`), never `eval/ai/` (measurement data).
 
 ## Commands
 
-Python 3 standard library only, no build.
+Python 3 standard library only, no build. Texts under ~120 words or 8 sentences return no measurement.
 
 ```sh
 python3 scripts/aimeter.py [--json] FILE     # 23 rates vs bands.json
@@ -31,14 +33,10 @@ python3 scripts/factdiff.py SOURCE REWRITE   # facts in the rewrite, not in the 
 QUIRON_BANDS=scripts/bands-fiction.json ...  # other registers: fiction, es
 ```
 
-Texts under ~120 words or 8 sentences return no measurement.
-
 ## Architecture
 
-- `aimeter.py`: `prose()` strips markdown, `measure()` computes features, each scored against the p10–p90 band. `AI_REF` holds each feature's AI direction and median; it decides `AI side` vs `overshot`. Word lists live in `scripts/lexicons/`.
-- `audit.py` `CHECKS`: one entry per Part A pattern, states PASS / FAIL / TELL / READ. FAIL only where ≤~5% of held-out human texts trip it (`evaluate.py` shows the rate), or the loop can never converge.
-- `check.sh` keeps a streak in `.FILE.quiron.json`. Convergence is two consecutive clean passes with READ items ruled on in both.
+- `aimeter.py`: each feature scored against the p10–p90 band; `AI_REF` holds each feature's AI direction and median and decides `AI side` vs `overshot`.
+- `audit.py` `CHECKS`: one entry per pattern, PASS / FAIL / TELL / READ. FAIL only where ≤~5% of held-out human texts trip it (`evaluate.py` shows the rate).
+- `check.sh`: convergence is two consecutive clean passes with READ items ruled on in both.
 
-`SKILL.md` (index), `references/patterns.md`, `CHECKS` and `AI_REF` describe the same patterns and numbers; change one, update the others. The band table in `references/numbers.md` mirrors `bands.json`. `SKILL.md` stays under 500 lines; detail goes in `references/`, one level deep.
-
-Band files: `bands.json` (blog), `bands-fiction.json`, `bands-es.json`, built by `build-corpus*.sh`; each may carry `_lang`, `_lexicon`, `_plain`, `_thresholds` and learned AI directions. Human corpora are not committed; `eval/ai/` samples are.
+`SKILL.md`, `references/patterns.md`, `CHECKS` and `AI_REF` describe the same patterns and numbers; change one, update the others. `references/numbers.md` mirrors `bands.json`. `SKILL.md` stays under 500 lines; detail goes in `references/`, one level deep. Band files (`bands.json`, `-fiction`, `-es`) come from `build-corpus*.sh`. Human corpora are not committed; `eval/ai/` samples are.
