@@ -6,6 +6,8 @@
   </picture>
 </p>
 
+<p align="center"><b>English</b> · <a href="README.es.md">Español</a></p>
+
 <h1 align="center">Quirón: an AI humanizer skill that measures its own work</h1>
 
 <p align="center">
@@ -137,8 +139,8 @@ repo. Nothing ships on "this reads better".
 - **Blind judges.** Fresh model judges read posts one at a time and guessed which were
   AI. That test produced the most important finding below.
 
-How each number was measured, and where every rule comes from, is in
-[`SKILL.md`](SKILL.md) and [`eval/README.md`](eval/README.md).
+The details of how each number was measured are in [`SKILL.md`](SKILL.md) and
+[`eval/README.md`](eval/README.md), along with the source of every rule.
 
 ## Tips for text that reads human
 
@@ -194,13 +196,6 @@ tested on text from three Claude models and one GPT model.
 **Does it make things up to sound human?** Its instructions forbid it. A rewrite may use only
 facts from your text or your notes. `scripts/factdiff.py` lists the numbers and links in
 the rewrite that the source doesn't have. When it needs detail it lacks, it asks.
-
-## En español
-
-Quirón también humaniza textos en español. Tiene sus propias bandas, medidas sobre 241
-posts de dev.to escritos por personas antes de ChatGPT, y su propia lista de palabras que
-delatan a un modelo. Pídele que quite el tono de IA a un borrador, o usa
-`QUIRON_BANDS=scripts/bands-es.json` para medirlo tú.
 
 ## The name
 

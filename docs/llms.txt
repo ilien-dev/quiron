@@ -7,6 +7,7 @@ Install with `npx skills add ilien-dev/quiron`, or in Claude Code with `/plugin 
 ## Docs
 
 - [README](https://raw.githubusercontent.com/ilien-dev/quiron/main/README.md): what it does, install, usage, FAQ
+- [README en español](https://raw.githubusercontent.com/ilien-dev/quiron/main/README.es.md): the same README in Spanish
 - [SKILL.md](https://raw.githubusercontent.com/ilien-dev/quiron/main/SKILL.md): the skill's instructions to the model
 - [Patterns](https://raw.githubusercontent.com/ilien-dev/quiron/main/references/patterns.md): the 33 signs of AI writing, each with its measured rate and fix
 - [Word choice](https://raw.githubusercontent.com/ilien-dev/quiron/main/references/word-choice.md): the AI word lists and the plain words models leave out
