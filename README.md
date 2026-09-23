@@ -37,6 +37,8 @@ Run these two commands inside Claude Code:
 
 The plugin puts the skill under its own name, so you call it as `/quiron:quiron`.
 
+## Demo: behind the scenes
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/demo/quiron-demo-dark.gif">
