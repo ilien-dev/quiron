@@ -1,4 +1,22 @@
-[![skills.sh](https://skills.sh/b/ilien-dev/quiron)](https://skills.sh/ilien-dev/quiron)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/hero/quiron-hero-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="assets/brand/hero/quiron-hero-light.png">
+    <img alt="Quirón: a centaur holding up an eight-point star" src="assets/brand/hero/quiron-hero-light.png" width="720">
+  </picture>
+</p>
+
+<p align="center">
+  <b>A writing skill for AI models. It strips the habits that mark prose as machine-written,<br>
+  then checks the result against measured human writing instead of a hunch.</b>
+</p>
+
+<p align="center">
+  <img alt="Python 3 standard library only" src="https://img.shields.io/badge/python-3%20stdlib%20only-20201E?style=flat-square">
+  <img alt="Registers: blog, fiction, Spanish" src="https://img.shields.io/badge/registers-blog%20%C2%B7%20fiction%20%C2%B7%20es-B5563A?style=flat-square">
+  <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-F7EEDB?style=flat-square&labelColor=20201E">
+  <a href="https://skills.sh/ilien-dev/quiron"><img alt="skills.sh installs" src="https://skills.sh/b/ilien-dev/quiron"></a>
+</p>
 
 ## Install
 
@@ -18,25 +36,6 @@ Run these two commands inside Claude Code:
 ```
 
 The plugin puts the skill under its own name, so you call it as `/quiron:quiron`.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/hero/quiron-hero-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="assets/brand/hero/quiron-hero-light.png">
-    <img alt="Quirón: a centaur holding up an eight-point star" src="assets/brand/hero/quiron-hero-light.png" width="720">
-  </picture>
-</p>
-
-<p align="center">
-  <b>A writing skill for AI models. It strips the habits that mark prose as machine-written,<br>
-  then checks the result against measured human writing instead of a hunch.</b>
-</p>
-
-<p align="center">
-  <img alt="Python 3 standard library only" src="https://img.shields.io/badge/python-3%20stdlib%20only-20201E?style=flat-square">
-  <img alt="Registers: blog, fiction, Spanish" src="https://img.shields.io/badge/registers-blog%20%C2%B7%20fiction%20%C2%B7%20es-B5563A?style=flat-square">
-  <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-F7EEDB?style=flat-square&labelColor=20201E">
-</p>
 
 <p align="center">
   <picture>
