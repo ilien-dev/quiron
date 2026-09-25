@@ -1,0 +1,16 @@
+- tema: Svelte, framework JS para UI; compila en build time a código imperativo, a diferencia de React/Angular/Vue que trabajan en el navegador
+- sin Virtual DOM; actualiza el DOM "quirúrgicamente" al cambiar estado; sintaxis más corta
+- autor: dev frontend, ha usado React, Angular, Vue, Elm; Svelte lo sorprendió
+- publicado originalmente en Platzi: https://platzi.com/blog/svelte-un-nuevo-framework-para-crear-aplicaciones-web-mejoradas/
+- setup desde cero: git init + npm init -y, npm install svelte; carpetas dist/, public/, src/, src/components/, src/index.js
+- Babel (@babel/core, preset-env, polyfill, babel-loader) + svelte-loader; .babelrc con preset-env
+- Webpack + webpack-cli + html-webpack-plugin; resolve extensiones .mjs/.js/.svelte; template public/index.html
+- app de ejemplo: consume API pública de Rick and Morty https://rickandmortyapi.com/api/character, grid de 5 columnas con personajes
+- App.svelte: script + estilos + HTML en un solo archivo; onMount + fetch; {#each}…{:else} "loading..."
+- index.js monta App con target `main`
+- webpack-dev-server para dev local en localhost:8080; scripts start/build (build → dist/index.html + bundle.js)
+- deploy en GitHub Pages https://pages.github.com/ vía `git subtree push --prefix dist origin gh-pages`
+- recomienda .gitignore para node_modules, generado con https://gitignore.io
+- demo: https://gndx.github.io/svelte-quickstart/ — repo: https://github.com/gndx/svelte-quickstart
+- opinión: rápido, comparable a React/Vue; al compilar evita costos de rendimiento y penalización en primera carga
+- cierre: pregunta al lector si le daría una oportunidad

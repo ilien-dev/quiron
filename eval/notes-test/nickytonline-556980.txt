@@ -1,0 +1,18 @@
+- context: 2020 year-in-review; author rarely posts personal stuff but others' openness prompted sharing
+- health: not COVID; Montreal lockdown March; lying down on work breaks, night sweats, calf seizures — first dismissed as pandemic blues
+- blood tests → sent to ER; ~3 weeks in hospital, many tests before diagnosis: bacteria in blood attacking heart
+- treatment: ~1.5 months antibiotics, self-injected daily via IV in arm (~2 months); cleared November; doctors: just bad luck
+- hindsight: symptoms likely began Nov 2019, blamed on year-end/sleep; thanks to Canada's free health care — imperfect
+- joined DEV (now Forem) team; first external contributor before joining; "first dream job" — remote, great coworkers, uses the product
+- links: https://github.com/forem/forem, https://dev.to/nickytonline/a-new-year-a-new-start-i-m-joining-the-dev-team-3ap0, https://dev.to/devteam/welcoming-three-new-team-members-38hp
+- Virtual Coffee (https://virtualcoffee.io/) via Bekah (https://dev.to/bekahhw) tweet — not sure which tweet prompted the DM (tweet id 1250169810308288512); first real Internet friends
+- started Twitch live coding: https://dev.to/nickytonline/i-ve-started-to-live-code-on-twitch-for-dev-13cn; reasons — learn in public, others doing it, pandemic YOLO; inspired by swyx (Shawn Wang) and Jason Lengstorf (https://www.learnwithjason.dev/) — own production quality not there "yet"
+- Hacktoberfest streams with coworker Christina Gorton (@coffeecraftcode) on DEV Twitch https://www.twitch.tv/thepracticaldev: Walkthrough Wednesdays, contributor gratitude stream, pairing with community, raise.dev stream https://www.twitch.tv/raisedevs; list: https://www.iamdeveloper.com/pages/live-coding/#heading-other-live-codingstreaming-projects
+- talks: "Getting the Most Out of Open Source" (Hacktoberfest, DigitalOcean community) https://www.iamdeveloper.com/pages/talks/#heading-getting-the-most-out-of-open-source; lightning talk "Words Matter: Conventional Comments" (Virtual Coffee) https://www.iamdeveloper.com/pages/talks/#heading-words-matter:-conventional-comments
+- fitness: tip-top shape end 2019, derailed by illness; resumed serious training November; athlete mindset — body remembers
+- Zoom group sessions with personal trainer, 7am Mon/Wed/Fri; early = no excuses, social pressure, paid so must show up
+- got somewhat handier during pandemic (still not great); built backyard skating rink — what impresses people most
+- site moved to 11ty/Eleventy, started Dec 10, finished over holidays; long low priority
+- Hylia template https://hylia.website by Andy Bell (@hankchizljaw, https://www.twitter.com/piccalilli_) — 100% Lighthouse, liked look, no time to design; site's goal is content
+- Eleventy easy to customize; Eleventy migration post planned for new year
+- 2021: keep training, streaming, blogging, building Forem

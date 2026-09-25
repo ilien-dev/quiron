@@ -1,0 +1,15 @@
+- contexto: post anterior sobre mejorar rendimiento refactorizando tipos de datos/algoritmos, sin cambiar de lenguaje: https://dev.to/andres_aec/complejidad-algoritmica-o-como-mejorar-el-tiempo-de-ejecucion-3hfc
+- idea: antes de reimplementar, medir; la intuición sobre el cuello de botella puede fallar y la mejora no compensar el esfuerzo
+- criterio: si el fragmento supone % significativo del tiempo total, merece la pena optimizarlo
+- ejemplo: `slowFunc` llama a `add` y `div`; `div` quema CPU con bucle de ~1000 ms
+- `console.time`/`timeEnd` con etiqueta: https://nodejs.org/api/console.html#console_console_time_label — bloques anidables; resultado div ~1000 ms de ~1002 ms total; invasivo
+- Performance API (perf_hooks): https://nodejs.org/api/perf_hooks.html — `performance.mark` + `measure`, resultados vía `PerformanceObserver` con entryType 'measure'
+- opinión: más potente que console.time, permite recoger, almacenar y procesar mediciones por código
+- `performance.timerify`: wrapper de la función; entryType 'function'; muestra también los argumentos (30 y 10)
+- timerify menos invasivo: solo cambia la línea de llamada; evitable con inyección de dependencias/configuración inicial
+- profiler nativo: `node --prof` genera log isolate-*-v8.log; `node --prof-process` lo convierte a texto con ticks por función
+- segundo ejemplo real: proyecto outtrack con turfjs (https://turfjs.org/) — bearing 13.8%, distance 12.6% de ticks
+- opinión: informe del profiler tedioso y difícil de interpretar → herramientas visuales
+- clinicjs: https://clinicjs.org/ — `clinic doctor` (CPU, memoria, retardo del event loop), `clinic flame` (flamegraph: eje Y anidamiento, eje X tiempo)
+- flamegraph = lo más parecido visualmente a la Performance API
+- capturas: https://raw.githubusercontent.com/aecostas/blog/master/performance/images/flamechart.png y https://raw.githubusercontent.com/aecostas/blog/master/performance/images/doctor.png

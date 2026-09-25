@@ -1,0 +1,16 @@
+- objetivo: tutorial de estilos en apps Angular CLI con Bootstrap — layout con header/footer, páginas home, about y login con formulario
+- demo: https://tutorial-styling-angular-cli-apps-with-bootstrap.netlify.app/home ; repo: https://github.com/beeman/tutorial-styling-angular-cli-apps-with-bootstrap
+- requisitos: Node 12+, npm 6+, Angular CLI 10+; opción yarn vía https://beeman.dev/posts/using-yarn-with-angular-cli-1n73/ (genera yarn.lock en vez de package-lock.json)
+- crear app: `ng new sandbox --routing --style scss --strict` (modo estricto: https://angular.io/guide/strict-mode); CLI hace git init + commit inicial
+- `npm install bootstrap`, import en src/styles.scss + html/body height 100% para pegar footer abajo
+- UiModule con LayoutComponent, HeaderComponent, FooterComponent — opinión: separar UI del resto facilita reutilizarla en otros proyectos
+- error común: olvidar importar RouterModule en UiModule → NG8001 'router-outlet' is not a known element
+- layout con flexbox (d-flex flex-column h-100, main flex-shrink-0, footer mt-auto); navbar según https://getbootstrap.com/docs/4.5/components/navbar/
+- páginas con `ng g module pages/X --route X --module app` → lazy loading (https://angular.io/guide/lazy-loading-ngmodules); recomendado para no descargar código innecesario
+- tropiezo: ruta home generada fuera del layout → header/footer desaparecen; hay que moverla al array children
+- login: FormGroup reactivo (email, password), Router redirige tras submit; se deja fuera de children a propósito para centrar formulario sin layout
+- sugerencia: si hay más páginas de auth, crear AuthLayoutComponent aparte
+- redirect ruta vacía a 'home' con pathMatch 'full'
+- librerías extra: ng-bootstrap https://ng-bootstrap.github.io/#/home o ngx-bootstrap https://valor-software.com/ngx-bootstrap/#/ (ambas buenas); formly https://formly.dev/ para muchos formularios
+- temas: variables SCSS antes del import de Bootstrap; Bootswatch https://bootswatch.com/ con 20+ temas
+- contacto autora: https://twitter.com/derlys_paola

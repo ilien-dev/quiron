@@ -1,0 +1,17 @@
+- contexto: console.log() es de lo primero que se aprende en JS; la clase console tiene muchos más métodos útiles para debuggear
+- objetivo: guía rápida de referencia para cuando hace falta algo más específico que imprimir por pantalla
+- spec de referencia: Console API, https://console.spec.whatwg.org/ — motores de JS se adaptaron a ella
+- assert(): muestra mensaje solo si la condición es falsa ("Assertion failed")
+- count()/countReset(): contador por etiqueta; ejemplo con usuarios "Cristian" y "Sol", reset vuelve a 1
+- debug(): en Chrome solo visible con opción Verbose en Default Levels; en Node se muestra por defecto
+- dir(): lista métodos de un objeto, ejemplo con console.dir(console); dirxml() igual pero en XML
+- error(): parece igual a log() pero escribe a stderr en vez de stdout; recomienda probar en Node y en Chrome para ver la diferencia
+- group()/groupEnd(): indentación de logs por niveles; groupCollapsed() crea grupo desplegable, recomienda probarlo en navegador
+- info(): mensaje informativo, suele llevar ícono 'i'
+- log(): sustituciones %s, %d, %o, %f; estilos con %c + CSS en navegador, códigos ANSI (\x1b[31m) en Node
+- para colores en Node: paquete colors, https://www.npmjs.com/package/colors
+- table(): recibe array u objeto; ejemplo con nombre/apellido Cristian Bonomo y lenguajes Javascript, PHP, Java, Python
+- time()/timeLog()/timeEnd(): medir duración de operaciones; ejemplo init() con bucle de 100 → 0.092ms y 0.276ms; útil para medir inicialización o respuesta a peticiones
+- trace(): stack de llamadas hasta el punto de invocación (funcionUno → funcionDos)
+- warn(): alerta con símbolo amarillo en consola web
+- ejemplos corridos con node en ThinkPad X1 Carbon Gen 8 (usuario cbonomo)

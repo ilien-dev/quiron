@@ -1,0 +1,15 @@
+- tema: introducción a Docker; mucho revuelo en la comunidad tech, fans y detractores
+- origen: marzo 2013, creador Solomon Hykes, bajo dotCloud → meses después renombrada Docker, Inc.
+- definición: correr apps aisladas entre sí y del resto del SO, con sus dependencias — "tecnología de contenedores"
+- arquitectura cliente-servidor, API RESTful sobre socket UNIX o TCP
+- se confunde con máquinas virtuales como si fueran variante; autor insiste: diferencias técnicas y de casos de uso
+- aislamiento vía Namespaces de Linux: Net, PID, UID, Mnt, UTS, CGroups (CPU/RAM), IPC
+- Linux crea un namespace por defecto por recurso al instalar; Docker crea uno nuevo por app
+- creación de namespaces flexible/opcional — aislar tanto o tan poco como haga falta
+- namespaces existen hace mucho en Linux; mérito de Docker: implementación simple, orientada también a devs, no solo SysAdmins
+- Microsoft colaboró con Docker Inc.: soporte en Windows Server 2016+ y Windows 10
+- opinión: interesante que Windows Server lo logre de forma nativa
+- Win10: Hyper-V levanta VM Linux optimizada solo con Docker Daemon; cliente instalado en Win10 conectado a ella; similar en Docker para Mac
+- Windows anterior a 10: Docker Toolbox, usa VirtualBox a falta de Hyper-V
+- también corre en ARM
+- autor lo llama "maravillosa herramienta"; promete artículo siguiente más profundo

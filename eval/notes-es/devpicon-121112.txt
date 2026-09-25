@@ -1,0 +1,15 @@
+- contexto: Google I/O anunció los Architecture Components — propuesta del equipo Android para arquitectura recomendada
+- componentes: Room, LiveData, Handling Lifecycle, ViewModel; varias dependencias ya estables; este post solo cubre Room
+- Room = librería de mapeo objeto-SQL; fin de escribir a mano clases de tablas, sentencias y CRUD (¿"sufrimiento"?, dice con ironía)
+- ejemplos en Kotlin a propósito — la red está llena de ejemplos en Java
+- update 23 abril 2019: repo y ejemplos migrados a últimas versiones de Room y a AndroidX (room 2.0.0, rxkotlin 2.1.0, rxandroid 2.0.1)
+- pasos: dependencias → entidad con @Entity/@PrimaryKey (data class Task) → DAO con @Dao, @Query, @Insert, @Update, @Delete (Flowable vía RxJava) → @Database abstracta → instancia en Application custom con Room.databaseBuilder
+- docs Entities (llaves compuestas): https://developer.android.com/topic/libraries/architecture/room.html#entities
+- docs DAO: https://developer.android.com/topic/libraries/architecture/room.html#daos
+- patrón DAO: https://www.tutorialspoint.com/design_pattern/data_access_object_pattern.htm
+- tests: inMemoryDatabaseBuilder — BD se destruye al morir el proceso; test inserta y consulta una tarea
+- gracias a Florina Muntenescu supo que hacía falta allowMainThreadQueries; su post: https://medium.com/google-developers/room-rxjava-acb0cd4f3757
+- corrección: versión original decía que se necesitaba InstantTaskExecutorRule; tras la migración no le ve mayor utilidad
+- InstantTaskExecutorRule: https://developer.android.com/reference/android/arch/core/executor/testing/InstantTaskExecutorRule.html
+- repo del ejemplo: https://github.com/DevPicon/arch-components-sample-app — por ahora solo inserta y lee; promete ir haciéndolo más útil; diferencias visibles en commits
+- canonical original en Medium: https://medium.com/kotlin-dev-reactor/room-un-vistazo-a-los-android-architecture-components-fa8a64c19cd4

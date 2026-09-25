@@ -1,0 +1,15 @@
+- origin: Twitter thread by Chris Achard, https://twitter.com/chrisachard/status/1181583499112976384
+- format: 10 numbered tips on JavaScript regex, each with screenshot image
+- basics: regex literal between slashes or new RegExp(); used with match, test, replace; define ahead or inline
+- character sets: square brackets match any listed char; hyphen for ranges
+- flags: i case insensitive, m multiline, g global (all matches, not just first)
+- anchors: ^ start of string, $ end of string; chain groups to match longer strings
+- shorthand classes: . any char but line break; \d / \D digit / non-digit; \s / \S whitespace / non-whitespace; \n newline
+- quantifiers: * zero+, + one+, ? 0 or 1, {3} exactly 3, {2,4} range, {2,} two or more
+- parens capture groups; match returns full match + groups unless g flag; pipe | = or inside group
+- escape special chars with backslash — list: ^ $ \ . * + ? ( ) [ ] { } |; e.g. \* for asterisk
+- ^ inside brackets = negation; author admits double meaning of caret is confusing
+- caution: regex fine for URLs, filenames; avoid for complex tasks — emails get messy fast, HTML not a regular language so can't be fully parsed
+- skipped: lazy vs greedy, lookahead, more capturing — but basics cover most web dev needs
+- follow-up post in progress with real-world regex use cases
+- promo: Twitter @chrisachard (https://twitter.com/chrisachard), newsletter https://chrisachard.com/newsletter/

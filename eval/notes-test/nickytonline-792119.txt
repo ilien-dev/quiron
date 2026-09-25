@@ -1,0 +1,17 @@
+- context: sponsored by Polywork, but author's own authentic review; Polywork = new professional platform
+- found via Twitter, maybe Ali Spittel tweet (unsure): https://twitter.com/ASpittel
+- access: waitlist https://www.polywork.com/users/sign_up + followed https://twitter.com/PolyworkHQ; got invite code tweeted one Sunday; tip: they post/retweet codes often
+- handle nickytonline (same everywhere: https://www.iamdeveloper.com/pages/social/); signed up in May, barely remembers onboarding; liked picking an assistant; asks recent users to fill gaps
+- likes minimal design, "Zen mode" feel; badges = interests/skills (open source, snowboarding)
+- positions like other networks; later added auto-generated highlights for starting/leaving roles
+- timeline = main profile area; slow to fill due to backfilling; nostalgic, realized how much accomplished
+- highlights: modal via Highlight button; activity tags (recent ones shown, search, create new); collaborators via two-person icon, unknown limit; collaborators must confirm — cuts needless tagging, adds authenticity
+- reposting unlike retweets: seemingly only possible for highlights you collaborated on (e.g. DEV Twitch stream with Ben Hong)
+- new: filter timeline by badges (e.g. Twitch Streamer), includes reposts
+- custom domain from settings; initial issues, fixed by improvements rolled out next week; https://timeline.iamdeveloper.com
+- contact requires picking a reason the person allows; coworker Christina (https://www.polywork.com/cgorton) open to speaking; doubts it fully stops "hi" messages, but gives pause
+- Multiverse: search members/highlights by badge; featured, trending badges, recently joined, what's everyone doing, possibilities — unclear what Possibilities is, maybe algorithmic
+- Space Station: groups people by topics they're open to collaborating on; author available for live streaming: https://www.iamdeveloper.com/pages/live-coding/
+- team ships improvements constantly; submit issues from profile menu; author already sent suggestions
+- fits author's varied work: open source https://www.polywork.com/nickytonline?badges%5B%5D=Open+Source, Twitch https://www.polywork.com/nickytonline/highlights/af1934a2-8130-457c-9734-3cc6c5e446b3, talks https://www.polywork.com/nickytonline/highlights/2c5da615-0aef-4494-bc63-f76da0ac3402, podcasts, skating rink https://www.polywork.com/nickytonline/highlights/a6be8320-1f80-4184-a38f-3dc9cba1eca0
+- verdict: early days, bright future, recommend for showcasing work; invite code yolo-2021, good for 100 invites

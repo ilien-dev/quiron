@@ -1,0 +1,15 @@
+- contexto: serie "En que pienso cuando pienso acerca de programar", ejercicio 01 para principiantes
+- problema: un youtuber quiere pantalla donde escribe ciudad → descarga Excel con hosts de departamentos de Airbnb
+- objetivo del youtuber: contactar hosts, negociar hospedaje gratis a cambio de anunciarlos en su canal
+- paso 1 entender el problema; si se entiende mal → proyecto fracasado
+- paso 2 resolverlo a mano: buscar en Airbnb, copiar datos a Excel con 3 columnas (propiedad, nombre del host, link de contacto)
+- paso 3 definir etapas: recibir ciudad → conectarse a Airbnb y sacar datos → crear Excel → enviar/descargar; diseñar pasos = la expertise del programador
+- trampa para principiantes: "hacer el Excel" parece un paso obvio pero en realidad son 3 (crear, enviar, notificar)
+- imagen: http://productividadti.com.mx/blog/2019/bpm_02_memorama1.png
+- paso 4: investigar todos los pasos en internet sin implementarlos; empezar por el que tenga menos info → el más difícil es conectarse a Airbnb
+- solo entonces escribir código; acciones ejecutadas por actores/objetos
+- actor ConexionAirbnb, función getDatosHostFromCiudad(ciudad) → devuelve datos (nombre, teléfono)
+- siguiente más difícil: crearArchivoExcel(textoConDatosAirbnb) en FactoryExcel → devuelve ruta del archivo temporal; enviar solo necesita esa ruta
+- "programa de pruebas" en paralelo porque aún no existe la pantalla; paso 3 probado con salida copiada del paso 2, sin ejecutarlo
+- al final paso 5 que orquesta pasos 1–4
+- opinión: para un no programador ya está resuelto; pensando como programador vamos a la mitad del camino

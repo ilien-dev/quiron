@@ -1,0 +1,13 @@
+- context: Shopify expanded Storefront API (https://shopify.dev/api/storefront); Netlify developer experience team each built a shop demo
+- author's version: Next.js; earlier also did React + Astro version: https://www.netlify.com/blog/2021/07/23/build-a-modern-shopping-site-with-astro-and-serverless-functions/
+- teammates' versions: Ekene/Gridsome, Phil/11ty, Ben/Nuxt, Tara/Angular — e.g. Tara: https://www.netlify.com/blog/2021/08/25/e-commerce-with-angular-shopify-netlify-serverless-functions/
+- shared across team: serverless functions for Shopify API (get product, list products, add to cart/create cart, get cart, remove from cart) + same styles → near-identical sites
+- functions: https://github.com/cassidoo/shopify-next-netlify/tree/main/functions
+- Shopify setup: partner account, development store, API credentials, products/variants (used meats and cheeses — team always hungry), private app in admin
+- starting points: full demo https://github.com/cassidoo/shopify-next-netlify or starter https://github.com/cassidoo/next-netlify-starter
+- gotcha: existing demo build fails until env vars (SHOPIFY_STOREFRONT_API_TOKEN, SHOPIFY_API_ENDPOINT in .env) + Netlify CLI set up; after that `npm start` just works
+- from scratch: next.config.js sets NETLIFY_URL — localhost:8888 in dev vs https://shopify-next.netlify.app in prod; netlify.toml dev targetPort 3000, functions dir functions/; `start` script → `netlify dev`
+- tip: deploy site with functions before calling them, avoids concurrency issues
+- pages: index.js, cart.js, product/[product].js — dynamic page at top level of pages/ risks errors later
+- data: getStaticProps fetching get-product-list function; getStaticPaths maps product handles to /product/<handle>, fallback false
+- live demo: https://shopify-next.netlify.app/

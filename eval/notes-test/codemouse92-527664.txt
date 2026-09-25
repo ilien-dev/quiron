@@ -1,0 +1,14 @@
+- context: author works with tab-indented code; pain point is typing in web browser
+- problem: pressing TAB in a field (e.g. GitHub) moves focus to next field, no literal tab
+- existing options: indent with spaces or manually copy/paste a tab char — both annoying
+- solution: Linux Compose key feature
+- Linux-only guide; untested alternatives: macOS https://github.com/Granitosaurus/macos-compose, Windows https://github.com/SamHocevar/wincompose
+- Compose key: tap (not hold), then key sequence; author uses right Alt
+- examples: Compose n ~ → ñ; Compose C O → ©; Compose t m → ™; Compose e ' → é
+- Gnome (default on Ubuntu, Pop!_OS, Fedora): Settings → Keyboard → Type Special Characters → Compose Key
+- other DEs (Xfce, MATE etc.): just search "enable compose key <DE>"
+- step 2: create/edit ~/.XCompose
+- config: include "%L" plus <Multi_key> <backslash> <t> and <backslash> <T> mapped to literal tab in quotes; # starts comment
+- warning: omitting include line overrides tens of thousands of default combos
+- save, restart computer
+- test: Compose n ~ still gives ñ; then Compose \ t gives literal tab

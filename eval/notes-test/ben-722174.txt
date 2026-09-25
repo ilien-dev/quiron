@@ -1,0 +1,15 @@
+- announcement: CodeLand returning 2021 — virtual, two days, Sept 23 (Thu) + Sept 24 (Fri)
+- last year's virtual event praised by global community for accessibility; keep what worked, fix what didn't
+- nothing fully replaces in-person conferences, but virtual date is safe to plan around given 2021 uncertainty
+- change from last year: split over two days instead of one very long day of talks
+- goal: max positive impact for early-career devs — memorable moments + lasting online connections, career progress
+- venue: CodeNewbie Forem, https://community.codenewbie.org — joining is step one before registration
+- schedule: 6 hrs/day, 4–10 PM UTC
+- format: live keynotes, pre-recorded talks, live speaker panels, both days
+- free access to all keynotes/talks/panels; registration TBA; CFP opens June 22
+- more community participation/representation on program this year; surprises teased
+- Forem iOS app: https://dev.to/devteam/forem-for-ios-is-here-4g3f — want to make best use of own open source tech; Android app in progress
+- "CodeLand 2021 Updates" email list: http://eepurl.com/hBb5pv
+- more details: post by @saronyitbarek, https://community.codenewbie.org/codenewbie/codeland-is-coming-sept-23-24-2021-238p
+- conference site: https://codelandconf.com
+- sponsorship interest form: http://eepurl.com/hAJVkb

@@ -1,0 +1,18 @@
+- context: author building a CHIP-8 emulator in Rust, https://en.wikipedia.org/wiki/CHIP-8; post aimed at readers who don't know Rust
+- premise: memory cheap today, so ints usually stored in full multi-byte values (e.g. 2 as 32-bit, mostly padding); CHIP-8 has only 4096 bytes, part reserved for system, so waste matters
+- Machine struct: 4K u8 memory, 16 u8 registers, u16 index + program counter, 64x32 screen, delay/sound timers at 60Hz, 16-entry stack, 16-key keypad, draw flag; usize ~ u64 on author's machine
+- hex: one digit = one nibble (4 bits), two digits = byte, 0x00–0xFF; beware 0x34 is 52 decimal
+- program load: ROM bytes copied one at a time starting at 0x200 (512); author keeps all games preloaded in memory, keyed by name
+- opcodes: 35 total, 2 bytes each, handled as u16; list at https://en.wikipedia.org/wiki/CHIP-8#Opcode_table
+- examples: 1NNN jump (12 bits covers 4096 addresses), 8XY4 add reg Y to X (one nibble per register, 16 regs), 3XNN skip if reg X == NN
+- key point: an opcode is four nibbles, not one number or two bytes; interpretation depends on opcode
+- AND with mask (0x0FFF, 0x00FF) isolates nibbles/bytes → last_three_digits helper
+- nibble_from_left: right-shift by 4*(3-index) then & 0xF; panics if index > 3; middle_nibbles helper returns (0x2, 0x3) for 0x8234
+- combine_bytes: (first as u16) << 8 | second; used in fetch_opcode via Opcode::new
+- extra trick: even/odd via val & 1 == 0; faster than %, benefit usually negligible
+- XOR version of even/odd left as reader exercise; invites answers + favorite bitwise hacks in comments
+- shifts double/halve by powers of two; likely faster than multiply but less readable — "depends on context"
+- mistake: post says shifting *right* by n multiplies by 2^n — should be left
+- typo: "skips an instruction of the value" (should be "if")
+- recommended resource: "How to write an emulator" by Laurence Muller, http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/ (author page http://www.multigesture.net/about/); only it + Wikipedia needed so far
+- cover photo: Federica Galli on Unsplash, https://unsplash.com/@fedechanw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText

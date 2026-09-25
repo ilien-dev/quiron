@@ -1,0 +1,16 @@
+- goal: GitHub auth with Supabase + React, full stack in ~50 lines of code, ~10 minutes
+- companion video: https://www.youtube.com/watch?v=jSqTzZk9UMg
+- author likes Supabase for its many built-in auth providers; said so before: https://twitter.com/dabit3/status/1427758522020864004
+- opinion: Supabase auth API about as simple as it gets — supabase.auth.signIn({ provider: 'github' }), supabase.auth.user()
+- GitHub auth worth offering on any developer-facing product
+- all Supabase auth guides: https://supabase.io/docs/guides/auth
+- step 1: new project at https://app.supabase.io/; Settings → API, copy project URL
+- step 2: GitHub OAuth app via https://github.com/settings/developers → "Register a new Application"; homepage http://localhost:3000; callback = Supabase URL + /auth/v1/callback
+- grab Client ID, generate client secret
+- step 3: Supabase dashboard Authentication → Settings, toggle Github enabled, paste ID + secret
+- front end: create-react-app, install @supabase/supabase-js via npm or Yarn
+- src/client.js exports client built with createClient(project URL, anon public key) — reusable across app
+- App.js: useState for user, checkUser on load + on 'hashchange' (OAuth redirect), signIn/signOut buttons, greets user by email
+- approach portable to any front end framework without big changes
+- gap: no way yet to query app's users
+- next step: profiles table w/ user_id referencing auth.users id + row level access rules, per https://supabase.io/docs/guides/auth#policy-examples

@@ -1,0 +1,16 @@
+- tema: comparación Flask (https://palletsprojects.com/p/flask/) vs Bottle (https://bottlepy.org/docs/dev/), frameworks web backend para Python
+- se dice que Flask es más eficiente → programadores lo prefieren sobre Bottle
+- recomendación previa: aprender bases de Python antes de programación web — https://pythonbasics.org
+- Flask pro: muchísima documentación, tutoriales y librerías; uno de los más usados
+- Flask pro: minimalista pero potente; funciona con HTML vanilla o Bootstrap; bueno para prototipos rápidos; ORM o SQL directo a elección
+- ejemplo Flask: ruta '/' con request.args "name", default "World", escape()
+- Flask contras: sin programación asíncrona; estructura por defecto complicada para reutilizar/limpiar código; orientado a HTML, no pensado para APIs (aunque las permite)
+- Bottle pro: distribución en un solo archivo Python → fácil compartir/subir; incluye enrutamiento y plantillas
+- ejemplo Bottle: ruta '/hello/<name>', template, run en localhost:8080
+- autor afirma que Bottle está en la biblioteca básica de Python, sin instalar nada (dudoso/erróneo: no forma parte de la stdlib); es app WSGI, fácil de enlazar
+- Bottle contras: poca documentación/soporte online; difícil pasar de ~1.000 líneas; le faltan los blueprints de Flask por el modelo de archivo único
+- opinión: la elección depende del proyecto; Flask sirve para cualquier tamaño, gran comunidad
+- opinión: Bottle mejor para proyectos rápidos y pequeños, rápido y fiable
+- curso: Create Web Apps with Flask — https://gum.co/IMzBy
+- web Flask: https://flask.palletsprojects.com/en/1.1.x/
+- tutorial Hello World Flask: https://pythonbasics.org/flask-tutorial-hello-world/

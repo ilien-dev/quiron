@@ -1,0 +1,15 @@
+- news: AWS Amplify added support for Next.js 10 features — ISR, optional catch-all routes, image optimization
+- disclosure: author is Developer Advocate on AWS Amplify team; feedback via Discord discord.gg/amplify
+- prereq tutorials: https://welearncode.com/beginners-guide-nextjs/ and https://welearncode.com/build-a-fullstack-app-nextjs/
+- setup: `npx create-next-app next10-blog`; backend via Amplify Sandbox https://sandbox.amplifyapp.com/getting-started, blog schema, deleted Blog model, added content field to Post
+- `amplify pull` into app; installed aws-amplify + TypeScript (TS only needed for generated DataStore models); Admin UI "Auto-generate data" → 10 fake posts
+- _app.js: Amplify.configure with ssr: true; home page uses getServerSideProps + withSSRContext + DataStore query; serialize via JSON.parse/stringify or serializeModel
+- SSR vs SSG explainer: https://welearncode.com/ssr-vs-ssg/
+- ISR: static pages regenerate after revalidate window; user triggering rebuild still gets stale page, later users get new one; good for e-commerce, blogs w/o redeploy
+- post/[post].js: getStaticPaths with fallback: true (generate on demand instead of 404); getStaticProps revalidate: 10 seconds; router.isFallback → loading state
+- deploy: push to GitHub, Amplify Console frontend environments tab, default build scripts from package.json; Lambda@Edge function handles ISR
+- optional catch-all: pages/about/[[...about]].js — /about, /about/hi, /about/ali/spittel all render; shows useRouter query
+- Image component (next/image): resizing, optimization, webp when supported; used photo of author's dog Blair, 200x150
+- every GitHub push auto-redeploys frontend
+- teardown: `amplify delete` — code stays local, cloud deployment removed
+- minor slips in post: filename written as [[...about.js]], home component destructures posts but props return models, "ad"/"compnent" typos

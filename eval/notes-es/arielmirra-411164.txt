@@ -1,0 +1,16 @@
+- contexto: elegir tecnología en cada proyecto es difícil con tantas opciones; cita propia en broma ("El sabiondo Ariel"): calidad del proyecto depende de conocimientos/tecnologías del diseñador
+- autor conoció bases de datos orientadas a grafos (BDOG) en su tesis de grado, usó Neo4j
+- grafo = entidades y relaciones, nodos y vértices; sin keys PK/FK, cardinalidad, herencia como en SQL; más simple, bueno o malo según el caso
+- figuras comparativas: clientes/órdenes/productos en modelo relacional vs grafo
+- opinión: en tablas, complejidad de agregar relaciones crece exponencialmente; en grafos cambios de esquema más baratos; si se persiste la relación, grafo es la mejor opción
+- útil para: redes de información, datos dinámicos, sin esquema fijo, número variable de atributos
+- ejemplos: redes sociales, knowledge graphs para IA, sistemas de recomendación, redes neuronales, árboles jerárquicos
+- descarga Neo4j: https://neo4j.com/download ; sandbox gratis, login con Google: https://neo4j.com/sandbox
+- tutorial en sandbox, promesa: todo en menos de 5 minutos; proyecto base elegido: Twitter; Neo4j crea container conectable a apps propias
+- query de prueba: `MATCH (n) RETURN n LIMIT 25` — muestra 25 nodos y relaciones, interactivos; menú izquierdo filtra sin escribir Cypher
+- Cypher Query Language: https://neo4j.com/developer/cypher-query-language — similar a SQL, intuitivo si sabés SQL
+- recursos Cypher (eBooks, videos, tutoriales): https://neo4j.com/developer/cypher-resources
+- resultados visibles también como tabla y JSON → compatible con el resto del ecosistema
+- conclusión: casos de uso definidos y particulares, saber cuándo usarlas; lenguaje especial para recorrer grafo
+- Neo4j proveedor más conocido, buena interfaz y recursos; chiste: no le pagan por decirlo, "lamentablemente"
+- autor: Ariel Mirra, https://linktr.ee/arielmirra ; instagram https://www.instagram.com/ariel.mirra ; linkedin linkedin.com/in/ariel-mirra

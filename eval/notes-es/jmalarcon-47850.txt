@@ -1,0 +1,15 @@
+- contexto: continuación del post anterior sobre método clásico de copiado: https://www.jasoft.org/Blog/post/copiado-de-texto-al-portapapeles-con-javascript-metodo-clasico.aspx
+- pegas del método clásico: engorroso (seleccionar rangos), no estandarizado, varía entre navegadores, síncrono → puede bloquear la UI con contenido grande
+- solución: Async Clipboard API de la W3C, aún borrador pero estable: https://www.w3.org/TR/clipboard-apis/#async-clipboard-api
+- ventajas: modelo de permisos unificado, asíncrona; usable con promesas o async/await (ECMAScript 2017)
+- soporte al escribir: solo Google Chrome; autor espera que el resto la implemente en próximos meses; fácil comprobar `navigator.clipboard` y caer al método antiguo
+- escritura: `writeText` (texto plano) y `write` genérico con objeto `DataTransfer` (mismo que drag & drop), p.ej. versiones HTML + texto
+- escritura sin permiso: Chrome no lo pide aunque el estándar define uno; solo en pestaña activa
+- lectura: `read()` / `readText()`; sí requiere permiso del usuario — si no, robo de datos del portapapeles, problema de privacidad/seguridad
+- funciona en file:/// y localhost; en servidor real solo bajo HTTPS — crítica a quien cree que su dominio no necesita HTTPS
+- UI de Chrome: icono de carpeta en barra al conceder, tachado al denegar; clic para revocar/cambiar
+- API `navigator.permissions`: permisos `clipboard-read` y `clipboard-write`; estados prompt / denied / granted
+- uso práctico: si ya está denegado, deshabilitar botones de pegar de antemano
+- referencias: MDN promesas https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises; curso campusMVP JS/ECMAScript avanzado https://www.campusmvp.es/catalogo/Product-Programaci%C3%B3n-avanzada-con-JavaScript-y-ECMAScript_206.aspx
+- ejemplo descargable (ZIP, 2.24KB): https://www.jasoft.org/Blog/descargas/Copiar-Cortar-Portapapeles-Async.zip — versiones async comentadas, Promise activas
+- opinión: será la forma preferida frente a la clásica; mientras tanto ambas pueden coexistir

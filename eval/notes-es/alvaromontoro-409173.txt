@@ -1,0 +1,18 @@
+- contexto: versión reducida en español del taller "Rocking the Gamepad API" dado en Codeland:Distributed, https://codelandconf.com/
+- versión en inglés: https://dev.to/alvaromontoro/develop-a-rock-band-game-with-html-and-javascript-in-10-minutes-26kc
+- sin batería real: gamepad virtual, https://dev.to/alvaromontoro/virtual-gamepad-in-javascript-511g
+- video del taller en YouTube (AvuETBMxdJs), 40 min, incluye detalle de la Gamepad API; spec: https://w3c.github.io/gamepad/
+- objetivo: mini Rock Band/Guitar Hero sólo con HTML, CSS y JS estándar, sin bibliotecas; ~10 min de desarrollo
+- hardware: batería Harmonix de PS3 del Rock Band original; orden de botones rojo=2, amarillo=3, azul=0, verde=1 — otros controladores pueden variar
+- detección con eventos gamepadconnected/gamepaddisconnected; bucle con requestAnimationFrame, más fiable que setTimeout/setInterval
+- recorre la lista de gamepads aunque sólo haya uno — pensando en multijugador futuro
+- problema: botón pulsado dispara buttonPressed varias veces (pulsación > ciclo de refresco ~16ms); solución: guardar estado previo de botones
+- lógica: Math.random para botón activo 0-3, puntos y racha (racha a 0 si falla)
+- UI: tambores redondos con box-shadow de color, dos centrales más altos como el físico; clase en #drumset marca tambor activo con fondo semitransparente
+- crítica propia: versión inicial demasiado simplona — pantalla en blanco, Times New Roman no pega con rock
+- arreglos: fuente New Rocker de Google Fonts; iframe de YouTube a pantalla completa con ?autoplay=1&controls=0; truco: usar playlist
+- captura con video "Ignorance" de Paramore de fondo
+- total 150 líneas (16 HTML + 73 CSS + 61 JS); Codepen: https://codepen.io/alvaromontoro/pen/abdMQzL
+- opinión: no tan complejo como el original, pero ideal para niños; a sus hijos les encanta
+- ideas de extensión: multiplicadores/combos, mensajes tras rachas 10+/20+/30+, API de YouTube para fin de video, detectar ritmo/volumen, JSON de notas cayendo desde arriba
+- próximo post: joystick/direccionales para juego tipo Dance Dance Revolution

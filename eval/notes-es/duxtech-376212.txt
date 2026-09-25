@@ -1,0 +1,15 @@
+- tema: objetos literales en JavaScript; autor los considera la estructura más importante del lenguaje y a menudo mal comprendida
+- sintaxis: pares clave/valor agrupados entre llaves
+- literal = valor escrito textualmente en el código; ej. string literal `colorDelSol = "Amarillo"`
+- ejemplo recurrente: objeto `perro` — nombre "Scott", color "Cafe", edad 5, macho true
+- valores admitidos: strings, enteros, booleanos, incluso otros objetos
+- acceso: notación de punto (`perro.nombre`) y de corchetes (`perro['nombre']`); mismo resultado, en la práctica se usa más el punto
+- métodos dentro del objeto: `ladrar` devuelve "Scott puede ladrar"; requiere `this` por scope
+- post previo sobre scope: https://dev.to/crisfer4217/scope-en-javascript-var-let-y-const-5eh2
+- post previo sobre this: https://dev.to/crisfer4217/this-en-javascript-5782
+- agregar campo: `perro.tamaño = "Grande"`; actualizar: sobrescribir, `perro.edad = 8`; eliminar: `delete perro.color`
+- salidas de ejemplos generadas con JSBin (https://jsbin.com/), de ahí el formato `[object Object]`
+- opinión: añadir/actualizar/eliminar propiedades es poco usual frente a otros lenguajes, pero muy simple
+- errores en el post: sintaxis genérica con `valor:2` en vez de `valor_2`; tabla dice "int" y "bolean"; llama "homónimas" a las dos notaciones; salida de delete mostrada como código `let perro = {...}` en vez de salida de JSBin
+- referencias: https://makeitrealcamp.gitbook.io/javascript-book/objetos-literales, https://desarrolloweb.com/articulos/literales-objeto-javascript.html
+- cierre con gif: https://media.giphy.com/media/lrDMG46JjKiovLbkn8/giphy.gif

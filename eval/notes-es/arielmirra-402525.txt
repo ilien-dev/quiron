@@ -1,0 +1,14 @@
+- contexto: debate habitual al hacer apps web — Angular vs React vs Vue; autor propone PolymerJs como alternativa más universal, compatible y fácil de aprender
+- Polymer: https://www.polymer-project.org/ — librería + toolbox para WebComponents y PWAs
+- WebComponents: https://www.webcomponents.org — definición tomada de MDN (llamada "la biblia de los desarrolladores"): https://developer.mozilla.org/es/docs/Web/Web_Components
+- herramientas previas: NodeJs https://nodejs.org/en/download, Git https://git-scm.com/downloads, npm https://www.npmjs.com
+- instalar CLI: `npm install -g polymer-cli@next`
+- repo de ejemplo: `git clone https://westdabestdb@bitbucket.org/westdabestdb/polymerapp.git`
+- `polymer serve` → app en http://127.0.0.1:8081, componentes reutilizables en http://127.0.0.1:8081/components/polymerapp/
+- ejemplo: clase HelloWorld extiende PolymerElement (import de '@polymer/polymer'), propiedad `who` tipo String, default 'World', template html con CSS inline, fondo #e3e3e3
+- registro con `customElements.define('hello-world', HelloWorld)`; uso: `<hello-world who="there!"></hello-world>` desde componente PolymerApp ('polymer-app')
+- opinión: para quien sabe React "es como estar en casa"
+- conclusiones del autor: WebComponents universales, sin librerías, funcionan en cualquier navegador; reutilizables; se pueden hacer apps solo con Polymer
+- más componentes de terceros en https://www.webcomponents.org/
+- autor: Ariel Mirra — https://linktr.ee/arielmirra, instagram https://www.instagram.com/ariel.mirra, linkedin linkedin.com/in/ariel-mirra
+- tono: informal, rioplatense ("tenés", "seguís vos"), guiño a Star Wars ("joven padawan")

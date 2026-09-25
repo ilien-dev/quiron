@@ -1,0 +1,15 @@
+- autor: Eduard Tomás, publicado en campusMVP; original: https://www.campusmvp.es/recursos/post/Comparando-valores-y-referencias-en-varios-lenguajes-de-programacion.aspx
+- tema: cómo distintos lenguajes resuelven comparación por referencia (mismo objeto) vs por valor (objetos distintos pero idénticos); semántica de valor aplicada del todo → inmutabilidad, toda modificación genera copia
+- Java: == compara referencias; equals (definido en Object) para comparar por valor, hay que redefinirlo en cada clase
+- error típico en Java: comparar cadenas con ==; puede dar true en Eclipse por optimización del compilador, no del lenguaje; leyendo de archivo daría false
+- Java: tipos simples (int, boolean, double) no son clases, siempre por valor
+- C#: misma base que Java (== referencia, Equals en Object), tres diferencias: structs con semántica de valor, se puede sobrecargar ==, tipos simples son alias de structs .NET (int → Int32)
+- structs en C# no son inmutables; consejo del autor: hacerlas inmutables; sin implementar == no se puede usar; si redefines == obliga a redefinir !=
+- opinión: solo sobrecargar == en clases con objetos inmutables; String es clase pero con == sobrecargado → "Hola" == "Hola" es true
+- JavaScript: sin comparación por valor salvo tipos simples (booleanos, números, cadenas); {} == {} false; comparación por valor a mano
+- autor: Java/C# al menos dan un sitio para el código (Equals), pero efecto colateral: todo objeto tiene Equals aunque no esté bien redefinido
+- JS ===: igual que == pero sin coerción de tipos; coerción no depende de dinámico/estático (C# estático y la soporta); problema en JS: coerciones muy amplias
+- ejemplos: 1 == "1" true; 1+1 == 1+"1" false ("11" → 11 vs 2); 1 === "1" false
+- consejo: usar siempre === en JS salvo razón clara
+- Swift: == compara por valor (como Equals/equals), === por referencia — confuso para quien venga de otros lenguajes, lo contrario que JS
+- Swift: implementar == en clases propias (ejemplo Vector2D con @infix); clases vs structs como C#; === entre structs siempre false aunque sean idénticas

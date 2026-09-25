@@ -1,0 +1,14 @@
+- fuente: artículo de Philip Wadler (2001), http://roman-dushkin.narod.ru/files/fp__philip_wadler_001.pdf
+- programación funcional muy ligada a matemáticas; mónada viene de teoría de categorías (matemáticas abstractas)
+- problema que resuelve: lenguajes funcionales puros sufren con cosas simples en imperativos — excepciones, contadores, trazas de ejecución
+- causa según Wadler: flujo de datos explícito — ventaja y desventaja ("a veces dolorosamente explícito"); pero da modularidad
+- mónada (a.k.a. construcción estándar): estructura que enriquece el retorno de una función, facilita composición, encapsula lo que en imperativos serían efectos colaterales
+- ejemplo clave: Try en Scala y en VAVR (librería funcional para Java); Try<Integer> guarda un Integer o una excepción
+- demo Java: dividir(100, 0).flatMap(...) → "/ by zero"; dividir(100, 10).flatMap(dividir(r1, 10)) → 1
+- 3 leyes monádicas; opinión del autor: más valor teórico que práctico
+- Left Identity: aplicar f a un valor == flatMap de f sobre el valor envuelto; Haskell `return a >>= f = f` 
+- Right Identity: flatMap con función que solo envuelve (Try.success) == valor envuelto; Haskell `m >>= return = m`
+- no encontró traducción al español para "Left Unit"/"Right Unit"
+- duda/advertencia: en los ejemplos Java las dos leyes de identidad parecen la misma (right como caso particular de left); diferencia más clara en lenguajes más matemáticos como Haskell
+- Asociatividad: encadenar flatMap en secuencia == anidarlos; ejemplo con dividirPor10 y duplicar sobre 100, r1.equals(r2) → true
+- Haskell asociatividad: `(m >>= f) >>= g ≡ m >>= (\x -> f x >>= g)`

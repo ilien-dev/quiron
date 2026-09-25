@@ -1,0 +1,16 @@
+- tutorial introductorio de Amazon SageMaker con ejemplo sencillo de ML; repo: https://github.com/elizabethfuentes12/Iniciando_SagemakerML
+- basado en tutorial oficial AWS: https://aws.amazon.com/es/getting-started/hands-on/build-train-deploy-machine-learning-model-sagemaker/
+- caso: dev de ML en un banco, predecir si clientes se inscriben en certificado de depósito; dataset de marketing etiquetado (versión pública en repositorio UC Irvine) → aprendizaje supervisado
+- algoritmo: XGBoost integrado en SageMaker (árboles con gradient boosting); sirve para regresión, clasificación y ranking; doc: https://docs.aws.amazon.com/es_es/sagemaker/latest/dg/xgboost.html
+- notebook MySageMakerInstance, tipo ml.t2.medium, rol IAM con acceso a cualquier bucket S3; entrenamiento y endpoint en ml.m4.xlarge
+- capa gratuita; si recursos activos >2 meses, costo <0,50 USD; recomienda borrar endpoint, vaciar bucket y detener/eliminar instancia
+- tip propio: config de ciclo de vida auto-stop-idle para apagar instancia inactiva — script on-start.sh: https://github.com/aws-samples/amazon-sagemaker-notebook-instance-lifecycle-config-samples/blob/master/scripts/auto-stop-idle/on-start.sh
+- split 70% entrenamiento / 30% prueba; hiperparámetros max_depth=5, eta=0.2, gamma=4, min_child_weight=6, subsample=0.8, num_round=100
+- entrenamiento duró 47 segundos — solo eso se cobra por la máquina del contenedor
+- resultado: tasa general 89.5%; precisión 65% (278/429) inscritos vs 90% (10 785/11 928) no inscritos
+- opinión: modelo bueno para no inscritos, malo para inscritos; métrica depende del objetivo (ej. spam: tolerar falsos negativos para minimizar falsos positivos)
+- mejorar iterando hiperparámetros; los de mayor efecto: alpha, min_child_weight, subsample, eta, num_round; recomienda HP Tuning Job de SageMaker
+- extras: desplegar desde job previo con Estimator.attach; importar modelo propio (MXNetModel) subiéndolo antes a S3
+- problema: tutorial original escrito para versión 1.x del SDK → errores; solución: guía v2 https://sagemaker.readthedocs.io/en/stable/v2.html, aplicable a otros ejemplos
+- más ejemplos: https://github.com/aws/amazon-sagemaker-examples
+- redes autora: https://dev.to/elizabethfuentes12, https://www.linkedin.com/in/lizfue/, AWS Girls Chile https://www.linkedin.com/company/aws-girls-cl/

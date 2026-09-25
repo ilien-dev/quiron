@@ -1,0 +1,9 @@
+- format: weekly Tuesday roundup of top DEV posts from previous week; picked by traffic, engagement, some editorial curation; Mon–Sun week, later-published posts still considered
+- @adiatiayu — free + affordable resources for learning frontend dev; praised as well-curated list: https://dev.to/adiatiayu/10-free-and-affordable-resources-to-learn-frontend-web-development-1ehb
+- @carstenbehrens — couldn't find perspective of German self-taught dev, so wrote own; became pro while working full-time job: https://dev.to/carstenbehrens/how-i-became-a-professional-self-taught-developer-in-germany-while-working-a-full-time-job-djd
+- @mariehposa — Jenkins primer; what/when/why; CI/CD: https://dev.to/mariehposa/achieving-continuous-integration-and-deployment-with-jenkins-4d6k
+- @allenheltondev (AWS Builders org) — 5 architecture diagram types for 5 audiences; roundup author found it fascinating: https://dev.to/aws-builders/solutions-architect-tips-the-5-types-of-architecture-diagrams-3pl3
+- @sanspanic — pure vs impure functions; jargon that seems inaccessible is easy to demystify: https://dev.to/sanspanic/pure-vs-impure-functions-50aj
+- @missamarakay — measuring documentation success; key idea: first admit to everyone incl. yourself that docs are hard: https://dev.to/missamarakay/measuring-successful-documentation-3hc8
+- @anuradha9712 — debouncing vs throttling; both for perf optimization; choice depends on context: https://dev.to/anuradha9712/debouncing-v-s-throttling-lb2
+- closing: watch dev.to for daily content; recap next week (says Monday despite Tuesday schedule — inconsistency)

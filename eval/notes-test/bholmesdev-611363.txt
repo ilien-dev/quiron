@@ -1,0 +1,16 @@
+- context: author's first full-time programming job this year; automating daily git routines
+- routine: pick up JIRA ticket → pull latest main → new branch → push to origin before PR; 5+ times/day in bug-squashing stretches
+- pain points: working off stale main; "copy-paste of shame" of `git push --set-upstream origin <branch>` hint
+- aliases live in `~/.bashrc`; Windows users need Git Bash, https://git-scm.com/downloads, bashrc setup: https://stackoverflow.com/questions/6883760/git-for-windows-bashrc-or-equivalent-configuration-files-for-git-bash-shell
+- `gimme`: `git stash push -u && git checkout main && git pull -r`; -u includes untracked files, -r rebases to avoid needless merge conflicts; simplest but most-used
+- team runs automated scripts on pull (installing deps, pulling CMS content), so pull is worth it; CMS link: https://www.optimizely.com/optimization-glossary/content-management-system/
+- `yoink`: `gimme && git checkout - && git stash pop`; returns to previous branch with latest main, for force-rebasing: https://egghead.io/lessons/git-push-a-rebased-local-branch-by-using-force-with-lease
+- name from Urban Dictionary: https://www.urbandictionary.com/define.php?term=Yoink
+- alternative: `git fetch origin master:master`, but skips pull-triggered team scripts
+- author used to use stash apply/clear; claims plain `git stash` merges into one pile vs `stash push` making a separate entry, so push/pop gets back exactly what was stashed (bag-pocket analogy) [flag: inaccurate — plain `git stash` is the same as `git stash push`; both create separate entries]
+- `woosh`: shell function, `git checkout -b $1 && git push -u origin HEAD`; ends set-upstream problem
+- admits sometimes you don't want the branch on remote yet; rare in author's experience, branches usually map to Kanban tasks ready to push
+- HEAD tip: auto-fills current branch name, no typing
+- `boop`: `gimme && woosh`; name credited to "lord of boops" Jason Lengstorf, https://www.jason.af
+- minor inconsistency: code comments say "master" while commands use main
+- plug: "web wizardry" newsletter, https://tinyletter.com/bholmesdev; web dev first principles (janky browser APIs, CSS, semi-accessible HTML), ref https://www.swyx.io/first-principles-approach/; promises no spam

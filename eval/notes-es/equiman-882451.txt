@@ -1,0 +1,17 @@
+- objetivo: crear archivos y directorios en VSCode sin ratón; más productividad
+- origen: época haciendo reportes y macros en Excel, jefe pedía todo "para ayer" → obsesión con atajos
+- al enseñar Excel de negocios, primera lección: desconectar el mouse; difícil al inicio pero necesario
+- autor usa VSCode en inglés + teclado en-US, lo recomienda; atajos pensados para eso, adaptables
+- post relacionado sobre migrar a teclado inglés: https://dev.to/equimancho/migrando-a-teclado-en-ingles-para-desarrollo-a91
+- opción por defecto de VSCode para crear archivos exige mucho ratón — el autor lo odia
+- atajo base: alternar foco editor/explorador — mac `Command + Shift + E`, win/linux `Ctrl + Shift + E`
+- setting `"explorer.autoReveal": true` en settings.json: explorador selecciona el archivo actual; a veces útil, a veces no — probar
+- keybindings propios: `ctrl+n` → `explorer.newFile`, `ctrl+shift+n` → `explorer.newFolder`, ambos con `when: explorerViewletFocus`
+- win/linux: además remapear `ctrl+shift+n` → `workbench.action.newWindow` con `when: !explorerViewletFocus` para evitar conflicto con nueva ventana
+- alternativa: terminal con ZSH; recomienda probarlo, "no vas a querer volver"
+- post sobre iTerm2 + Oh My Zsh + Powerlevel9k (en inglés, orientado a macOS, pendiente traducir): https://dev.to/equiman/iterm2--oh-my-zsh--powerlevel9k-best-terminal-combination-for-geeks-58l5
+- ZSH también en Linux y en Windows vía WSL
+- `take` = mkdir + cd; `touch` crea uno o varios archivos
+- componente en una línea: `take Name && touch name{.css,.js,.test.js}` → name.css, name.js, name.test.js
+- versión en inglés: https://dev.to/equiman/vscode-create-files-and-folders-on-the-go-2hd6
+- patrocinio: https://github.com/sponsors/deinsoftware
