@@ -37,3 +37,13 @@ The scripts use the Python 3 standard library only. Please don't add dependencie
 If you edit a README or any other Markdown written for people, run it through
 `scripts/check.sh` before you commit. `SKILL.md` and `CLAUDE.md` are instructions for the
 model, so they don't need it, and neither do the samples in `eval/ai/`.
+
+## Releases
+
+A release goes out when a pull request that changes the version is merged. Bump it to the
+same `x.y.z` in `.claude-plugin/marketplace.json` and `CITATION.cff`, and set
+`date-released`. Once the merge reaches `main`, the release workflow tags the merge commit
+as `vx.y.z` and publishes the GitHub release, with the pull request's description as its
+notes. So write that description for the people who will read the release. If the two
+files disagree on the version, the workflow fails and nothing is published. An existing
+tag is left alone.
