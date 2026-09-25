@@ -144,7 +144,10 @@ este repo. Nada entra porque "se lee mejor".
   "escribir como humano" acaban más cortados y más planos que cualquier persona. El
   medidor marca los dos casos.
 - **Jueces a ciegas.** Modelos nuevos leyeron posts de uno en uno y adivinaron cuáles eran
-  de IA. De esa prueba sale el hallazgo más importante, que está justo abajo.
+  de IA. De esa prueba sale el hallazgo más importante, que está justo abajo. Desde
+  septiembre de 2026, cada cambio a las reglas de reescritura lo juzgan también jueces de
+  Claude y de GPT sobre títulos con los que no se ajustó, en inglés, en español y en
+  ficción; el código está en `eval/e2e/`.
 
 Cómo se midió cada número y de dónde viene cada regla está en [`SKILL.md`](SKILL.md),
 [`references/spanish.md`](references/spanish.md) y [`eval/README.md`](eval/README.md),

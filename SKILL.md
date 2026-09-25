@@ -26,6 +26,7 @@ Read these when the step you are on needs them. Each is one level deep and self-
 - [references/word-choice.md](references/word-choice.md): the lexicons, the plain words
   models leave out, and the Claude-specific words.
 - [references/spanish.md](references/spanish.md): bands, checks and word lists for Spanish.
+- [references/fiction.md](references/fiction.md): the story-shape rules for fiction.
 - [references/numbers.md](references/numbers.md): every band, what the apparatus does on
   held-out texts, how to calibrate a new register, and what the skill cannot do.
 - [references/sources.md](references/sources.md): the studies behind every number.
@@ -56,7 +57,9 @@ kind, and the kinds differ in opposite directions: assistant blog posts have lon
 more even sentences than human ones, while assistant fiction has shorter, choppier ones.
 
 - `scripts/bands.json` (default): technical and personal blog posts, articles, essays.
-- `scripts/bands-fiction.json`: short stories and narrative prose.
+- `scripts/bands-fiction.json`: short stories and narrative prose. **For a story, read
+  [references/fiction.md](references/fiction.md) before rewriting**: in fiction the
+  story's shape, not its sentences, is what readers catch.
 - `scripts/bands-es.json`: blog posts and articles in Spanish (see `references/spanish.md`).
 
 Select a file by putting `QUIRON_BANDS=<skill-dir>/scripts/bands-fiction.json` (or
@@ -116,6 +119,17 @@ events", "generic trend summary", "tidy gotchas" against "specific personal mish
   speaker when they had attended, an invented product). Where they disagree, the notes
   win. The draft's personal anecdotes ("I rewrote the headline twenty times") were
   invented by the model that wrote it: drop them unless the writer confirms them.
+- **With notes, build the post from the notes, not from the draft.** The notes say what
+  the post is about; the draft is only material to borrow wording and explanations from.
+  Keep a draft section only when the notes support it or it explains something the notes
+  mention. Tutorial scaffolding the writer never asked for (install steps, a "basics"
+  section, error handling, security caveats, a closing summary) goes, even when it is
+  correct. A post the length and shape of the notes reads like its writer; the draft's
+  complete tutorial around them reads like the model that wrote it.
+- **Leave no trace of the draft or of the rewrite.** Delete what you cannot fill:
+  placeholders (`GIF_URL_HERE`, TODO), an embed described in prose ("there's a video
+  version (video id …)"). Add no note about when the post was written or what may have
+  changed since; the writer did not write one.
 - **Without that material, say so. This holds for tutorials and reference posts too.**
   A rewrite with no new information gets the rates human and leaves the text reading as
   generated. You MUST tell the user the draft needs their specifics to stop reading as
@@ -127,7 +141,11 @@ skill's tests closed paragraphs with invented sayings: "That's a favor, not a
 liability", "Hope isn't a strategy", "Every line has to earn its spot". The judges quoted
 exactly those lines as their reason, every time. The clipped ", not Y." tail was in 25% of
 the final rewrites against 5% of human posts. End a paragraph on its last fact or the
-writer's own words, not on a line built to be quoted.
+writer's own words, not on a line built to be quoted. The same goes for sections: end each on
+its last fact. Blind judges' most common reason after "too polished" was a line that
+wraps a section up ("That turned out to be enough.", "It's just the advice I keep giving,
+written down.") or a stock hand-off ("One last thing."): 58 of 288 reasons on this
+skill's rewrites.
 
 **Loosen the structure.** Assistant posts carry about twice the headings of human ones
 (held-out median 12.2 against 6.6 per 1,000 words), and rewrites that fixed every word
@@ -160,12 +178,13 @@ Quirón progress:
 - [ ] 4. Meter: AI side fixed, then overshot
 - [ ] 5. Checklist: no FAIL, every READ and TELL ruled on
 - [ ] 6. check.sh converged (two clean runs in a row, with --source when rewriting)
-- [ ] 7. Review items asked one at a time, if the writer is in the conversation
-- [ ] 8. Final message follows the step 7 template (never "ready to publish")
+- [ ] 7. Cold read by a fresh agent, text-level reasons fixed, check.sh rerun
+- [ ] 8. Review items asked one at a time, if the writer is in the conversation
+- [ ] 9. Final message follows the step 8 template (never "ready to publish")
 ```
 
 1. **Write or rewrite.** Apply the points above, the pattern index below, and the word
-   choice summary. Keep every supported claim. Never add a fact, name, number, date,
+   choice summary. Keep every claim the notes support. Never add a fact, name, number, date,
    quote, citation or personal experience that is not in the source or from the user. If
    a sentence needs a detail you lack, ask, or cut the sentence. An opinion or reaction is
    fine where the voice calls for one. Fiction is exempt: invented detail is the task.
@@ -178,8 +197,9 @@ Quirón progress:
    have a median of 20 of 23 features in band. The goal is a clean checklist, not 23 of 23.
 5. **Converge** with `check.sh` (next section). When rewriting, pass the draft and any
    notes with `--source`; a number, date or link the sources do not have fails the run.
-6. **Review with the writer** (section below): `audit.py --review`, one question at a time.
-7. **Report honestly**, with this template, in the user's language:
+6. **Cold read** (section below), once, if you can start a fresh agent.
+7. **Review with the writer** (section below): `audit.py --review`, one question at a time.
+8. **Report honestly**, with this template, in the user's language:
 
    ```
    Result: <N> of 23 features in the human band; checklist <F> FAIL, <T> TELL; converged: yes/no.
@@ -252,6 +272,31 @@ any Title Case heading and any rate outside the band; it failed every one of 42 
 human posts. The current rules pass 98% of them clean and still fail 86% of the Claude
 Sonnet and 93% of the GPT posts written on the same titles.
 
+## Cold read
+
+The meter and the checklist cannot see what a reader sees first: a text that is evenly
+tidy, sections that each close on a neat line, caveats nobody asked for. A reader who has
+not watched you write can. When the host lets you start a fresh agent with no context (in
+Claude Code, the Agent tool), give it only the finished text and this prompt:
+
+```
+Below is a <kind of text, e.g. blog post>. Some texts like it were written by people,
+others were generated by an AI assistant. Estimate the probability, 0 to 100, that this
+one was AI-generated. Judge the writing itself, not dates or versions. Reply with the
+number and at most three reasons, quoting the text where you can.
+```
+
+Never tell it that you wrote or rewrote the text. Then act on the reasons, once:
+
+- A reason that quotes or points at a sentence (a closing line, a caveat, a stock
+  transition, an inserted aside, a section the writer's notes do not support): fix it
+  with the rules above, or delete the sentence.
+- A reason that asks for what only the writer has (anecdotes, typos, links, opinions):
+  do not supply it. Add it to "What would help" in the report.
+
+Run `check.sh` again after the edits. One round only: a second round drives the text
+toward what one reader expects, which is the overshoot problem again.
+
 ## Review with the writer
 
 `scripts/audit.py --review [--json] FILE` lists sentences a reader may take for AI that
@@ -262,7 +307,7 @@ the loop made rewrites read more AI to blind judges, because many of these sente
 ordinary ones (`references/numbers.md`). So the writer decides, sentence by sentence,
 and you leave these sentences exactly as they are while writing, rewriting and looping.
 
-Do this only when the writer is in the conversation, after `check.sh` converged; skip it
+Do this only when the writer is in the conversation, after the cold read and `check.sh` converged; skip it
 in batch or headless runs. Ask about one item at a time, never as a list, and wait for
 the answer before the next. Each question carries:
 
@@ -333,7 +378,7 @@ them, but their absence proves nothing.
 Three or more distinct entries in one text fail B1.
 
 **The stronger signal is the plain words that are missing:** *very, get, about, because,
-do, able, lot, so, things, really, actually, something, want*. Models reach for the
+do, able, lot, so, things, something, want*. Models reach for the
 elevated member of every pair: *used* not *utilized*, *use* not *leverage*, *show* not
 *showcase*. Use the plain word where it is the natural one; do not sprinkle plain words to
 move a number, which is its own tell.
@@ -350,7 +395,9 @@ Details, the fiction lexicon and the Claude-specific words are in
 It does not defeat a perplexity-based AI detector such as GPTZero, and no prompt tested in
 the literature does: those detectors read the probability of each token, not the style.
 Style edits alone also do not move a strong reader (see the judge table above); the
-writer's own material does. `references/numbers.md` has the measurements.
+writer's own material does. Text Claude writes also carries Anthropic's watermark (models
+from August 2026 on), which no edit of style removes. `references/numbers.md` has the
+measurements.
 
 ## Voice
 
@@ -377,6 +424,13 @@ rule would trim it: a specific, unusual detail; mixed feelings left unresolved; 
 era-bound references; a first-person choice the writer can explain; a genuine aside or
 self-correction. Voice comes from what the writer knows and thinks, not from slang or a
 casual tone.
+
+**State an opinion without vouching for it.** Write "I think he'd be a great fit", not
+"Honestly, I think he'd be a great fit". Sincerity markers (*honestly*, *genuinely*,
+*frankly*, *to be honest*, *truly*) are how Claude signals candour: in this skill's own
+rewrites *honestly* was in 33% of posts, against 2% to 5% of human posts and none of the
+writers' notes. Anthropic's claude.ai system prompts tell Claude to avoid the same words.
+Keep one only when the writer's notes or sample use it.
 
 ## When not to act
 

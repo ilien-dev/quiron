@@ -55,3 +55,13 @@ held-out human story and in 20% to 30% of the assistant ones.
 against 14.3% chance). Its over-used academic words are in `claude-lean.txt` (*through,
 across, substantially, mechanisms, fundamentally*); four or more distinct
 ones is a TELL. Claude Sonnet also used em dashes in every post on this skill's run.
+
+**Sincerity markers are Claude's, not the writer's.** Anthropic's own claude.ai system
+prompts tell Claude to avoid *genuinely*, *honestly* and *straightforward* (Opus 4.8's
+also *actually*). On this skill's run *genuinely* was in 1% of human posts and 50% of
+Claude Sonnet ones, so it joined `ai-lean.txt` in September 2026 (Sonnet posts left
+clean by the checklist fell from 14% to 0%, held-out human posts unchanged). *Honestly*
+is in 5% of human posts, too many for the list, but the skill's own rewrites put it in
+33%: state the opinion and leave its sincerity alone. *Actually* is in 24% of human posts
+and 64% of Claude Opus ones, so it is left out of the plain-word advice even though LexA
+found GPT under-using it.
