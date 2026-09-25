@@ -1,0 +1,68 @@
+name: release
+
+# When a version bump reaches main, tag it and publish the GitHub release.
+# The version comes from .claude-plugin/marketplace.json and must match CITATION.cff.
+# The release notes are the description of the pull request that was merged.
+
+on:
+  push:
+    branches: [main]
+    paths: [.claude-plugin/marketplace.json]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read the version
+        id: version
+        run: |
+          version=$(jq -r '.plugins[0].version' .claude-plugin/marketplace.json)
+          cff=$(sed -n 's/^version: *//p' CITATION.cff | tr -d '"')
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::marketplace.json has no x.y.z version: '$version'"; exit 1
+          fi
+          if [[ "$version" != "$cff" ]]; then
+            echo "::error::marketplace.json says $version but CITATION.cff says $cff"; exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "v$version is already tagged, nothing to release."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Tag and publish
+        if: steps.version.outputs.exists != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          pr=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" \
+                 --jq '[.[] | select(.merged_at != null)][0]')
+          if [[ -n "$pr" && "$pr" != "null" ]]; then
+            echo "$pr" | jq -r '.body // ""' > notes.md
+            title=$(echo "$pr" | jq -r '.title' | sed -E 's/ *\([0-9.]+\)$//')
+          fi
+          if [[ ! -s notes.md ]]; then
+            echo "No merged pull request found for ${GITHUB_SHA}; using generated notes."
+            notes=(--generate-notes)
+          else
+            notes=(--notes-file notes.md)
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$VERSION" "$GITHUB_SHA" -m "Release $VERSION${title:+: $title}"
+          git push origin "v$VERSION"
+          gh release create "v$VERSION" --title "Quirón $VERSION" --verify-tag --latest "${notes[@]}"
