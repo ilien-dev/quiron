@@ -1,0 +1,17 @@
+- contexto: Angular 8 lanzado oficialmente 28 de mayo; Angular 9 previsto oct/nov 2019 gracias al trabajo de la comunidad
+- versiones con soporte: https://angular.io/guide/releases
+- rutas: opción de navegación basada en hash en setUpLocationSync
+- núcleo: se puede definir el timing de consultas ViewChild / ContentChild; antes inconsistencia rompía código dependiente
+- compilador: tokenizar subconjunto de cadena + cadenas de escape; compiler-cli ya no soporta símbolos externos por defecto
+- estilos: soporte SASS para Bazel; fix aumenta límite de memoria de node para ng-module con módulos grandes
+- imágenes PNG más livianas con pngcrush
+- API pública: createInjector() para renderizador Ivy (beta a finales de año), se reexportará al lanzar Ivy
+- sintaxis: chequeos typeof coherentes (!== null && typeof == 'object'), evita ToBoolean innecesario; ngtsc expuesto como plugin para binarios TypeScript existentes
+- CLI: archivos SASS/Less resueltos a .css
+- formularios: marcar control y descendientes como tocados; se exportan NumberValueAccessor y RangeValueAccessor
+- rendimiento: @angular/platform-server reutiliza instancia compartida de DomElementSchemaRegistry; antes ServerRendererFactory2 creaba una por request — muy costoso
+- fixes Bazel en beta: proyecto generado por schematics no compilaba si tenía módulo de enrutamiento
+- Ivy: bundles más pequeños, arranque rápido en móvil lento, depuración más fácil, rebuilds más rápidos, mejor type checking de plantillas; alternar Ivy/View Engine en beta futura
+- duda del autor: Ivy no lista para todos los casos de uso; lanzamiento completo esperado en Angular 9, otoño 2019
+- posibles extras en 8.0: carga diferencial JS en CLI (bundles legacy + modernos ES2015+) para mejor TTI; modo compatibilidad del router para migrar proyectos grandes
+- probarlo: `npm install -g @angular/cli` — versión 8.0.0 al momento de escribir

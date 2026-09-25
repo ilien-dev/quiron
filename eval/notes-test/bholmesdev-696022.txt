@@ -1,0 +1,12 @@
+- context: building design systems, leaning heavily on CSS custom properties; earlier post: https://bholmes.dev/blog/how-using-css-variables-cut-down-on-my-javascript/
+- roadblock: var() not allowed inside @media declarations, e.g. max-width: var(--mobile-breakpoint) with vars on :root
+- why: :root = root HTML element; media queries not attached to any element, evaluated at CSS parse time, can't see element-scoped vars
+- analogy: var defined on body — obviously @media can't read it; :root no different
+- Sass nesting of @media inside rulesets misleading — compiles back out to top level of stylesheet
+- W3C/CSSWG proposal for "environment" variables: https://drafts.csswg.org/css-env-1/ — phase 1 as of May 2021, aims at this exact case; skipping syntax since likely to change
+- workaround 1 (recommended for existing Sass users): Sass vars for breakpoints, CSS vars elsewhere; Sass vars just compile-time value substitution, not tied to rulesets
+- gotcha: calc() also invalid in media queries — do math in Sass instead ($mobile-breakpoint + 50px ok, calc(...) not)
+- workaround 2 (no Sass / avoid two var syntaxes): PostCSS plugin postcss-media-variables, https://www.npmjs.com/package/postcss-media-variables — enables var() + calc() in media queries
+- downside: needs build step (annoying if you don't have one); you're writing invalid CSS that gets transformed — confusing for new contributors; document in README
+- CTA: web wizardry newsletter, bi-weekly, https://tinyletter.com/bholmesdev
+- canonical: https://bholmes.dev/blog/alternative-to-css-variable-media-queries/

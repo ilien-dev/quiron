@@ -13,6 +13,7 @@ A change ships only if a measurement shows an improvement. Opinion and "this rea
 - An improvement moves assistant-register text toward the band and keeps known-human text inside it. Flagging human texts is a regression, even if it catches more AI text.
 - Overshoot is a failure (TextPulse, top of `SKILL.md`): prefer `overshot` getting rarer over a higher score.
 - Rerun any reproducible number in `SKILL.md` or `references/` when code or bands change; remove figures with no measurement behind them.
+- Rewrite rules are judged end to end with `eval/e2e/` on `dev`, then confirmed on `test` (`fic2` for fiction). A `dev`-only gain does not ship: two failed on `test`.
 
 ## User-facing Markdown
 
@@ -20,7 +21,7 @@ Any Markdown a person reads (READMEs, `CONTRIBUTING.md`, any new one) is written
 
 ## Commands
 
-Python 3 standard library only, no build. Texts under ~120 words or 8 sentences return no measurement.
+Python 3 standard library only, no build (`eval/e2e/` is the exception). Texts under ~120 words or 8 sentences return no measurement.
 
 ```sh
 python3 scripts/aimeter.py [--json] FILE     # 23 rates vs bands.json
@@ -31,6 +32,8 @@ scripts/build-corpus.sh [OUTDIR] [author ...] # fetch pre-2022 dev.to corpus, th
 python3 scripts/evaluate.py --human DIR [--ai-train DIR] NAME=DIR ...  # score the skill
 python3 scripts/factdiff.py SOURCE REWRITE   # facts in the rewrite, not in the source
 QUIRON_BANDS=scripts/bands-fiction.json ...  # other registers: fiction, es
+python3 eval/e2e/harness.py rewrite SNAP REP [--set dev|test|es|fic|fic2]  # needs the claude CLI
+python3 eval/e2e/report.py OLD NEW [--set ...]  # blind judges, paired per title
 ```
 
 ## Architecture

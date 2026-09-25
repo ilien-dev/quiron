@@ -1,0 +1,16 @@
+- serie "Sobrevivir en Swift", parte 1 de 2; parte 2: https://dev.to/fmo91/sobrevivir-en-swift-parte-2-2gab
+- autor: Fernando Martín Ortiz, 6 años desarrollando iOS; formato de curso introductorio, no exhaustivo, solo lo necesario para arrancar con apps iOS
+- contexto: Swift de Apple, reemplazo de Objective-C; con Xcode para iOS, iPadOS, macOS, watchOS, tvOS; open source desde 2015 con comunidad abierta
+- Swift multiparadigma (OOP, funcional, procedural, scripting), aunque la comunidad se orienta sobre todo a OOP; fácil de aprender, puede volverse tan complejo como haga falta
+- temas cubiertos: var/let, inferencia de tipos, tipos básicos (Int, Double, Float, Bool, String), print, comentarios, interpolación, Array, Dictionary, for-in, rangos, while, funciones, guard, tuplas, opcionales
+- opinión: preferir `let` siempre, `var` solo si es imprescindible — evita dolores de cabeza en funciones complejas
+- opinión: no abreviar nombres (`nombre` y no `nom`, `index` y no `i`); en el curso nombres en español, en la práctica siempre en inglés
+- consejo: evitar arrays `[Any]` — "no lo hagan"; en diccionarios `Any` es más aceptado
+- detalles curiosos: Strings admiten emojis; Swift no tiene `index++` ni for clásico estilo C; Dictionary no preserva orden
+- admite: en 6 años nunca recuerda haber usado `while`; `for` casi siempre alcanza y evita bucles infinitos accidentales
+- funciones: nombres internos/externos de parámetros y `_` para legibilidad en la invocación, ej. `multiplicar(2, por: 8)`
+- buenas prácticas (sección opcional): funciones cortas (10–15 líneas aprox.), legibles, cohesivas — cohesión más prioritaria que brevedad
+- forzar opcionales con `!` = "muy mala práctica", la app crashea si es nil; preferir if-let / guard-let
+- implicitly unwrapped optionals: mala práctica pero muy usados en iOS por frameworks escritos en Objective-C
+- detalle de humor: en el ejemplo de los Simpson el perro se llama "Huesos", no "Ayudante de Santa"
+- cierra con 5 ejercicios: tupla de dirección con diccionario para la calle, opcionales `piso`/`departamento`, función de formateo con interpolación, filtrar direcciones con piso y depto

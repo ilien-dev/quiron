@@ -37,3 +37,8 @@ ir, hay, muy, casi, algo, porque, ya, después, menos*. Alonso Simón et al. (20
 same direction in GPT-3.5 and GPT-4 Spanish: fewer commas-per-sentence, fewer parentheses
 and quotation marks, more sentences per text. The raya is correct Spanish punctuation for
 asides and dialogue and is never a tell by itself.
+
+**The notes-first rules hold in Spanish.** On 30 Spanish dev.to titles, rewrites built
+from the author's notes with the September 2026 rules were judged AI by blind Claude Opus
+judges 3% of the time, against 20% with version 1.1.0 (mean P(AI) 29.2 against 38.8, p <
+0.001; human originals 5.2). `references/numbers.md` has the protocol.

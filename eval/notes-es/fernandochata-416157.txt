@@ -1,0 +1,11 @@
+- contexto: autor empezando a estudiar Node; probando fetch API, el código no se ejecutaba en el orden esperado; le quitó el sueño, se puso a investigar
+- ejemplo: console.log 'program start', tres setTimeout (3000, 2000, 1000 ms) con 'first/second/third function', luego console.log 'program end'
+- suposición ingenua 1: ejecución línea por línea, orden tal cual está escrito
+- suposición 2: sabiendo que setTimeout(función, ms) retrasa la función → third, second, first, pero 'program end' al final
+- salida real: program start, program end, third, second, first — sorpresa (meme Pikachu: https://i.imgur.com/wJU1oC5.jpg)
+- explicación del autor: JS ejecuta lo inmediato; funciones que pueden demorar van a una cola, corren en segundo plano, y sigue con la siguiente línea
+- al terminar, las funciones pasan a otra cola "de salida"; JS la revisa y muestra resultados en orden; repite hasta que no queda nada en ninguna cola
+- motivo: optimizar tiempo — secuencial serían 6 s en total vs ~3 s reales
+- relevancia: importa sobre todo con promesas, donde no se sabe cuánto tarda la respuesta
+- autor admite no ser experto; pide correcciones/aportes en comentarios, dispuesto a modificar el post
+- referencia MDN setTimeout: https://developer.mozilla.org/es/docs/Web/API/WindowTimers/setTimeout

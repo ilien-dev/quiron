@@ -1,0 +1,15 @@
+- context: DiamondQuest, MousePaw Media game built for GAME MODE 2020; event ends July 1, game not finished
+- delays: unexpected team changes, trouble settling core game structure, other slowdowns
+- knew before June that July 1 deadline likely unreachable; normal for software dev
+- gif: good/fast/cheap pick two, https://dev-to-uploads.s3.amazonaws.com/i/q7u673e9n1tzmoxapwkb.gif
+- plan: keep developing past event, keep updating devlog; split time with regular game engine work
+- still proud of June progress
+- map generator done: Jason C. McDonald with open source contributor Harley Davis; screenshot https://dev-to-uploads.s3.amazonaws.com/i/r5uxnkvuh02zhtda1zfi.png
+- map logic: deeper = fewer caves/dirt, more treasure; essentially final code, tuning = tweaking a few constants
+- block textures by WightKing; CC BY-NC-SA-ND 4.0 (as stated)
+- player movement: Elizabeth Larson, Jason, Harley built model for The Miner (she) to sense surroundings and check which actions are possible; works in model, not yet rendered
+- Elizabeth expanding The Miner sprite sheet
+- menu: Wilfrantz Dede on rendering model; disability support goal → menu navigable with single key press at a time
+- math puzzles: Adeel Hussain + Graham Mix building puzzle generation model and on-screen rendering pieces
+- treasure art by open source contributor Anna Dunster: ammonite fossil https://dev-to-uploads.s3.amazonaws.com/i/ofv137xfxnbbjvgjmqm9.png, vesicular basalt (spelled "Vescular") https://dev-to-uploads.s3.amazonaws.com/i/4tmq6q3vvfub4ag308hd.png, ruined book (overdue joke) https://dev-to-uploads.s3.amazonaws.com/i/hrepdzu9oqw27o0aoz2t.png, lost sock (found-my-other-sock joke) https://dev-to-uploads.s3.amazonaws.com/i/p1x8x6ildkqaifbuasco.png
+- call for contributors: coders, artists, sound designers, musicians — https://mousepawmedia.com/developers/contributing

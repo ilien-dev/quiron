@@ -52,5 +52,12 @@ Every study and dataset behind a number in this skill.
   WritingPrompts corpus the fiction bands are built from.
 - Wikipedia WikiProject AI Cleanup, *Signs of AI writing* (September 2026 version),
   including its era word lists, its historical indicators and its signs of human writing.
+- Anthropic (2026). *How Claude's text watermarking works*, anthropic.com/news/claude-text-watermark
+  (14 August 2026, updated 1 September): SynthID-Text watermark on Claude models from 2
+  August 2026, detection API in private preview, what edits do and do not remove.
+- Anthropic, claude.ai system prompts (release notes, Sonnet 4.6, Opus 4.8, Opus 5): "Claude
+  avoids saying 'genuinely', 'honestly', or 'straightforward'" (Opus 4.8: 'actually').
+- This skill's September 2026 end-to-end rounds: blind Opus 5.5 and GPT-5.6 judges on
+  rewrites of 20 development and 18 held-out titles (`references/numbers.md`).
 - This skill's own run: `scripts/build-corpus.sh` for the human corpus, and
   `scripts/evaluate.py` for every rate marked *measured* above.

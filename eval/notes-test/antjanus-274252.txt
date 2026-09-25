@@ -1,0 +1,13 @@
+- topic: grep — old CLI utility for plain-text/regex search across files; basically Ctrl/Cmd+F for the command line
+- part of a series alongside earlier posts on rsync (https://dev.to/antjanus/demystifying-rsync-3jac) and tar (https://dev.to/antjanus/demystifying-tar-351l)
+- author's view: needs far fewer flags/knowledge than rsync or tar to be productive
+- Windows users: separate post on grep equivalent in PowerShell, https://antjanus.com/blog/web-development-tutorials/how-to-grep-in-powershell/
+- use case: find a line without opening the file, or in a huge file — `grep keyword file.txt` returns matching lines
+- output varies by grep variant — may include line numbers, highlighting
+- basic mode handles `[]` (e.g. `'^2020-0[0-4]'`) but not `{}` repetition
+- recommendation: always default to `-E` for regex; e.g. `[0-9]{4}-[0-9]{2}-[0-9]{2}` matches yyyy-mm-dd dates only in extended mode
+- `-r` recursive directory search; output includes filenames of matches
+- flags combine: `-ir`, `-Er`, `-Enr`
+- useful flags: `-i` case-insensitive, `-n` line numbers, `-o` only the match (handy with regex)
+- man page very long; suggests reading it once basics feel insufficient
+- canonical: https://antjanus.com/digital-garden/demystifying-grep

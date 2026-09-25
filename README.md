@@ -137,7 +137,9 @@ repo. Nothing ships on "this reads better".
   human side. Overshoot is a tell too: models told to "write like a human" go choppier
   and plainer than any person does. The meter flags both.
 - **Blind judges.** Fresh model judges read posts one at a time and guessed which were
-  AI. That test produced the most important finding below.
+  AI. That test produced the most important finding below. Since September 2026 every
+  change to the rewrite rules is also judged by Claude and GPT judges on titles it was
+  never tuned on, in English, Spanish and fiction; the harness is in `eval/e2e/`.
 
 The details of how each number was measured are in [`SKILL.md`](SKILL.md) and
 [`eval/README.md`](eval/README.md), along with the source of every rule.

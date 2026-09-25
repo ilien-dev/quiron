@@ -1,0 +1,15 @@
+- serie "Introducción a Kikstart UI": 4 tutoriales — primeros pasos app Angular, layout con Kikstart UI, rutas, despliegue
+- este es el tutorial 1: instalar Angular CLI
+- requisitos: Node.js ≥12 y NPM ≥6; instrucciones en https://nodejs.org/en/
+- versiones del autor en el ejemplo: node v14.0.0, npm 6.14.4
+- instalación global: `npm install -g @angular/cli`; comprobar versión con `ng version`
+- app de ejemplo llamada `site`; consejo: nombre corto, claro, genérico — se usa mucho
+- `ng new site` pregunta por routing (responder `y`) y estilos; autor elige SCSS
+- atajo en una línea: `ng new site --routing --style scss`
+- `ng serve` levanta la app en puerto 4200: http://localhost:4200/
+- Angular también hace una pregunta extra al servir (captura en el post)
+- primera modificación: vaciar `src/app/app.component.html` y poner "Hola kikstart"
+- secciones "kikstartpedia" / "KikstartDato" con tips extra
+- repo del paso: https://github.com/KikstartDev/introduccion-a-kikstart-ui/tree/tutorial-1
+- agradecimiento a Laura Ciro (https://dev.to/ltciro) por revisar la serie
+- siguiente tutorial: herramientas de Kikstart UI, que el autor presenta como plataforma "poderosa"

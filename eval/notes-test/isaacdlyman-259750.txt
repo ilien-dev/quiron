@@ -1,0 +1,15 @@
+- goal: zero to configurable load-testing script with Apache JMeter (free, Apache Software Foundation); fast-paced intro
+- load testing vs e2e: e2e = single user, client + server; load testing = many simulated users, mostly server-side
+- download: http://jmeter.apache.org/download_jmeter.cgi — Java-based, needs Java 8+
+- tip: if committing JMeter to source control, gitignore `docs/` and `printable_docs/` — huge, not needed to run
+- folder layout: `config/`, `jmeter-5.2.1/`, `plans/`; test plan saved as XML `.jmx` (author's: `ferb.jmx`)
+- GUI mode for building/debugging, CLI mode for running; `jmeter.bat` on Windows, `jmeter` on Linux
+- concepts: thread = simulated user; thread group = instructions; setUp / tearDown thread groups for auth tokens, DB seeding, cleanup
+- first test: 1 thread, 1 loop, GET https://jsonplaceholder.typicode.com/posts/1, View Results Tree listener, Response Assertion substring `"id": 1`
+- config: `production.properties` flat file + User Defined Variables using `${__P(name,default)}` fallback; property and variable names needn't match, same names just for simplicity
+- CLI: `-n`, `-t` plan, `-f` overwrite prior results, `-q` properties file (path relative to JMX); Linux command untested by author; docs: http://jmeter.apache.org/usermanual/get-started.html#non_gui
+- output: `ferb.jtl` (CSV — author suggests renaming to .csv, opening in Excel) + `ferb.log`
+- Regular Expression Extractor post-processor to capture response data into a variable (e.g. `PostId`) — useful for auth tokens
+- think times: "Add Think Times to children" → Pause with Constant Delay Offset + Random Delay Maximum; staggers threads unless users are "a robot army with a hive mind"
+- other features: While/If logic controllers, JavaScript/Groovy/BeanShell scripts, Cookie/Header Managers, Debug Sampler, JSON/XML traversal (author used regex throughout)
+- author admits still pretty new to JMeter; asks readers to share favorite features in comments

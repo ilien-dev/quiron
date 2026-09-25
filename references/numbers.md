@@ -156,6 +156,76 @@ python3 scripts/evaluate.py --human CORPUS --ai-train eval/ai/blog/train \
     opus=eval/ai/blog/test-opus sonnet=eval/ai/blog/test-sonnet gpt=eval/ai/blog/test-gpt
 ```
 
+### What the rewrite adds: the September 2026 rounds
+
+A second end-to-end protocol, run on version 1.1.0 and each candidate change. 20 titles
+(the 12 e2e titles and the 8 fresh ones), each rewritten three times from the assistant
+draft and the author's notes by Claude Opus 5.5 running headless with the skill. Every
+rewrite is read alone by three fresh Claude Opus 5.5 judges and two GPT-5.6 judges
+(through the Codex CLI), each giving P(AI) with no hint that AI was involved. On the same
+judges the human originals score 4.5 (Opus) and 6.5 (GPT), and the untouched drafts 88.5
+and 92.9. Differences are per title, paired, with a Wilcoxon signed-rank test.
+
+| version | Opus mean P(AI) | judged AI (Opus) | GPT mean P(AI) | vs 1.1.0 |
+|---|---|---|---|---|
+| 1.1.0 | 47.8 | 52% | 20.1 | – |
+| sincerity markers named, *really* and *actually* out of the plain-word list | 45.7 | 45% | 19.7 | -2.0, p = 0.08 |
+| build from the notes, drop the draft's scaffolding | 43.3 | 35% | 18.3 | -4.5, p = 0.09 |
+| both, plus end sections on a fact and leave no trace of the draft (1.2.0) | 39.1 | 25% | 15.7 | -8.7, better on 18 of 20 titles, p = 0.001; GPT -4.3, p = 0.001 |
+| no named plain-word list ("swap, never add") | 48.2 | 50% | 20.1 | +0.5, p = 0.72, not shipped |
+| 1.2.0 plus the cold read (a fresh agent's reasons, acted on once) | 34.9 | 13% | 14.0 | -4.2 against 1.2.0, p = 0.055; GPT -1.8, p = 0.12 |
+
+On 18 held-out titles never used to choose anything (two rewrites each), 1.2.0 against
+1.1.0: Opus 36.7 to 31.8 (-4.9, better on 12 of 18, p = 0.055), GPT 15.1 to 14.6 (p =
+0.42); human originals 5.0 and 6.5. With Claude Sonnet 5 as the rewriter (one rewrite per
+dev title), 1.2.0 against 1.1.0: Opus 51.7 to 43.8 (-7.9, p = 0.07), GPT 18.7 to 15.5
+(-3.2, p = 0.04), so the change is not specific to Opus. Nor to Claude: with GPT-5.6 through the Codex CLI as the rewriter, pointed at
+SKILL.md (one rewrite per dev title, two Opus judges), the current version against 1.1.0
+went from 67.0 to 55.3 (-11.6, p = 0.002; judged AI 100% to 75%). The same version
+rewritten by Claude Opus scores 34.9, so the skill does most for the model it was tuned on. In Spanish, on the 30 Spanish test titles (dev.to posts in
+Spanish before 2022, notes in Spanish, one rewrite each), the current version against
+1.1.0: Opus 38.8 to 29.2 (-9.6, better on 24 of 30, p < 0.001), judged AI 20% to 3%; GPT
+22.2 to 20.1 (p = 0.08). Human originals 5.2 and 10.7, untouched drafts 85.5 and 89.1.
+
+The cold read on the 18 held-out titles, against 1.2.0 without it: Opus mean 31.8 to 31.5
+(p = 0.95), but texts judged AI fell from 17% to 3%, and GPT 14.6 to 11.7 (-2.9, p =
+0.001). Pooled over all 38 titles: Opus -2.3 (p = 0.16), GPT -2.3 (p = 0.001). The GPT
+judges share no family with the rewriter or the cold reader, so the gain is not the
+rewriter learning to please its own kind. It costs about a third more per rewrite (0.52
+against 0.39 USD) and left the meter where it was. The meter did not move (checklist clean on 100% of
+both, overshot 1.83 and 1.85 features per text), and rewrites with a figure or link in
+no source fell from 4 of 60 to 1 of 60.
+
+Where the rules came from. The judges' 288 reasons for calling a 1.1.0 rewrite AI,
+grouped: human cues present (70, counter-evidence), uniformly tidy prose (63), a line that
+wraps a section up or a stock hand-off (58), safety and best-practice caveats nobody
+asked for (23), draft residue such as `GIF_URL_HERE` (13), inserted voice ("Quite a lot,
+honestly.", 10), tutorial scaffolding around the writer's story (18), a note about when
+the post was written (6). And a word-frequency classifier trained on 175 human posts
+against 128 of the skill's rewrites, with only words found in at least eight titles on
+both sides, told them apart perfectly (leave-one-title-out AUC 1.00) on the rewriter's own
+overshoot: *so* at 6.7 per 1,000 words against 4.0, *lot*, *too*, *back*, *gets*,
+*honestly* (in 33% of rewrites, 2% to 5% of human posts, none of the notes); shorter
+sentences (15.4 against 18.9 words); fewer semicolons, parentheses, questions,
+exclamation marks and *we*. Taking the plain-word list out of the instructions did not
+change that, so it stays; what moved the judges was content and structure.
+
+### Fiction
+
+The same protocol on WritingPrompts replies, rewritten with no notes (invented detail is
+the task in fiction), one rewrite per story, two Opus judges. The version with the blog
+changes barely moved stories against 1.1.0 (77.6 to 75.5 on 30 stories, every story still
+judged AI; human replies 7.7). The judges' 873 reasons were about the story's shape:
+callbacks and bookends (about 300), a clockwork arc (180), even polish (150), placed props
+(120), a stated moral (100), similes at a steady rate (90). `references/fiction.md` turns
+those into edits. Against the version without it: 75.2 to 69.3 on the 30 stories the
+rules came from (better on 25), 74.0 to 69.7 on 32 held-out stories (better on 30, p <
+0.001). On the meter, the word-frequency judge fell from 44% to 31% AI and the overshot
+count rose from 0.84 to 1.02, still under the held-out humans' 1.2. A second round aimed at what the
+judges still named (the rules had turned bookends into a quiet mundane last line in most
+stories; one restrained, wry register across all of them) did not move them: 69.3 to
+70.0, worse on 18 of 30. What is left is the premise and plot the draft chose.
+
 ### Checks measured and not shipped
 
 Each of these was measured with the same held-out split and left out, so it is not
@@ -187,6 +257,35 @@ in September 2026.
   headless, so no review questions) gave mean P(AI) 43.7 against 43.6 without it (+1.3
   per title, 95% CI -2.0 to +4.7, Wilcoxon p = 0.42), and the countable rates did not
   move. Negated setups were left in 5 of 40 rewrites, against 11 of 52 before.
+
+- **Semantic redundancy** (the same claim twice within three sentences; Jakesch et al.
+  2023 found it the most valid reader cue). On 2026 text it points the other way: human
+  posts repeat more than assistant posts (AUC 0.24 to 0.37 against held-out humans).
+- **Eight features from the 2024 to 2026 stylometry literature** (concessives, downtoners,
+  adjective pairs, synthetic negation, ", which" relatives, personal asides, discourse
+  particle openers, a prescriptive last paragraph): AUC 0.40 to 0.60 on 2026 assistant
+  posts, close to chance.
+- **Claude's chat words** from forums (*load-bearing*, *footgun*, *blast radius*, *the
+  crux*, *the tell*): in no human or assistant blog post. They belong to chat and agent
+  output, not this register.
+- **A worked before/after example in SKILL.md** (a notes-built paragraph from a title
+  outside every test set; Anthropic's guides call examples the most reliable way to steer
+  Claude's style). On the 20 development titles it looked like a gain over the cold-read
+  version (Opus -2.4, p = 0.06; GPT -2.1, p = 0.03). On the 18 held-out titles it was not:
+  Opus +0.4 (p = 0.85), GPT +1.5 (p = 0.02, worse). No phrase of the example was copied.
+- **Three more instructions from the judges' remaining reasons**, each against the
+  cold-read version on the 20 development titles: colon lead-ins, clipped comment
+  sentences and code retold in prose (Opus -1.9, p = 0.35; GPT -0.6); letting the notes set
+  the length, since longer rewrites of the same title were judged more AI (r = 0.45 across
+  479 rewrites; the instruction cut length 12%, Opus -2.0, p = 0.26; GPT 0.0). Neither
+  moved the judges enough to ship. Style features such as plain words, contractions,
+  sentence-length variation and lexical diversity had no within-title correlation with
+  the judges' P(AI) (|r| < 0.13).
+- **A condensed SKILL.md** (352 lines, a fifth fewer words, the evidence moved to the
+  references): the same judges' P(AI) as the full file (35.2 against 34.9, p = 0.91) and
+  the same cost per rewrite (0.52 USD, 13 turns), so it bought nothing measurable.
+- **Placeholders and date notes as checklist items**: in 12 and 10 of 176 human posts
+  (placeholders in code, "at the time of writing"), so they stay instructions only.
 
 ### Calibrating for another register
 
@@ -225,6 +324,14 @@ Nor do style edits reach what conditioning on a writer does. In Chakrabarty et a
 most of the rest went away only when the model had learned from the writer's own work.
 On this skill's blind test, the loop moved every measured rate into the human band and
 did not change which post a strong model judge picked as AI (Part C).
+
+A text Claude writes also carries a watermark. Claude models released since 2 August
+2026 (older ones over the following months) pick among equally good words with a keyed
+random source, the SynthID-Text method, so Anthropic's detection API can estimate that
+Claude was involved. Nothing is visible and no style edit touches it: light editing leaves
+it, a rewrite where every word changes removes it, and it is thin where Claude only
+proofread a human text (Anthropic, *How Claude's text watermarking works*, 2026). This is
+one more reason the writer's own words beat a rewrite.
 
 Two more limits. Stylometric classifiers reach 86% to 90% accuracy at population scale
 but produce unreliable individual verdicts: in TextPulse's classification study,

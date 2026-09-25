@@ -1,0 +1,18 @@
+- serie "Convertirse en Desarrollador"; planeada primero para Medium, primeros capítulos aún en publicación DevEnEspañol: https://medium.com/devenespañol
+- foto de portada: @patmcmanaman en Unsplash, https://unsplash.com/@patmcmanaman
+- capítulos: 1 Clases en JS; próximos: Stacks y Queues, Linked lists, árboles binarios, algoritmos de búsqueda/ordenamiento
+- dirigida a sus alumnos actuales y futuros; autor ~5 años aprendiendo, ~1 año y poco enseñando
+- problema: barrera de entrada alta para quienes no estudiaron CS; mucho contenido pero calidad variable, difícil de juzgar sin conocimiento previo
+- desventajas para dev latinoamericano: casi todo en inglés, traducciones sin contexto; ejemplo: artículo Wikipedia "Cola" en español más completo que "Queue" en inglés — excepción, no regla, no es crítica
+- difícil hallar analogías gráficas amables sin horas curando videos/cursos; términos complejos explicados con otros términos complejos
+- objetivo: comprensión conceptual más que técnica; muchas analogías visuales (ilustraciones, gifs, animaciones) y textuales
+- explicaciones basadas en sus propios modelos mentales; no se considera experto; senior dev en startup, consultor sobre todo para empresas en USA
+- duda: no sabe si la serie funcionará sola o como apoyo a otro curso
+- estructura por concepto: glosario, contexto histórico, contexto funcional, explicación, implementación en JavaScript y TypeScript
+- prioriza cobertura sobre practicidad; no quiere que sea solo índice de recursos
+- puerta de entrada, no material avanzado; recomienda fuentes originales (en inglés) sobre la serie
+- código siempre en inglés (variables, métodos) — dev actual debe leer código en inglés con naturalidad; mezcla de términos inglés/español
+- arranca en módulo de JS del máster en coding donde da clases, desde Clases en adelante; luego apéndices (seguridad, historia del lenguaje)
+- artículos como trabajo en progreso: notas narrativas, luego más analogías/ilustraciones; marcará los terminados con algún identificador; metodología aún en construcción
+- límite: la serie sola no convierte en desarrollador; hacen falta "horas de vuelo" — proyectos personales, ejercicios, proyectos reales pagados o no, open source
+- admite poder equivocarse; acepta críticas/consejos en Twitter o comentarios; material libre para quien le sirva

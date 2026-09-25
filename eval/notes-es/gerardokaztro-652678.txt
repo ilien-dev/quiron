@@ -1,0 +1,13 @@
+- contexto: último post de la serie "Inicializando AWS CloudShell"
+- post 1: fundamentos del servicio, límites y capacidades; post 2: librería ECS-CLI
+- objetivo real de la serie: mostrar soporte nativo de AWS CloudShell para librerías y runtimes de lenguajes, no enseñar Docker ni ECS
+- esta entrega: EB-CLI de Elastic Beanstalk, misma premisa
+- pasos: `eb --version` (usar versión más reciente), crear carpeta `sample-app`, `eb init` eligiendo región
+- elección del autor en `eb init`: nombre por default, plataforma Node.js versión 14, sin KeyPair SSH
+- `eb create`: nombre de ambiente + prefijo DNS para personalizar la URL
+- balanceador: autor recomienda solo opción 1 o 2
+- sin código en el directorio → EB ofrece descargar app de ejemplo; aceptar
+- `eb open` abre la app desplegada en el navegador; si falla, ir a la consola: https://console.aws.amazon.com/elasticbeanstalk/home?region=us-east-1#/environments
+- `eb status` para configuración y salud; sugiere explorar `eb logs --all`, `eb events`, `eb health`
+- limpieza: `eb terminate nombredeaplicacion` elimina todos los recursos creados
+- cierre: pide compartir, reaccionar y dejar feedback en comentarios

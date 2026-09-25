@@ -1,0 +1,16 @@
+- thesis: git rebase probably most misunderstood git command; junior devs author pairs with are scared of it
+- author uses rebase nearly daily, at least once per GitHub PR — keeps commit messages sensible, avoids surprise merge conflicts
+- example: working branch 3 commits ahead, master 8 commits ahead, diverged at 13363dd3 ("Rails 5.2 features: enable cache")
+- example commits from DEV codebase — Sidekiq refactors, MentionJob → MentionWorker, UpdateAnalyticsWorker, etc.
+- situation common on multi-dev projects like DEV; feature branch lives a few days, master moves on
+- goal: catch feature branch up to master, own commits on top — cleaner PR, fewer conflicts
+- name metaphor: tree trunk (git's recurring tree metaphor); replace working branch's base with master's → "re-base"
+- author almost always uses -i (interactive): reword messages, squash, reorder commits — out of scope here, but recommends trying it
+- basic usage with working-branch checked out: `git rebase master`
+- output: "rewinding head to replay your work on top of it", then applies each commit
+- "replaying" like a recording on top of master — decent mental model
+- tip for the nervous: copy the working branch before rebasing, as a safety net
+- author's articles: https://jh.codes
+- podcast: https://www.devpath.fm
+- newsletter digest: https://pages.convertkit.com/674caf55d4/f30f7753a7
+- Twitter: https://twitter.com/jakeherrington — memes, dev life

@@ -1,0 +1,11 @@
+- contexto: continuación de post previo sobre configurar Svelte + Tailwind: https://dev.to/erianvc/configurando-svelte-con-tailwind-52g9
+- objetivo: app sencilla para entender mejor cómo se trabaja con Svelte
+- app: input con nombre de pokémon → consulta a PokéAPI (https://pokeapi.co/) → muestra imagen; si no existe, imagen de error
+- `src/main.js`: monta App en `document.body`, pasa como props la URL de la API (https://pokeapi.co/api/v2/pokemon/), nombre 'MissingNa' e imagen 'images/missingno.png'
+- `App.svelte`: estado inicial 'POKEMON' + imagen pokeball; `getData` hace fetch y devuelve JSON
+- `handleSubmit` async: trim + lowercase del texto, usa `data.name` en mayúsculas y `data.sprites.front_default`; en catch pone MissingNo; en finally resetea el form
+- form con `on:submit|preventDefault`; estilos con clases de Tailwind (fondo gray-900, botón azul "Buscar")
+- ojo: con `npm run dev` funciona pero no carga imagen si faltan las imágenes por defecto en `public/images/`
+- descargar 2 imágenes: pokeball (por defecto) https://raw.githubusercontent.com/erianvc/first-svelte-app/master/public/images/pokeball.png y missingno (error en fetch) https://raw.githubusercontent.com/erianvc/first-svelte-app/master/public/images/missingno.png
+- captura del resultado: https://i.imgur.com/WiDN2ss.png
+- demo en vivo: https://erianvc.github.io/first-svelte-app/

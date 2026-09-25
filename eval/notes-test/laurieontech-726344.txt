@@ -1,0 +1,15 @@
+- topic: new ECMAScript proposal, `at` method on arrays — access elements with negative indices
+- canonical post: https://laurieontech.com/posts/at-proposal/
+- context: array prototype expanding fast lately, e.g. `flat`, `filter`; more coming
+- JS indices zero-based; `arr[0]` first element
+- other languages allow `arr[-1]` for last element; JS doesn't
+- reason: arrays are objects with indices as keys, so "-1" is a valid key → `arr[-1]` returns undefined
+- current workarounds, more verbose: `arr[arr.length - 1]`, `arr.slice(-1)[0]`
+- proposal: `arr.at(-1)` returns last element; any negative index works until you go past the first element
+- `at` can fully replace square brackets — `arr.at(0)` still first element
+- out-of-range index, e.g. `arr.at(5)` on 4-element array → undefined
+- author: seems to cover all cases
+- history: earlier attempt named `item`, dropped — not web compatible, clashed with major libraries
+- author hopes it reaches Stage 4 soon, officially adopted
+- opinion: nice syntactic sugar for array access
+- asks readers whether they'd use it

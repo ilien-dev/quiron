@@ -1,0 +1,12 @@
+- tema: función joinToString() de Kotlin — arma un String a partir de una colección según argumentos opcionales
+- firma: separator=", ", prefix="", postfix="", limit=-1, truncated="...", transform=null
+- sin argumentos: resultado parecido a toString() pero sin corchetes — "1, 2, 3, 4, 5, 6" vs [1, 2, 3, 4, 5, 6]
+- separator: cualquier CharSequence, ej. ".", "-", "@#€"
+- prefix / postfix: agregan algo al inicio / final; combinados prefix="[" y postfix="]" imitan toString()
+- postfix útil según autor para armar queries SQL o expresiones regulares
+- limit: para colecciones grandes; -1 = sin límite, 0 = no concatena nada (solo "..."), 4 → "1, 2, 3, 4, ..."
+- truncated: va junto con limit (o debería); default "...", personalizable, ej. "" o "... will be continued"
+- transform: modifica cada elemento antes de unirlo; ej. { it + 2 } → "12, 22..." (concatena, no suma, porque son Strings)
+- uso personal del autor: crear queries y dar formato, ej. precio simple con "$" + it + ".00" → "$1.00, $2.00..."
+- cierre: pregunta a lectores qué otros usos le dan
+- nota: autor instaló IntelliJ IDEA para correr los ejemplos

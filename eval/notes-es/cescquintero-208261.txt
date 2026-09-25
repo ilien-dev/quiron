@@ -1,0 +1,15 @@
+- tema: formularios web = dolor de cabeza; a veces el mínimo de campos igual es mucho (ej. apps del sector salud, muchos datos del paciente)
+- aun con expertos UX, formularios siguen teniendo muchos campos por debajo
+- caso común: campos solo numéricos
+- input type=number de HTML5 no basta — deja escribir letras; sirve más en móvil para abrir teclado numérico
+- atributo `pattern` con regex: se queda corto según recuerdo del autor, no lo volvió a probar
+- mejor solución: controlar entrada con event listener y prevenir lo no permitido
+- hace un par de años: solución con jQuery capturando `keydown`, permitiendo solo números y teclas especiales (CTRL, SHIFT) — https://otroespacioblog.wordpress.com/2018/09/01/cosas-de-javascript-seleccionando-id-numerico-con-queryselector/
+- error del autor: la semana pasada, proyecto más reciente, copió solo el cuerpo del handler del proyecto viejo, no el evento; usó `keypress` y falló
+- causa: `keypress` usa `charCode`, `keydown` usa `keyCode`; no todas las teclas devuelven `charCode`
+- lo resolvió tras investigar: https://stackoverflow.com/a/4285697/1407371 — cambiar a `keydown` funcionó
+- MDN: `keypress` depreciado/desaconsejado, usar `keydown` — https://developer.mozilla.org/en-US/docs/Web/Events/keypress , https://developer.mozilla.org/en-US/docs/Web/Events/keydown
+- bonus: al redactar encontró en MDN solución mucho más simple — función numbersOnly: `charCode === 0` o regex `\d` sobre `String.fromCharCode`, asignada a `input.onkeypress`
+- contraste con su versión jQuery: lista de keyCodes permitidos (46, 8, 9, 27, 13, 110, 190), Ctrl+A/C/X, rango 35–39, bloquea shift y fuera de 48–57 / 96–105 con preventDefault
+- opinión: gran diferencia en complejidad para lograr lo mismo
+- publicado primero en su blog Otro Espacio Blog: https://otroespacioblog.wordpress.com/2019/02/13/javascript-y-el-dom-keydown-vs-keypress/ — escribe sobre lo que aprende programando y temas no tecnológicos

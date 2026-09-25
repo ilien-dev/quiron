@@ -1,0 +1,15 @@
+- tema: introducción a GraphQL — qué es, comparación con REST, schemas y root types
+- imagen de cabecera: https://dev-to-uploads.s3.amazonaws.com/i/b0whzrn5fciqmti26gpw.png
+- GraphQL = query language; lenguaje como sistema compartido entre dos partes para comunicarse
+- SQL también es lenguaje de consultas pero sin relación: SQL → bases de datos; GraphQL → comunicación cliente-servidor
+- se presenta como alternativa a REST; mejora principal: optimización, más control del lado del cliente
+- agnóstico de plataforma, implementable en 20+ lenguajes
+- objetivo principal: evitar múltiples consultas al servidor
+- REST según autor: solo convención, servidor expone recursos y cliente se adapta, overfetching, varios requests por vista (caro en performance, custom endpoints)
+- GraphQL según autor: tipado y validable (más seguridad), cliente define qué recibe, solo lo necesario, un request por vista
+- schemas: definen entidades, relaciones y qué puede pedir cada cliente; compuestos de types (autor los llama scalars — confusión, no todos los types son scalars)
+- scalars: Int, Float, String, Boolean, ID (único; Int o String)
+- objects: ejemplo type Compañía (id ID!, descripcion, usuarios [Usuario]) y Usuario (id, nombre, edad); `!` = obligatorio, `[]` = lista
+- Root Type Query: único punto de entrada, análogo a endpoints REST; ejemplo compañías, usuarios, compañía(id: String!)
+- Root Type Mutation: insertar, editar, borrar; ejemplo agregarCurso(descripcion, profesorId): Curso
+- errores en snippets: `Type Query` con mayúscula, sintaxis de argumentos de mutation con llaves en vez de paréntesis, comentarios con `//` en vez de `#`, typos ("obligatrio", "epsecial", "unicio")

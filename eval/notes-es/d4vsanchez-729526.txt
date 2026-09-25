@@ -1,0 +1,16 @@
+- contexto: Next.js Conf 2021, 15 junio 2021, virtual, solo 24 min; dos ejes: Next.js Live (Vercel) y Next.js 11
+- tema central de la conf: unir UX y DX; autor siente que se enfatizó demasiado
+- Next.js 11 rendimiento: arranque de sesión dev 24% más rápido; procesamiento de cambios (guardar → ver en pantalla) 40% más rápido; basta con actualizar next, react, react-dom a latest
+- `next/image` (desde Next.js 10, docs: https://nextjs.org/docs/api-reference/next/image): con `import` de la imagen calcula width/height solo → menos Cumulative Layout Shift (Web Vitals); nuevo `placeholder="blur"` muestra versión difuminada en conexiones lentas
+- gif de demo del blur tomado de https://nextjs.org/blog/next-11#image-placeholders
+- Conformance (reglas de Google, https://web.dev/conformance/): tipo linter, evita memorizar reglas de performance; plugin ESLint mostrado detecta scripts que bloquean render y recargas completas por no usar `next/Link`; se corre con `next lint`
+- nuevo `next/script`, prop `strategy`: beforeInteractive (críticos, antes de interactividad), afterInteractive, lazyOnload (en momentos inactivos); ejemplo cargando three.js desde unpkg
+- Webpack 5 ahora bundler por defecto; antes opcional vía flag en `next.config.js` desde Next.js 10.2 (https://nextjs.org/blog/next-10-2#webpack-5)
+- migración CRA → Next: `npx @next/codemod cra-to-next`; experimental, no mencionada en la conf, solo en el post de lanzamiento; probablemente con bugs
+- Next.js Live: abrió la conf, mucho tiempo dedicado; entorno de desarrollo/colaboración en tiempo real solo para Next.js; editor Monaco (https://microsoft.github.io/monaco-editor/, el de VS Code) en navegador, cambios incrementales enviados a los demás
+- Live: dibujar/escribir encima del proyecto para feedback; cursores con info a nivel de componente, se ubican bien incluso en responsive, no solo coordenadas X/Y; funciona sin conexión
+- Live en Preview, lista de espera en https://nextjs.org/live; imagen de https://nextjs.org/blog/next-11#nextjs-live-preview-release
+- autor no ha obtenido acceso aún → no puede opinar mucho, ansioso por probarlo
+- opinión: cumplieron con creces lo de UX+DX; image y script reducen muchísimo la complejidad de optimizar
+- a favor de que la optimización sea responsabilidad del framework; al dev le queda solo tomar decisiones
+- fuentes: video https://www.youtube.com/watch?v=ze8ycxc1UzE; post https://nextjs.org/blog/next-11

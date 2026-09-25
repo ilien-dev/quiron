@@ -1,0 +1,17 @@
+- tema: lo mínimo para considerarse desarrollador full stack; muchos dicen que hay que saber mil cosas o que no existen (unicornios 🦄)
+- canonical: https://gomezespejo.com/lo-minimo-que-debes-saber-para-ser-full-stack/
+- full stack se mueve entre capas: frontend (interfaz de usuario) y backend (procesamiento y entrega de datos); cada mundo con miles de tecnologías
+- definición propia, más amplia: alguien capaz de crear una app con interacción de usuarios finales + procesamiento/entrega de datos
+- consecuencias: se mide por lo que la persona logra, no por lo que supuestamente sabe; herramientas en segundo plano, al servicio del profesional
+- idea clave: el full stack compensa sus puntos débiles o lo que no le interesa con herramientas
+- en vez de servidores/devOps/SO: Heroku https://heroku.com
+- en vez de backend desde 0: frameworks Ruby on Rails https://rubyonrails.org/, Django https://www.djangoproject.com/, Laravel https://laravel.com/; o backend as a service Firebase http://firebase.com/
+- en vez de frameworks frontend propios: Angular https://angular.io/, Vue https://vuejs.org/, React (link del post apunta por error a https://vuejs.org/)
+- en vez de aprender CSS: templates ya hechos
+- en vez de Android (Java/Kotlin) + iPhone (Swift): React Native https://reactnative.dev/ (JavaScript) o Flutter https://flutter.dev/ (Dart)
+- perfiles ejemplo: JS+jQuery+Firebase; RoR en AWS con React; React Native+Django en VPS; React Native+Node.js en Heroku; Vue+Laravel en Docker sobre AWS; AWS Amplify
+- autor se considera full stack: varias apps exitosas en ambos mundos
+- backend: Ruby on Rails, aprendido estudiando, enamorado del framework; también node.js, pero casi siempre elige RoR
+- frontend: React, aprendido por trabajo; no le encanta pero cumple
+- UI: no es experto en CSS; usa Bootstrap o AntDesign
+- devops: nunca le gustaron los servidores; usa Heroku

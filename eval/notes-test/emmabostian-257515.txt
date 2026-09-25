@@ -1,0 +1,14 @@
+- context: new year (2020), many devs job hunting; technical interviews hard — six data structures worth knowing
+- tied to Ladybug Podcast episode on data structures & algorithms: https://www.ladybug.dev/data-structures-and-algorithms — covers more than six
+- topics so over-written that post mostly curates favorite learning resources
+- arrays: basic list structure; hold references or primitives; JS arrays not fixed length — MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array; freeCodeCamp: https://www.freecodecamp.org/news/https-medium-com-gladchinda-hacks-for-creating-javascript-arrays-a1b80cb372b/
+- linked lists: not built into JS; nodes point to next; doubly-linked also point back; author describes as LIFO (add/remove same end) — arguably a mistake, that's stack behavior
+- linked list resources: Ali's 'Thank U Next' post https://dev.to/aspittel/thank-u-next-an-introduction-to-linked-lists-4pph; Emma's post https://dev.to/emmabostian/creating-linked-lists-with-javascript-391e; Kyle Shevlin Egghead course https://egghead.io/lessons/javascript-linked-list-data-structure-in-javascript
+- stacks: not built-in, build from arrays; LIFO like pile of books ("unless you're a savage"); constant-time add/remove, no constant-time access to nth item
+- stack resources: Emma's stacks vs queues https://dev.to/emmabostian/stacks-vs-queues-in-javascript-4d1o; Emma's three stacks in one array https://dev.to/emmabostian/creating-3-stacks-with-1-array-in-javascript-514b; GeeksforGeeks https://www.geeksforgeeks.org/implementation-stack-javascript/
+- queues: FIFO, like movie ticket line; same Emma stacks vs queues post
+- binary trees: nodes with value + max two children; root has no parent; BST = distinct values, left child less, right child greater
+- BST resources: Kyle Shevlin Egghead link reused (same linked-list lesson URL — likely wrong link); GeeksforGeeks https://www.geeksforgeeks.org/implementation-binary-search-tree-javascript/
+- graphs: nodes + edges; directed (one-way street) vs undirected; example people (purple) → favorite movies (green), not reverse
+- graph resources: Emma's post https://dev.to/emmabostian/creating-graphs-with-javascript-4efm; Adrian Mejia https://adrianmejia.com/data-structures-for-beginners-graphs-time-complexity-tutorial/
+- closes asking readers for their own DS&A resources

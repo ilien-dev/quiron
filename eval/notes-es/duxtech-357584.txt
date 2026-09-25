@@ -1,0 +1,12 @@
+- tema: método nativo `filter()` de arrays en JavaScript; ayuda a código limpio, legible y con menos líneas
+- aclaración: muchos creen que es de ES6 (https://www.w3schools.com/js/js_es6.asp), pero viene de ES5 (https://www.w3schools.com/js/js_es5.asp), publicada en 2009, más de una década atrás
+- definiciones citadas: MDN (https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/filter) y "W3C" (en realidad enlace a w3schools: https://www.w3schools.com/jsref/jsref_filter.asp)
+- opinión: definiciones oficiales poco útiles solas; mejor complementarlas con ejemplos prácticos
+- sintaxis: `array.filter(function(currentValue, index, arr))`; solo `currentValue` es obligatorio (snippet de sintaxis con paréntesis sin cerrar)
+- ejemplo 1: vegetales ["Zanahoria","Calabaza","Cebolla","Tomate","Ajo"], filtrar length <= 6 → ["Tomate","Ajo"]
+- ejemplo 2: primos de [2,3,8,20,9,13,17,23,24] → [2,3,13,17,23]; casos especiales 0, 1, 4; bucle hasta numero/2; callback devuelve el número en vez de true
+- ejemplo 3: array de objetos users (Carlos 19 false, Ana 15 true, Andres 26 true); condición mayor de edad y estado true → solo Andres
+- en el ejemplo 3 el callback devuelve `user` dentro de un if; el comentario de salida muestra un objeto suelto, no un array
+- conclusiones: sirve para arrays simples y de objetos; crea array nuevo según criterio; no altera el original (inmutabilidad); recibe callback o arrow function; cada elemento es argumento del callback
+- post previo del autor sobre `map()`: https://dev.to/crisfer4217/las-bondades-del-metodo-map-en-javascript-4bo1
+- referencias extra: https://ed.team/blog/javascript-filtrar-elementos-de-un-array-con-filter

@@ -49,3 +49,4 @@ underpin underpins                               # legacy
 underscores underscoring                         # legacy; bare "underscore" dropped, it names the _ character in technical text
 utilize utilized utilizing                       # legacy
 versatile                                        # legacy
+genuinely                                        # anthropic2026-sysprompt
