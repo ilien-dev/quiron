@@ -18,8 +18,10 @@ skill's run, it appeared in at most 4% of human posts and in at least 10% of ass
 posts. The 2026 survivors are words like *increasingly*, *significantly*, *consistently*,
 *comprehensive*, *meaningful*, *merely*, *careful*, *remains*, *maintaining*: ordinary
 words, used by models at many times the human rate. One of them is English. Three or more
-distinct entries in one text fail B1, which none of the 42 held-out human posts did and
-43% of the GPT posts did. Technical nouns that passed the same test (*architecture*,
+distinct entries in one text fail B1, which none of the 40 held-out human posts did and
+50% of the GPT posts did. In November 2026 the word lists of slop-score, Antislop and
+avoid-ai-writing were scored the same way, word by word: of 2,779 entries not already
+here, one passed, *surprisingly* (3% of human training posts, 17% of assistant ones). Technical nouns that passed the same test (*architecture*,
 *infrastructure*, *integration*, *handling*, *complexity*) were taken out again: they are
 the field's vocabulary, and rewriters had to cut real terms to clear the check.
 
