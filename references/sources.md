@@ -50,7 +50,7 @@ Every study and dataset behind a number in this skill.
 - Conor Bronsdon, *avoid-ai-writing* (github.com/conorbronsdon/avoid-ai-writing, commit
   ccc8fc4): detector word tiers, the source of *surprisingly* in `ai-lean.txt`.
 - *unslop* (github.com/theclaymethod/unslop, commit 17ed39c): matching curly apostrophes
-  as straight ones before the phrase checks.
+  as straight ones before the phrase checks, and "the real X is" in A3.
 - Herbold et al. (2023) on structural uniformity in ChatGPT essays.
 - Fan, Lewis & Dauphin (2018). *Hierarchical Neural Story Generation.* ACL 2018. The
   WritingPrompts corpus the fiction bands are built from.

@@ -78,7 +78,8 @@ CHECKS = [
     ("A3", "sayings that sound deep", "tell",
      r"\b(?:the real question is|at its core|in reality,|what really matters|"
      r"fundamentally,|the deeper issue|the heart of the matter|becomes a trap|"
-     r"the (?:language|currency|architecture) of (?:the|our|modern)\b)", None),
+     r"the (?:language|currency|architecture) of (?:the|our|modern)\b|"
+     r"the real \w+ (?:is|isn't|was)\b)", None),
     ("A3b", "X is the Y of Z", "judge", r"\bis the \w+ of (?:the |a )?\w+\b", None),
     ("A4", "staged run-up", "tell",
      r"\b(?:here's the thing|the thing is,|let's be honest|real talk|buckle up|"
