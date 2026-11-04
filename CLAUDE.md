@@ -1,6 +1,8 @@
 ## What this is
 
-A skill that makes any AI model's prose read like a person wrote it, checked against measured human baselines. This checkout is the skill: the root `SKILL.md` is the instructions, `scripts/` the measuring apparatus. Agents here use them directly, not an installed copy. `AGENTS.md` symlinks to this file.
+This checkout is the skill: the root `SKILL.md` is the instructions, `scripts/` the measuring apparatus. Agents here use them directly, not an installed copy.
+
+`.upstream/`: gitignored clones of similar skills, reference only, never shipped. Weekly intake: `/upstream-sync`.
 
 `main` is protected: work on a `feature/<lowercase-words-with-hyphens>` branch and open a pull request against `main`.
 
