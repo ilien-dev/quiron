@@ -245,7 +245,8 @@ def run(path, samples=()):
     """Every check on one text. A TELL that also fires in the writer's own sample
     texts is the writer's habit, not a tell: it is reported and not counted."""
     habits = {r[0] for p in samples for r in run(p) if r[2] == "TELL"}
-    raw = open(path, encoding="utf-8").read()
+    # the patterns are written with a straight apostrophe; GPT writes it’s and let’s
+    raw = open(path, encoding="utf-8").read().replace("’", "'").replace("‘", "'")
     body = re.sub(r"```.*?```", "", raw, flags=re.S)
     text = prose(raw)
     sample_args = [x for p in samples for x in ("--sample", p)]
