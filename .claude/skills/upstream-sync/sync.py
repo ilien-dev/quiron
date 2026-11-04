@@ -13,6 +13,7 @@ this script (committed). Python 3 standard library only; run with python3 -I.
 import argparse
 import datetime
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -21,6 +22,7 @@ HERE = Path(__file__).resolve().parent
 DEPTH = 50
 DEEPEN_STEP = 200
 DEEPEN_TRIES = 5
+TIMEOUT = 300  # seconds per git call
 
 
 class GitError(Exception):
@@ -28,8 +30,16 @@ class GitError(Exception):
 
 
 def git(cwd, *args, check=True):
-    r = subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True,
-                       encoding="utf-8", errors="replace")
+    # Never wait on a credential prompt (a deleted or private repo asks for one) or a hung
+    # network: the repo is reported as failed and the run goes on.
+    env = {**os.environ, "GIT_TERMINAL_PROMPT": "0", "GCM_INTERACTIVE": "never"}
+    try:
+        r = subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", env=env, timeout=TIMEOUT)
+    except subprocess.TimeoutExpired:
+        raise GitError([f"git {args[0]} timed out after {TIMEOUT}s"])
+    except FileNotFoundError:
+        raise GitError(["git not found on PATH"])
     if check and r.returncode != 0:
         raise GitError((r.stderr or r.stdout).strip().splitlines()[-1:] or ["git failed"])
     return r
@@ -81,6 +91,16 @@ def reachable(path, sha):
     return False
 
 
+def default_branch(path):
+    """The remote's current default branch, asked of the remote itself, so a renamed
+    default branch (master -> main) is followed; a shallow clone only tracks the old one."""
+    out = git(path, "ls-remote", "--symref", "origin", "HEAD").stdout
+    for line in out.splitlines():
+        if line.startswith("ref: refs/heads/") and line.endswith("\tHEAD"):
+            return line[len("ref: refs/heads/"):-len("\tHEAD")]
+    raise GitError(["remote reports no default branch"])
+
+
 def short(sha):
     return sha[:7] if sha else "never"
 
@@ -96,9 +116,7 @@ def cmd_update(state, root):
                 what = "cloned"
             else:
                 git(path, "remote", "set-url", "origin", url_of(entry))
-                git(path, "remote", "set-head", "origin", "-a")
-                branch = git(path, "rev-parse", "--abbrev-ref", "origin/HEAD").stdout.strip()
-                branch = branch.split("/", 1)[1]
+                branch = default_branch(path)
                 git(path, "fetch", "-q", "--no-tags", f"--depth={DEPTH}", "origin",
                     f"+refs/heads/{branch}:refs/remotes/origin/{branch}")
                 git(path, "reset", "-q", "--hard", f"origin/{branch}")

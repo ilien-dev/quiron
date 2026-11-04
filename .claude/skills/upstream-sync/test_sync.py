@@ -89,6 +89,41 @@ class SyncTest(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertEqual(git(self.clones / "o__m", "rev-parse", "HEAD"), head)
 
+    def test_update_survives_default_branch_rename(self):
+        up = Upstream(self.root, "r", branch="master")
+        up.commit("x.md", "one")
+        self.write_state([self.entry("r", up)])
+        self.assertEqual(self.run_sync("update").returncode, 0)
+        git(up.work, "branch", "-m", "master", "main")
+        up.branch = "main"
+        git(up.work, "push", "-q", "origin", "main")
+        git(up.bare, "symbolic-ref", "HEAD", "refs/heads/main")
+        git(up.bare, "branch", "-D", "master")
+        head = up.commit("y.md", "two")
+        r = self.run_sync("update")
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertEqual(git(self.clones / "o__r", "rev-parse", "HEAD"), head)
+
+    def test_git_timeout_and_prompt_are_handled(self):
+        sys.path.insert(0, str(HERE))
+        import sync
+        seen = {}
+
+        def fake_run(*args, **kwargs):
+            seen.update(kwargs)
+            raise subprocess.TimeoutExpired(args[0], kwargs.get("timeout"))
+
+        real = sync.subprocess.run
+        sync.subprocess.run = fake_run
+        try:
+            with self.assertRaises(sync.GitError):
+                sync.git(self.root, "fetch")
+        finally:
+            sync.subprocess.run = real
+        self.assertEqual(seen["env"]["GIT_TERMINAL_PROMPT"], "0")
+        self.assertEqual(seen["env"]["GCM_INTERACTIVE"], "never")
+        self.assertTrue(seen["timeout"])
+
     def test_update_failure_continues(self):
         good = Upstream(self.root, "g")
         head = good.commit("x.md", "one")
