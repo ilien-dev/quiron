@@ -1,0 +1,53 @@
+{
+  "repos": [
+    {
+      "repo": "sam-paech/slop-score",
+      "weight": "proven",
+      "reviewed": null,
+      "reviewed_on": null
+    },
+    {
+      "repo": "sam-paech/antislop-sampler",
+      "weight": "proven",
+      "reviewed": null,
+      "reviewed_on": null
+    },
+    {
+      "repo": "theclaymethod/unslop",
+      "weight": "proven",
+      "reviewed": null,
+      "reviewed_on": null
+    },
+    {
+      "repo": "harshaneel/humanize",
+      "weight": "proven",
+      "reviewed": null,
+      "reviewed_on": null
+    },
+    {
+      "repo": "blader/humanizer",
+      "weight": "popular",
+      "reviewed": null,
+      "reviewed_on": null
+    },
+    {
+      "repo": "hardikpandya/stop-slop",
+      "weight": "popular",
+      "reviewed": null,
+      "reviewed_on": null
+    },
+    {
+      "repo": "petergyang/no-ai-slop",
+      "weight": "popular",
+      "reviewed": null,
+      "reviewed_on": null
+    },
+    {
+      "repo": "conorbronsdon/avoid-ai-writing",
+      "weight": "popular",
+      "reviewed": null,
+      "reviewed_on": null
+    }
+  ],
+  "deferred": []
+}
