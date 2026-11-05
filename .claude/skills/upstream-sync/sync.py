@@ -5,6 +5,8 @@
     sync.py status            per repo: head, last reviewed commit, what is new since then
     sync.py diff OWNER/REPO   write what changed since the last review to a file, print its path
     sync.py mark OWNER/REPO [SHA]   record SHA (default: current head) as reviewed today
+    sync.py tried [WORD ...]  search the ledger of every candidate already measured
+    sync.py tried --check     validate the ledger (exit 1 on a bad entry)
 
 The clones live in <repo root>/.upstream/owner__repo, are gitignored and are untrusted
 data: this script only runs git on them, never their code. State is upstream.json beside
@@ -20,6 +22,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 DEPTH = 50
+TRIED = HERE / "tried.json"
+TRIED_FIELDS = ("id", "date", "source", "kind", "target", "what", "outcome", "measured", "result",
+                "reason", "retry_if")
+OUTCOMES = ("shipped", "rejected", "deferred", "measured", "not-measurable")
 DEEPEN_STEP = 200
 DEEPEN_TRIES = 5
 TIMEOUT = 300  # seconds per git call
@@ -129,7 +135,7 @@ def cmd_update(state, root):
     return 1 if failed else 0
 
 
-def cmd_status(state, root):
+def cmd_status(state, root, tried=TRIED):
     for entry in state["repos"]:
         repo, path, reviewed = entry["repo"], clone_dir(root, entry["repo"]), entry.get("reviewed")
         if not (path / ".git").exists():
@@ -147,6 +153,46 @@ def cmd_status(state, root):
             files = git(path, "diff", "--name-only", reviewed, "HEAD").stdout.split()
             print(f"{line}, {commits} new commits, {len(files)} files changed")
     print(f"deferred candidates: {len(state.get('deferred', []))}")
+    entries = load_tried(tried)
+    counts = {}
+    for t in entries:
+        counts[t.get("outcome")] = counts.get(t.get("outcome"), 0) + 1
+    print(f"tried ledger: {len(entries)} entries ("
+          + ", ".join(f"{v} {k}" for k, v in sorted(counts.items())) + "); search it: sync.py tried WORD")
+    return 0
+
+
+def load_tried(path):
+    if not path.exists():
+        return []
+    return json.loads(path.read_text(encoding="utf-8")).get("tried", [])
+
+
+def cmd_tried(words, check, path=TRIED):
+    entries = load_tried(path)
+    if check:
+        bad, seen = 0, set()
+        for i, t in enumerate(entries):
+            missing = [f for f in TRIED_FIELDS if not str(t.get(f, "")).strip()]
+            problems = missing and [f"missing {', '.join(missing)}"] or []
+            if t.get("outcome") not in OUTCOMES:
+                problems.append(f"outcome must be one of {', '.join(OUTCOMES)}")
+            if t.get("id") in seen:
+                problems.append("duplicate id")
+            seen.add(t.get("id"))
+            for msg in problems:
+                bad += 1
+                print(f"entry {i} ({t.get('id', '?')}): {msg}")
+        print(f"{len(entries)} entries, {bad} problems")
+        return 1 if bad else 0
+    words = [w.lower() for w in words]
+    hits = [t for t in entries if all(w in " ".join(str(v) for v in t.values()).lower() for w in words)]
+    for t in hits:
+        print(f"{t['id']} [{t['outcome']}, {t['date']}] {t['kind']} -> {t['target']}: {t['what']}")
+        print(f"    source: {t['source']}")
+        print(f"    result: {t['result']}")
+        print(f"    reason: {t['reason']}; retry only if: {t['retry_if']}")
+    print(f"{len(hits)} of {len(entries)} entries match")
     return 0
 
 
@@ -188,6 +234,7 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--state", type=Path, default=HERE / "upstream.json")
     p.add_argument("--dir", type=Path, default=None, help="clones (default <root>/.upstream)")
+    p.add_argument("--tried", type=Path, default=TRIED, help="ledger (default tried.json beside this script)")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("update")
     sub.add_parser("status")
@@ -195,13 +242,18 @@ def main(argv=None):
     m = sub.add_parser("mark")
     m.add_argument("repo")
     m.add_argument("sha", nargs="?")
+    t = sub.add_parser("tried")
+    t.add_argument("words", nargs="*")
+    t.add_argument("--check", action="store_true")
     a = p.parse_args(argv)
+    if a.cmd == "tried":
+        return cmd_tried(a.words, a.check, a.tried)
     root = (a.dir or toplevel() / ".upstream").resolve()
     state = load_state(a.state)
     if a.cmd == "update":
         return cmd_update(state, root)
     if a.cmd == "status":
-        return cmd_status(state, root)
+        return cmd_status(state, root, a.tried)
     if a.cmd == "diff":
         return cmd_diff(state, root, a.repo)
     return cmd_mark(state, root, a.state, a.repo, a.sha)
