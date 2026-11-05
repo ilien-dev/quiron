@@ -67,6 +67,45 @@ class SyncTest(unittest.TestCase):
     def load(self):
         return json.loads(self.state.read_text(encoding="utf-8"))
 
+    def write_tried(self, entries):
+        path = self.root / "tried.json"
+        path.write_text(json.dumps({"tried": entries}), encoding="utf-8")
+        return path
+
+    def tried_entry(self, **over):
+        e = {"id": "contrast", "date": "2026-11-04", "source": "o/a@abc1234 regexes.js", "kind": "check",
+             "target": "A1", "what": "wasn't X. It was Y.", "outcome": "rejected",
+             "measured": "evaluate.py", "result": "AUC 0.86->0.87; e2e worse", "reason": "rewrites worse",
+             "retry_if": "a new way to steer rewrites"}
+        e.update(over)
+        return e
+
+    def test_tried_search_matches_all_words(self):
+        ledger = self.write_tried([self.tried_entry(),
+                                   self.tried_entry(id="fillers", target="new TELL", what="in terms of")])
+        r = self.run_sync("--tried", str(ledger), "tried", "A1", "e2e")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("contrast [rejected", r.stdout)
+        self.assertNotIn("fillers", r.stdout)
+        self.assertIn("1 of 2 entries match", r.stdout)
+
+    def test_tried_check_flags_bad_entries(self):
+        ledger = self.write_tried([self.tried_entry(), self.tried_entry(),
+                                   self.tried_entry(id="x", outcome="maybe", retry_if="")])
+        r = self.run_sync("--tried", str(ledger), "tried", "--check")
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("duplicate id", r.stdout)
+        self.assertIn("missing retry_if", r.stdout)
+        self.assertIn("outcome must be one of", r.stdout)
+        good = self.write_tried([self.tried_entry()])
+        self.assertEqual(self.run_sync("--tried", str(good), "tried", "--check").returncode, 0)
+
+    def test_status_counts_the_ledger(self):
+        self.write_state([])
+        ledger = self.write_tried([self.tried_entry(), self.tried_entry(id="w", outcome="shipped")])
+        r = self.run_sync("--tried", str(ledger), "status")
+        self.assertIn("tried ledger: 2 entries (1 rejected, 1 shipped)", r.stdout)
+
     def test_update_clones_then_updates(self):
         up = Upstream(self.root, "a")
         first = up.commit("x.md", "one")
