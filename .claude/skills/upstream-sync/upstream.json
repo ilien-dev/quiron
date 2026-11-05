@@ -3,50 +3,50 @@
     {
       "repo": "sam-paech/slop-score",
       "weight": "proven",
-      "reviewed": null,
-      "reviewed_on": null
+      "reviewed": "289264ab2a0df1358ef81ced3c259610ea709514",
+      "reviewed_on": "2026-11-04"
     },
     {
       "repo": "sam-paech/antislop-sampler",
       "weight": "proven",
-      "reviewed": null,
-      "reviewed_on": null
+      "reviewed": "0ae330e98fbe6f09351f2d1063a51956378a44b2",
+      "reviewed_on": "2026-11-04"
     },
     {
       "repo": "theclaymethod/unslop",
       "weight": "proven",
-      "reviewed": null,
-      "reviewed_on": null
+      "reviewed": "17ed39c9d0b522f44190ff0c6233867eadee192a",
+      "reviewed_on": "2026-11-04"
     },
     {
       "repo": "harshaneel/humanize",
       "weight": "proven",
-      "reviewed": null,
-      "reviewed_on": null
+      "reviewed": "9c3dec34dc8e0ed9d26de14a869900a714da8f9e",
+      "reviewed_on": "2026-11-04"
     },
     {
       "repo": "blader/humanizer",
       "weight": "popular",
-      "reviewed": null,
-      "reviewed_on": null
+      "reviewed": "0ef9fe5bc3572734fd3ae6c448fe00a30cd5dcf0",
+      "reviewed_on": "2026-11-04"
     },
     {
       "repo": "hardikpandya/stop-slop",
       "weight": "popular",
-      "reviewed": null,
-      "reviewed_on": null
+      "reviewed": "8da1f030185bdfe8471220585162991eaeb970e9",
+      "reviewed_on": "2026-11-04"
     },
     {
       "repo": "petergyang/no-ai-slop",
       "weight": "popular",
-      "reviewed": null,
-      "reviewed_on": null
+      "reviewed": "000650b156983f5159695b441477f4e63b25dc85",
+      "reviewed_on": "2026-11-04"
     },
     {
       "repo": "conorbronsdon/avoid-ai-writing",
       "weight": "popular",
-      "reviewed": null,
-      "reviewed_on": null
+      "reviewed": "ccc8fc486c3a1dd6cc00be6258a6db3b12e801d3",
+      "reviewed_on": "2026-11-04"
     }
   ],
   "deferred": []
