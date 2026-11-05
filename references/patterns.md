@@ -83,10 +83,12 @@ carries a new fact. Merge a row of fragments into a sentence with a specific cla
 
 ### 3. Sayings that sound deep [TELL; READ for "X is the Y of Z"]
 
-**Watch for:** the real question is, at its core, in reality, what really matters,
-fundamentally, the deeper issue, the heart of the matter, X is the Y of Z, X becomes a
-trap, the language of, the architecture of.
-**Measured:** in 2% of posts on either side. Cheap to check, rare in 2026 output.
+**Watch for:** the real question is, the real problem (cost, story) is, at its core, in
+reality, what really matters, fundamentally, the deeper issue, the heart of the matter, X
+is the Y of Z, X becomes a trap, the language of, the architecture of.
+**Measured:** in 2% of posts on either side. Cheap to check, rare in 2026 output. Widening
+"the real question is" to any noun (from unslop's phrase list) caught 2 of 14 held-out
+Sonnet posts and no held-out human post.
 **Instead:** replace the saying with the specific claim underneath it.
 
 ### 4. Staged run-up before the point [TELL]

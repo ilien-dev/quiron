@@ -18,7 +18,10 @@ Reported per group:
 Per feature: AUC of each AI group against the held-out humans, i.e. the chance
 a random AI text sits further toward the AI side than a random human text.
 0.5 is no signal. Per check: the share of texts in each group it FAILs, so a
-check that fires on humans is visible at once.
+check that fires on humans is visible at once, and the share where it reports
+TELL or FAIL, which is how a TELL check shows what it catches. Checklist AUC:
+the number of items found per text (TELL or FAIL, combined checks left out),
+AI group against held-out humans.
 
 With --ai-train DIR, a second and independent judge is trained: a naive Bayes
 classifier over word frequencies, fitted on the calibration humans against those
@@ -37,6 +40,10 @@ from collections import Counter
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import aimeter  # noqa: E402
+
+
+# checks that combine others, or that only a reader can settle: not counted as found items
+COMBINED = {"C1", "C2", "T1", "V1", "V2"}
 
 
 def texts(directory):
@@ -120,10 +127,12 @@ def main():
     if ai_train:
         judge = Judge(train_paths, texts(ai_train))
 
-    report = {"bands_from": len(train), "groups": {}, "auc": {}, "checks": {}}
+    report = {"bands_from": len(train), "groups": {}, "auc": {}, "checks": {}, "tells": {},
+              "checklist_auc": {}}
+    checklist = {}
     for name, items in rows.items():
         scores, ai_side, over, fails, zero = [], [], [], [], 0
-        check_fail = {}
+        check_fail, check_hit, found = {}, {}, []
         for path, m in items:
             v = {key: aimeter.verdict(key, m[key], bands[key]) for key in aimeter.AI_REF}
             scores.append(sum(1 for x in v.values() if x == "ok"))
@@ -135,6 +144,10 @@ def main():
             zero += not nf
             for cid in nf:
                 check_fail[cid] = check_fail.get(cid, 0) + 1
+            hit = [r[0] for r in res if r[2] in ("TELL", "FAIL") and r[0] not in COMBINED]
+            found.append(len(hit))
+            for cid in hit:
+                check_hit[cid] = check_hit.get(cid, 0) + 1
         n = len(items)
         pj = [judge.p_ai(p) for p, _ in items] if judge else []
         report["groups"][name] = {
@@ -149,6 +162,12 @@ def main():
             "audit_clean_share": round(zero / n, 2) if n else None,
         }
         report["checks"][name] = {c: round(x / n, 2) for c, x in sorted(check_fail.items())}
+        report["tells"][name] = {c: round(x / n, 3) for c, x in sorted(check_hit.items())}
+        checklist[name] = found
+    for name, found in checklist.items():
+        if name != "human-heldout":
+            # how many checklist items fire, as a score: AI text further up than human text
+            report["checklist_auc"][name] = auc(found, checklist["human-heldout"], "hi")
     for key in aimeter.AI_REF:
         push = bands[key].get("push", aimeter.AI_REF[key][0])
         if not push:
@@ -175,6 +194,10 @@ def main():
     cids = sorted({c for g in report["checks"].values() for c in g})
     for c in cids:
         print(f"{c:18}" + "".join(f"{report['checks'][n].get(c, 0):>16}" for n in rows))
+    print(f"\n{'TELL or FAIL rate':18}" + "".join(f"{n:>16}" for n in rows))
+    for c in sorted({c for g in report["tells"].values() for c in g}):
+        print(f"{c:18}" + "".join(f"{report['tells'][n].get(c, 0):>16}" for n in rows))
+    print(f"\n{'checklist AUC':18}" + "".join(f"{report['checklist_auc'][n]!s:>16}" for n in names))
 
 
 if __name__ == "__main__":

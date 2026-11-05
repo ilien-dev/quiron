@@ -78,7 +78,8 @@ CHECKS = [
     ("A3", "sayings that sound deep", "tell",
      r"\b(?:the real question is|at its core|in reality,|what really matters|"
      r"fundamentally,|the deeper issue|the heart of the matter|becomes a trap|"
-     r"the (?:language|currency|architecture) of (?:the|our|modern)\b)", None),
+     r"the (?:language|currency|architecture) of (?:the|our|modern)\b|"
+     r"the real \w+ (?:is|isn't|was)\b)", None),
     ("A3b", "X is the Y of Z", "judge", r"\bis the \w+ of (?:the |a )?\w+\b", None),
     ("A4", "staged run-up", "tell",
      r"\b(?:here's the thing|the thing is,|let's be honest|real talk|buckle up|"
@@ -245,7 +246,8 @@ def run(path, samples=()):
     """Every check on one text. A TELL that also fires in the writer's own sample
     texts is the writer's habit, not a tell: it is reported and not counted."""
     habits = {r[0] for p in samples for r in run(p) if r[2] == "TELL"}
-    raw = open(path, encoding="utf-8").read()
+    # the patterns are written with a straight apostrophe; GPT writes it’s and let’s
+    raw = open(path, encoding="utf-8").read().replace("’", "'").replace("‘", "'")
     body = re.sub(r"```.*?```", "", raw, flags=re.S)
     text = prose(raw)
     sample_args = [x for p in samples for x in ("--sample", p)]

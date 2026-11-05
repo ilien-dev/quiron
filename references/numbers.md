@@ -196,6 +196,19 @@ against 0.39 USD) and left the meter where it was. The meter did not move (check
 both, overshot 1.83 and 1.85 features per text), and rewrites with a figure or link in
 no source fell from 4 of 60 to 1 of 60.
 
+November 2026, two rewrites per title, two Opus judges and one GPT judge. The current
+version against the same rewriter given the same draft and notes and one sentence of
+instruction instead of the skill ("rewrite the text so it reads naturally, the way the
+writer would write it; keep every fact from the notes and add none"): on the 20
+development titles Opus 32.0 against 44.0 (-12.0, better on 18 of 20, p = 0.001), GPT 16.4
+against 22.3 (p = 0.022); on the 18 held-out titles Opus 26.7 against 32.1 (better on 14
+of 18, p = 0.011), GPT 14.0 against 16.2 (p = 0.025). The notes alone do not explain the
+result. Given a human post as the draft instead (14 pre-2022 dev.to posts outside every
+set, no notes), the rewrite read slightly more AI than the original: Opus 6.0 to 7.5
+(worse on 8 of 14, p = 0.056), GPT 6.4 to 7.9 (p = 0.09). Two more posts were not
+rewritten, because the skill stopped to ask for the notes. On a text a person wrote, the
+loop costs a little.
+
 Where the rules came from. The judges' 288 reasons for calling a 1.1.0 rewrite AI,
 grouped: human cues present (70, counter-evidence), uniformly tidy prose (63), a line that
 wraps a section up or a stock hand-off (58), safety and best-practice caveats nobody
@@ -286,6 +299,25 @@ in September 2026.
   the same cost per rewrite (0.52 USD, 13 turns), so it bought nothing measurable.
 - **Placeholders and date notes as checklist items**: in 12 and 10 of 176 human posts
   (placeholders in code, "at the time of writing"), so they stay instructions only.
+- **November 2026 upstream intake** (slop-score, Antislop, unslop, humanize, humanizer,
+  stop-slop, no-ai-slop, avoid-ai-writing), on the rebuilt corpus (160 dev.to posts, 40
+  held out; 157 stories; 245 Spanish posts). A cross-sentence contrast with any subject
+  ("The hardest part wasn't X. It was Y.") raised the checklist AUC (0.860 to 0.873) and
+  left held-out humans unflagged, but end to end it made rewrites worse on the development
+  titles (Opus 32.0 to 34.0, p = 0.28; held-out 26.7 to 26.1). A feature for paragraphs
+  that open on a word from the intro separated AI posts (AI-side AUC 0.879 to 0.881 blog,
+  0.829 to 0.849 Spanish) and also made rewrites worse (Opus +1.8 dev, +2.4 held-out). Word
+  lists: of 2,779 upstream entries one passed for blog; the fiction survivors flagged one
+  more human story on held-out and on 117 fresh stories (FAIL 8.5% to 9.4%), and none of
+  2,529 Antislop phrases passed. No gain or more humans flagged: plain "not X, but Y"
+  (A1b on held-out humans 12.5% to 27.5%), "No X, no Y, no Z" chains (one held-out story),
+  wider A9, A12, A16, A17 and A21/A22 phrase lists (no hits, or more human hits), a Title
+  Case filter (A19 stopped catching AI), a proximity gate on A1, short self-answered
+  questions, fillers ("in terms of", in 14% to 20% of human posts), bare-noun bullet
+  lists, and features for staccato runs, callbacks, n-gram repetition, specific anchors,
+  bold, punctuation spread, function-word entropy and paragraph uniformity. A copy gate
+  against voice samples fired on 7 of 19 rewrites, all of them the author's own sign-off,
+  which the notes also held.
 
 ### Calibrating for another register
 

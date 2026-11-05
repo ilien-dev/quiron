@@ -42,6 +42,7 @@ realm                                            # legacy
 remains                                          # kobak2025
 significantly                                    # ai-lean(current),lexa-news-gpt4.1mini
 subtle                                           # lexa-sci-gemini3
+surprisingly                                     # avoid-ai-writing2026
 tapestry                                         # legacy
 testament                                        # legacy
 thereby                                          # legacy
