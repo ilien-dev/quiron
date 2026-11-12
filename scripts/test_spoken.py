@@ -1,4 +1,4 @@
-import os, tempfile, unittest, aimeter
+import json, os, subprocess, sys, tempfile, unittest, aimeter
 
 
 class Spoken(unittest.TestCase):
@@ -46,6 +46,39 @@ class Spoken(unittest.TestCase):
                 f.write("[B-ROLL: a river at dawn. The camera pans left slowly.]\n" * 40 + body)
             self.assertEqual(len(aimeter.measure_dir(d)), 1)
             self.assertEqual(aimeter.measure_dir(d, spoken_only=True), [])
+
+
+class AuditSpoken(unittest.TestCase):
+    """audit.py reads only the spoken words when the band file says "_spoken": true."""
+    HERE = os.path.dirname(os.path.abspath(__file__))
+    TELL = "It was not just a city, but a home."
+
+    def audit_states(self, text, spoken_bands):
+        with tempfile.TemporaryDirectory() as d:
+            with open(aimeter.BANDS_FILE, encoding="utf-8") as f:
+                bands = json.load(f)
+            if spoken_bands:
+                bands["_spoken"] = True
+            bf, tf = os.path.join(d, "b.json"), os.path.join(d, "t.txt")
+            with open(bf, "w", encoding="utf-8") as f:
+                json.dump(bands, f)
+            with open(tf, "w", encoding="utf-8") as f:
+                f.write(text)
+            out = subprocess.run([sys.executable, os.path.join(self.HERE, "audit.py"), "--json", tf],
+                                 capture_output=True, text=True, encoding="utf-8",
+                                 env={**os.environ, "QUIRON_BANDS": bf})
+            return {i["id"]: i["state"] for i in json.loads(out.stdout)["items"]}
+
+    FILLER = "".join(f"Sentence number {i} talks about rivers and why they matter nearby.\n" for i in range(20))
+
+    def test_stage_direction_does_not_trip_a_pattern(self):
+        text = f"[B-ROLL: {self.TELL}]\n" + self.FILLER
+        self.assertEqual(self.audit_states(text, False)["A1b"], "TELL")
+        self.assertEqual(self.audit_states(text, True)["A1b"], "PASS")
+
+    def test_spoken_words_still_trip_it(self):
+        text = f"NARRATOR: {self.TELL}\n" + self.FILLER
+        self.assertEqual(self.audit_states(text, True)["A1b"], "TELL")
 
 
 if __name__ == "__main__":

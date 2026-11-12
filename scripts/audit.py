@@ -35,7 +35,7 @@ import json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from aimeter import prose, lexicon_name, lang_guess, lang_warning, BANDED, LAYOUT, BANDS_FILE, LANG, SPOKEN  # noqa: E402
+from aimeter import prose, lexicon_name, lang_guess, lang_warning, BANDED, LAYOUT, BANDS_FILE, LANG, SPOKEN, spoken  # noqa: E402
 
 # Thresholds for the combined checks. Chosen from a grid over held-out human posts and
 # 2026 assistant posts: the setting that kept human texts failing the whole checklist
@@ -221,12 +221,18 @@ NEGSET_WHY = [
 ]
 
 
+def read_text(path):
+    """The file as the checks see it: for a "_spoken" register, only the spoken words."""
+    raw = open(path, encoding="utf-8").read()
+    return spoken(raw) if SPOKEN else raw
+
+
 def review(path):
     """Negated setups, with the reasons a reader may take them for AI. Blog bands only."""
     if lexicon_name() != "ai-lean.txt":
         return []
     items = []
-    for n, para in enumerate(re.split(r"\n\s*\n", prose(open(path, encoding="utf-8").read()))):
+    for n, para in enumerate(re.split(r"\n\s*\n", prose(read_text(path)))):
         ss = [s_.strip() for s_ in SENT.split(para.replace("\n", " ")) if s_.strip()]
         for i, s_ in enumerate(ss):
             nxt = ss[i + 1] if i + 1 < len(ss) else ""
@@ -251,7 +257,7 @@ def run(path, samples=()):
     texts is the writer's habit, not a tell: it is reported and not counted."""
     habits = {r[0] for p in samples for r in run(p) if r[2] == "TELL"}
     # the patterns are written with a straight apostrophe; GPT writes it’s and let’s
-    raw = open(path, encoding="utf-8").read().replace("’", "'").replace("‘", "'")
+    raw = read_text(path).replace("’", "'").replace("‘", "'")
     body = re.sub(r"```.*?```", "", raw, flags=re.S)
     text = prose(raw)
     sample_args = [x for p in samples for x in ("--sample", p)]
@@ -416,7 +422,7 @@ def main():
                                         for r in res]}, indent=1))
             continue
         print(f"\n{os.path.basename(path)}")
-        warn = lang_warning(open(path, encoding="utf-8").read())
+        warn = lang_warning(read_text(path))
         if warn:
             print(warn)
         print(f"{'':4}{'check':40}{'state':7}detail")
