@@ -119,6 +119,49 @@ class Spoken(unittest.TestCase):
             with open(out, encoding="utf-8") as f:
                 self.assertTrue(json.load(f)["_spoken"])
 
+    def test_spoken_measure_does_not_count_scene_headings(self):
+        body = "".join(f"Sentence number {i} is plain speech about rivers and the people near them.\n"
+                       for i in range(16))
+        text = "## INT. CITY - NIGHT\n" * 6 + body
+        old = aimeter.SPOKEN
+        try:
+            aimeter.SPOKEN = False
+            self.assertGreater(aimeter.measure(text)["headings_1k"], 0)
+            aimeter.SPOKEN = True
+            self.assertEqual(aimeter.measure(text)["headings_1k"], 0)
+        finally:
+            aimeter.SPOKEN = old
+
+    def test_judge_tokens_skip_stage_directions_in_a_spoken_register(self):
+        import evaluate
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "a.txt")
+            with open(p, "w", encoding="utf-8") as f:
+                f.write("[B-ROLL: tractors]\nNARRATOR: The river runs south.\n")
+            old = aimeter.SPOKEN
+            try:
+                aimeter.SPOKEN = False
+                self.assertIn("tractors", evaluate.tokens(p))
+                aimeter.SPOKEN = True
+                self.assertEqual(evaluate.tokens(p), ["the", "river", "runs", "south"])
+            finally:
+                aimeter.SPOKEN = old
+
+    def test_recalibration_keeps_register(self):
+        t = "".join(f"Sentence number {i} is plain speech about rivers and the people near them.\n"
+                    for i in range(15))
+        with tempfile.TemporaryDirectory() as d:
+            for i in range(8):
+                with open(os.path.join(d, f"{i}.txt"), "w", encoding="utf-8") as f:
+                    f.write(t)
+            out = os.path.join(d, "bands.json")
+            with open(out, "w", encoding="utf-8") as f:
+                json.dump({"_register": "script"}, f)
+            with contextlib.redirect_stdout(io.StringIO()):
+                aimeter.calibrate(d, out=out)
+            with open(out, encoding="utf-8") as f:
+                self.assertEqual(json.load(f)["_register"], "script")
+
 
 class AuditSpoken(unittest.TestCase):
     """audit.py reads only the spoken words when the band file says "_spoken": true."""

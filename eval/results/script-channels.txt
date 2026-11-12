@@ -1,0 +1,73 @@
+# QUIRON_BANDS=scripts/bands-script.json python3 eval/script_channels.py eval/titles/script-manifest.tsv ~/corpus/script eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55
+144 human texts in 17 channels, 48 AI texts; 17 channels with 4+ texts are counted
+
+sentence-length CV (cv_sentence_len): AI median 0.53, human median 0.578, 13 of 17 channels on the human side
+  3Blue1Brown 0.515, CGP Grey 0.744, Every Frame a Painting 0.661, Johnny Harris 0.667, Kurzgesagt 0.545, LEMMiNO 0.506, Nerdwriter1 0.661, Oversimplified 0.667, PBS Space Time 0.542, Real Engineering 0.538, TED-Ed 0.441, Tom Scott 0.596, Veritasium 0.735, Vox 0.539, Vsauce 0.649, Wendover Productions 0.491, exurb1a 0.691
+
+mean sentence length (mean_sentence_len): AI median 12.3, human median 17.8, 17 of 17 channels on the human side
+  3Blue1Brown 24.6, CGP Grey 22, Every Frame a Painting 13.2, Johnny Harris 15.5, Kurzgesagt 16.3, LEMMiNO 18.9, Nerdwriter1 20.9, Oversimplified 17.2, PBS Space Time 16.3, Real Engineering 22.7, TED-Ed 15.8, Tom Scott 16.9, Veritasium 22.7, Vox 16.2, Vsauce 16.1, Wendover Productions 21.4, exurb1a 19.3
+
+long words (7+) /1k (long_words_1k): AI median 216, human median 195, 13 of 17 channels on the human side
+  3Blue1Brown 194, CGP Grey 199, Every Frame a Painting 148, Johnny Harris 151, Kurzgesagt 196, LEMMiNO 218, Nerdwriter1 188, Oversimplified 204, PBS Space Time 233, Real Engineering 244, TED-Ed 231, Tom Scott 180, Veritasium 155, Vox 200, Vsauce 161, Wendover Productions 211, exurb1a 180
+
+mean word length (mean_word_len): AI median 4.7, human median 4.53, 15 of 17 channels on the human side
+  3Blue1Brown 4.49, CGP Grey 4.54, Every Frame a Painting 4.25, Johnny Harris 4.24, Kurzgesagt 4.53, LEMMiNO 4.66, Nerdwriter1 4.47, Oversimplified 4.56, PBS Space Time 4.77, Real Engineering 4.75, TED-Ed 4.67, Tom Scott 4.45, Veritasium 4.37, Vox 4.48, Vsauce 4.39, Wendover Productions 4.54, exurb1a 4.49
+
+nominalizations /1k (nominalizations_1k): AI median 18, human median 13.6, 13 of 17 channels on the human side
+  3Blue1Brown 13.8, CGP Grey 11.9, Every Frame a Painting 10.3, Johnny Harris 7.18, Kurzgesagt 16.4, LEMMiNO 21.7, Nerdwriter1 17.4, Oversimplified 9.5, PBS Space Time 32.2, Real Engineering 19.8, TED-Ed 15.1, Tom Scott 11, Veritasium 10.9, Vox 22.6, Vsauce 10.8, Wendover Productions 11.9, exurb1a 11.3
+
+-ly adverbs /1k (ly_adverbs_1k): AI median 13, human median 14.5, 14 of 17 channels on the human side
+  3Blue1Brown 15.2, CGP Grey 11.4, Every Frame a Painting 13.5, Johnny Harris 14.2, Kurzgesagt 15.8, LEMMiNO 20.4, Nerdwriter1 16.7, Oversimplified 13.5, PBS Space Time 14, Real Engineering 11.1, TED-Ed 9.51, Tom Scott 14.8, Veritasium 16.4, Vox 14.5, Vsauce 14.2, Wendover Productions 13.9, exurb1a 20.3
+
+passive voice /1k (passive_1k): AI median 5.12, human median 5.97, 13 of 17 channels on the human side
+  3Blue1Brown 3.75, CGP Grey 5.55, Every Frame a Painting 2.07, Johnny Harris 3.87, Kurzgesagt 7.21, LEMMiNO 11.2, Nerdwriter1 5.41, Oversimplified 7.38, PBS Space Time 5.05, Real Engineering 9.53, TED-Ed 7.41, Tom Scott 5.48, Veritasium 5.48, Vox 7.46, Vsauce 5.49, Wendover Productions 7.09, exurb1a 5.46
+
+lexical diversity MATTR-50 (mattr50): AI median 0.833, human median 0.807, 16 of 17 channels on the human side
+  3Blue1Brown 0.79, CGP Grey 0.806, Every Frame a Painting 0.816, Johnny Harris 0.788, Kurzgesagt 0.799, LEMMiNO 0.808, Nerdwriter1 0.823, Oversimplified 0.814, PBS Space Time 0.815, Real Engineering 0.803, TED-Ed 0.805, Tom Scott 0.806, Veritasium 0.781, Vox 0.824, Vsauce 0.804, Wendover Productions 0.794, exurb1a 0.836
+
+first person /1k (first_person_1k): AI median 4.77, human median 14.2, 13 of 17 channels on the human side
+  3Blue1Brown 16.4, CGP Grey 7.42, Every Frame a Painting 24.4, Johnny Harris 27.4, Kurzgesagt 14.9, LEMMiNO 8.11, Nerdwriter1 21.4, Oversimplified 4.57, PBS Space Time 22.2, Real Engineering 13.6, TED-Ed 4.67, Tom Scott 17.9, Veritasium 16.4, Vox 3.82, Vsauce 24.4, Wendover Productions 1.78, exurb1a 8.93
+
+contractions /1k (contractions_1k): AI median 23.8, human median 21.8, 10 of 17 channels on the human side
+  3Blue1Brown 19.4, CGP Grey 22.1, Every Frame a Painting 36.6, Johnny Harris 29.4, Kurzgesagt 12.4, LEMMiNO 16.8, Nerdwriter1 26.4, Oversimplified 12.8, PBS Space Time 20.4, Real Engineering 9.73, TED-Ed 17.5, Tom Scott 26.9, Veritasium 21.9, Vox 28.5, Vsauce 24.9, Wendover Productions 17, exurb1a 37.8
+
+questions /1k (questions_1k): AI median 3.26, human median 2.63, 10 of 17 channels on the human side
+  3Blue1Brown 1.25, CGP Grey 6.59, Every Frame a Painting 8.8, Johnny Harris 1.86, Kurzgesagt 0, LEMMiNO 2.18, Nerdwriter1 0.99, Oversimplified 1.23, PBS Space Time 2.61, Real Engineering 0, TED-Ed 4.18, Tom Scott 5.93, Veritasium 5.46, Vox 2.91, Vsauce 4.64, Wendover Productions 0, exurb1a 4.8
+
+repeated openers /100 (repeated_openers): AI median 5.35, human median 3.45, 16 of 17 channels on the human side
+  3Blue1Brown 4.5, CGP Grey 3.1, Every Frame a Painting 4.2, Johnny Harris 6.75, Kurzgesagt 2.8, LEMMiNO 4.7, Nerdwriter1 1.65, Oversimplified 3.9, PBS Space Time 1.9, Real Engineering 5.2, TED-Ed 3.1, Tom Scott 3.3, Veritasium 3.5, Vox 1.4, Vsauce 4.2, Wendover Productions 3.7, exurb1a 5
+
+connective openers % (connective_openers): AI median 12, human median 17, 15 of 17 channels on the human side
+  3Blue1Brown 24.2, CGP Grey 23.5, Every Frame a Painting 21.1, Johnny Harris 25.5, Kurzgesagt 16.7, LEMMiNO 13.7, Nerdwriter1 13, Oversimplified 20.1, PBS Space Time 22.4, Real Engineering 9.2, TED-Ed 14.3, Tom Scott 16, Veritasium 16, Vox 19, Vsauce 18.8, Wendover Productions 8.3, exurb1a 12.9
+
+commas /1k (commas_1k): AI median 64.5, human median 58, 11 of 17 channels on the human side
+  3Blue1Brown 68.7, CGP Grey 71.8, Every Frame a Painting 52.8, Johnny Harris 46.5, Kurzgesagt 59.5, LEMMiNO 45.7, Nerdwriter1 65.3, Oversimplified 48.9, PBS Space Time 47.1, Real Engineering 42.7, TED-Ed 60.8, Tom Scott 68.8, Veritasium 40.8, Vox 49.9, Vsauce 67.2, Wendover Productions 61, exurb1a 64.7
+
+semicolons /1k (semicolons_1k): AI median 0, human median 0, 0 of 17 channels on the human side
+  3Blue1Brown 0, CGP Grey 0, Every Frame a Painting 0, Johnny Harris 0, Kurzgesagt 0.88, LEMMiNO 0, Nerdwriter1 0, Oversimplified 0, PBS Space Time 0, Real Engineering 0, TED-Ed 0, Tom Scott 0, Veritasium 0, Vox 0, Vsauce 0, Wendover Productions 0, exurb1a 0.89
+
+em dashes /1k (em_dashes_1k): AI median 0, human median 0, 0 of 17 channels on the human side
+  3Blue1Brown 0, CGP Grey 0, Every Frame a Painting 0, Johnny Harris 0, Kurzgesagt 0, LEMMiNO 0, Nerdwriter1 0, Oversimplified 0, PBS Space Time 0, Real Engineering 0, TED-Ed 0, Tom Scott 0, Veritasium 0, Vox 5.15, Vsauce 0, Wendover Productions 4.33, exurb1a 0
+
+AI-lexicon words /1k (ai_lexicon_1k): AI median 1.43, human median 0.41, 17 of 17 channels on the human side
+  3Blue1Brown 0.81, CGP Grey 0.6, Every Frame a Painting 0, Johnny Harris 0.195, Kurzgesagt 0, LEMMiNO 0.9, Nerdwriter1 0.435, Oversimplified 0.605, PBS Space Time 0.88, Real Engineering 0.8, TED-Ed 1.36, Tom Scott 0.88, Veritasium 0, Vox 0, Vsauce 0, Wendover Productions 0.39, exurb1a 0
+
+lists of three /1k (triads_1k): AI median 6.19, human median 2.08, 17 of 17 channels on the human side
+  3Blue1Brown 1.01, CGP Grey 2.08, Every Frame a Painting 1.05, Johnny Harris 1.73, Kurzgesagt 4.17, LEMMiNO 2.7, Nerdwriter1 1.55, Oversimplified 1.81, PBS Space Time 1.01, Real Engineering 3.1, TED-Ed 3.5, Tom Scott 1.97, Veritasium 0.79, Vox 4.48, Vsauce 2.2, Wendover Productions 2.25, exurb1a 2.25
+
+participial clauses /1k (participles_1k): AI median 1.08, human median 0.995, 11 of 17 channels on the human side
+  3Blue1Brown 0.71, CGP Grey 0, Every Frame a Painting 0.69, Johnny Harris 0.92, Kurzgesagt 1.75, LEMMiNO 0, Nerdwriter1 2.1, Oversimplified 1.25, PBS Space Time 1.06, Real Engineering 1.24, TED-Ed 1.51, Tom Scott 0, Veritasium 0.39, Vox 1.36, Vsauce 0.73, Wendover Productions 0.39, exurb1a 0.91
+
+plain words /1k (plain_words_1k): AI median 62.2, human median 74.9, 14 of 17 channels on the human side
+  3Blue1Brown 71.8, CGP Grey 66.6, Every Frame a Painting 98, Johnny Harris 94.2, Kurzgesagt 58.1, LEMMiNO 66.5, Nerdwriter1 77.6, Oversimplified 72.8, PBS Space Time 64.9, Real Engineering 50, TED-Ed 55.7, Tom Scott 82.3, Veritasium 97.8, Vox 72.6, Vsauce 91.8, Wendover Productions 68.1, exurb1a 104
+
+parentheses /1k (parens_1k): AI median 0, human median 0, 0 of 17 channels on the human side
+  3Blue1Brown 0, CGP Grey 4.06, Every Frame a Painting 0, Johnny Harris 1.19, Kurzgesagt 0, LEMMiNO 1.78, Nerdwriter1 0.395, Oversimplified 0.37, PBS Space Time 0, Real Engineering 0, TED-Ed 0, Tom Scott 0, Veritasium 0, Vox 0, Vsauce 0, Wendover Productions 0, exurb1a 1.2
+
+words per paragraph (para_words): AI median 30.7, human median 1.18e+03, 17 of 17 channels on the human side
+  3Blue1Brown 2e+03, CGP Grey 1.44e+03, Every Frame a Painting 1.08e+03, Johnny Harris 2.54e+03, Kurzgesagt 973, LEMMiNO 1.37e+03, Nerdwriter1 1.19e+03, Oversimplified 1.66e+03, PBS Space Time 2.21e+03, Real Engineering 1.35e+03, TED-Ed 662, Tom Scott 558, Veritasium 1.19e+03, Vox 737, Vsauce 1.36e+03, Wendover Productions 1.8e+03, exurb1a 896
+
+headings /1k (headings_1k): AI median 0, human median 0, 0 of 17 channels on the human side
+  3Blue1Brown 0, CGP Grey 0, Every Frame a Painting 0, Johnny Harris 0, Kurzgesagt 0, LEMMiNO 0, Nerdwriter1 0, Oversimplified 0, PBS Space Time 0, Real Engineering 0, TED-Ed 0, Tom Scott 0, Veritasium 0, Vox 0, Vsauce 0, Wendover Productions 0, exurb1a 0
+
+# Rule (brief step 2): commas, em dashes, semicolons and parentheses go to _skip when fewer than three of four counted channels are on the human side of the AI median.

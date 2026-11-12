@@ -441,7 +441,9 @@ def markup_counts(text):
 
 
 def measure(text):
-    t = prose(spoken(text) if SPOKEN else text)
+    if SPOKEN:  # every rate, headings included, is of the spoken words
+        text = spoken(text)
+    t = prose(text)
     P = PROFILES[LANG]
     words = P["word"].findall(t)
     n = len(words)
@@ -569,7 +571,7 @@ def calibrate(directory, ai_dir=None, out=None, lexicon=None, lang=None, plain=N
     ai_rows = measure_dir(ai_dir, spoken_only) if ai_dir else None
     bands = {"_corpus": os.path.basename(os.path.abspath(directory)),
              **bands_from(rows, ai_rows)}
-    bands.update({k: old[k] for k in ("_lexicon", "_thresholds", "_lang", "_plain", "_skip")
+    bands.update({k: old[k] for k in ("_lexicon", "_thresholds", "_lang", "_plain", "_skip", "_register")
                   if k in old})
     for key, val in (("_lexicon", lexicon), ("_lang", lang), ("_plain", plain)):
         if val:

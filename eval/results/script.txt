@@ -1,0 +1,193 @@
+# Bands for video scripts: calibration and evaluation (English)
+# Written by the commands below, run from the repository root on 12 November 2026.
+# Human texts are not in the repository. One split everywhere: the corpus files sorted by name, every 4th
+# one (the 1st, 5th, ...) held out, the other three quarters train.
+#   TRAIN=$(mktemp -d); ls ~/corpus/script/*.md | awk 'NR%4!=1' | xargs -I{} cp {} $TRAIN
+
+## Band file
+# QUIRON_BANDS=scripts/bands-script.json python3 scripts/aimeter.py --calibrate $TRAIN --ai eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 --out scripts/bands-script.json --spoken
+# (the file first held only the meta keys below, minus _corpus, _texts and _ai_texts; _corpus was then set by hand to script-train)
+# meta keys: {"_corpus": "script-train", "_texts": 144, "_ai_texts": 48, "_thresholds": {"AI_SIDE_MAX": 4, "TELLS_MAX": 6, "LEXICON_MIN": 4}, "_skip": ["para_words", "headings_1k", "commas_1k", "em_dashes_1k", "semicolons_1k", "parens_1k"], "_register": "script", "_spoken": true}
+
+## Held-out evaluation with the shipped thresholds
+# QUIRON_BANDS=scripts/bands-script.json python3 scripts/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
+bands from 144 human texts, 49 held out
+
+group                              n        judge_p_ai       judge_as_ai      score_median      score_14plus      ai_side_mean     overshot_mean  audit_fails_mean audit_clean_share
+human-heldout                     49              0.02              0.02                21              0.98              0.78                 1              0.08              0.92
+opus55                             9              0.67              0.67                20               1.0              2.89              0.11              0.44              0.56
+sonnet55                           9              0.44              0.44                19               1.0              2.44              0.56              0.44              0.56
+fable52                            9              0.56              0.56                20               1.0              2.33              0.22              0.33              0.67
+gpt61                              9              0.77              0.78                18               1.0              4.67              0.22              0.78              0.33
+terra                              9              0.67              0.67                19               1.0              3.78              0.11              0.89              0.33
+
+AUC vs held-out humans                  opus55        sonnet55         fable52           gpt61           terra
+sentence-length CV                       0.603           0.766           0.676            0.88           0.773
+mean sentence length                     0.907           0.913           0.913           0.939           0.884
+long words (7+) /1k                      0.578           0.501           0.544           0.862           0.737
+mean word length                         0.709           0.529           0.582           0.821            0.76
+nominalizations /1k                      0.355            0.42           0.494           0.794           0.612
+-ly adverbs /1k                          0.702           0.587           0.508           0.358           0.502
+lexical diversity MATTR-50               0.872           0.722           0.698           0.863           0.774
+first person /1k                         0.743           0.587           0.645           0.619           0.798
+repeated openers /100                    0.639           0.549            0.66           0.732           0.768
+connective openers %                     0.681            0.55           0.626            0.61           0.618
+AI-lexicon words /1k                     0.575           0.383           0.615           0.732           0.732
+lists of three /1k                       0.855           0.825           0.776           0.703           0.876
+plain words /1k                          0.612           0.671           0.622           0.703           0.678
+
+FAIL rate per check   human-heldout          opus55        sonnet55         fable52           gpt61           terra
+A21                              0               0            0.11               0               0               0
+B1                            0.02               0               0            0.11            0.11            0.22
+C1                            0.02            0.44            0.33            0.11            0.67            0.56
+C2                            0.02               0               0               0               0               0
+T1                            0.02               0               0            0.11               0            0.11
+
+TELL or FAIL rate    human-heldout          opus55        sonnet55         fable52           gpt61           terra
+A1                           0.163           0.333           0.333           0.222               0               0
+A14b                         0.102               0           0.111               0           0.111           0.333
+A15                          0.041               0               0               0               0               0
+A17                              0           0.222               0               0               0               0
+A1b                          0.367           0.222           0.222           0.556           0.222           0.333
+A20                          0.122               0               0               0           0.667           0.778
+A21                              0               0           0.111               0               0               0
+A26                           0.02               0               0               0               0               0
+A2b                          0.184           0.111           0.222           0.333           0.222           0.222
+A3                           0.041               0               0           0.111               0               0
+A32                           0.02           0.111               0               0               0               0
+A4                           0.041               0           0.111           0.222               0               0
+A4b                           0.02           0.111           0.111               0               0               0
+A5                               0           0.111               0               0               0               0
+A8                           0.204           0.111               0           0.111           0.333           0.667
+A9                           0.041               0               0               0               0           0.111
+B1                           0.469           0.667           0.222           0.556           0.778           0.778
+B2                           0.061           0.111           0.111           0.222           0.444           0.111
+
+checklist AUC                 0.54           0.472           0.559             0.7           0.763
+
+## Thresholds: the shipped band file with other _thresholds, human-train added (its bands come from those same texts, so C1 and C2 on human-train are in-sample and optimistic)
+# V=$(mktemp); python3 -c "import json,sys;d=json.load(open('scripts/bands-script.json'));d['_thresholds'].update(json.loads(sys.argv[1]));json.dump(d,open(sys.argv[2],'w'))" '<variant>' $V
+# QUIRON_BANDS=$V python3 scripts/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 human-train=$TRAIN opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra   (rows: group lines and FAIL rate per check)
+
+### variant: chosen (C1=4, T1=6, B1=4)   _thresholds={'AI_SIDE_MAX': 4, 'TELLS_MAX': 6, 'LEXICON_MIN': 4}
+group n judge_p_ai judge_as_ai score_median score_14plus ai_side_mean overshot_mean audit_fails_mean audit_clean_share
+human-heldout 49 0.02 0.02 21 0.98 0.78 1 0.08 0.92
+human-train 144 0.0 0.0 21.0 1.0 0.97 0.82 0.12 0.9
+opus55 9 0.67 0.67 20 1.0 2.89 0.11 0.44 0.56
+sonnet55 9 0.44 0.44 19 1.0 2.44 0.56 0.44 0.56
+fable52 9 0.56 0.56 20 1.0 2.33 0.22 0.33 0.67
+gpt61 9 0.77 0.78 18 1.0 4.67 0.22 0.78 0.33
+terra 9 0.67 0.67 19 1.0 3.78 0.11 0.89 0.33
+FAIL rate per check human-heldout human-train opus55 sonnet55 fable52 gpt61 terra
+A21 0 0.01 0 0.11 0 0 0
+B1 0.02 0.04 0 0 0.11 0.11 0.22
+C1 0.02 0.05 0.44 0.33 0.11 0.67 0.56
+C2 0.02 0 0 0 0 0 0
+T1 0.02 0.01 0 0 0.11 0 0.11
+
+### variant: C1=3   _thresholds={'AI_SIDE_MAX': 3, 'TELLS_MAX': 6, 'LEXICON_MIN': 4}
+group n judge_p_ai judge_as_ai score_median score_14plus ai_side_mean overshot_mean audit_fails_mean audit_clean_share
+human-heldout 49 0.02 0.02 21 0.98 0.78 1 0.08 0.92
+human-train 144 0.0 0.0 21.0 1.0 0.97 0.82 0.18 0.83
+opus55 9 0.67 0.67 20 1.0 2.89 0.11 0.44 0.56
+sonnet55 9 0.44 0.44 19 1.0 2.44 0.56 0.56 0.56
+fable52 9 0.56 0.56 20 1.0 2.33 0.22 0.67 0.56
+gpt61 9 0.77 0.78 18 1.0 4.67 0.22 1 0.11
+terra 9 0.67 0.67 19 1.0 3.78 0.11 1.11 0.22
+FAIL rate per check human-heldout human-train opus55 sonnet55 fable52 gpt61 terra
+A21 0 0.01 0 0.11 0 0 0
+B1 0.02 0.04 0 0 0.11 0.11 0.22
+C1 0.02 0.11 0.44 0.44 0.44 0.89 0.78
+C2 0.02 0 0 0 0 0 0
+T1 0.02 0.01 0 0 0.11 0 0.11
+
+### variant: T1=5   _thresholds={'AI_SIDE_MAX': 4, 'TELLS_MAX': 5, 'LEXICON_MIN': 4}
+group n judge_p_ai judge_as_ai score_median score_14plus ai_side_mean overshot_mean audit_fails_mean audit_clean_share
+human-heldout 49 0.02 0.02 21 0.98 0.78 1 0.14 0.86
+human-train 144 0.0 0.0 21.0 1.0 0.97 0.82 0.16 0.85
+opus55 9 0.67 0.67 20 1.0 2.89 0.11 0.56 0.44
+sonnet55 9 0.44 0.44 19 1.0 2.44 0.56 0.44 0.56
+fable52 9 0.56 0.56 20 1.0 2.33 0.22 0.44 0.56
+gpt61 9 0.77 0.78 18 1.0 4.67 0.22 0.89 0.33
+terra 9 0.67 0.67 19 1.0 3.78 0.11 0.89 0.33
+FAIL rate per check human-heldout human-train opus55 sonnet55 fable52 gpt61 terra
+A21 0 0.01 0 0.11 0 0 0
+B1 0.02 0.04 0 0 0.11 0.11 0.22
+C1 0.02 0.05 0.44 0.33 0.11 0.67 0.56
+C2 0.02 0 0 0 0 0 0
+T1 0.08 0.06 0.11 0 0.22 0.11 0.11
+
+### variant: B1=3   _thresholds={'AI_SIDE_MAX': 4, 'TELLS_MAX': 6, 'LEXICON_MIN': 3}
+group n judge_p_ai judge_as_ai score_median score_14plus ai_side_mean overshot_mean audit_fails_mean audit_clean_share
+human-heldout 49 0.02 0.02 21 0.98 0.78 1 0.14 0.88
+human-train 144 0.0 0.0 21.0 1.0 0.97 0.82 0.12 0.89
+opus55 9 0.67 0.67 20 1.0 2.89 0.11 0.56 0.44
+sonnet55 9 0.44 0.44 19 1.0 2.44 0.56 0.56 0.56
+fable52 9 0.56 0.56 20 1.0 2.33 0.22 0.33 0.67
+gpt61 9 0.77 0.78 18 1.0 4.67 0.22 1 0.22
+terra 9 0.67 0.67 19 1.0 3.78 0.11 0.89 0.33
+FAIL rate per check human-heldout human-train opus55 sonnet55 fable52 gpt61 terra
+A21 0 0.01 0 0.11 0 0 0
+B1 0.08 0.05 0.11 0.11 0.22 0.33 0.33
+C1 0.02 0.05 0.44 0.33 0.11 0.67 0.56
+C2 0.02 0 0 0 0 0 0
+T1 0.02 0.01 0 0 0 0 0
+
+### variant: C1=5   _thresholds={'AI_SIDE_MAX': 5, 'TELLS_MAX': 6, 'LEXICON_MIN': 4}
+group n judge_p_ai judge_as_ai score_median score_14plus ai_side_mean overshot_mean audit_fails_mean audit_clean_share
+human-heldout 49 0.02 0.02 21 0.98 0.78 1 0.06 0.94
+human-train 144 0.0 0.0 21.0 1.0 0.97 0.82 0.08 0.92
+opus55 9 0.67 0.67 20 1.0 2.89 0.11 0.11 0.89
+sonnet55 9 0.44 0.44 19 1.0 2.44 0.56 0.22 0.78
+fable52 9 0.56 0.56 20 1.0 2.33 0.22 0.22 0.78
+gpt61 9 0.77 0.78 18 1.0 4.67 0.22 0.67 0.44
+terra 9 0.67 0.67 19 1.0 3.78 0.11 0.67 0.56
+FAIL rate per check human-heldout human-train opus55 sonnet55 fable52 gpt61 terra
+A21 0 0.01 0 0.11 0 0 0
+B1 0.02 0.04 0 0 0.11 0.11 0.22
+C1 0 0.01 0.11 0.11 0 0.56 0.33
+C2 0.02 0 0 0 0 0 0
+T1 0.02 0.01 0 0 0.11 0 0.11
+
+### variant: C1=5 and C2=7   _thresholds={'AI_SIDE_MAX': 5, 'TELLS_MAX': 6, 'LEXICON_MIN': 4, 'OVERSHOT_MAX': 7}
+group n judge_p_ai judge_as_ai score_median score_14plus ai_side_mean overshot_mean audit_fails_mean audit_clean_share
+human-heldout 49 0.02 0.02 21 0.98 0.78 1 0.04 0.96
+human-train 144 0.0 0.0 21.0 1.0 0.97 0.82 0.08 0.92
+opus55 9 0.67 0.67 20 1.0 2.89 0.11 0.11 0.89
+sonnet55 9 0.44 0.44 19 1.0 2.44 0.56 0.22 0.78
+fable52 9 0.56 0.56 20 1.0 2.33 0.22 0.22 0.78
+gpt61 9 0.77 0.78 18 1.0 4.67 0.22 0.67 0.44
+terra 9 0.67 0.67 19 1.0 3.78 0.11 0.67 0.56
+FAIL rate per check human-heldout human-train opus55 sonnet55 fable52 gpt61 terra
+A21 0 0.01 0 0.11 0 0 0
+B1 0.02 0.04 0 0 0.11 0.11 0.22
+C1 0 0.01 0.11 0.11 0 0.56 0.33
+T1 0.02 0.01 0 0 0.11 0 0.11
+
+## Before and after on the same texts (blog bands read the raw text, markup included; script bands read the spoken words)
+# before: QUIRON_BANDS=scripts/bands.json python3 eval/band_compare.py human-heldout=~/corpus/script@heldout opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
+bands: scripts/bands.json  (23 scored features)
+group                n   out of band, median  AI side, mean   clean checklist
+human-heldout       49                     4           1.16    40 of 49 (82%)
+opus55               9                     4           3.00      5 of 9 (56%)
+sonnet55             9                     5           3.56      6 of 9 (67%)
+fable52              9                     5           3.22      5 of 9 (56%)
+gpt61                9                     7           4.67      3 of 9 (33%)
+terra                9                     6           3.89      4 of 9 (44%)
+
+# after:  QUIRON_BANDS=scripts/bands-script.json python3 eval/band_compare.py human-heldout=~/corpus/script@heldout opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
+bands: scripts/bands-script.json  (17 scored features)
+group                n   out of band, median  AI side, mean   clean checklist
+human-heldout       49                     2           0.78    45 of 49 (92%)
+opus55               9                     3           2.89      5 of 9 (56%)
+sonnet55             9                     4           2.44      5 of 9 (56%)
+fable52              9                     3           2.33      6 of 9 (67%)
+gpt61                9                     5           4.67      3 of 9 (33%)
+terra                9                     4           3.78      3 of 9 (33%)
+
+## Held-out human texts that fail the checklist
+# QUIRON_BANDS=scripts/bands-script.json python3 eval/band_compare.py --detail human-heldout=~/corpus/script@heldout | grep 'checklist FAIL'
+  realengineering-7vLPefHYWpY.md: 0 out (); checklist FAIL
+  teded-GTvnjaUU6Xk.md: 4 out (long_words_1k, mean_word_len, mattr50, triads_1k); checklist FAIL
+  veritasium-vKA4w2O61Xo.md: 10 out (cv_sentence_len, mean_sentence_len, long_words_1k, mean_word_len, passive_1k, mattr50, first_person_1k, contractions_1k, questions_1k, plain_words_1k); checklist FAIL
+  wendoverproductions-aQSxPzafO_k.md: 2 out (ai_lexicon_1k, triads_1k); checklist FAIL

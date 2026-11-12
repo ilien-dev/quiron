@@ -1,0 +1,75 @@
+# QUIRON_BANDS=scripts/bands-script-es.json python3 eval/script_channels.py eval/titles/script-es-manifest.tsv ~/corpus/script-es eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55
+80 human texts in 13 channels, 48 AI texts; 10 channels with 4+ texts are counted
+
+sentence-length CV (cv_sentence_len): AI median 0.518, human median 0.597, 8 of 10 channels on the human side
+  C de Ciencia 0.579, CuriosaMente 0.588, Date un Vlog 0.72, El Robot de Platon 0.652, Jaime Altozano 0.876, La Hiperactina 0.557, Pero eso es otra historia 0.517, QuantumFracture 0.61, Un Mundo Inmenso 0.46, VisualPolitik 0.628
+
+mean sentence length (mean_sentence_len): AI median 14.4, human median 21.1, 10 of 10 channels on the human side
+  C de Ciencia 22.8, CuriosaMente 19.3, Date un Vlog 18.9, El Robot de Platon 15.8, Jaime Altozano 27, La Hiperactina 27.4, Pero eso es otra historia 21.4, QuantumFracture 20.8, Un Mundo Inmenso 15.6, VisualPolitik 20.8
+
+long words (7+) /1k (long_words_1k): AI median 291, human median 262, 10 of 10 channels on the human side
+  C de Ciencia 268, CuriosaMente 290, Date un Vlog 244, El Robot de Platon 248, Jaime Altozano 190, La Hiperactina 271, Pero eso es otra historia 275, QuantumFracture 264, Un Mundo Inmenso 260, VisualPolitik 255
+
+mean word length (mean_word_len): AI median 4.85, human median 4.74, 9 of 10 channels on the human side
+  C de Ciencia 4.76, CuriosaMente 4.89, Date un Vlog 4.63, El Robot de Platon 4.63, Jaime Altozano 4.25, La Hiperactina 4.77, Pero eso es otra historia 4.82, QuantumFracture 4.73, Un Mundo Inmenso 4.73, VisualPolitik 4.73
+
+nominalizations /1k (nominalizations_1k): AI median 25.7, human median 22.1, 8 of 10 channels on the human side
+  C de Ciencia 25.6, CuriosaMente 28.4, Date un Vlog 24.4, El Robot de Platon 18.7, Jaime Altozano 13.1, La Hiperactina 27.9, Pero eso es otra historia 13.3, QuantumFracture 21.8, Un Mundo Inmenso 22.1, VisualPolitik 21.9
+
+-ly adverbs /1k (ly_adverbs_1k): AI median 3.79, human median 5.86, 9 of 10 channels on the human side
+  C de Ciencia 9.41, CuriosaMente 7.41, Date un Vlog 4.1, El Robot de Platon 6.58, Jaime Altozano 2.76, La Hiperactina 6.29, Pero eso es otra historia 4.97, QuantumFracture 5.29, Un Mundo Inmenso 3.91, VisualPolitik 6.83
+
+passive voice /1k (passive_1k): AI median 1.43, human median 2.05, 8 of 10 channels on the human side
+  C de Ciencia 3.89, CuriosaMente 2.18, Date un Vlog 1.73, El Robot de Platon 2.92, Jaime Altozano 0.34, La Hiperactina 1.88, Pero eso es otra historia 2.7, QuantumFracture 2.76, Un Mundo Inmenso 1.3, VisualPolitik 1.85
+
+lexical diversity MATTR-50 (mattr50): AI median 0.822, human median 0.796, 10 of 10 channels on the human side
+  C de Ciencia 0.784, CuriosaMente 0.796, Date un Vlog 0.757, El Robot de Platon 0.787, Jaime Altozano 0.76, La Hiperactina 0.783, Pero eso es otra historia 0.814, QuantumFracture 0.783, Un Mundo Inmenso 0.813, VisualPolitik 0.814
+
+first person /1k (first_person_1k): AI median 2.98, human median 5.31, 7 of 10 channels on the human side
+  C de Ciencia 4.78, CuriosaMente 1.4, Date un Vlog 7.27, El Robot de Platon 6.43, Jaime Altozano 6.77, La Hiperactina 12.2, Pero eso es otra historia 1.11, QuantumFracture 6.8, Un Mundo Inmenso 4.69, VisualPolitik 2.55
+
+contractions /1k (contractions_1k): AI median 0, human median 0, 0 of 10 channels on the human side
+  C de Ciencia 0, CuriosaMente 0, Date un Vlog 0, El Robot de Platon 0, Jaime Altozano 0, La Hiperactina 0, Pero eso es otra historia 0, QuantumFracture 0, Un Mundo Inmenso 0, VisualPolitik 0
+
+questions /1k (questions_1k): AI median 3.62, human median 3.64, 5 of 10 channels on the human side
+  C de Ciencia 3, CuriosaMente 3.24, Date un Vlog 9.25, El Robot de Platon 7.01, Jaime Altozano 1.2, La Hiperactina 4.56, Pero eso es otra historia 0.89, QuantumFracture 6.9, Un Mundo Inmenso 2.75, VisualPolitik 4.94
+
+repeated openers /100 (repeated_openers): AI median 2.7, human median 2.35, 7 of 10 channels on the human side
+  C de Ciencia 0, CuriosaMente 3.2, Date un Vlog 1.4, El Robot de Platon 1.5, Jaime Altozano 5, La Hiperactina 2, Pero eso es otra historia 1, QuantumFracture 3.5, Un Mundo Inmenso 1.5, VisualPolitik 2.6
+
+connective openers % (connective_openers): AI median 17.1, human median 18, 5 of 10 channels on the human side
+  C de Ciencia 15.5, CuriosaMente 15.2, Date un Vlog 16.6, El Robot de Platon 11.9, Jaime Altozano 32.6, La Hiperactina 21.4, Pero eso es otra historia 11.6, QuantumFracture 20.8, Un Mundo Inmenso 19.1, VisualPolitik 20.6
+
+commas /1k (commas_1k): AI median 66.2, human median 59.9, 9 of 10 channels on the human side
+  C de Ciencia 54.2, CuriosaMente 60.1, Date un Vlog 44.8, El Robot de Platon 44.6, Jaime Altozano 42.5, La Hiperactina 63.4, Pero eso es otra historia 68.4, QuantumFracture 65.1, Un Mundo Inmenso 59.8, VisualPolitik 59.1
+
+semicolons /1k (semicolons_1k): AI median 0, human median 0, 0 of 10 channels on the human side
+  C de Ciencia 0, CuriosaMente 0, Date un Vlog 0, El Robot de Platon 0, Jaime Altozano 0, La Hiperactina 0.54, Pero eso es otra historia 0.9, QuantumFracture 1.91, Un Mundo Inmenso 0, VisualPolitik 0
+
+em dashes /1k (em_dashes_1k): AI median 0, human median 0, 0 of 10 channels on the human side
+  C de Ciencia 0, CuriosaMente 0, Date un Vlog 0, El Robot de Platon 0, Jaime Altozano 0, La Hiperactina 0, Pero eso es otra historia 0, QuantumFracture 0, Un Mundo Inmenso 0, VisualPolitik 0
+
+AI-lexicon words /1k (ai_lexicon_1k): AI median 0, human median 0, 0 of 10 channels on the human side
+  C de Ciencia 0, CuriosaMente 0, Date un Vlog 0, El Robot de Platon 0, Jaime Altozano 0, La Hiperactina 0, Pero eso es otra historia 0, QuantumFracture 0, Un Mundo Inmenso 0, VisualPolitik 0
+
+lists of three /1k (triads_1k): AI median 5.47, human median 2.22, 10 of 10 channels on the human side
+  C de Ciencia 1.33, CuriosaMente 3.73, Date un Vlog 2.6, El Robot de Platon 1.92, Jaime Altozano 1.53, La Hiperactina 2.44, Pero eso es otra historia 4.21, QuantumFracture 1.51, Un Mundo Inmenso 3.67, VisualPolitik 3.53
+
+participial clauses /1k (participles_1k): AI median 0.575, human median 0.815, 5 of 10 channels on the human side
+  C de Ciencia 1.34, CuriosaMente 0, Date un Vlog 0.77, El Robot de Platon 0, Jaime Altozano 0.34, La Hiperactina 2.12, Pero eso es otra historia 0.56, QuantumFracture 1.89, Un Mundo Inmenso 1.09, VisualPolitik 0.52
+
+plain words /1k (plain_words_1k): AI median 33.3, human median 40.3, 8 of 10 channels on the human side
+  C de Ciencia 36.5, CuriosaMente 29.3, Date un Vlog 43.4, El Robot de Platon 40.3, Jaime Altozano 49, La Hiperactina 42.7, Pero eso es otra historia 29.7, QuantumFracture 45.9, Un Mundo Inmenso 38.3, VisualPolitik 40
+
+parentheses /1k (parens_1k): AI median 0, human median 0.6, 8 of 10 channels on the human side
+  C de Ciencia 0.25, CuriosaMente 0.98, Date un Vlog 0.305, El Robot de Platon 1.17, Jaime Altozano 0, La Hiperactina 2.66, Pero eso es otra historia 0.45, QuantumFracture 2.27, Un Mundo Inmenso 0, VisualPolitik 4.94
+
+words per paragraph (para_words): AI median 36.7, human median 1.6e+03, 10 of 10 channels on the human side
+  C de Ciencia 1.44e+03, CuriosaMente 716, Date un Vlog 1.59e+03, El Robot de Platon 1.04e+03, Jaime Altozano 1.88e+03, La Hiperactina 1.97e+03, Pero eso es otra historia 2.04e+03, QuantumFracture 1.09e+03, Un Mundo Inmenso 1.12e+03, VisualPolitik 1.96e+03
+
+headings /1k (headings_1k): AI median 0, human median 0, 0 of 10 channels on the human side
+  C de Ciencia 0, CuriosaMente 0, Date un Vlog 0, El Robot de Platon 0, Jaime Altozano 0, La Hiperactina 0, Pero eso es otra historia 0, QuantumFracture 0, Un Mundo Inmenso 0, VisualPolitik 0
+
+left out of the count (fewer than 4 texts): Academia Play (2), Derivando (2), Memorias de Pez (2)
+
+# Rule (brief step 2): commas, em dashes, semicolons and parentheses go to _skip when fewer than three of four counted channels are on the human side of the AI median.

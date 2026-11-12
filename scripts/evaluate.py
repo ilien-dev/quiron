@@ -71,7 +71,10 @@ def auc(ai, human, push):
 
 
 def tokens(path):
-    return re.findall(r"[a-z']+", aimeter.prose(open(path, encoding="utf-8").read()).lower())
+    raw = open(path, encoding="utf-8").read()
+    if aimeter.SPOKEN:  # a spoken register: stage directions and labels are not words said
+        raw = aimeter.spoken(raw)
+    return re.findall(r"[a-z']+", aimeter.prose(raw).lower())
 
 
 class Judge:
