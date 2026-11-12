@@ -189,7 +189,9 @@ def lang_warning(text):
     if guess == LANG:
         return ""
     if guess in BANDED:
-        name = {"es": "bands-es.json", "en": "bands.json"}[guess]
+        names = ({"es": "bands-script-es.json", "en": "bands-script.json"}
+                 if band_meta().get("_register") == "script" else {"es": "bands-es.json", "en": "bands.json"})
+        name = names[guess]
         return (f"WARNING: this text looks {_NAMES[guess]} but {os.path.basename(BANDS_FILE)} "
                 f"is for {_NAMES[LANG]}. Set QUIRON_BANDS={os.path.join(HERE, name)} and run again.")
     return (f"NOTE: this text looks {_NAMES.get(guess, guess)}, and no band file is measured for it. "

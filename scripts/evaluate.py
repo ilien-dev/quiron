@@ -43,7 +43,7 @@ import aimeter  # noqa: E402
 
 
 # checks that combine others, or that only a reader can settle: not counted as found items
-COMBINED = {"C1", "C2", "T1", "V1", "V2"}
+COMBINED = {"C1", "C2", "T1", "V1", "V2", "S7", "SE8"}  # S7, SE8: script checks together
 
 
 def texts(directory):

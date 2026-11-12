@@ -1,4 +1,5 @@
 # QUIRON_BANDS=scripts/bands-script-es.json python3 eval/script_channels.py eval/titles/script-es-manifest.tsv ~/corpus/script-es eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55
+# Em dashes and semicolons are 0 per 1,000 words on both sides (the AI median and every channel's median), so for them "0 of N channels on the human side" is a tie, not a signal.
 80 human texts in 13 channels, 48 AI texts; 10 channels with 4+ texts are counted
 
 sentence-length CV (cv_sentence_len): AI median 0.518, human median 0.597, 8 of 10 channels on the human side

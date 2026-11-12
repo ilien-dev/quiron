@@ -1,0 +1,128 @@
+"""The checks of the video-script register (S1-S7, SE1-SE8): they run only under a band file
+with "_register": "script", read only the spoken words, and leave the other registers alone."""
+import json, os, re, subprocess, sys, tempfile, unittest
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+EN = os.path.join(HERE, "bands-script.json")
+ES = os.path.join(HERE, "bands-script-es.json")
+BLOG = os.path.join(HERE, "bands.json")
+BLOG_ES = os.path.join(HERE, "bands-es.json")
+
+
+def states(text, bands):
+    with tempfile.TemporaryDirectory() as d:
+        tf = os.path.join(d, "t.md")
+        with open(tf, "w", encoding="utf-8") as f:
+            f.write(text)
+        out = subprocess.run([sys.executable, os.path.join(HERE, "audit.py"), "--json", tf],
+                             capture_output=True, text=True, encoding="utf-8",
+                             env={**os.environ, "QUIRON_BANDS": bands})
+        return {i["id"]: i["state"] for i in json.loads(out.stdout)["items"]}
+
+
+class English(unittest.TestCase):
+    CASES = {  # id: (fires, does not fire)
+        "S1": ("Imagine a city with no roads. It would be quiet.", "I can't imagine a city with no roads."),
+        "S2": ("But here's the twist: it worked. Then there's the cost.", "Here is a list of what we found."),
+        "S3": ("Let me know in the comments what you think.", "The comments on the first video were rude."),
+        "S4": ("Next time you cross a bridge, look down.", "The next time we met, it was raining."),
+        "S5": ("The catch? It costs twice as much.", "What is the catch with this one?"),
+        "S6": ("No roads. No cars. Just fields.", "No roads were built. Cars came much later."),
+    }
+
+    def test_each_fires_and_stays_quiet(self):
+        for cid, (yes, no) in self.CASES.items():
+            with self.subTest(cid):
+                self.assertEqual(states(yes, EN)[cid], "TELL")
+                self.assertEqual(states(no, EN)[cid], "PASS")
+
+    def test_stage_directions_are_not_read(self):
+        for cid, (yes, _) in self.CASES.items():
+            with self.subTest(cid):
+                text = f"[B-ROLL: {yes}]\nNARRATOR: The river is old and it is still here."
+                self.assertEqual(states(text, EN)[cid], "PASS")
+
+    def test_spoken_after_a_label_is_read(self):
+        self.assertEqual(states("NARRATOR: Imagine a city with no roads.", EN)["S1"], "TELL")
+
+    def test_three_together_fail(self):
+        two = "Imagine a city with no roads. But here's the twist: it worked."
+        self.assertEqual(states(two, EN)["S7"], "PASS")
+        self.assertEqual(states(two + " Let me know in the comments.", EN)["S7"], "FAIL")
+
+    def test_checks_that_do_not_separate_are_off(self):
+        text = "It was not just a city, but a home. Rather than walk, they ran."
+        self.assertNotIn("A1b", states(text, EN))
+        self.assertEqual(states(text, BLOG)["A1b"], "TELL")
+
+    def test_one_lexicon_word_is_not_a_tell_here(self):
+        text = "We will additionally look at the river and why it is old."
+        self.assertEqual(states(text, EN)["B1"], "PASS")
+        self.assertEqual(states(text, BLOG)["B1"], "TELL")
+
+    def test_blog_bands_have_no_script_checks(self):
+        got = states("Imagine a city with no roads. Let me know in the comments.", BLOG)
+        self.assertFalse([c for c in got if c.startswith("S")])
+
+
+class Spanish(unittest.TestCase):
+    CASES = {
+        "SE1": ("Quédate hasta el final, porque merece la pena.", "Me quedé hasta el final de la película."),
+        "SE2": ("Hoy te cuento por qué el cielo es azul.", "Hoy llueve en toda la ciudad."),
+        "SE3": ("Imagina un país sin mar. Así es Bolivia.", "No me lo imagino sin mar."),
+        "SE4": ("Y aquí viene lo bueno: funcionó.", "Aquí vive mi tía desde hace años."),
+        "SE5": ("Entonces, ¿quién ganó la guerra?", "Entonces se fue de la ciudad."),
+        "SE6": ("Cuéntame en los comentarios qué opinas.", "Los comentarios del primer vídeo eran largos."),
+        "SE7": ("La próxima vez que mires el cielo, piensa en esto.", "La próxima semana hablaremos del mar."),
+    }
+
+    def test_each_fires_and_stays_quiet(self):
+        for cid, (yes, no) in self.CASES.items():
+            with self.subTest(cid):
+                self.assertEqual(states(yes, ES)[cid], "FAIL" if cid == "SE1" else "TELL")
+                self.assertEqual(states(no, ES)[cid], "PASS")
+
+    def test_stage_directions_are_not_read(self):
+        for cid, (yes, _) in self.CASES.items():
+            with self.subTest(cid):
+                text = f"[EN PANTALLA: {yes}]\nNARRADOR: El río es viejo y sigue aquí."
+                self.assertEqual(states(text, ES)[cid], "PASS")
+
+    def test_three_together_fail(self):
+        two = "Hoy te cuento por qué. Imagina un país sin mar."
+        self.assertEqual(states(two, ES)["SE8"], "PASS")
+        self.assertEqual(states(two + " Cuéntame en los comentarios qué opinas.", ES)["SE8"], "FAIL")
+
+    def test_fragment_rows_are_off_here_only(self):
+        text = "Un país. Sin mar. Sin playa. Sin puerto. Así es Bolivia, y así lo cuenta su historia."
+        self.assertNotIn("A2b", states(text, ES))
+        self.assertIn("A2b", states(text, BLOG_ES))
+
+    def test_spanish_blog_bands_have_no_script_checks(self):
+        got = states("Hoy te cuento por qué. Quédate hasta el final.", BLOG_ES)
+        self.assertFalse([c for c in got if c.startswith("SE")])
+
+
+class LanguageWarning(unittest.TestCase):
+    """A script band file names the other language's script band file, not the blog one."""
+    ES_TEXT = "El cielo es azul porque la luz del sol que llega a la tierra se dispersa en el aire de la mañana."
+    EN_TEXT = "The sky is blue because the light of the sun is scattered in the air and it is still there."
+
+    def suggested(self, text, bands):
+        """the band file the WARNING tells the user to set"""
+        code = "import sys, aimeter; print(aimeter.lang_warning(sys.stdin.read()))"
+        out = subprocess.run([sys.executable, "-c", code], input=text, capture_output=True, text=True,
+                             encoding="utf-8", cwd=HERE, env={**os.environ, "QUIRON_BANDS": bands}).stdout
+        m = re.search(r"QUIRON_BANDS=(\S+) and run again", out)
+        return os.path.basename(m.group(1)) if m else None
+
+    def test_script_bands_name_script_bands(self):
+        self.assertEqual(self.suggested(self.ES_TEXT, EN), "bands-script-es.json")
+        self.assertEqual(self.suggested(self.EN_TEXT, ES), "bands-script.json")
+
+    def test_blog_bands_still_name_blog_bands(self):
+        self.assertEqual(self.suggested(self.ES_TEXT, BLOG), "bands-es.json")
+        self.assertEqual(self.suggested(self.EN_TEXT, BLOG_ES), "bands.json")
+
+if __name__ == "__main__":
+    unittest.main()

@@ -235,7 +235,7 @@
  "_lexicon": "ai-lean-es.txt",
  "_thresholds": {
   "AI_SIDE_MAX": 6,
-  "TELLS_MAX": 2
+  "TELLS_MAX": 4
  },
  "_lang": "es",
  "_plain": "human-lean-es.txt",
