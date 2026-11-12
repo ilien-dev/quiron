@@ -155,6 +155,7 @@ terra                5                     5           4.40      4 of 5 (80%)
   academiaplay--mnRwShLmXc.md: 8 out (long_words_1k, mean_word_len, nominalizations_1k, first_person_1k, repeated_openers, connective_openers, triads_1k, plain_words_1k); checklist FAIL
 
 ## Shape patterns (task 5): the script checks, switch-offs and T1, before and after on the same texts
+# Optimistic, like the thresholds above: the verdicts, the switch-offs, the union size and T1 were chosen looking at the held-out humans and the test folders, so the after column is partly in-sample; the switch-off of A2b and the T1 value were chosen on that same held-out set.
 # New checks in audit.py, only under "_register": "script": SE1 (FAIL), SE2-SE7 (TELL) and SE8 (FAIL, three of SE1-SE7);
 # switched off here: A2b.
 # Candidates, rates and every decision: eval/results/script-es-candidates.txt.

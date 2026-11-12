@@ -63,16 +63,20 @@ union: 2+ de todas las movidas de arriba                                14/80   
 union: 3+ de todas las movidas de arriba                                 4/80       0/27       7/12       7/12       7/12       9/12        2/5        2/5        2/5        4/5        3/5     0.52  FAIL
 union: 2+ de los checks SE1-SE7                                          7/80       3/27      10/12      10/12      10/12      11/12        3/5        4/5        5/5        4/5        3/5     0.76  TELL
 union: 3+ de los checks SE1-SE7                                          1/80       0/27       7/12       5/12       5/12       9/12        2/5        2/5        2/5        4/5        3/5     0.52  FAIL
+union: 3+ de SE1-SE7 sin SE6 (comentarios)                               0/80       0/27       7/12       4/12       2/12       5/12        0/5        1/5        1/5        2/5        0/5     0.16  FAIL
 
 ## Decisions
 # Shipped as FAIL
 #   SE1  quédate hasta el final / quédate conmigo: no human caption, train or held out; Opus 5.5 2/5
 #        and Sonnet 5.5 4/5 in test, 10 of 48 assistant train scripts. The first version also had
-#        "no te pierdas", which 2 train captions use (and 1 held-out); it was dropped on that train
-#        evidence.
+#        "no te pierdas" (2 of 80 train captions, 1 of 27 held out: still under the train bar, so a FAIL
+#        by the rule that would have cost that held-out human). Every human hit was "no te pierdas", a
+#        different move from asking the viewer to stay, so it was dropped, with the held-out row in view.
 #   SE8  three of SE1-SE7 in one script: 0/27 held-out and 1/80 train humans; every test model 2/5 to
 #        4/5 (52% pooled). A combined check, like T1. Three of every move above (empecemos and pero
-#        ojo too) also passes the bar (4/80 train); the shipped checks are the ones counted.
+#        ojo too) also passes the bar (4/80 train); the shipped checks are the ones counted. Without
+#        SE6 (comment asks) three of the other six still fire on 4 of 25 test scripts (Sonnet 5.5 2/5),
+#        still a FAIL by the rule, at 16% pooled instead of 52%.
 # Shipped as TELL (held-out human, train human, pooled AI test)
 #   SE2  hoy te cuento / hoy vamos a ......................... 3/27, 8/80, 36%
 #   SE3  imagina abre una frase ............................... 2/27, 4/80, 40%

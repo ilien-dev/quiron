@@ -194,6 +194,7 @@ terra                9                     4           3.78      3 of 9 (33%)
   wendoverproductions-aQSxPzafO_k.md: 2 out (ai_lexicon_1k, triads_1k); checklist FAIL
 
 ## Shape patterns (task 5): the script checks, switch-offs and T1, before and after on the same texts
+# Optimistic, like the thresholds above: the verdicts, the switch-offs, the union size and T1 were chosen looking at the held-out humans and the test folders, so the after column is partly in-sample; the realengineering-7vLPefHYWpY caption that is clean now was cleared by switch-offs chosen on that same held-out set.
 # New checks in audit.py, only under "_register": "script": S1-S6 (TELL) and S7 (FAIL, three of S1-S6);
 # switched off here: A1, A1b, A2b, A3, A4, A8, A9, A14b, A15, A26, A32 and the TELL state of B1.
 # Candidates, rates and every decision: eval/results/script-candidates.txt.

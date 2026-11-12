@@ -254,6 +254,7 @@ CANDS_EN = [
                                                                 "nexttime", "comments")}, 3)),
     ("union: 2+ of the checks S1-S6", moves(EN_CHECKS, 2)),
     ("union: 3+ of the checks S1-S6", moves(EN_CHECKS, 3)),
+    ("union: 3+ of S1-S6 without S3 (comments)", moves(EN_CHECKS, 3, ("S3",))),
 ]
 
 # --- Spanish -----------------------------------------------------------------------------
@@ -320,6 +321,7 @@ CANDS_ES = [
     ("union: 3+ de todas las movidas de arriba", moves(ES, 3)),
     ("union: 2+ de los checks SE1-SE7", moves(ES, 2, ("empecemos", "ojo"))),
     ("union: 3+ de los checks SE1-SE7", moves(ES, 3, ("empecemos", "ojo"))),
+    ("union: 3+ de SE1-SE7 sin SE6 (comentarios)", moves(ES, 3, ("empecemos", "ojo", "comentarios"))),
 ]
 
 

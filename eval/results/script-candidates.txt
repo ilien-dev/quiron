@@ -74,12 +74,17 @@ union: 2+ of the stock moves                                            7/144   
 union: 3+ of the stock moves                                            0/144       0/49       3/12       3/12       4/12       4/12        0/9        2/9        2/9        2/9        1/9     0.16  out
 union: 2+ of the checks S1-S6                                           5/144       2/49       4/12       6/12       8/12       7/12        2/9        4/9        3/9        5/9        4/9     0.40  FAIL
 union: 3+ of the checks S1-S6                                           0/144       0/49       3/12       3/12       3/12       5/12        0/9        2/9        3/9        1/9        1/9     0.16  FAIL
+union: 3+ of S1-S6 without S3 (comments)                                0/144       0/49       3/12       0/12       2/12       3/12        0/9        1/9        0/9        1/9        0/9     0.04  out
 
 ## Decisions
 # Shipped as FAIL
 #   S7  three of S1-S6 in one script: 0/144 train and 0/49 held-out humans; Opus 5.5 3/9, GPT-6.1 2/9,
 #       Sonnet 5.5 1/9, Terra 1/9, Fable 5.2 0/9 (16% pooled). A combined check (evaluate.py COMBINED),
-#       like T1.
+#       like T1. Three, not two: train humans alone would have allowed two or more (5/144), but two
+#       costs two held-out human scripts (see the choices below), so three was picked with the
+#       held-out row in view. S7 leans on S3: without the comment ask, three of the other five fire on
+#       2 of 45 assistant test scripts (the row "without S3" above), under the FAIL bar. If S3 goes,
+#       S7 goes with it.
 # Shipped as TELL (held-out human, train human, pooled AI test)
 #   S1  Imagine / Picture this opens a sentence ............ 1/49, 8/144, 29%
 #   S2  staged reveals (here's the X / why / how / what, then there's, the honest answer, sounds
@@ -168,7 +173,8 @@ A8       0.204     0.111     0.000     0.111     0.333     0.667      0.244   1.
 A9       0.041     0.000     0.000     0.000     0.000     0.111      0.022   0.54  OFF
 B1       0.469     0.667     0.222     0.556     0.778     0.778      0.600   1.28  OFF
 B2       0.061     0.111     0.111     0.222     0.444     0.111      0.200   3.28  keep
-# Switched off: A1, A1b, A2b, A3, A4 (its phrases are inside S2 now), A8, A9, A14b, A15, A26, A32,
+# Switched off: A1, A1b, A2b, A3, A4 (partly inside S2: here's the thing, here's where it gets; not
+# let's be honest, buckle up, without further ado), A8, A9, A14b, A15, A26, A32,
 # and the TELL state of B1 (one to three lexicon words: 47% of held-out humans, 60% of assistants);
 # B1 still FAILs at four words. Kept: A17, A20 (curly quotes: GPT-6.1 and Terra only, 2.4x), A4b
 # (2.2x, one human text), A5, B2.
