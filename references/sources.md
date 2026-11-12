@@ -80,6 +80,12 @@ Every study and dataset behind a number in this skill.
 - Wikipedia, *Signs of AI writing*, November 2026 version: the mid-2026 word list, the
   source of *quietly* in `ai-lean.txt`; the em dash moved to its historical indicators on
   7 October 2026.
+- Zhang & Tetreault (2019). *This Email Could Save Your Life: Introducing the Task of
+  Email Subject Line Generation.* ACL 2019. The AESLC corpus
+  (github.com/ryanzhumich/AESLC), cleaned Enron emails with their subject lines: the human
+  side of `bands-email.json`.
+- GitHub's public API, for the human side of `bands-pr.json`, `bands-commit.json` and
+  `bands-readme.json` (`scripts/build-corpus-work.sh`).
 - This skill's November 2026 rounds: Claude Sonnet 5.5 as rewriter, Sonnet 5.5 and
   GPT-6.1 Terra as blind judges, on the same 20 development and 18 held-out titles
   (`references/numbers.md`).

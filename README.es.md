@@ -81,8 +81,8 @@ El plugin guarda el skill bajo su propio nombre, así que lo llamas con `/quiron
 
 Pídele a un modelo un post de blog y te llega con una forma que se aprende a reconocer:
 listas de tres, el doble de encabezados de los que pondría una persona, una sección de
-resumen al final. En español hay dos más: el "no es X: es Y"
-y el cierre con "## Conclusión". Quirón le da al modelo una lista de 33 de estas señales
+resumen al final. En español hay tres más: el "no es X: es Y",
+el cierre con "## Conclusión" y las etiquetas en negrita al inicio de cada elemento de una lista. Quirón le da al modelo una lista de 33 de estas señales
 de escritura con IA y un medidor que dice con números si el arreglo funcionó o se pasó de
 la raya.
 
@@ -134,7 +134,8 @@ este repo. Nada entra porque "se lee mejor".
 
 - **Bases humanas.** Las bandas salen de 167 posts de dev.to y 157 cuentos de
   WritingPrompts escritos antes de que existiera ChatGPT, y de 241 posts de dev.to en
-  español de 118 autores. Una cuarta parte de cada conjunto se reserva y nunca se usa para
+  español de 118 autores. Desde noviembre de 2026 hay también bandas para descripciones
+  de pull request, mensajes de commit, README y correo de trabajo, en inglés. Una cuarta parte de cada conjunto se reserva y nunca se usa para
   elegir nada.
 - **Texto de IA de 2026 con los mismos títulos.** Claude Opus, Sonnet, Haiku y GPT
   escribieron los textos de comparación que hay en `eval/ai/`, a partir de la petición

@@ -373,6 +373,16 @@ def measure_dir(directory):
     return rows
 
 
+def apply_skip(bands):
+    """A band file can list features its human corpus cannot support under "_skip" (the
+    Enron emails come with their paragraph breaks removed, so words per paragraph would
+    separate people from assistants by file format). A skipped feature is always inside."""
+    for key in bands.get("_skip", []):
+        if key in bands:
+            bands[key].update({"p10": -1e12, "p90": 1e12, "push": None})
+    return bands
+
+
 def calibrate(directory, ai_dir=None, out=None, lexicon=None, lang=None, plain=None):
     rows = measure_dir(directory)
     if len(rows) < 8:
@@ -383,13 +393,14 @@ def calibrate(directory, ai_dir=None, out=None, lexicon=None, lang=None, plain=N
     out = out or BANDS_FILE
     try:  # keep the register's own lexicon and thresholds across a recalibration
         old = json.load(open(out))
-        bands.update({k: old[k] for k in ("_lexicon", "_thresholds", "_lang", "_plain")
+        bands.update({k: old[k] for k in ("_lexicon", "_thresholds", "_lang", "_plain", "_skip")
                       if k in old})
     except (OSError, ValueError):
         pass
     for key, val in (("_lexicon", lexicon), ("_lang", lang), ("_plain", plain)):
         if val:
             bands[key] = val
+    apply_skip(bands)
     json.dump(bands, open(out, "w"), indent=1)
     print(f"calibrated on {len(rows)} texts" +
           (f" and {len(ai_rows)} AI texts" if ai_rows else "") + f" -> {out}")
@@ -481,7 +492,7 @@ def report(path, as_json=False, sample=None):
             v, hint = "ok", f"writer's habit: their own texts sit at {sample[key]:.3g}"
         if v != "ok":
             bad += 1
-        band = f"{b['p10']} - {b['p90']}"
+        band = "not scored" if key in bands.get("_skip", []) else f"{b['p10']} - {b['p90']}"
         print(f"{LABELS[key]:30}{got:>9}{band:>18}{(ai if ai is not None else '-'):>8}   "
               f"{'' if v == 'ok' else v}{hint}")
     print(f"\n{len(keys) - bad}/{len(keys)} {'features' if len(keys) == len(AI_REF) else 'layout features'}"

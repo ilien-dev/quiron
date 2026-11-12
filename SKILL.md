@@ -61,10 +61,15 @@ sentences than human ones, while assistant fiction has choppier ones (both run s
   [references/fiction.md](references/fiction.md) before rewriting**: in fiction the
   story's shape, not its sentences, is what readers catch.
 - `scripts/bands-es.json`: blog posts and articles in Spanish (see `references/spanish.md`).
+- `scripts/bands-pr.json`, `bands-commit.json`, `bands-readme.json`, `bands-email.json`:
+  pull request descriptions, commit messages with a body, READMEs and workplace email, in
+  English. They measure a draft; the rewrite rules were not tested end to end in these
+  registers. Most commit messages and many emails are under the meter's 120 words, and
+  for those the patterns apply by eye.
 
 Select a file by putting `QUIRON_BANDS=<skill-dir>/scripts/bands-fiction.json` (or
-`bands-es.json`) in front of every command, including `check.sh`. The scripts print a
-WARNING when the text's language and the band file disagree; switch and rerun. For anything else (academic papers, news, email, other languages, Spanish
+another of these files) in front of every command, including `check.sh`. The scripts print a
+WARNING when the text's language and the band file disagree; switch and rerun. For anything else (academic papers, news, other languages, Spanish
 fiction) the numbers are only a rough guide until you calibrate a band file for it
 (`references/numbers.md`).
 
@@ -273,8 +278,7 @@ any Title Case heading and any rate outside the band; it failed every one of 42 
 human posts. The current rules pass all 40 held-out human posts clean and still fail 93%
 of the GPT-6.1 posts written on the same titles. Each new Claude model gets past them
 more often: they fail every Sonnet post from September 2026, 43% of the Sonnet 5.5 ones,
-29% of Opus 5.5 and 7% of Fable 5.2. A clean checklist on a Claude draft says little; the
-writer's material and the cold read do the work there.
+29% of Opus 5.5 and 7% of Fable 5.2. A clean checklist on a Claude draft says little.
 
 ## Cold read
 

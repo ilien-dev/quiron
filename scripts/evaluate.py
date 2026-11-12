@@ -115,6 +115,7 @@ def main():
     bands = aimeter.bands_from(train, [m for _, m in measured(texts(ai_train))]
                                if ai_train else None)
     bands.update(aimeter.band_meta())  # keep the register's language, lexicon, thresholds
+    aimeter.apply_skip(bands)
     bands.pop("_corpus", None)
     tmp = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
     json.dump(bands, tmp)

@@ -936,6 +936,19 @@
    "result": "dev Sonnet +0.5 (p=0.72), Terra -2.3 (p=0.43); test +0.1 (p=0.67), -1.7 (p=0.74); es +0.5 (p=0.55), -0.8 (p=0.80); overshot +0.16 per text (p=0.15)",
    "reason": "rewrites judged the same; the changes act on detection",
    "retry_if": "-"
+  },
+  {
+   "id": "work-registers",
+   "date": "2026-11-12",
+   "source": "reader reports 2026 on PR descriptions, commit messages and READMEs; ledger entries blocked on missing samples",
+   "kind": "feature",
+   "target": "bands-pr.json, bands-commit.json, bands-readme.json, bands-email.json",
+   "what": "four band files from pre-ChatGPT human texts (GitHub API, AESLC) and November 2026 assistant texts on the same titles",
+   "outcome": "shipped",
+   "measured": "evaluate.py, held-out split, per register",
+   "result": "held-out humans clean 98% pr, 97% commit, 100% readme, 98% email; GPT-6.1 clean 43%, 0%, 0%, 12%; Claude models clean 67% to 100%; 5 to 9 held-out assistant texts per model",
+   "reason": "new registers measured; humans within the 5% ceiling",
+   "retry_if": "larger held-out groups; samples written from a diff; an end-to-end set for these registers"
   }
  ]
 }

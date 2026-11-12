@@ -1,0 +1,7 @@
+This change fixes `ConscryptEngine.wrap()` when application data is supplied through multiple source buffers. The engine now gathers plaintext into a single TLS record, subject to the maximum plaintext record size, so splitting a message across buffers does not cause each buffer to be handled as a separate record.
+
+The implementation uses an existing source buffer directly when it contains enough contiguous data. Otherwise, it copies data from the selected buffers into a reusable direct buffer before passing it to the TLS layer. This preserves the efficient path for contiguous input while allowing fragmented input to fill a record.
+
+Source buffer positions are advanced only after the TLS layer reports how many bytes it consumed. When a temporary copy is used, that count is applied back to the original buffers in order, leaving any unconsumed data available for a subsequent call. The supplied offset and length continue to restrict which buffers participate.
+
+Validation should cover heap and direct buffers, empty buffers, nonzero offsets, restricted source ranges, and input spanning the TLS record limit. Checks should also verify destination capacity handling, consumed and produced byte counts, source positions, and successful recovery of the original plaintext after unwrapping. [Implementation reference](https://github.com/google/conscrypt/blob/master/common/src/main/java/org/conscrypt/ConscryptEngine.java).

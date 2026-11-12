@@ -24,6 +24,11 @@ redistributed.
     (plus two real posts by the same author as voice samples, listed in
     `samples-list/`), `e2e-v5` (plus the author's notes in `notes/`). `skill-v0` holds
     twelve earlier rewrites by the first version.
+- `ai/pr/`, `ai/commit/`, `ai/readme/`, `ai/email/`: four more registers from November
+  2026. The same models wrote them. The folders are the same too. Each text starts from
+  the title of a human one, and `gensamples.py --titles` makes the title files. The email
+  titles are Enron subject lines, so they stay out of the repo and the email texts are
+  numbered.
 - `titles/`: the prompts, one line per text: name, the human text's word count, title.
   Every text was generated from the plain request a user would type: "Write a blog post
   for dev.to titled "…". Around N words." (Spanish: "Escribe un post para dev.to titulado
@@ -49,6 +54,7 @@ redistributed.
 scripts/build-corpus.sh ~/corpus/blog            # 167 dev.to posts, recalibrates bands.json
 scripts/build-corpus-fiction.sh ~/corpus/fiction # 157 WritingPrompts stories
 scripts/build-corpus-es.sh ~/corpus/es           # 241 Spanish dev.to posts
+scripts/build-corpus-work.sh pr ~/corpus/pr      # also commit, readme, email; needs GITHUB_TOKEN
 
 A=eval/ai/blog
 python3 scripts/evaluate.py --human ~/corpus/blog --ai-train $A/train,$A/train-2026-11 \

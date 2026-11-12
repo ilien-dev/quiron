@@ -7,6 +7,7 @@ The bands, the AI directions, what the whole apparatus does on held-out texts, h
 - Where the numbers come from
 - Blog bands
 - Fiction bands
+- Work registers: pull requests, commit messages, READMEs, email
 - Four counter-intuitive results
 - What the apparatus does on held-out texts
 - What the loop does to a text
@@ -97,6 +98,48 @@ and passive voice gains one (lower). On the 50 held-out November stories the str
 features are words per paragraph (AI median 26.4, AUC 0.90), mean sentence length (11.4,
 lower, 0.85) and contractions (0.76); the title heading (0.64) and the em dash (0.57)
 have faded.
+
+### Work registers: pull requests, commit messages, READMEs, email
+
+Four band files added in November 2026, each built by `build-corpus-work.sh` from human
+texts that predate ChatGPT and measured against texts the November models wrote from
+the same titles ("Write the description for a pull request titled … in the … repository.
+Around N words.", and the like for a commit subject, a project name and description, an
+email subject). A quarter of the human texts is held out, as everywhere else.
+
+| register | human texts | held-out humans clean | Opus 5.5, Sonnet 5.5, Fable 5.2 clean | GPT-6.1, Terra clean | C1 fails at |
+|---|---|---|---|---|---|
+| `bands-pr.json` | 170 descriptions of merged GitHub pull requests opened 2019 to 2021, at most 2 per author and 4 per repository | 98% of 43 | 89%, 67%, 89% | 43%, 43% | 4 |
+| `bands-commit.json` | 132 commit messages with a long body from 17 projects (Linux, Git, PostgreSQL, Go and others), 2019 to 2021 | 97% of 33 | 67%, 100%, 100% | 0%, 20% | 3 |
+| `bands-readme.json` | 170 READMEs of repositories last pushed before June 2021, one per owner | 100% of 43 | 78%, 78%, 89% | 0%, 25% | 4 |
+| `bands-email.json` | 170 workplace emails from the Enron corpus, 1999 to 2002 (AESLC) | 98% of 43 | 67%, 89%, 88% | 12%, 75% | 4 |
+
+What separates the assistant texts, on the training texts (AUC against all the human
+ones): in pull requests, longer words (mean 5.2 against a human band of 4.3 to 5.0, 0.90),
+more nominalizations (0.80), lists of three (0.85), no parentheses and little first
+person; in commit messages, longer words (0.79) and a wider vocabulary (0.77), with no
+first person and no connective openers; in READMEs, a wider vocabulary (0.91), lists of
+three (11.9 per 1,000 words against a band that tops at 8.4, 0.91), few parentheses and
+even sentences; in email, a wider vocabulary (0.91), more commas (0.84), lists of three
+(0.82) and shorter sentences. The word-frequency judge calls 78% to 100% of the held-out
+Opus 5.5, Sonnet 5.5 and GPT texts AI in every register. Fable 5.2 gets past it more
+often: 89% in pull requests, 75% in email, 44% in READMEs and 29% in commit messages. It
+also calls 18% of the human commit messages and 9% of the human emails AI.
+
+Read these with their limits. The held-out assistant groups have 5 to 9 texts per model,
+so each percentage moves by 11 to 20 points with one text. Only texts the meter can
+measure are in the corpora, about 130 words and up: the usual two-line commit message and
+the three-line email are not. The assistant wrote from a title alone, not from a diff or
+a thread, so its text is more generic than what an agent writes with the change in front
+of it. The Enron emails come with their paragraph breaks removed, so words per paragraph
+is not scored for email (`_skip` in the band file). Their subject lines and mailbox names
+are not in this repository: the email texts in `eval/ai/email/` are numbered, the three
+written from a subject that named a person were left out, and `eval/titles/email-*.tsv`
+is made locally by `gensamples.py --titles email`. The lexicon is the blog one; B1
+failed no held-out human text in any of the four. And the rewrite rules were not run end
+to end here: these files tell a draft from human text of its kind, and nothing yet shows
+what the loop does to a pull request description. The checklist catches GPT-6.1 in all
+four and lets most Claude drafts through, as it does in blog posts.
 
 ### Four counter-intuitive results
 

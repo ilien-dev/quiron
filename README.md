@@ -129,7 +129,9 @@ Every rule and number traces to a published study or to a run of the scripts in 
 repo. Nothing ships on "this reads better".
 
 - **Human baselines.** The bands come from 167 dev.to posts and 157 WritingPrompts
-  stories, all written before ChatGPT existed, plus a Spanish set. A quarter of each is
+  stories, all written before ChatGPT existed, plus a Spanish set. Since November 2026
+  there are also bands for pull request descriptions, commit messages, READMEs and work
+  email. A quarter of each is
   held out and never used to pick anything.
 - **2026 AI text on the same titles.** Claude Opus, Sonnet, Haiku and GPT wrote the
   comparison texts in `eval/ai/`, from the plain prompt a user would type. They were
