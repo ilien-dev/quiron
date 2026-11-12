@@ -15,6 +15,8 @@
 # This is the one script that needs more than the standard library: plain urllib gets an
 # empty body from the caption endpoint, so it calls yt-dlp (tested with 2026.10.26, install
 # with: python3 -m pip install --user yt-dlp) and node for its JavaScript challenges.
+# Every kept text is cleaned and judged by the same function, also the ones saved by an earlier run, so
+# manifest, files and titles.tsv always agree; one that no longer passes loses its row's kept status and its file.
 # Resumable: a video already in the manifest is not fetched again (error rows are retried).
 # Requests are spaced 1 to 2 seconds apart, and a channel stops at 12 kept videos or 60 examined.
 #
@@ -29,7 +31,7 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 MANIFEST="$HERE/../eval/titles/script$SUF-manifest.tsv"
 mkdir -p "$OUT" "$(dirname "$MANIFEST")"
 PYTHONUTF8=1 python3 - "$LANG_CODE" "$OUT" "$MANIFEST" "$HERE" "${CHANNELS:-}" "${RESERVE:-}" <<'PY'
-import glob, json, os, random, re, shutil, subprocess, sys, time
+import glob, html, json, os, random, re, shutil, subprocess, sys, time
 lang, out, manifest, here, only, reserve = sys.argv[1:7]
 if lang == "es":
     os.environ.setdefault("QUIRON_BANDS", os.path.join(here, "bands-es.json"))
@@ -76,8 +78,22 @@ if only:
 # "este" is also the demonstrative ("este modelo"), so it counts only as a hesitation: "este..." or "este,"
 FILLER = re.compile(r"\b(?:uh+|um+|uhm)\b" if lang == "en"
                     else r"\b(?:eh+|em+|o sea)\b|\beste(?=\s*(?:\.\.\.|…|,|--))", re.I)
-SWITCH = re.compile(r"^(?:>>|-\s|[A-Z][A-Za-z.' ]{0,24}:\s)")
-GONE = re.compile(r"not available|members|Join this channel|Private video|has been removed|terminated|copyright|age-restricted|confirm your age|unavailable", re.I)
+# a cue that opens a turn of dialogue: ">>", a dash ("-", "--", "—"), or "NAME: " (accented names too)
+SWITCH = re.compile(r"^(?:>>|-\s|--|—|[A-ZÁÉÍÓÚÑÜ][\w.' ]{0,24}:\s)")
+# the same turns in running text, where the cue lines are gone: " --What?" or " —¿Qué?"
+SWITCH_TEXT = re.compile(r"(?:^|\s)(?:--|—)(?=[\w¿¡\"'])")
+# an error that says something lasting about the video; anything that mentions a retry is transient
+GONE = re.compile(r"not available|members|Join this channel|Private video|has been removed|terminated|copyright|"
+                  r"age-restricted|confirm your age|Video unavailable", re.I)
+TRANSIENT = re.compile(r"try again|temporar|timed out|HTTP Error 5|429|Unable to download|not a bot|rate.limit", re.I)
+# punctuation floors and ceilings, chosen on the kept texts (see the fix report in task-2-report.md)
+MIN_TERMINATORS = 0.02   # sentence ends per word: 1 in 50 words at most without one
+MIN_CAPITALS = 0.03      # share of capitalised words: below it the caption is lower-case
+MAX_FW_CAPITALS = 0.12   # share of "the/and/los/que..." capitalised mid-sentence: cues each started with a capital
+FUNCTION = set(("the and of to in is that it for with as on this are be but not we you they was have has at by from or "
+                "an so if then when what which who how there their" if lang == "en" else
+                "el la los las y de que en un una es son se por con para como pero no lo del al su sus más muy ya si "
+                "cuando donde qué cómo hay fue ha han").split())
 COLS = "id channel upload_date track words status title".split()
 YT = [sys.executable, "-m", "yt_dlp", "--js-runtimes", "node", "--no-warnings", "--ignore-config"]
 node = "C:/Program Files/nodejs"
@@ -169,9 +185,20 @@ CUE = re.compile(r"\[[^\[\]\d]{1,40}\]|\((?=[^()]{0,40}\))[^()\d]*(?:music|laugh
                  r"cheer|gasp|clap|whoosh|sigh|m[uú]sica|risas?|aplausos?|sonido)[^()\d]*\)", re.I)
 
 
+def unescape(l):
+    """Captions are sometimes escaped twice ("&amp;lt;i&amp;gt;"): decode until stable, then drop tags."""
+    for _ in range(3):
+        u = html.unescape(l)
+        if u == l:
+            break
+        l = u
+    return re.sub(r"</?[A-Za-z][^>]*>|<\d[\d:.]*>", "", l).replace("\u00a0", " ")
+
+
 def tidy(text):
-    """Caption cues such as [Music] or (upbeat music) and a leading dash are not speech."""
-    return re.sub(r"\s{2,}", " ", CUE.sub("", re.sub(r"^- ", "", text.strip()))).strip()
+    """Caption cues such as [Music] or (upbeat music), markup and a leading dash are not speech."""
+    t = re.sub(r"\s{2,}", " ", CUE.sub("", unescape(text.strip()))).strip()
+    return re.sub(r"^- ", "", t)
 
 
 def vtt_text(path):
@@ -183,13 +210,34 @@ def vtt_text(path):
         if (not l or l.startswith(("WEBVTT", "Kind:", "Language:", "NOTE", "STYLE")) or "-->" in l
                 or re.fullmatch(r"\d+", l)):
             continue
-        l = re.sub(r"<[^>]+>", "", l).replace("&nbsp;", " ").replace("&amp;", "&")
-        l = l.replace("&gt;", ">").replace("&lt;", "<").strip()
+        l = unescape(l).strip()
         if l and l != last:
             switches += bool(SWITCH.match(l))
             lines.append(l)
         last = l
     return tidy(" ".join(lines)), switches
+
+
+def judge(text, switches):
+    """(words, status) of a cleaned text: kept, or the reason it is not a script."""
+    w = text.split()
+    n = len(w)
+    if n < LO:
+        return n, "short"
+    if n > HI:
+        return n, "long"
+    if switches > 5 or len(FILLER.findall(text)) > 2 * n / 1000:
+        return n, "unscripted"
+    letters = [c for c in text if c.isalpha()]
+    ends = len(re.findall(r"[.!?…]+(?=[\"')\]”’»]*(?:\s|$))", text))
+    caps = sum(x.lstrip("\"'(“¿¡")[:1].isupper() for x in w)
+    fw = [b.strip("\"'(“¿¡)") for a, b in zip(w, w[1:]) if not re.search(r"[.!?…:][\"')”’»]*$", a)]
+    fw = [x for x in fw if x.lower() in FUNCTION]
+    fwcap = sum(x[:1].isupper() and x != "I" for x in fw) / len(fw) if len(fw) >= 30 else 0
+    if (r"\rtf" in text or aimeter.measure(text) is None or sum(c.isupper() for c in letters) > 0.6 * len(letters)
+            or ends < MIN_TERMINATORS * n or caps < MIN_CAPITALS * n or fwcap > MAX_FW_CAPITALS):
+        return n, "unpunctuated"
+    return n, "kept"
 
 
 def examine(channel, vid, title, work):
@@ -220,23 +268,39 @@ def examine(channel, vid, title, work):
     if not os.path.exists(path):
         raise RuntimeError("manual track listed but not downloaded: " + why(r.stderr))
     text, switches = vtt_text(path)
-    spoken = aimeter.spoken(text)  # a caption uploaded as an RTF file is not text: it ends as unpunctuated
-    n = len(aimeter.PROFILES[aimeter.LANG]["word"].findall(aimeter.prose(spoken)))
-    letters = [c for c in spoken if c.isalpha()]
-    if n < LO:
-        status = "short"
-    elif n > HI:
-        status = "long"
-    elif switches > 5 or len(FILLER.findall(spoken)) > 2 * n / 1000:
-        status = "unscripted"
-    elif r"\rtf" in text or aimeter.measure(spoken) is None or sum(c.isupper() for c in letters) > 0.6 * len(letters):
-        status = "unpunctuated"
-    else:
-        status = "kept"
+    spoken = aimeter.spoken(text)  # an RTF caption is not text: judge() sends it to unpunctuated
+    n, status = judge(spoken, switches)
     return date, "manual", n, status, spoken, title
 
 
+def path_of(r):
+    return os.path.join(out, f"{slug(r['channel'])}-{r['id']}.md")
+
+
+def rejudge(rows):
+    """Clean and judge again every kept text with the current rules, from the saved file: the manifest
+    words come from the file, a text that no longer passes loses its row and its file, and a file whose
+    row is not kept is deleted (calibration reads every .md in the folder)."""
+    for r in rows.values():
+        if r["status"] != "kept":
+            continue
+        if not os.path.exists(path_of(r)):
+            r["status"] = "error"  # fetched again by the loop below
+            continue
+        t = tidy(open(path_of(r), encoding="utf-8").read())
+        n, status = judge(t, len(SWITCH_TEXT.findall(t)))
+        r["words"], r["status"] = str(n), status
+        if status == "kept":
+            open(path_of(r), "w", encoding="utf-8", newline="\n").write(t + "\n")
+    keep = {os.path.basename(path_of(r)) for r in rows.values() if r["status"] == "kept"}
+    for f in glob.glob(os.path.join(out, "*.md")):
+        if os.path.basename(f) not in keep:
+            os.remove(f)
+    save(rows)
+
+
 rows = load()
+rejudge(rows)
 streak = pauses = 0
 for channel, handle in CHANNELS.items():
     mine = lambda: [r for k, r in rows.items() if k[0] == channel and r["id"] != "-"]
@@ -261,7 +325,7 @@ for channel, handle in CHANNELS.items():
             streak = 0
         except Exception as e:
             print(f"  {channel} {vid}: {e}", file=sys.stderr)
-            if GONE.search(str(e)):  # members-only, private or removed: a fact about the video, not a refusal
+            if GONE.search(str(e)) and not TRANSIENT.search(str(e)):  # members-only, private or removed: a fact about the video, not a refusal
                 record(rows, channel, vid, status="unavailable", title=title)
                 continue
             record(rows, channel, vid, status="error", title=title)
@@ -280,20 +344,16 @@ for channel, handle in CHANNELS.items():
         if status == "kept":
             kept += 1
             open(os.path.join(out, f"{slug(channel)}-{vid}.md"), "w", encoding="utf-8",
-                 newline="\n").write(text.strip() + "\n")
+                 newline="\n").write(text + "\n")
         record(rows, channel, vid, date, track, n, status, title)
     shutil.rmtree(os.path.join(out, ".work"), ignore_errors=True)
     print(f"{channel}: {kept} kept, {examined} examined", file=sys.stderr)
 
-for f in glob.glob(os.path.join(out, "*.md")):  # texts kept by an earlier run get the same cleaning
-    t = open(f, encoding="utf-8").read()
-    clean = tidy(t) + "\n"
-    if clean != t:
-        open(f, "w", encoding="utf-8", newline="\n").write(clean)
+rejudge(rows)  # the same cleaning and judging for every text, so manifest, files and titles.tsv agree
 
 with open(os.path.join(out, "titles.tsv"), "w", encoding="utf-8", newline="\n") as idx:
     for r in sorted(rows.values(), key=lambda r: slug(r["channel"]) + "-" + r["id"]):
-        if r["status"] == "kept" and os.path.exists(os.path.join(out, f"{slug(r['channel'])}-{r['id']}.md")):
+        if r["status"] == "kept":
             idx.write(f"{slug(r['channel'])}-{r['id']}\t{r['words']}\t{r['title']}\n")
 n = sum(r["status"] == "kept" for r in rows.values())
 print(f"{lang} script corpus: {n} texts in {out}", file=sys.stderr)
