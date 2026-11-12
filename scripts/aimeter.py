@@ -25,10 +25,11 @@ held-out titles (see AI_REF). The directions come from the published studies:
 Usage:
   aimeter.py FILE...               score files against the shipped bands
   aimeter.py --calibrate DIR [--ai AI_DIR[,AI_DIR]] [--out FILE] [--lexicon NAME]
-                               [--lang es] [--plain NAME]
+                               [--lang es] [--plain NAME] [--spoken]
                                    rebuild bands from a corpus of human texts; with
                                    AI texts of the same register, also learn which
-                                   side of each band is the AI side
+                                   side of each band is the AI side; --spoken measures
+                                   only the spoken words and marks the bands "_spoken"
   aimeter.py --json FILE           machine-readable output
   aimeter.py --sample PATH FILE    PATH: the writer's own texts; a rate outside the band
                                    on the same side as theirs is their habit, not a tell
@@ -156,6 +157,7 @@ def band_meta():
 
 
 LANG = band_meta().get("_lang", "en")
+SPOKEN = band_meta().get("_spoken", False)
 
 # The most frequent function words of each language. A text whose words are mostly from
 # another list is being measured against the wrong band file, or against a language no
@@ -272,8 +274,90 @@ def prose(md):
     return md
 
 
+# What a video script carries besides the words said aloud. A caption file has none of
+# it, so a band file calibrated on captions ("_spoken": true) measures spoken() only.
+_UP = r"A-ZÁÉÍÓÚÑÜ"
+STAGE_LINE = re.compile(r"^\s*[*_]*(?:\[[^\]]*\]|\([^)]*\))[*_]*\s*$")
+STAGE_INLINE = re.compile(r"\[[^\]\n]*\](?!\()")  # a link, [text](url), is not one
+TIMESTAMP = re.compile(r"^\s*[\[(]?\d{1,2}:\d{2}(?::\d{2})?(?:\s*[-–]\s*\d{1,2}:\d{2}(?::\d{2})?)?[\])]?\s*[-–:]?\s*")
+# up to four capitals-only words, an optional (V.O.), then a colon; "Here is the thing:" has
+# lower case, so an ordinary sentence with a colon is never a label
+SPEAKER = re.compile(rf"^\s*[*_]{{0,2}}[{_UP}][{_UP}0-9.'’-]*(?:\s+[{_UP}0-9.'’-]+){{0,3}}"
+                     r"(?:\s*\([^)]*\))?\s*[*_]{0,2}\s*:\s*[*_]{0,2}\s*")
+SCENE = re.compile(r"^\s*(?:#{1,6} .*|(?:INT|EXT|INT\./EXT)\.\s.*)$")
+MUSIC = re.compile(r"[♪♫]+")
+AUDIO_COLUMN = re.compile(r"^[*_]*(?:AUDIO|NARRATION|NARRACI[OÓ]N|VO|V\.O\.|SCRIPT|GUION)[*_]*$", re.I)
+
+
+def _table_lines(rows):
+    """The words said in a markdown table: the AUDIO / NARRATION / VO / SCRIPT column when
+    the header names one, else the last column (the picture is conventionally first)."""
+    cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows]
+    head = len(cells) > 1 and all(re.fullmatch(r":?-{2,}:?", c) for c in cells[1] if c)
+    col = -1
+    if head:
+        named = [i for i, c in enumerate(cells[0]) if AUDIO_COLUMN.match(c)]
+        col = named[0] if named else -1
+        cells = cells[2:]
+    return [r[col] for r in cells if r and (col == -1 or col < len(r)) and r[col]]
+
+
+def _spoken(text):
+    """spoken() and the count of each kind of markup removed."""
+    n = {"stage": 0, "speaker": 0, "timestamp": 0, "heading": 0}
+    lines, table = [], []
+    for l in text.split("\n") + [None]:
+        if l is not None and l.lstrip().startswith("|"):
+            table.append(l)
+            continue
+        if table:
+            lines += _table_lines(table)
+            table = []
+        if l is not None:
+            lines.append(l)
+    out = []
+    for l in lines:
+        old = l
+        if SCENE.match(l):
+            n["heading"] += 1
+            continue
+        m = TIMESTAMP.match(l)
+        if m:
+            n["timestamp"] += 1
+            l = l[m.end():]
+        if STAGE_LINE.match(l):
+            n["stage"] += 1
+            continue
+        m = SPEAKER.match(l)
+        if m:
+            n["speaker"] += 1
+            l = l[m.end():]
+        l, k = STAGE_INLINE.subn("", l)
+        n["stage"] += k
+        l = MUSIC.sub("", l)
+        if l != old:
+            l = re.sub(r"[ \t]{2,}", " ", l).strip()
+            if not l:
+                continue
+        out.append(l)
+    return "\n".join(out), n
+
+
+def spoken(text):
+    """Only what is said aloud: stage directions, speaker labels, scene headings and
+    timestamps are removed. A parenthesis inside a sentence is speech and stays."""
+    return _spoken(text)[0]
+
+
+def markup_counts(text):
+    """Each kind of markup per 1,000 spoken words, to see how script-like a text is."""
+    clean, n = _spoken(text)
+    words = len(PROFILES[LANG]["word"].findall(prose(clean)))
+    return {k: round(v / words * 1000, 2) if words else 0.0 for k, v in n.items()}
+
+
 def measure(text):
-    t = prose(text)
+    t = prose(spoken(text) if SPOKEN else text)
     P = PROFILES[LANG]
     words = P["word"].findall(t)
     n = len(words)
@@ -361,13 +445,16 @@ def bands_from(rows, ai_rows=None):
     return bands
 
 
-def measure_dir(directory):
-    """Measured texts of a folder, or of several folders joined with commas."""
+def measure_dir(directory, spoken_only=False):
+    """Measured texts of a folder, or of several folders joined with commas. With
+    spoken_only each text is cut to its spoken words first."""
     rows = []
     for d in directory.split(","):
         for name in sorted(os.listdir(d)):
             if name.endswith((".md", ".txt")):
-                m = measure(open(os.path.join(d, name), encoding="utf-8").read())
+                with open(os.path.join(d, name), encoding="utf-8") as f:
+                    text = f.read()
+                m = measure(spoken(text) if spoken_only else text)
                 if m:
                     rows.append(m)
     return rows
@@ -383,11 +470,12 @@ def apply_skip(bands):
     return bands
 
 
-def calibrate(directory, ai_dir=None, out=None, lexicon=None, lang=None, plain=None):
-    rows = measure_dir(directory)
+def calibrate(directory, ai_dir=None, out=None, lexicon=None, lang=None, plain=None,
+              spoken_only=False):
+    rows = measure_dir(directory, spoken_only)
     if len(rows) < 8:
         sys.exit(f"need at least 8 usable texts, got {len(rows)}")
-    ai_rows = measure_dir(ai_dir) if ai_dir else None
+    ai_rows = measure_dir(ai_dir, spoken_only) if ai_dir else None
     bands = {"_corpus": os.path.basename(os.path.abspath(directory)),
              **bands_from(rows, ai_rows)}
     out = out or BANDS_FILE
@@ -400,6 +488,8 @@ def calibrate(directory, ai_dir=None, out=None, lexicon=None, lang=None, plain=N
     for key, val in (("_lexicon", lexicon), ("_lang", lang), ("_plain", plain)):
         if val:
             bands[key] = val
+    if spoken_only:
+        bands["_spoken"] = True
     apply_skip(bands)
     json.dump(bands, open(out, "w"), indent=1)
     print(f"calibrated on {len(rows)} texts" +
@@ -522,7 +612,7 @@ if __name__ == "__main__":
         if opt("--plain"):
             HUMAN_LEAN = _load(opt("--plain"))
         calibrate(args[1], ai_dir=opt("--ai"), out=opt("--out"), lexicon=opt("--lexicon"),
-                  lang=opt("--lang"), plain=opt("--plain"))
+                  lang=opt("--lang"), plain=opt("--plain"), spoken_only="--spoken" in args)
     else:
         sample_paths = []
         while "--sample" in args:

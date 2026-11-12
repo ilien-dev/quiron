@@ -35,7 +35,7 @@ import json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from aimeter import prose, lexicon_name, lang_guess, lang_warning, BANDED, LAYOUT, BANDS_FILE, LANG  # noqa: E402
+from aimeter import prose, lexicon_name, lang_guess, lang_warning, BANDED, LAYOUT, BANDS_FILE, LANG, SPOKEN  # noqa: E402
 
 # Thresholds for the combined checks. Chosen from a grid over held-out human posts and
 # 2026 assistant posts: the setting that kept human texts failing the whole checklist
@@ -293,7 +293,7 @@ def run(path, samples=()):
                     bad.append(m.group(1)[:40])
             if bad:
                 state, detail = "READ", "restates its heading? " + "; ".join(bad[:4])
-        elif kind == "para":
+        elif kind == "para" and not SPOKEN:  # captions have no paragraphs to close
             paras = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
             bad = []
             for prev, p in zip(paras, paras[1:]):
