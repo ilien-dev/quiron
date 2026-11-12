@@ -10,7 +10,8 @@ sorted name. Answers are cached by eval/e2e/harness.py, so a rerun with the same
 The output gives the mean P(AI) per group, the judges' reasons grouped by what they point at
 (a reason can be in several groups; each group is a regex over the reason, printed with it),
 and every reason. Human captions are not redistributed, so on the human side every quoted
-span is cut to its first four words.
+span is cut to its first four words, and so is every run of more than four words that stands
+verbatim in the judged caption (the output prints the longest run left, and the script stops if it is over four).
 
 Usage:
   JUDGE=claude-sonnet-5-5 python3 eval/script_reasons.py en|es [-k 2] > eval/results/script[-es]-reasons.txt
@@ -104,15 +105,49 @@ def humans():
     return out
 
 
-def shorten(reason):
-    """cut every quoted span to its first four words"""
+WORD = re.compile(r"[^\W_]+")
+
+
+def _hay(caption):
+    return " " + " ".join(m.group(0).lower() for m in WORD.finditer(caption)) + " "
+
+
+def _run_at(ws, i, hay, n):
+    """the longest run of words from ws[i] that stands in the caption, if it is at least n long"""
+    if i + n > len(ws) or " " + " ".join(ws[i:i + n]) + " " not in hay:
+        return 0
+    while i + n + 1 <= len(ws) and " " + " ".join(ws[i:i + n + 1]) + " " in hay:
+        n += 1
+    return n
+
+
+def longest_run(reason, caption):
+    """the longest run of consecutive words of the reason that also stands in the caption"""
+    hay, ws, best = _hay(caption), [m.group(0).lower() for m in WORD.finditer(reason)], 0
+    for i in range(len(ws)):
+        best = max(best, _run_at(ws, i, hay, best + 1))
+    return best
+
+
+def shorten(reason, caption, keep=4):
+    """Cut every quoted span to its first four words, then every run of more than four words that
+    stands verbatim in the caption, however it is quoted: pairing quotes can drift, this cannot."""
     def cut(m):
         words = m.group(2).split()
-        return m.group(1) + " ".join(words[:4]) + (" …" if len(words) > 4 else "") + m.group(3)
+        return m.group(1) + " ".join(words[:keep]) + (" …" if len(words) > keep else "") + m.group(3)
     for q in (r'(")([^"]{3,600})(")', r"(“)([^”]{3,600})(”)", r"(«)([^»]{3,600})(»)", r"(‘)([^’]{3,600})(’)",
               r"((?<!\w)')(.{3,600}?)('(?!\w))"):
         reason = re.sub(q, cut, reason)
-    return reason
+    hay = _hay(caption)
+    while True:
+        toks = list(WORD.finditer(reason))
+        ws = [t.group(0).lower() for t in toks]
+        hit = next(((i, n) for i in range(len(ws)) for n in [_run_at(ws, i, hay, keep + 1)] if n), None)
+        if not hit:
+            return reason
+        i, n = hit
+        rest = reason[toks[i + n - 1].end():]
+        reason = reason[:toks[i + keep - 1].end()] + ("" if rest.lstrip().startswith("…") else " …") + rest
 
 
 def main():
@@ -127,7 +162,8 @@ def main():
           f"JUDGE={harness.JUDGE}, k={K}, prompt {'JPROMPT_SCR_ES' if LANG == 'es' else 'JPROMPT_SCR'}")
     print(f"# JUDGE={harness.JUDGE} python3 eval/script_reasons.py {LANG} -k {K}")
     print("# The judge reads the narration only (harness.narration). Human captions are not redistributed:")
-    print("# on the human side every quoted span is cut to its first four words.\n")
+    print("# on the human side every quoted span is cut to its first four words, and so is every run of more")
+    print("# than four words that stands verbatim in the judged caption.\n")
     print(f"{'group':28}{'texts':>6}{'mean P(AI)':>12}{'over 50':>9}")
     print(f"{'human train captions':28}{len(hum):>6}{mean(hum):>12.1f}{over(hum):>9}")
     print(f"{'assistant train scripts':28}{len(ai):>6}{mean(ai):>12.1f}{over(ai):>9}")
@@ -144,15 +180,22 @@ def main():
             print(f"{n:5}  {name}    /{rx}/")
         none = sum(not any(re.search(rx, x, re.I) for _, rx in GROUPS[LANG][side]) for x in reasons)
         print(f"{none:5}  in none of these")
+    caption = {f: harness.narration(open(f, encoding="utf-8").read()) for f in hum}
+    cut = {(f, j, x): shorten(x, caption[f]) for f in hum for j, r in enumerate(res[f]) for x in r["reasons"]}
+    worst = max(longest_run(v, caption[f]) for (f, _, _), v in cut.items())
+    print(f"\nLongest run of words any human-side reason, as printed, shares with its judged caption: {worst}"
+          " (runs of more than 4 are cut)")
+    if worst > 4:
+        sys.exit("a run of more than four words of a human caption would be printed")
     for side, fs in (("ai", ai), ("human", hum)):
         print(f"\n## Every reason, {'assistant scripts' if side == 'ai' else 'human captions (quotes cut)'}")
         for f in fs:
             p = st.mean(r["p_ai"] for r in res[f] if r["p_ai"] is not None)
             name = os.path.basename(os.path.dirname(f)) + "/" + os.path.basename(f) if side == "ai" else os.path.basename(f)
             print(f"\n{name}  P(AI) {p:.1f}")
-            for r in res[f]:
+            for j, r in enumerate(res[f]):
                 for x in r["reasons"]:
-                    print(f"  - {x if side == 'ai' else shorten(x)}")
+                    print(f"  - {x if side == 'ai' else cut[(f, j, x)]}")
 
 
 if __name__ == "__main__":

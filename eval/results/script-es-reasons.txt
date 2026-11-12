@@ -1,7 +1,8 @@
 # Blind judges on Spanish video narrations: JUDGE=claude-sonnet-5-5, k=2, prompt JPROMPT_SCR_ES
 # JUDGE=claude-sonnet-5-5 python3 eval/script_reasons.py es -k 2
 # The judge reads the narration only (harness.narration). Human captions are not redistributed:
-# on the human side every quoted span is cut to its first four words.
+# on the human side every quoted span is cut to its first four words, and so is every run of more
+# than four words that stands verbatim in the judged caption.
 
 group                        texts  mean P(AI)  over 50
 human train captions            48         5.2        0
@@ -40,6 +41,8 @@ human texts judged: academiaplay-3Wg10E4Ung0.md, cdeciencia-CR6UoZYIu14.md, curi
    70  referencias concretas    /concret|espec[ií]fic|referencia|cifra|dato/
    39  pistas que el juez leyó como IA    /pulid|f[oó]rmula|plantilla|t[ií]pic[oa] de (?:la )?ia|podr[ií]a ser ia|aunque/
     1  in none of these
+
+Longest run of words any human-side reason, as printed, shares with its judged caption: 4 (runs of more than 4 are cut)
 
 ## Every reason, assistant scripts
 
@@ -442,7 +445,7 @@ cdeciencia-CR6UoZYIu14.md  P(AI) 3.5
   - Registro oral y personal de youtuber: "Y bueno, nos queda …", "NOTICIÓN", "Si es miércoles, lastima", "Estaré haciendo una retransmisión …", con promoción de su canal secundario y hora española
   - Sintaxis desordenada con frases mal pegadas y comas arbitrarias ("sintetizando se extrajeron dos …", "No envejecen, lo hacen …"), propia de una transcripción o redacción apresurada humana
   - Errores humanos típicos de escritura y tipeo: "dudada", "simientes", "nación" por nació, "mandibula", "ultimas" sin tilde, "Gumpertz", frases con puntuación irregular.
-  - Estilo oral y personal de youtuber: "Y bueno, nos queda …", "NOTICIÓN", "Si es miércoles, lastima", más el anuncio de una retransmisión en directo del Falcon Heavy con enlaces en la descripción.
+  - Estilo oral y personal de youtuber: "Y bueno, nos queda …", "NOTICIÓN", "Si es miércoles, lastima", más el anuncio de una retransmisión en directo … Falcon Heavy con enlaces en la descripción.
   - Estructura desordenada y sintaxis improvisada (cambios de tema abruptos, comas mal colocadas, "sintetizando se extrajeron dos …"), impropia de un texto generado por IA que suele ser pulido y coherente.
 
 curiosamente-6oG92Fl4AhI.md  P(AI) 7.0
@@ -450,7 +453,7 @@ curiosamente-6oG92Fl4AhI.md  P(AI) 7.0
   - Humor y marca propia del canal ("pasado sin pena ni …", "bichos", "¡CuriosaMente!", llamado a suscribirse) y errores factuales como penicilina en el siglo XIX, que una IA pulida habría evitado.
   - Estructura de guion oral con preguntas retóricas, inexactitudes y decisiones irregulares de puntuación, sin la limpieza y el equilibrio típicos de un texto generado.
   - Voz humana muy marcada y coloquial: "Peeero… no contábamos con …", "(SE PRONUNCIA ESKERIKIA COLI)", "pasó sin pena ni …", "bichos con montones de …".
-  - Errores y descuidos típicos de un guion humano: "de la o la …", "carpabenemas", "a la mayor parte …", "transfiréndole", además de imprecisiones como situar los antibióticos en el siglo XIX.
+  - Errores y descuidos típicos de un guion humano: "de la o la …", "carpabenemas", "a la mayor parte …", "transfiréndole", además de imprecisiones como situar los antibióticos en el ….
   - Marca de canal y cierre propios ("¡CuriosaMente!", "suscríbete... cada semana", Instagram y Facebook), con humor y opiniones personales ("Evita comer animales") poco comunes en texto generado.
 
 dateunvlog-1GgFAYX5Y3I.md  P(AI) 4.0
@@ -471,7 +474,7 @@ derivando-teqFwLG2-6s.md  P(AI) 3.5
 
 elrobotdeplaton-Can7RK004jg.md  P(AI) 6.0
   - Errores y tropiezos típicos del habla transcrita: "Hola soy Aldo y …", "recuedan", "huececillos", "diferente.Cuando" sin espacio; una IA rara vez los comete.
-  - Contenido desordenado y con fallos factuales: dice que el sonido llega a los "canales auditivos" y "transforman esa información", y la frase "Si alguien les dice …" cierra de forma incoherente con lo explicado.
+  - Contenido desordenado y con fallos factuales: dice que el sonido llega a los "canales auditivos" y "transforman …", y la frase "Si alguien les dice …" cierra de forma incoherente con lo explicado.
   - Tono oral y espontáneo: "Vamos a unas tiendas. …", "¿O sí?", la despedida torpe con "espejismos"; sin la estructura pulida ni las transiciones suaves típicas de una IA.
   - Errores y irregularidades típicas del habla transcrita: "Hola soy Aldo y …", "recuedan", "huececillos", "diferente.Cuando" sin espacio.
   - Contenido confuso y con fallos factuales (canales auditivos en vez de cóclea, "el sonido sale por …", "los espejos son ilusiones …"), algo que una IA pulida rara vez produciría.
@@ -483,7 +486,7 @@ jaimealtozano-9rLc_brC8DY.md  P(AI) 3.0
   - Referencias personales y específicas con humor improvisado (AntVenom, Bruno Mars en el aeropuerto, "Vamos eso opino yo", despedida con ":)"y":D"), además de saltos de tema y autocorrecciones que una IA no produciría.
   - Habla oral muy natural con muletillas y coloquialismos: "La música es la …", "sabes? y a mi …", "Vamos eso opino yo".
   - Errores y desorden propios de una transcripción humana: "desición", "the gardian", "estrechos de 15 minutos", frases que se rompen y cambian de idea a mitad ("no te encajo con …").
-  - Referencias visuales y de edición del vídeo ("esto, o esto, o …", "AntVenom", despedida con ":)"y":D", y un fragmento …"Y que aquí va a salir un 3 y un 4") que una IA no produciría así.
+  - Referencias visuales y de edición del vídeo ("esto, o esto, o …", "AntVenom", despedida con ":)"y":D", y un fragmento …"Y que aquí va …") que una IA no produciría así.
 
 lahiperactina-FB9C4uqzJSc.md  P(AI) 3.5
   - Voz personal y coloquial muy marcada: "el 'trinki trinki'", "la cogorza de toda …", "Troll.", "un cuervo o lo …", con humor autorreferencial.
@@ -544,7 +547,7 @@ academiaplay-hYajgwcWb1k.md  P(AI) 10.0
 cdeciencia-EgxiXbBwAqQ.md  P(AI) 3.5
   - Errores típicos de transcripción oral y de habla improvisada: "ah llevado", "a observado", "cuidad", "precesar", "lengua de sinos", "100x100", "100%%"
   - Marcas de guion de youtuber: "intro saluda el emisor", "Wow", "Fascinante", "Lee esta palabra metalmente", puntuación irregular y frases sin cierre
-  - Datos con imprecisiones y digresiones personales (75 mil millones de neuronas, 'tal vez tu experiencia …'), propias de un humano; una IA sería más pulida y estructurada
+  - Datos con imprecisiones y digresiones personales (75 mil millones de …, 'tal vez tu experiencia …'), propias de un humano; una IA sería más pulida y estructurada
   - Typos y errores de transcripción oral: "ah llevado", "a observado", "precesar", "cuidad", "sinos", "100x100", "100%%"
   - Estilo hablado con muletillas, puntuación irregular y digresiones filosóficas ("Wow", "Fascinante", "¿de quién es esa …"), con datos imprecisos típicos de un divulgador humano
   - Contiene restos de guion/transcripción ("intro saluda el emisor") y cierre natural "Muchas gracias por ver …"
@@ -559,8 +562,8 @@ curiosamente-Aet-p4VdM2g.md  P(AI) 12.0
 
 dateunvlog-UnFDTO_DcXM.md  P(AI) 3.0
   - Transcripción de voz con errores típicos de subtítulos automáticos y habla espontánea: "un8%", "no sé fríen", "producíados", "entono a un estrella", "acaber si dejarles", "prxóximo".
-  - Contenido muy personal y específico: promoción de su libro "El bosón de Higgs", venta de 3.000 ejemplares, "mi amigo Mariano", saludo "camaradas" y colaboración con las científicas de Star Tres, con diálogo entre varios hablantes.
-  - Estilo oral con titubeos, giros coloquiales y errores factuales ("se parece más a …", "miles de millones de …", "Esa no, esa, esa, …") que una IA no suele producir.
+  - Contenido muy personal y específico: promoción de su libro "El bosón de …", venta de 3.000 ejemplares, "mi amigo Mariano", saludo "camaradas" y colaboración con las científicas de Star Tres, con diálogo entre varios hablantes.
+  - Estilo oral con titubeos, giros coloquiales y errores factuales ("se parece más a …", "miles de millones …", "Esa no, esa, esa, …") que una IA no suele producir.
   - Errores de transcripción automática y de habla oral ("esa calle", "no sé fríen", "producíados", "acaber si dejarles", "prxóximo") que una IA no produciría
   - Estilo hablado espontáneo con muletillas, cambios de tema y anécdotas personales (promoción de su libro, venta de 3.000 ejemplares, "mi amigo Mariano", "camaradas")
   - Diálogo entre varias personas con nombres propios (Javiera, Javi, Star Tres) y errores factuales/desorden típicos de divulgación humana improvisada
@@ -590,8 +593,8 @@ jaimealtozano-BRBTCIK_9_g.md  P(AI) 3.0
   - Transcription errors, personal anecdotes ('Cuando llevas muchos años... …'), and channel-specific references to their own videos, with an irregular, oral structure.
 
 lahiperactina-Hb6YaR1BWPM.md  P(AI) 3.0
-  - Voz oral muy personal y coloquial: "nos ha jodido pero …", "nos pilla 'en pelotas'", "¿Y el tratamiento pa' …", "a saco", con muletillas como "vamos a ver" y "o sea".
-  - Errores y torpezas típicas de un guion hablado: "tos laos", "puede peligroso", "todo ha ido tan …", la pregunta repetida "¿Cómo puede ser que …", y referencias al momento como "a no ser que …" y "si estornudas, hazlo aquí" (gesto en pantalla).
+  - Voz oral muy personal y coloquial: "nos ha jodido pero …", "nos pilla 'en pelotas … el tratamiento pa' …", "a saco", con muletillas como "vamos a ver" y "o sea".
+  - Errores y torpezas típicas de un guion hablado: "tos laos", "puede peligroso", "todo ha ido tan …", la pregunta repetida "¿Cómo puede ser que …", y referencias al momento como "a no ser que …" y "si estornudas, hazlo …" (gesto en pantalla).
   - Contexto personal y específico de una creadora: queja sobre la desmonetización de YouTube, mensajes de los suscriptores, "siento que haya tenido …", con mayúsculas enfáticas y cambios de registro poco pulidos.
   - Voz oral muy personal y coloquial, con muletillas y expresiones como "nos ha jodido pero …", "nos pilla 'en pelotas'", "crecen a saco", "es que es una …", "qué más quieres".
   - Errores y desorden típicos del habla transcrita: repite la pregunta "¿Cómo puede ser que …" dos veces, "tos laos", "peligroso a la hora …", "por eso todo ha …", y frases largas que se enredan.
@@ -619,7 +622,7 @@ quantumfracture-IEP5IM4N7GE.md  P(AI) 4.0
   - Digresiones improvisadas y autocorrecciones ("fuera cargas positivas... vale …"), cierre informal con "suscríbete. Y gracias por …"; una IA habría producido texto más pulido y estructurado.
   - Voz muy humana y coloquial con vosotros peninsular: "¡Que demonios!", "¿Que me decís de …", "Ya sabéis", y el chiste de la moneda que se cambia por chicles.
   - Errores tipográficos y de puntuación típicos de una persona: "¿Que" sin tilde, "mas" sin tilde, "¿y si...?¿Que" sin espacio, "cargas en movimientos", "gracias por vernos! :)".
-  - Estructura digresiva e improvisada ("vale tal vez es …", la división repetida de la Tierra en 100 partes) y cierre informal con emoticono, nada del pulido uniforme de un texto generado.
+  - Estructura digresiva e improvisada ("vale tal vez es …", la división repetida de la Tierra en 100 …) y cierre informal con emoticono, nada del pulido uniforme de un texto generado.
 
 unmundoinmenso-7c_KT7VsPxw.md  P(AI) 6.0
   - Contiene fragmentos de sketches/humor con voces y exclamaciones coloquiales ('¡Aleeeexisss! ¡Gooooooool!', 'Hable español, por favor. …') y un anuncio insertado ('métete a TocToc.com'), típicos de un video real transcrito.
@@ -673,7 +676,7 @@ jaimealtozano-OdYIS8KXdFI.md  P(AI) 8.0
   - Errores típicos de transcripción automática de voz: "entre 1000 y fa" (do y fa), "dow" por do, "rey" por re, "desde mí", "frIgia", "dos sostenidos" por "do sostenido"; una IA que escribe texto no cometería estos fallos fonéticos.
   - Estilo oral y personal con marcas de habla espontánea: "Bien pues ninguna nota…", "voilà", "fijaos en lo chulo …", "ni vosotros ni yo …", con referencias a lo que suena en el video ("Y suena así").
   - Falta de puntuación y estructura típica de subtítulos transcritos, con frases largas encadenadas sin pausas, y explicación pedagógica con digresiones naturales, no el pulido uniforme de un texto generado.
-  - Errores típicos de transcripción automática de voz ("1000 y fa" por "do y fa", "dow", "rey", "desde mí", "los chulo que es") que una IA no produciría al escribir
+  - Errores típicos de transcripción automática de voz ("1000 y fa" por "do y fa", "dow", "rey", "desde mí", "los chulo que es … una IA no produciría al escribir
   - Tono oral y personal con digresiones y marcas de habla ("Bien pues", "voilà", "ni vosotros ni yo …"), con "Y suena así" indicando partes musicales del video
   - Falta de puntuación y estructura irregular propia de subtítulos transcritos; un texto generado sería más pulido y ordenado
 
@@ -702,12 +705,12 @@ quantumfracture-J7FofwcNCpk.md  P(AI) 8.0
   - Explicación algo desordenada y con digresiones ("no puedo evitar haceros …", cambio de "vosotros" a "recuerda"), imprecisiones físicas propias de un humano, poco habituales en un texto de IA pulido.
 
 unmundoinmenso-9XqnDSqhfww.md  P(AI) 12.0
-  - Voseo rioplatense ('creés', 'Dejanos tu comentario') y cierre con llamado a ser miembro de 'Un Mundo Inmenso': típico de un canal humano real
+  - Voseo rioplatense ('creés', 'Dejanos tu comentario') y cierre con llamado a ser miembro de 'Un …': típico de un canal humano real
   - Errores y irregularidades naturales del habla escrita: 'Groenlandia mantiene el récord …' tras una lógica confusa, comas faltantes, 'Rusia' sin coma en la primera frase, 'Francia... desbloqueó un nuevo …'
   - Tono conversacional con humor y preguntas retóricas ('Bueno, estamos ante un …', 'esto se empieza a …'), sin la estructura pulida y simétrica de un texto generado
   - Voseo rioplatense ('creés', 'Dejanos') y tono conversacional con retórica espontánea ('Bueno, partamos de esa …', 'Claro, con el Canal …')
   - Errores e imprecisiones humanas: puntuación irregular ('Islandia Nueva Zelanda o …'), frases torpes ('Groenlandia mantiene el récord... …'), falta de punto tras 'tierras asiáticas'
-  - Cierre típico de canal real con llamado a ser miembro de 'Un Mundo Inmenso' y humor propio ('Francia desbloqueó un nuevo …'), sin estructura ni listas genéricas de IA
+  - Cierre típico de canal real con llamado a ser miembro de 'Un …' y humor propio ('Francia desbloqueó un nuevo …'), sin estructura ni listas genéricas de IA
 
 visualpolitik-LP6yMu9wdr8.md  P(AI) 3.0
   - Voz muy personal y específica de VisualPolitik: bromas internas ("Fonseca", "A ver, Couto", "A ver, Alberto"), insultos coloquiales ("ni puta idea tienes") y marcas de transcripción como "(((TOSER)))".
@@ -777,7 +780,7 @@ quantumfracture-JBZx03342eM.md  P(AI) 3.0
   - Voz personal y coloquial con jerga española ("la peña", "a su bola", "movida", "os ha molado", "Nope"), y referencias a su propio canal y a CdeCiencia que una IA no inventaría así.
   - Errores humanos de transcripción/escritura: "la propia de gente …", "a pillado", "No hecho nada de …", "est video", "reduciendolos", "bajaramos", concordancias rotas.
   - Estructura oral improvisada con autocorrecciones, analogías propias (batidora, orquesta, pelota en el valle) y cierre típico de youtuber pidiendo likes con ironía; contexto temporal específico del creador.
-  - Voz personal y coloquial muy marcada de youtuber: "La peña piensa", "va a su bola", "si os ha molado …", "una movida así", con referencias a su propio canal y a CdeCiencia.
+  - Voz personal y coloquial muy marcada de youtuber: "La peña piensa", "va a su bola … os ha molado …", "una movida así", con referencias a su propio canal y a CdeCiencia.
   - Errores y descuidos típicos de transcripción hablada: "la propia de gente …", "ha pillado" por "a pillado", "bajaramos o subieramos", "No hecho nada de …", "quién controla", mezcla de tiempos y concordancias que una IA rara vez produce.
   - Humor, autocorrecciones y analogías improvisadas (batidora que hace tartas, orquesta, pelota en el valle), además de opiniones y cierre propios ("Nos vemos la semana …", "pedir una cantidad absurda …") que reflejan una experiencia concreta y no una estructura genérica.
 
@@ -791,10 +794,10 @@ unmundoinmenso-YyZIRGRQ_1w.md  P(AI) 10.0
 
 visualpolitik-MX6gxOVL7KY.md  P(AI) 4.0
   - Marcas de habla oral y errores humanos: 'Está ayuda', 'véis', 'salgas adelante', 'dónde', 'cómo' con tilde mal puesta, 'mismamente en el Whatsapp'.
-  - Restos de guion/transcripción: marcadores '//', títulos entre paréntesis'(EL MÉTODO QUE NUNCA FUNCIONA)', diálogo de entrevista sin comillas y cortes abruptos.
+  - Restos de guion/transcripción: marcadores '//', títulos entre paréntesis'(EL MÉTODO QUE NUNCA …)', diálogo de entrevista sin comillas y cortes abruptos.
   - Voz muy personal y coloquial de VisualPolitik: 'Houston, tenemos un problema', 'Agarraos a la silla', 'cómo diantres', patrocinio de Microwd, referencias a eventos y a la descripción.
   - Marcas claras de habla improvisada humana: muletillas y repeticiones como 'Pues… ¿Sabéis qué?', 'empleos, empleos y empleos', 'capital, capital y capital', 'Houston, tenemos un problema'.
-  - Errores tipográficos y gramaticales típicos de transcripción humana: 'véis', 'Está ayuda', 'cómo' por 'como', 'salgas adelante', 'la la', además de marcas '//' y notas de …'(EL MÉTODO QUE NUNCA FUNCIONA)'.
+  - Errores tipográficos y gramaticales típicos de transcripción humana: 'véis', 'Está ayuda', 'cómo' por 'como', 'salgas adelante', 'la la', además de marcas '//' y notas de …'(EL MÉTODO QUE NUNCA …)'.
   - Voz muy personal y específica del canal (VisualPolitik): chistes de Messi y Apple, referencias a un evento el 25 de febrero, patrocinio de Microwd con entrevista a Alejandro; no tiene el tono neutro y pulido de una IA.
 
 cdeciencia-K0lqbaOr5dk.md  P(AI) 6.0

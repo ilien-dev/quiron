@@ -1,7 +1,8 @@
 # Blind judges on English video narrations: JUDGE=claude-sonnet-5-5, k=2, prompt JPROMPT_SCR
 # JUDGE=claude-sonnet-5-5 python3 eval/script_reasons.py en -k 2
 # The judge reads the narration only (harness.narration). Human captions are not redistributed:
-# on the human side every quoted span is cut to its first four words.
+# on the human side every quoted span is cut to its first four words, and so is every run of more
+# than four words that stands verbatim in the judged caption.
 
 group                        texts  mean P(AI)  over 50
 human train captions            48         6.1        0
@@ -41,6 +42,8 @@ human texts judged: 3blue1brown-M64HUIJFTZM.md, cgpgrey-BUY6HGqYweQ.md, everyfra
    57  specific names, sources, numbers    /specific|citation|reference|detail|data|statistic/
    48  cues the judge read as AI    /polish|tidy|formula|could fit ai|hint at|lean ai|ai-like|ai polish/
     5  in none of these
+
+Longest run of words any human-side reason, as printed, shares with its judged caption: 4 (runs of more than 4 are cut)
 
 ## Every reason, assistant scripts
 
@@ -431,23 +434,23 @@ train-sonnet55/vsauce-evQsOFQju08.md  P(AI) 76.0
 ## Every reason, human captions (quotes cut)
 
 3blue1brown-M64HUIJFTZM.md  P(AI) 4.0
-  - Distinct personal voice and anecdotes: "I was discussing this …", plus the playful prime-number joke "I know what you're …"
-  - Spoken-style asides and self-corrections like "the way I introduced …" and "mind you it can …", typical of a scripted human explainer (3Blue1Brown style)
+  - Distinct personal voice and anecdotes: "I was discussing this …", plus the playful prime-number joke "I know what you …"
+  - Spoken-style asides and self-corrections like "the way I introduced …" and "mind you it …", typical of a scripted human explainer (3Blue1Brown style)
   - Specific, idiosyncratic details and pacing (IMO 2011 statistics, Terence Tao quote, Aesop analogy) with natural, uneven structure rather than formulaic AI patterns
   - Distinct personal voice and anecdotes, e.g. "I was discussing this …"
-  - Natural spoken-style humor and asides like "I know what you're …"
+  - Natural spoken-style humor and asides like "I know what you …"
   - Conversational digressions and self-correction, e.g. "the way I introduced …", plus on-screen references that fit a human-made video
 
 cgpgrey-BUY6HGqYweQ.md  P(AI) 4.0
   - Typos and slips like "Frist", "the rules when along", "much convert", and inconsistent capitalization/punctuation are typical of human transcription and unpolished writing
   - Idiosyncratic, witty voice ("Naturally Dead", "Catholicism is transitive", "matching 23 Chromosomes", "a race for the …") and casual asides like "BTW" and "(whatever)"
   - Run-on, meandering sentence structure with dashes and colons used loosely, unlike the tidy, uniform prose of AI-generated scripts
-  - Typos and slips like "Frist", "rules when along", "much convert", and inconsistent capitalization of "Monarch" and "Third spouses don't count" are typical of a human script and unlike AI output
+  - Typos and slips like "Frist", "rules when along", "much convert", and inconsistent capitalization of "Monarch" and "Third spouses don't …" are typical of a human script and unlike AI output
   - Distinctive, idiosyncratic humor and voice ("Catholicism is transitive", "matching 23 Chromosomes", "a race for the …", "BTW") with a CGP Grey–style cadence
   - Loose, irregular punctuation ("--"dashes, colons mid-sentence,"Male Primogeniture (whatever)") and quirky structure are not polished the way AI text usually is
 
 everyframeapainting-2THVvshvq0Q.md  P(AI) 3.0
-  - Distinctive human voice and wit: "just the past with …", "Also, lamp-posts. Lots of …"
+  - Distinctive human voice and wit: "just the past with …", "Also, lamp-posts. Lots …"
   - Includes film clips, quoted dialogue, and typos typical of subtitle transcripts ("techinique", "charachter", "etxreme", "Wernor"), plus the Amara.org subtitle credit
   - Personal, opinionated analysis with specific references (Howard Hawks, Glen Keane, NYT interview) and a signature intro ("My name is Tony …")
   - Distinctive human voice and wit: "Bayhem", "just the past with …", "He is a slave …"
@@ -464,7 +467,7 @@ exurb1a-7MJ2MyDQM_8.md  P(AI) 4.0
 
 johnnyharris-HBlZlmXyR5M.md  P(AI) 3.0
   - Highly conversational, spontaneous human voice with self-interruptions: "I ripped the page", "No, no, wait, no …"
-  - Transcription artifacts like "(speaks foreign language)", "(men chant)", "(indistinct)", and typos such as "Mongo guys", "Chechnyan" and "erotic" for 'erratic' indicate a real spoken transcript
+  - Transcription artifacts like "(speaks foreign language)", "(men …)", "(indistinct)", and typos such as "Mongo guys", "Chechnyan" and "erotic" for 'erratic' indicate a real spoken transcript
   - Personal asides, opinionated humor and sponsor read with first-person anecdotes ("I was using Skillshare …") are characteristic of a human creator
   - Highly conversational, improvised voice with self-interruptions: "No, no, wait, no …"
   - Transcription artifacts like "(speaks foreign language)", "(indistinct)", and misheard words ("something erotic taking place", "Mongo guys") indicate auto-captioned human speech
@@ -497,17 +500,17 @@ nerdwriter1-55kqNg88JqI.md  P(AI) 4.0
 oversimplified-ATlila3e9dM.md  P(AI) 4.0
   - Irreverent comedic voice with crude asides like "big balls public official", "old-ass man", "wiping his ass with …" and "(You rockstar.)" is typical of a human YouTuber.
   - Messy transcript artifacts: "alarm sounds", missing punctuation, run-on sentences, garbled phrases like "defines of Habsburg Austria" and "he returns to the …" indicate human speech auto-transcribed.
-  - Repeated comedic refrain "enraged his father, who …" and spoken-style delivery with factual slips ("Hitler's had two more …") are unlike polished AI output.
+  - Repeated comedic refrain "enraged his father, who …" and spoken-style delivery with factual slips ("Hitler's had two …") are unlike polished AI output.
   - Irreverent comedic voice with crude asides like "big balls public official", "old-ass man", "wiping his ass with …", and "(You rockstar.)" that AI rarely writes unprompted
   - Messy speech-to-text artifacts: "alarm sounds" sound cue, random capitalization ("Repeat a grade", "Grief"), run-on sentences, garbled passages like "defines of Habsburg Austria"
   - Recurring gag "which enraged his father, …" and the sarcastic "you know, the usual" show human comedic timing and structure
 
 pbsspacetime-1Ou1MckZHTA.md  P(AI) 8.0
-  - Distinct host voice with personal asides: "I bet you've never …", "the amazing power of …", "An indestructium craft"
-  - Callbacks to prior episodes and imperfect, speech-like errors ("If you're quite for …", "The density is here …", "then anything on Earth") that point to a human-written script/transcript
+  - Distinct host voice with personal asides: "I bet you've …", "the amazing power of …", "An indestructium craft"
+  - Callbacks to prior episodes and imperfect, speech-like errors ("If you're quite …", "The density is here …", "then anything on Earth") that point to a human-written script/transcript
   - Informal, humorous analogies and uneven structure ("gridlocked traffic", "Welcome to the pasta", "nuclear lasagna") rather than polished AI-style uniformity
-  - Distinct host voice (PBS Space Time style) with personal asides: "I bet you've never …", "the amazing power of …", "indestructium craft"
-  - Spoken-word imperfections and typos typical of a human transcript: "If you're quite for …", "The density is here …", "then anything on Earth"
+  - Distinct host voice (PBS Space Time style) with personal asides: "I bet you've …", "the amazing power of …", "indestructium craft"
+  - Spoken-word imperfections and typos typical of a human transcript: "If you're quite …", "The density is here …", "then anything on Earth"
   - Idiosyncratic humor and callbacks to previous episodes ("Welcome to the pasta", "nuclear lasagna", "as we saw in …") rather than generic AI structure
 
 realengineering-2HcqS508lIo.md  P(AI) 12.0
@@ -535,20 +538,20 @@ tomscott--CV-lkyXepA.md  P(AI) 2.0
   - Transcript artifacts like stumbles ("This, er --"), sound cues, and uneven punctuation consistent with auto-captioning of spoken performance
 
 veritasium-72DCj3BztG4.md  P(AI) 3.5
-  - Spontaneous, conversational speech with false starts and hesitations like "It, uhh, it doesn't …" and "I'll wait. Just click …"
-  - Specific, personal details: re-shooting after "15,000 comments," Simon Pampena, George Hart's video, and live demos with honey and ping pong balls.
+  - Spontaneous, conversational speech with false starts and hesitations like "It, uhh, it doesn …" and "I'll wait. Just …"
+  - Specific, personal details: re-shooting after "15,000 comments," Simon Pampena, George Hart's video, and live demos with honey and ping pong ….
   - Natural spoken-word structure with self-corrections and in-the-moment reactions ("Woah! The bike did …"), not polished AI prose.
-  - Natural spoken-style hedges and self-corrections: "It, uhh, it doesn't …"
-  - References to specific real people and events (Simon Pampena, George Hart's video, 15,000 comments, re-shooting with viewer responses) and live on-camera demonstration ("I'm going to pull …")
+  - Natural spoken-style hedges and self-corrections: "It, uhh, it doesn …"
+  - References to specific real people and events (Simon Pampena, George Hart's video, 15,000 comments, re-shooting with viewer responses) and live on-camera demonstration ("I'm going to …")
   - Conversational, uneven structure with run-on sentences and tangents, typical of a human presenter's unscripted physics explainer rather than polished AI prose
 
 vox-4u-7BNRgESI.md  P(AI) 12.0
-  - Mixed-in interview soundbites ('When something's quiet you …') have a spontaneous spoken quality and a rambling structure that AI would not produce
+  - Mixed-in interview soundbites ('When something's quiet …') have a spontaneous spoken quality and a rambling structure that AI would not produce
   - Transcription-style flaws: 'You can still hear …' capitalized mid-sentence, 'quiet environment seem to', 'harmful to the human'
-  - Sponsored-documentary tone with quirky asides ('Even if it can't …', 'Among mice, at least') is typical of human-written branded video scripts
-  - Mixed interview soundbites with narrator voice-over ("When you're doing science …"), typical of a human-produced documentary segment with sponsor 3M.
+  - Sponsored-documentary tone with quirky asides ('Even if it can …', 'Among mice, at least') is typical of human-written branded video scripts
+  - Mixed interview soundbites with narrator voice-over ("When you're doing …"), typical of a human-produced documentary segment with sponsor 3M.
   - Natural imperfections: stray capital "You can still hear …" "quiet environment seem," "harmful to the human," and transcribed audio cues like "it sounds like this:" suggest a real transcript.
-  - Casual, specific humor and details ("Even if it can't …" "Among mice, at least," built in '64, St. Paul) rather than generic AI-style phrasing.
+  - Casual, specific humor and details ("Even if it can …" "Among mice, at least," built in '64, St. Paul) rather than generic AI-style phrasing.
 
 vsauce-ACUuFg9Y9dY.md  P(AI) 4.0
   - Distinctive Vsauce voice with spontaneous asides and jokes ("Earth has two Suns... …"), typical of Michael Stevens' human scripting
@@ -567,27 +570,27 @@ wendoverproductions-7C1fPocIFgU.md  P(AI) 4.0
   - Conversational, essayistic pacing with hedges like 'Now,' 'Interestingly,' 'at least in theory' and an extended pineapple analogy, rather than the uniform polish of AI text
 
 3blue1brown-QJYmyhnaaek.md  P(AI) 4.0
-  - This is the 3Blue1Brown video on Pythagorean triples, and the narration is a human-written script. It has natural spoken asides like "which I encourage you …" and "isn't exactly something to …", plus a reference to the creator's own earlier videos.
-  - It includes transcription artifacts that AI-generated text would not have, such as a duplicated sentence with a stray timestamp ("00:14:00,420 --> 00:13:59,720") and a slip where the second square is again described as having side a plus b.
+  - This is the 3Blue1Brown video on Pythagorean triples, and the narration is a human-written script. It has natural spoken asides like "which I encourage you …" and "isn't exactly something …", plus a reference to the creator's own earlier videos.
+  - It includes transcription artifacts that AI-generated text would not have, such as a duplicated sentence with a stray timestamp ("00:14:00,420 …") and a slip where the second square is again described as having side a plus b.
   - The pacing and rhetorical questions ("right?", "do they?") fit a spoken explanation in a personal voice, and the content is original and idiosyncratic, including the "favorite proof" and the lattice-point visualization.
   - This is 3Blue1Brown's 'Pythagorean triples and complex …' narration, with personal asides like 'my favorite proof' and 'which I encourage you …'
-  - Natural spoken-word flow and transcript artifacts, such as the duplicated sentence with the timestamp '00:14:00,420 --> 00:13:59,720' and the slip 'a over c squared …'
+  - Natural spoken-word flow and transcript artifacts, such as the duplicated sentence with the timestamp '00:14:00,420 …' and the slip 'a over c squared …'
   - References to the creator's other videos ('the zeta function video', 'pi hiding in prime …') and some small errors, such as repeating 'a plus b' for both squares, which point to a human script
 
 cgpgrey-Erp8IAUouus.md  P(AI) 4.0
   - Distinctive human comedic voice: dramatized dialogue ('"Yoink!"'), 'Oh hello, asterisk, my …', and the recurring 'long, long ago' callback
-  - Idiosyncratic phrasing and wry asides like 'Which seems fair' and 'kills dead your plans', plus 'nay, begging', which a model would rarely produce
+  - Idiosyncratic phrasing and wry asides like 'Which seems fair' and 'kills dead your …', plus 'nay, begging', which a model would rarely produce
   - Spoken-style ellipsis fragmentation, self-correcting asides, and a tightly crafted closing recap match a human-scripted explainer
   - Distinctive human comedic voice: dramatized dialogue ('Yoink!'), 'Oh hello, asterisk, my …', 'nay, begging people to …'
   - Recurring idiosyncratic refrain 'in the long, long …' and the ellipsis-chained transcript breaks typical of a CGP Grey–style spoken script
-  - Specific quirky details (Chicago teachers, Amish religion exemption, phantom children) with a callback ending ('universal, except when it's …') that feel authored rather than generated
+  - Specific quirky details (Chicago teachers, Amish religion exemption, phantom children) with a callback ending ('universal, except when it …') that feel authored rather than generated
 
 everyframeapainting-5UE3jz_O_EM.md  P(AI) 3.0
-  - Transcript artifacts like the duplicated line "Nearly everything you watch …" and embedded film clip dialogue, with "Subtitles by the Amara.org …", indicate a human-made video with captions.
+  - Transcript artifacts like the duplicated line "Nearly everything you watch …" and embedded film clip dialogue, with "Subtitles by the Amara …", indicate a human-made video with captions.
   - Conversational, idiosyncratic phrasing ("Hi my name is …", "It just feels 'off.'") and specific, expert film analysis reflect a human creator's voice.
   - Unpolished, uneven structure with interleaved interview quotes and film dialogue is unlike typical AI-generated narration.
   - Opens with a personal intro, "Hi my name is …", which is a human creator's signature channel opening
-  - Transcript artifacts such as the repeated "Nearly everything you watch …", interleaved film-clip dialogue, and "Subtitles by the Amara.org …" show it was captured from a real video
+  - Transcript artifacts such as the repeated "Nearly everything you watch …", interleaved film-clip dialogue, and "Subtitles by the Amara …" show it was captured from a real video
   - Conversational, opinionated voice with idiosyncratic phrasing like "kind of uncomfortable… and …" and "It just feels 'off.'", rather than polished generic AI prose
 
 exurb1a-A4pR--qJTdU.md  P(AI) 8.0
@@ -599,10 +602,10 @@ exurb1a-A4pR--qJTdU.md  P(AI) 8.0
   - Distinct personal voice with crude humor and meta-commentary ("gravity is also a …", "disembodied smart-ass narrators") rather than polished, uniform AI prose
 
 johnnyharris-OwqVtZn5df8.md  P(AI) 3.0
-  - Highly spontaneous spoken style with fillers and self-interruptions: "I don't even know …", "Hold on a second, …"
+  - Highly spontaneous spoken style with fillers and self-interruptions: "I don't even …", "Hold on a second, …"
   - Specific personal anecdotes and humor (the owl animation, $2,000 cash on the hotel bed in Miami, Vox boss Joe) plus transcript artifacts like "(car speeding)" and "(inaudible)"
   - Unscripted sponsor read and sound-effect cues, with errors like "pear out" and "borders to edit" typical of auto-transcribed human speech
-  - Transcript artifacts of a real spoken video: '(car speeding)', '(owl hooting)', '(inaudible)', 'Hey, there Iz. We're …' and auto-caption errors like 'pear out'
+  - Transcript artifacts of a real spoken video: '(car speeding)', '(owl hooting)', '(inaudible)', 'Hey, there Iz. We …' and auto-caption errors like 'pear out'
   - Highly personal, specific anecdotes (State Department email, owl animation, Cuba trip with $2,000 cash, Vox boss Joe) with natural digressions and self-deprecating humor
   - Disfluent conversational rhythm ('like', 'I mean', 'Okay. Cool.'), mid-thought restarts and an unscripted sign-off about 'editing borders'
 
@@ -624,26 +627,26 @@ lemmino-Ja8JFEypESU.md  P(AI) 6.0
 
 nerdwriter1-7oY5WNAgb90.md  P(AI) 4.0
   - Transcript artifacts like interview clips with stumbles ("I often feel if …"), mid-sentence fragments and "You know," fillers typical of spoken human narration
-  - Personal voice and opinion: "At least it is …" "it's a reminder, frankly, …"
+  - Personal voice and opinion: "At least it is …" "it's a reminder …, …"
   - Genuine Squarespace sponsor read with "squarespace.com/nerdwriter" and casual sign-off, characteristic of a human creator's video
-  - Transcript artifacts like interview clips mixed in and disfluencies ('You know, facing her …', 'Okay. So what's the …') show natural spoken delivery by a human narrator
-  - Personal, idiosyncratic voice: 'it's a reminder, frankly, …' and 'At least it is …'
+  - Transcript artifacts like interview clips mixed in and disfluencies ('You know, facing her …', 'Okay. So what's …') show natural spoken delivery by a human narrator
+  - Personal, idiosyncratic voice: 'it's a reminder …, …' and 'At least it is …'
   - Sponsor read for Squarespace with 'squarespace.com/nerdwriter' is a genuine Nerdwriter episode; typos like 'this column' and 'Christine' reflect raw human transcription
 
 oversimplified-Dd1JUTA7Ijc.md  P(AI) 10.0
   - Transcription artifacts like "Gun Shots", "only one about 2%", "it's former glory" and "dare to pose Hitler" suggest a human-narrated video transcribed by speech-to-text
-  - Casual, jokey voice: "the French were pissed", "thought he was a …", "angry little puppet. What …" As it turned out, EVERYTHING."
+  - Casual, jokey voice: "the French were pissed", "thought he was a …", "angry little puppet. What …" As it turned out …."
   - Inconsistent tense and sloppy phrasing ("the party needs a …", "very delightful 'Gymnastic and …") are typical of human scriptwriting, not polished AI prose
   - Transcription artifacts like "Gun Shots" inserted mid-text, "only one about 2%", "it's former glory", and "pose Hitler" are typical of auto-captioned human speech, not AI output
-  - Casual, opinionated humor: "The French were pissed", "thought he was a …", "angry little puppet. What …" As it turned out, EVERYTHING.
+  - Casual, opinionated humor: "The French were pissed", "thought he was a …", "angry little puppet. What …" As it turned out ….
   - Uneven, conversational structure with tangents and a sarcastic aside ("when I said prison, …") and minor factual slips, unlike polished AI prose
 
 pbsspacetime-1Tstyqz2g7o.md  P(AI) 3.0
-  - Distinctive human host voice with personal asides and humor: "I'm still mad at …" and "this dude is also …"
+  - Distinctive human host voice with personal asides and humor: "I'm still mad …" and "this dude is also …"
   - Spoken-transcript artifacts and quirks like "g-m waves", "obits", "Check out this playlist", and conversational jokes about telling "a boyfriend, their mother, …"
   - Episode-specific references to viewer comments by username, rumors, and show-specific callbacks that a generated script would not naturally contain
   - Spoken-word transcript artifacts like 'g-m waves', 'obits' typos and auto-caption hyphenation ('in-spiralling', 'Space Time' episode references) typical of a real PBS Space Time video
-  - Personal humor and asides: 'I'm still mad at …', 'Thanks, dude', 'sorry, just a drill' and reading viewer comments by username
+  - Personal humor and asides: 'I'm still mad …', 'Thanks, dude', 'sorry, just a drill' and reading viewer comments by username
   - Time-specific, conversational references ('advanced LIGO only started …', 'A little birdie told …') and episode callbacks that a generic AI text would not produce
 
 realengineering-5QZ3eozyQfU.md  P(AI) 3.5
@@ -668,46 +671,46 @@ tomscott-2qT8ZYewYEY.md  P(AI) 4.0
   - Specific opinionated asides and series callbacks ("this week's video", "Next time") that feel like a human creator's script
   - Distinct personal voice with British slang and humor: "bollocks", "can absolutely go and …", the suppository joke
   - Natural spoken-word flaws: the self-interrupting "cleary--- Irony! Can we …" and typos like "To which I way"
-  - Specific opinionated asides and a channel-style sign-off ("Next time: we'll have …") rather than generic, balanced AI phrasing
+  - Specific opinionated asides and a channel-style sign-off ("Next time: we'll …") rather than generic, balanced AI phrasing
 
 veritasium-F69uqDIhr60.md  P(AI) 12.0
   - Spoken-style asides and references to the scene: "Oh man!", "roughly the size of …", "most of the sharks …"
-  - Conversational disfluency and grammar slips typical of transcribed speech: "they're diet consists mainly …", "a couple misconceptions", "so that's a pretty …"
+  - Conversational disfluency and grammar slips typical of transcribed speech: "they're diet consists …", "a couple misconceptions", "so that's a …"
   - Uneven, rambling structure and repeated phrasing ("they get cancer just …") rather than polished AI-style organization
   - Conversational spoken asides like "Oh man!" and "roughly the size of …" show a real on-location presenter
-  - Natural speech disfluencies and grammar slips ("they're diet consists", "a couple misconceptions", "Now they're called pups") are typical of transcribed speech, not AI text
+  - Natural speech disfluencies and grammar slips ("they're diet consists", "a couple misconceptions", "Now they're called …") are typical of transcribed speech, not AI text
   - Rambling, repetitive phrasing ("get cancer just like …") and uneven structure lack the polish of generated narration
 
 vox-AFw8MSF7yE4.md  P(AI) 12.0
-  - Idiosyncratic human voice and asides: "but - eh - …", "a fountain you can't …"
+  - Idiosyncratic human voice and asides: "but - eh - …", "a fountain you can …"
   - Slight slips and unpolished phrasing like "in Sicily he cheered …" and "The legend's that", unlike typical clean AI output
   - Specific personal observational ending and quoted novelty song lyrics with "Ha, I'm Kilroy!" suggest a human-written, scripted creator style
-  - Idiosyncratic human voice and dry humor: "but - eh - …" and "a fountain you can't …"
+  - Idiosyncratic human voice and dry humor: "but - eh - …" and "a fountain you can …"
   - Slight clumsy slips like "in Sicily he cheered …" and the abrupt "At some point, that …" read as spoken, scripted human narration rather than polished AI prose
   - Specific quirky details (Mr. Chad complaining about skimpy rations, the novelty song quoting Edgar Hoover, a personal visit to the memorial) and an ending that ties back to a real-world observation
 
 vsauce-Iw8idyw_N6Q.md  P(AI) 4.0
   - Distinctive Vsauce voice and signature opener/closer ("Hey, Vsauce. Michael here", "And as always, thanks …") with personal asides like "My favorite are Disney …"
   - Transcription-style errors ("allusion" for illusion, "elicit" for illicit, "effects" for affects, "a typical ways") indicate auto-captioned human speech, not generated text
-  - Quirky, tangential structure and wordplay ("this myelinated machine is …", "It's kind of a …") with specific, idiosyncratic anecdotes (Soviet bombers, Titanic mirage, dentists, London traders) typical of a human scriptwriter
-  - Distinctive Vsauce voice with personal asides ("It's neat", "My favorite are Disney …", "It's kind of a …") and the signature sign-off "And as always, thanks …"
+  - Quirky, tangential structure and wordplay ("this myelinated machine is …", "It's kind of …") with specific, idiosyncratic anecdotes (Soviet bombers, Titanic mirage, dentists, London traders) typical of a human scriptwriter
+  - Distinctive Vsauce voice with personal asides ("It's neat", "My favorite are Disney …", "It's kind of …") and the signature sign-off "And as always, thanks …"
   - Transcription-style errors ("allusion" for illusion, "elicit love", "effects its index", "in a typical ways") and stray "ship(?)" are typical of human speech captions, not generated text
   - Rambling, uneven structure with idiosyncratic jokes ("this myelinated machine is …") and a self-correcting "they can also be …" slip, unlike polished AI prose
 
 wendoverproductions-7cjIWMUgPtY.md  P(AI) 7.0
-  - Typos and disfluencies like "it's most basic level, …" and "that's still that's losing …" are typical of human transcription or writing, not AI output
+  - Typos and disfluencies like "it's most basic …, …" and "that's still that …" are typical of human transcription or writing, not AI output
   - Idiosyncratic, run-on conversational flow with sponsor read and specific data (MetLife figures, Chicago Heights teachers, 8,000 tennis matches) matches Wendover Productions' known human-written style
-  - Uneven grammar like "privately runs lotteries" and "an 100% chance" and repetitive 'But here's the thing' phrasing reflect natural spoken scripting rather than polished AI prose
-  - Typos and slips like "it's most basic level", "loosing to avoid loss", "that's still that's losing …", "privately runs lotteries" are typical of human-written scripts, not AI output
+  - Uneven grammar like "privately runs lotteries" and "an 100% chance" and repetitive 'But here's the …' phrasing reflect natural spoken scripting rather than polished AI prose
+  - Typos and slips like "it's most basic …", "loosing to avoid loss", "that's still that …", "privately runs lotteries" are typical of human-written scripts, not AI output
   - Idiosyncratic Wendover Productions style: sponsor read at start and end, long run-on sentences chained with "but", conversational asides like "Just look:" and "Feel free to think …"
   - Specific data points (MetLife $37.2B vs $36.35B, Chicago Heights teachers, 8,000 tennis matches) woven in unevenly with some imperfect math framing, unlike polished AI prose
 
 3blue1brown-ToIXSwZ1pJU.md  P(AI) 4.0
-  - This is the 3Blue1Brown heat equation video (Part 2 of the differential equations series); the narration has Grant Sanderson's voice, including 'Where there's curvature in …' and 'your mind should burn …'
+  - This is the 3Blue1Brown heat equation video (Part 2 of the differential equations series); the narration has Grant Sanderson's voice, including 'Where there's curvature …' and 'your mind should burn …'
   - Spoken, human tangents and asides, such as 'oh, if it was …' and 'nature is not so …'
-  - Hand-wavy admissions like 'That's somewhat hand-wavy and …' and pointers to the video description, which fit a human presenter more than generated text
-  - Recognizable 3Blue1Brown 'Differential equations' heat equation script with signature voice: "Where there's curvature in …"
-  - Conversational asides and imperfect phrasing typical of spoken human narration: "your mind should burn …", "we're off the bumpy …"
+  - Hand-wavy admissions like 'That's somewhat hand …' and pointers to the video description, which fit a human presenter more than generated text
+  - Recognizable 3Blue1Brown 'Differential equations' heat equation script with signature voice: "Where there's curvature …"
+  - Conversational asides and imperfect phrasing typical of spoken human narration: "your mind should burn …", "we're off the …"
   - Specific personal pedagogy and transcript artifacts ("0T and at LT", "Here, go ahead and …") indicate a human-spoken transcript, not generated text
 
 cgpgrey-Ex74x_gqTU0.md  P(AI) 3.5
@@ -715,15 +718,15 @@ cgpgrey-Ex74x_gqTU0.md  P(AI) 3.5
   - Messy, specific research trail (1913 NYT, Clute, Disosway, missing Gazette volumes, locked museum) with real-time emotional reactions that an AI would not fabricate this naturally
   - Playful wordplay and punchline escalation ("hearsay" -> "hear story" -> "isn't history"), plus typos and colloquial quirks like "rekt" and "a'tall"
   - Highly idiosyncratic personal voice with stage directions and asides like "(Grey, whispering loudly)", "thunk", and a librarian saying "Shhhh!!" that reflect a real filmed trip and a specific creator's persona
-  - Messy, authentic research narrative: dead ends, emails ignored by the museum, closed building, frustration ("I couldn't let it …", "You've got to be …"), with specific source details and dates that an AI would not invent so organically
-  - Playful, uneven wordplay and humor ("Ye Old Meme", "hear story", "commodiousest", "embiggened") plus typos like "trial" for "trail" and "as far and I …" that signal human writing
+  - Messy, authentic research narrative: dead ends, emails ignored by the museum, closed building, frustration ("I couldn't let …", "You've got to …"), with specific source details and dates that an AI would not invent so organically
+  - Playful, uneven wordplay and humor ("Ye Old Meme", "hear story", "commodiousest", "embiggened") plus typos like "trial" for "trail" and "as far and …" that signal human writing
 
 everyframeapainting-8q4X2vDRfRk.md  P(AI) 3.0
-  - Distinct personal voice with profanity and crude humor ("full of shit", "raging hard-ons", "Fuck that, he's rich!"), unlike typical AI narration
-  - Transcript artifacts from interleaved film clip dialogue ("Hold that, please.", "Seems I've found a …") and "Subtitles by the Amara.org …" indicate a real human-made video transcript
-  - Self-aware, opinionated asides and loose structure ("So maybe I'm full …") reflect a human essayist's style
+  - Distinct personal voice with profanity and crude humor ("full of shit", "raging hard-ons", "Fuck that, he's …!"), unlike typical AI narration
+  - Transcript artifacts from interleaved film clip dialogue ("Hold that, please.", "Seems I've found …") and "Subtitles by the Amara …" indicate a real human-made video transcript
+  - Self-aware, opinionated asides and loose structure ("So maybe I'm …") reflect a human essayist's style
   - Distinctive personal voice with profanity and crude humor ("full of shit", "raging hard-ons", "Good shit") typical of the human creator Tony Zhou
-  - Spontaneous, opinionated asides and self-doubt ("So maybe I'm full …") plus embedded film-clip dialogue and subtitle artifacts ("Subtitles by the Amara.org …")
+  - Spontaneous, opinionated asides and self-doubt ("So maybe I'm …") plus embedded film-clip dialogue and subtitle artifacts ("Subtitles by the Amara …")
   - Transcript quirks like inline movie quotes and conversational fragments ("Yours is 3 minutes? …") reflect a real recorded video, not generated prose
 
 exurb1a-CNQC1DoaWz8.md  P(AI) 4.0
@@ -732,14 +735,14 @@ exurb1a-CNQC1DoaWz8.md  P(AI) 4.0
   - Messy, conversational structure with self-interruptions and dashes ("Well, how about- No, …"), lacking the polished tidy phrasing of AI output
   - Raw comedic voice with profanity and a stumbled, spoken rhythm ("Oh yeah, yeah, yeah, …") and false starts that read as live performance, not generated text
   - Specific, quirky British humor ("cuing for flu shots", "Did it touch your …") and in-scene dialogue with interruptions like "No, no, just death"
-  - Uneven, escalating riffs with emphatic caps ("A FUCKING DEATH MACHINE") and a Star Trek parody structure typical of a human comedian's script
+  - Uneven, escalating riffs with emphatic caps ("A FUCKING DEATH MACHINE … a Star Trek parody structure typical of a human comedian's script
 
 johnnyharris-VzAErq53yZk.md  P(AI) 4.0
-  - Transcript-style artifacts like "- I see. -" and disfluencies ("I don't really remember …") show spoken, unscripted delivery
+  - Transcript-style artifacts like "- I see. -" and disfluencies ("I don't really …") show spoken, unscripted delivery
   - Highly specific personal anecdotes (Afghan rug warehouse owner's kebab lunch, asbestos tile scare, walnut butcher block from Illinois) feel lived, not generated
   - Casual, uneven phrasing and transcription errors ("Wahaca", "Iz"/"Izzy", "the seamless's") typical of auto-captioned human speech
   - Spontaneous, personal anecdotes: rug warehouse owner from Afghanistan, kebab lunch, "Wait, is that asbestos …"
-  - Transcript artifacts like "- I see. -", "Iz"/"Izzy", misspelled "Wahaca", and "I don't really remember …" show a real spoken, auto-transcribed vlog
+  - Transcript artifacts like "- I see. -", "Iz"/"Izzy", misspelled "Wahaca", and "I don't really …" show a real spoken, auto-transcribed vlog
   - Specific sponsor disclosures (Fully, Article, Frame Bridge, Fellow) and casual disfluent phrasing like "this sucker" and "so, so, so grateful" read as human
 
 kurzgesagt-KsF_hdjWJjo.md  P(AI) 13.5
@@ -760,18 +763,18 @@ lemmino-Lbv3eJgmFAg.md  P(AI) 4.0
 
 nerdwriter1-DgZPQMyzKiE.md  P(AI) 4.0
   - Typos and slips like "San Fransisco" and "Ron Stryker" (should be Roy), plus a stray capitalized "For" mid-sentence, are typical of human transcription and speech, not AI output
-  - Personal voice and a genuine sponsor read: "Hey everybody, welcome to …" "I've had a few …" "Nord VPN is definitely …"
+  - Personal voice and a genuine sponsor read: "Hey everybody, welcome to …" "I've had a …" "Nord VPN is definitely …"
   - Conversational, opinionated phrasing such as "Lange thought she could …" and "Next time you have …" reflects a distinct human essayist style
   - Typos and slips like "San Fransisco", "Ron Stryker" (for Roy), and a stray capitalized "For the last fifteen …" are characteristic of a human-made transcript/script.
-  - Personal voice and context: "Hey everybody, welcome to …", "I've had a few …", and a sponsor read for Nord VPN with the "nerdwriter" code are typical of the Nerdwriter channel.
+  - Personal voice and context: "Hey everybody, welcome to …", "I've had a …", and a sponsor read for Nord VPN with the "nerdwriter" code are typical of the Nerdwriter channel.
   - Idiosyncratic, conversational asides and opinions ("Lange thought she could …", "a third dimension", "Next time you have …") reflect a distinct human narrator rather than generic AI prose.
 
 oversimplified-Mun1dKkc_As.md  P(AI) 4.0
   - Typos and transcription slips like "Somne", "Ottomen where divided", "germans", "There is no clear …" (tense shifts) and a pasted lenny-face "( ͡° ͜ʖ ͡°)" point to a human-written script.
-  - Casual, jokey humor with a distinct voice: "Basically: Don't be jerks. …" and "the spies got bored, …".
+  - Casual, jokey humor with a distinct voice: "Basically: Don't be …. …" and "the spies got bored, …".
   - Closing line "never had such an …" is a dark-humor punchline, and the structure is rambling and uneven, unlike polished AI text.
   - Typos and transcription errors like "Somne", "The Ottomen where divided", "germans", and an inline emoticon "( ͡° ͜ʖ ͡°)" are typical of a human-made script, not AI output
-  - Irreverent, jokey voice with a human comedic rhythm: "The Germans held a …", "Whoops, looks like we're …", "spies got bored, brewed …"
+  - Irreverent, jokey voice with a human comedic rhythm: "The Germans held a …", "Whoops, looks like we …", "spies got bored, brewed …"
   - Inconsistent tense and punctuation ("There are mutinies... it …", missing periods) plus a spoken-word, off-the-cuff structure suggest a human writer, not a polished AI draft
 
 pbsspacetime-5l1KxgHH2Ek.md  P(AI) 4.0
@@ -809,7 +812,7 @@ tomscott-GLqJvWlEolk.md  P(AI) 2.0
 veritasium-K4vyRvMASPU.md  P(AI) 7.0
   - Spoken-style quirks and typos like "Press the space key …", "i'm", "sychronized", and spaces before question marks ("how did they do …") suggest a human transcript
   - Personal, on-camera references ("I'll clap", "Here I am bouncing …", "let me play the …") and mixed British/American spellings ("reorganised", "favour", "monolog")
-  - Inconsistent phrasing and a conversational interview snippet ("You didn't press anything …") that AI scripts rarely produce
+  - Inconsistent phrasing and a conversational interview snippet ("You didn't press …") that AI scripts rarely produce
   - Idiosyncratic human errors and quirks: missing punctuation ("live on TV But"), stray spaces before question marks, "sychronized", "Press the space key …" left in from the demo
-  - Conversational, improvised on-camera asides like "I'll clap to make …" and "That last one came …" with interview-style back-and-forth
+  - Conversational, improvised on-camera asides like "I'll clap to …" and "That last one came …" with interview-style back-and-forth
   - Mixed British/American spellings and uneven phrasing ("reorganised", "synchronized", "audio-syncing-capabilities", "we created this computer …") typical of a human script, not polished AI prose
