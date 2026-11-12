@@ -43,6 +43,36 @@ FENCE_WORK = re.compile(r"^(`{3,})(?:markdown|md|text|txt|plaintext|gitcommit|em
 SCRIPT = ("script", "script-es")  # kept as written: stage directions, labels and headings stay
 
 
+# The model talking to the user about the request, not the script. Anchored to the first or
+# last paragraph and to words about the script itself, so a narration that opens "I'm
+# standing in..." or "Here's the thing" stays. Word-count trailers and production notes
+# are kept in the file: aimeter.spoken() does not count them as speech.
+_LEAD = (r"(?:I can(?:'|’)t|I cannot|I(?:'m| am) assuming|I don(?:'|’)t know|Here(?:'|’)s|Here is|Sure|Certainly|"
+         r"Below is|Aqu[ií] (?:tienes|est[aá])|No puedo|Claro|A continuaci[oó]n|Te dejo|Supongo|Asumo)\b")
+_ABOUT = re.compile(r"script|transcript|guion|guión|\byour\b|\btu\b|\btus\b|t[ií]tulo|title|:\s*$", re.I)
+_CLOSE_LEAD = re.compile(r"(?:Note|Notes|Two notes|Nota|Notas|This runs|This script|This is an original|"
+                         r"The spoken script|Este guion|El guion|Approx(?:imately|\.)?|Word count)\b", re.I)
+_TO_USER = re.compile(r"\bI(?:'m|’m|'ve|’ve|'d)?\b|\bmy\b|\byour (?:title|series|channel|script|video|real)\b|"
+                      r"\byou may want\b|\bwant me to\b|\blet me know\b|\bswap in\b|\bte (?:sugiero|recomiendo)\b|"
+                      r"\bsi quieres\b|\bquieres que\b|\bt(?:u|us) (?:t[ií]tulo|serie|canal|guion)\b|\bdime\b|"
+                      r"\bhe (?:dejado|inventado|tratado|supuesto)\b", re.I)
+
+
+def script_notes(text):
+    """Drop an opening paragraph that talks to the user about the request and a closing
+    note to the user (first and last paragraph only), and a rule left at either end."""
+    paras = re.split(r"\n\s*\n", text.strip())
+    plain = lambda p: p.strip().strip("*_ ")
+    if len(paras) > 2 and re.match(_LEAD, plain(paras[0])) and _ABOUT.search(paras[0]):
+        paras = paras[1:]
+    while len(paras) > 2 and (_CLOSE_LEAD.match(plain(paras[-1])) and _TO_USER.search(paras[-1])
+                              or re.fullmatch(r"(?:[-*_]\s*){3,}", paras[-1].strip())):
+        paras = paras[:-1]
+    while len(paras) > 2 and re.fullmatch(r"(?:[-*_]\s*){3,}", paras[0].strip()):
+        paras = paras[1:]
+    return "\n\n".join(paras).strip()
+
+
 def clean(text, register="blog"):
     """The post itself: what is inside a ```markdown wrapper when the model used one
     (its comments to the user outside the wrapper are dropped), without front matter.
@@ -59,6 +89,8 @@ def clean(text, register="blog"):
                 text = inner
     if register == "email":  # the subject goes in its own field, not in the body
         text = re.sub(r"\A\s*\**Subject:.*\n", "", text)
+    if register in SCRIPT:  # a leading --- is a rule, not front matter
+        return script_notes(text.strip())
     return re.sub(r"\A\s*---\n.*?\n---\n", "", text, flags=re.S).strip()
 
 

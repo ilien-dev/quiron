@@ -170,7 +170,3 @@ And whatever you think of the results, it's hard to argue it doesn't work.
 Thanks for watching.
 
 *[END CARD]*
-
----
-
-*Approx. 1,500 words. Clip suggestions are placeholders. Swap in footage you can use under fair use or have licensed.*

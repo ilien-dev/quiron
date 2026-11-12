@@ -64,7 +64,3 @@ Brokkr, outwitted, can't collect. Instead, he sews Loki's lips shut. A lesson, a
 If you enjoyed this story, like and subscribe for more myths from around the world.
 
 **[END CARD]**
-
----
-
-*Note: This is an original retelling of the myth from the Prose Edda (Skáldskaparmál), written to match your title. It isn't a transcript of Mellor's lesson. If you're adapting his actual narration, check usage rights and credit him in the description.*

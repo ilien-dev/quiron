@@ -65,7 +65,3 @@ And the one that made me put my coffee down: "Can you kiss through a video call 
 Until then, stay close, even when you can't be.
 
 **[END CARD]**
-
----
-
-This runs about 710 words. I treated "LÜT" as the name of your series and invented the segments, the friend Dani, and the commenter, so swap in your real format, names, and any actual products you want to feature.

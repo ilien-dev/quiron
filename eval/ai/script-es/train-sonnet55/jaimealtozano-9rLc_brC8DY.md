@@ -179,7 +179,3 @@ Gracias por quedarte hasta el final. Nos vemos en el próximo vídeo.
 **[VISUAL: Fundido a negro. Suenan unas últimas notas de piano. Después, silencio.]**
 
 **[FIN]**
-
----
-
-*Nota de producción: para respetar la idea del vídeo, te sugiero dejar silencios reales de 2-3 segundos entre secciones y evitar música de fondo constante en la narración, usando piezas muy puntuales y con licencia adecuada. Antes de publicar, conviene revisar los derechos de uso de cualquier fragmento musical del juego.*

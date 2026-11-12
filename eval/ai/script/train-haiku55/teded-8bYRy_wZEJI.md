@@ -1,5 +1,3 @@
-I'm assuming the pharaoh is Hatshepsut, since the title fits her story of erasure and rediscovery. I don't know the specific content of Kate Green's video, so you may want to adjust the script to match it.
-
 **The Pharaoh That Wouldn't Be Forgotten**
 
 *[COLD OPEN]*

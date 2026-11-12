@@ -297,6 +297,74 @@ SPEAKER = re.compile(rf"^\s*[*_]{{0,2}}(?:(?:{_KNOWN})(?:\s*\d+)?(?:\s*\([^)]*\)
                      r"\s*[*_]{0,2}\s*:\s*[*_]{0,2}\s*")
 SCENE = re.compile(r"^\s*(?:#{1,6} .*|(?:INT|EXT|INT\./EXT)\.\s.*)$")
 MUSIC = re.compile(r"[♪♫]+")
+# What the model tacks on after a script is production markup, not speech: a line that is
+# only a word count, a rule (---, ***), and a trailing production-note paragraph.
+RULE = re.compile(r"^\s*(?:[-*_]\s*){3,}$")
+_WRAP = "*_()[]> 	"
+_NUM = r"~?≈?\s*(?:(?:approx(?:imately)?|aprox(?:imadamente)?|about|unas)\.?\s+)?[\d][\d.,]*"
+_WCLABEL = (r"(?:(?:approximate\s+)?word\s+count|words|palabras|recuento(?:\s+aproximado)?(?:\s+de\s+palabras)?"
+            r"|conteo(?:\s+de\s+palabras)?|extensi[oó]n(?:\s+aproximada)?|longitud(?:\s+aproximada)?|length)")
+_WCAPPROX = r"(?:approx(?:imately)?|aprox(?:imadamente)?)\.?"
+WORD_COUNT = re.compile(
+    rf"^(?:{_WCLABEL}\s*:\s*{_NUM}(?:\s*(?:words|palabras))?|(?:{_WCAPPROX}\s+)?{_NUM}\s*(?:words|palabras)"
+    rf"|{_WCAPPROX}\s+word\s+count\s*:?\s*{_NUM})\.?(?:\s*\([^)]*\)|,\s*including[^.]*\.?)?$", re.I)
+# an italic or bold line that begins with a word count and goes on with a note
+WORD_COUNT_LEAD = re.compile(
+    rf"^[*_]+\s*(?:{_WCLABEL}\s*:\s*|{_WCAPPROX}\s+){_NUM}\s*(?:words|palabras)?\.\s+\S", re.I)
+# a header line of runtime / length fields ("Runtime: ~8 minutes | Script: ~1,177 words") and an
+# italic line that only describes the script ("*YouTube script, approx. 2,600 words*")
+_COUNT_UNIT = r"\d[\d.,]*\s*(?:words|palabras|minutes?|min|minutos?)\b"
+META_LINE = re.compile(rf"^(?:[^:\n]{{0,40}}\s·\s)?(?:estimated\s+|target\s+)?(?:runtime|length|script\s+length|duraci[oó]n(?:\s+estimada)?)"
+                       rf"\s*:.*(?:~|{_COUNT_UNIT})", re.I)
+NOTE_LINE = re.compile(r"^[*_]+(?:note|nota)s?\b[^:\n]{0,20}:", re.I)  # an italic or bold "Note: ..." line
+DESCRIPTOR = re.compile(rf"^[*_].*\b(?:script|guion|gui[oó]n)\b.*\b(?:approx\w*|aprox\w*|about|runs|unas|de)\b.*{_COUNT_UNIT}", re.I)
+PROD_NOTE = re.compile(r"^(?:production\s+notes?|notes?\s+for\s+(?:the\s+)?production|notas?\s+(?:para|de)\s+(?:la\s+)?producci[oó]n"
+                       r"|sugerencias\s+de\s+edici[oó]n|editing\s+suggestions)\b", re.I)
+BARE_NOTE = re.compile(r"^(?:note|nota)s?\b", re.I)
+LIST_ITEM = re.compile(r"^\s*(?:[-*+•]|\d+[.)])\s+")
+
+
+def _trailers(lines, n):
+    """Drop word-count lines, rules and production-note paragraphs (counted as stage)."""
+    paras, cur = [], []
+    for l in lines:
+        if l.strip():
+            cur.append(l)
+        else:
+            if cur:
+                paras.append(cur)
+            cur = []
+            paras.append([l])
+    if cur:
+        paras.append(cur)
+    out, notes = [], False
+    for i, p in enumerate(paras):
+        first = p[0].strip()
+        core = first.strip(_WRAP)
+        if first and PROD_NOTE.match(core.lstrip("*_ ")):
+            n["stage"] += 1
+            notes = True
+            continue
+        if first and BARE_NOTE.match(core) and first[0] in "*_":
+            n["stage"] += 1
+            continue
+        if notes and first and LIST_ITEM.match(p[0]):
+            n["stage"] += 1
+            continue
+        if first:
+            notes = False
+        for l in p:
+            c = re.sub(r"[*_]", "", LIST_ITEM.sub("", l)).strip().strip(_WRAP).rstrip(".")
+            if c and (WORD_COUNT.match(c) or WORD_COUNT_LEAD.match(l.strip()) or META_LINE.match(c) or NOTE_LINE.match(l.strip())
+                      or DESCRIPTOR.match(l.strip())):
+                n["stage"] += 1
+            elif RULE.match(l):
+                continue
+            else:
+                out.append(l)
+    return out
+
+
 AUDIO_COLUMN = re.compile(r"^[*_]*(?:AUDIO|NARRATION|NARRACI[OÓ]N|VO|V\.O\.|SCRIPT|GUION)[*_]*$", re.I)
 
 
@@ -326,6 +394,7 @@ def _spoken(text):
             table = []
         if l is not None:
             lines.append(l)
+    lines = _trailers(lines, n)
     out = []
     for l in lines:
         old = l

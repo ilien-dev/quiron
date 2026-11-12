@@ -49,6 +49,42 @@ class Spoken(unittest.TestCase):
         t = "You were on your way home, when you died. It was a car accident."
         self.assertEqual(aimeter.spoken(t), t)
 
+    def test_word_count_lines_are_not_speech(self):
+        for line in ("*Word count: ~845*", "*~712 words*", "(Word count: 845)", "*(Extensión aproximada: 779 palabras)*",
+                     "Palabras: 780", "*Approximately 460 words.*", "- Longitud aproximada: unas 1.130 palabras.",
+                     "*Approximate word count: 2,400, including visual directions.*"):
+            self.assertEqual(aimeter.spoken("Hello there.\n\n" + line).strip(), "Hello there.", line)
+            self.assertGreater(aimeter.markup_counts("Hello there. " * 100 + "\n\n" + line)["stage"], 0, line)
+
+    def test_runtime_header_and_descriptor_lines(self):
+        for line in ("**Runtime: ~8 minutes | Script: ~1,177 words**", "**Target length:** about 1,989 words (roughly 13 minutes)",
+                     "*YouTube script, approx. 2,600 words*", "**Recuento aproximado:** ~2.640 palabras.",
+                     "**Duración estimada:** 7 minutos (~1100 palabras)", "*Note: this is an original script.*",
+                     "**Target runtime:** ~19 minutes at a relaxed pace", "**Guion para YouTube · Duración estimada: 10–12 minutos**",
+                     "**Duración estimada:** 8-9 minutos\n**Nota:** donde pone [X], entra el invitado."):
+            self.assertEqual(aimeter.spoken("Hello there.\n\n" + line).strip(), "Hello there.", line)
+        for t in ("The runtime: it is long.", "This script is about 3 words long."):
+            self.assertEqual(aimeter.spoken(t), t)
+
+    def test_spoken_words_mentioning_words_are_kept(self):
+        for t in ("That is about 845 words of text.", "Son unas 800 palabras de texto, no más."):
+            self.assertEqual(aimeter.spoken(t), t)
+
+    def test_production_note_paragraph(self):
+        for note in ("**Production notes:**\n\n- Verify the dates.\n- Trim section two.",
+                     "*Production note: verify the figures.*", "**Note for production:** check the numbers.",
+                     "**Nota para la producción:** revisa las cifras.", "**Notas de producción:**\n\n- Revisar fechas."):
+            self.assertEqual(aimeter.spoken("The end.\n\n" + note).strip(), "The end.", note)
+        self.assertGreater(aimeter.markup_counts("The end. " * 100 + "\n\n**Nota para la producción:** x.")["stage"], 0)
+
+    def test_speech_that_opens_with_note_is_kept(self):
+        t = "Note: this is spoken.\n\nAnd more."
+        self.assertEqual(aimeter.spoken(t), t)
+
+    def test_rules_are_not_speech(self):
+        self.assertEqual(aimeter.spoken("One.\n\n---\n\nTwo.\n\n***\n\nThree.").split(), ["One.", "Two.", "Three."])
+        self.assertEqual(aimeter.prose(aimeter.spoken("---\nHello there.\n---\nBye.")).split(), ["Hello", "there.", "Bye."])
+
     def test_markup_counts(self):
         c = aimeter.markup_counts("[B-ROLL]\nNARRATOR: " + "word " * 500)
         self.assertEqual((c["stage"], c["speaker"]), (2.0, 2.0))

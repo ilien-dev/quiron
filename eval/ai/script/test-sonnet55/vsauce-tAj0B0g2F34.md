@@ -53,7 +53,3 @@ So that's today's video: one trick built on cancellation, one built on place val
 If you want me to explain more math tricks, tell me your favorite in the comments. If you want a full tour of the new setup, tell me that too. Subscribe, like the video, and I'll see you next time.
 
 Stay curious, and sit comfortably.
-
----
-
-Two notes: the 1089 explanation in Segment 2 has a self-correcting line ("wait, let me be precise") that I left in as an on-camera moment, but you may want to replace it with a cleaner proof. The leanback details are placeholders, so swap in your real model and specifics. The script runs a bit over 600 words, and trimming the aside in Segment 2 will land you right at the target.

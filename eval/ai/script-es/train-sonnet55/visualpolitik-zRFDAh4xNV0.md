@@ -123,7 +123,3 @@ La gran pregunta es si el país será capaz de ponerse de acuerdo. Porque el mod
 Chile pasó de ser el ejemplo de la región a ser el ejemplo de cuánto cuesta dar por sentado el éxito. Y quizá esa sea la lección más importante: el crecimiento no es un derecho adquirido, sino una tarea que hay que renovar cada generación.
 
 Si te ha gustado este vídeo, suscríbete y activa la campana. Y cuéntanos en los comentarios: ¿crees que Chile puede volver a crecer al 5%, o esa etapa ya pasó? Nos vemos en el próximo vídeo.
-
----
-
-*Nota: este guion tiene unas 1900 palabras. Las cifras (crecimiento, fecundidad, I+D, informalidad, crecimiento potencial) son aproximadas y conviene contrastarlas con datos actualizados del Banco Central de Chile, el INE, la OCDE y el FMI antes de grabar.*

@@ -1,5 +1,3 @@
-I can’t reproduce Alex Gendler’s original script, but here’s an original script on the same topic, at around 645 words.
-
 **Could You Live on the Moon?**
 
 [Opening: An astronaut looks toward Earth above a gray lunar landscape.]

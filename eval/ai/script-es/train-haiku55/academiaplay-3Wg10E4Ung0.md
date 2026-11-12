@@ -158,7 +158,3 @@ Si te gustó este video, deja tu like, suscríbete al canal y cuéntame en los c
 Nos vemos en la próxima historia.
 
 *[Fin.]*
-
----
-
-**Nota para la producción:** Las cifras de navíos, soldados y bajas varían entre fuentes. Si quieres que el guion sea más preciso, conviene verificar los datos con bibliografía especializada, por ejemplo en trabajos sobre la campaña de Vernon en Cartagena de 1741 o en el Archivo General de Indias.
