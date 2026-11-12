@@ -9,8 +9,8 @@ type: software
 authors:
   - alias: ilien
     website: "https://github.com/ilien-dev"
-version: 1.3.0
-date-released: "2026-11-04"
+version: 1.4.0
+date-released: "2026-11-12"
 license: AGPL-3.0-only
 repository-code: "https://github.com/ilien-dev/quiron"
 url: "https://quiron.ilien.dev/"
