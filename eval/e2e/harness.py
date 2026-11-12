@@ -17,15 +17,17 @@ CORPUS = os.path.expanduser("~/corpus/blog")
 ISO = ["--setting-sources", "project", "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
        "--no-session-persistence"]
 MODEL = "claude-opus-5-5"
+JUDGE = os.environ.get("JUDGE", MODEL)  # Claude judge; a non-default one gets its own cache keys
+GPT = os.environ.get("GPT_MODEL", "gpt-5.6-sol")  # Codex rewriter and GPT judge
 LOCK = threading.Lock()
 
 
 def sets():
     out = {}
     for p in sorted(os.listdir(os.path.join(CODE, "sets"))):
-        rows = [l.split("\t") for l in open(os.path.join(CODE, "sets", p)).read().splitlines() if l.strip()]
+        rows = [l.split("\t") for l in open(os.path.join(CODE, "sets", p), encoding="utf-8").read().splitlines() if l.strip()]
         for r in rows:
-            r[1] = os.path.join(REPO, r[1])
+            r[1] = os.path.join(REPO, os.path.expanduser(r[1]))  # ~/corpus/... for human originals
             if r[2] != "-":
                 r[2] = os.path.join(REPO, r[2])
         out[p[:-4]] = rows
@@ -47,6 +49,11 @@ def snapshot(name, src):
 PROMPT = ("Use the quiron skill. Rewrite this dev.to blog post draft (draft.md) so it reads like I "
           "wrote it. My notes about what actually happened are in notes.txt. Save the finished post "
           "as final.md in this folder.\n")
+
+
+PROMPT_NONOTES = ("Use the quiron skill on this dev.to blog post draft (draft.md) so it does not read as "
+                  "AI-written. I have no notes for it; work from the draft alone and do not stop to "
+                  "ask me. Save the finished post as final.md in this folder.\n")
 
 
 PROMPT_ES = ("Usa la skill quiron. Reescribe este borrador de post para dev.to (draft.md) para que "
@@ -74,10 +81,10 @@ def rewrite_one(snap, rep, row):
     if notes != "-":
         shutil.copy(notes, os.path.join(wd, "notes.txt"))
     cmd = ["claude", "-p", "--model", os.environ.get("REWRITER", MODEL), *ISO, "--permission-mode", "bypassPermissions",
-           "--output-format", "json", PROMPT_FIC % FIC[name] if name in FIC else (PROMPT_ES if name in ES_NAMES else PROMPT)]
+           "--output-format", "json", PROMPT_FIC % FIC[name] if name in FIC else (PROMPT_ES if name in ES_NAMES else PROMPT if notes != "-" else PROMPT_NONOTES)]
     if os.environ.get("REWRITER") == "codex":  # a non-Claude agent: point it at the skill file
         cmd = ["codex", "exec", "--skip-git-repo-check", "--ephemeral", "--ignore-user-config",
-               "-s", "workspace-write", "-m", "gpt-5.6-sol",
+               "-s", "workspace-write", "-m", GPT,
                "Read .claude/skills/quiron/SKILL.md and follow it as your instructions for this "
                "task; its paths are relative to that folder. " + cmd[-1]]
     try:
@@ -129,10 +136,10 @@ def judge_one(text, k, cache, jp=None):
         return cache[(h, k)]
     if isinstance(k, str) and k.startswith("g"):  # GPT judge through the Codex CLI
         cmd = ["codex", "exec", "--skip-git-repo-check", "--ephemeral", "--ignore-user-config",
-               "-m", "gpt-5.6-sol", "-c", 'model_reasoning_effort="medium"', "-s", "read-only", "-"]
+               "-m", GPT, "-c", 'model_reasoning_effort="medium"', "-s", "read-only", "-"]
         wd = os.path.join(H, "jwd-gpt")
     else:
-        cmd = ["claude", "-p", "--model", MODEL, *ISO, "--tools", "", "--output-format", "text"]
+        cmd = ["claude", "-p", "--model", JUDGE, *ISO, "--tools", "", "--output-format", "text"]
         wd = os.path.join(H, "jwd")
     for attempt in range(3):
         try:
@@ -157,8 +164,10 @@ def judge_files(files, k=3, j=8, gpt=0, jp=None):
     os.makedirs(os.path.join(H, "jwd"), exist_ok=True)
     os.makedirs(os.path.join(H, "jwd-gpt"), exist_ok=True)
     cache = load_cache()
-    jobs = [(f, i) for f in files for i in range(k)] + [(f, f"g{i}") for f in files for i in range(gpt)]
-    texts = {f: strip_front(open(f).read()) for f in files}
+    ck = (lambda i: i) if JUDGE == MODEL else (lambda i: f"{JUDGE}:{i}")
+    gk = (lambda i: f"g{i}") if GPT == "gpt-5.6-sol" else (lambda i: f"g:{GPT}:{i}")
+    jobs = [(f, ck(i)) for f in files for i in range(k)] + [(f, gk(i)) for f in files for i in range(gpt)]
+    texts = {f: strip_front(open(f, encoding="utf-8").read()) for f in files}
     with ThreadPoolExecutor(j) as ex:
         res = list(ex.map(lambda fi: (fi[0], judge_one(texts[fi[0]], fi[1], cache, jp)), jobs))
     out = {}

@@ -27,7 +27,7 @@ With --ai-train DIR, a second and independent judge is trained: a naive Bayes
 classifier over word frequencies, fitted on the calibration humans against those
 AI texts, and never shown the held-out humans or any scored group. Its mean
 P(AI) per group is reported. It is independent of the bands and the checklist,
-so a rewrite that games the 17 rates without changing the underlying word
+so a rewrite that games the 23 rates without changing the underlying word
 distribution shows up here. Keep the AI training texts on topics disjoint from
 the scored groups, or the judge learns topics instead of style.
 
@@ -47,7 +47,8 @@ COMBINED = {"C1", "C2", "T1", "V1", "V2"}
 
 
 def texts(directory):
-    return sorted(os.path.join(directory, n) for n in os.listdir(directory)
+    # several folders joined with commas count as one group
+    return sorted(os.path.join(d, n) for d in directory.split(",") for n in os.listdir(d)
                   if n.endswith((".md", ".txt")))
 
 
@@ -114,6 +115,7 @@ def main():
     bands = aimeter.bands_from(train, [m for _, m in measured(texts(ai_train))]
                                if ai_train else None)
     bands.update(aimeter.band_meta())  # keep the register's language, lexicon, thresholds
+    aimeter.apply_skip(bands)
     bands.pop("_corpus", None)
     tmp = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
     json.dump(bands, tmp)

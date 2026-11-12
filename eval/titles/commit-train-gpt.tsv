@@ -1,0 +1,8 @@
+freebsd-freebsd-src-d11f81afd5	150	"qcom_tcsr: add initial top control and status register (TCSR) support" in the freebsd/freebsd-src repository
+git-git-d73f5cfa89	335	"chainlint.sed: stop splitting "(..." into separate lines "(" and "..."" in the git/git repository
+golang-go-e6c973198d	178	"[dev.regabi] cmd/compile: stop mangling SelectorExpr.Sel for ODOTMETH" in the golang/go repository
+mesonbuild-meson-6e25548d06	207	"add_*_script: fix incorrect typed_pos_args allowing built targets" in the mesonbuild/meson repository
+postgres-postgres-911588a3f8	186	"Add fast path for validating UTF-8 text" in the postgres/postgres repository
+qemu-qemu-a09410ed1f	231	"target/ppc: Remove the software TLB model of 7450 CPUs" in the qemu/qemu repository
+rust-lang-rust-274e2993cb	151	"Stablize slice::strip_prefix and strip_suffix, with SlicePattern" in the rust-lang/rust repository
+torvalds-linux-c4a68b4da6	298	"usb: phy: ab8500-usb: Keep PHY turned on in UART mode" in the torvalds/linux repository

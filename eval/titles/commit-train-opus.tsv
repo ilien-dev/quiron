@@ -1,0 +1,8 @@
+bitcoin-bitcoin-8b57013473	202	"[net processing] Remove nStartingHeight check from block relay" in the bitcoin/bitcoin repository
+freebsd-freebsd-src-f64dc2ab5b	169	"tcp: TCP output method can request tcp_drop" in the freebsd/freebsd-src repository
+git-lfs-git-lfs-7838572d72	205	"Support submodule.recurse = true" in the git-lfs/git-lfs repository
+llvm-llvm-project-4646de5d75	147	"[NewPM][CodeGen] Introduce CodeGenPassBuilder to help build codegen pipeline" in the llvm/llvm-project repository
+nodejs-node-06c5b5315a	913	"deps: various quic patches from akamai/openssl" in the nodejs/node repository
+postgres-postgres-e2f0f8ed25	167	"Check for STATUS_DELETE_PENDING on Windows." in the postgres/postgres repository
+redis-redis-0e5b813ef9	456	"Multiparam config set (#9748)" in the redis/redis repository
+systemd-systemd-4287c85589	256	"meson: create new libsystemd-core.so private shared library" in the systemd/systemd repository

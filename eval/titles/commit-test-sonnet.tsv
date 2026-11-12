@@ -1,0 +1,7 @@
+curl-curl-78cef06847	254	"openssl: Revert to less sensitivity for SYSCALL errors" in the curl/curl repository
+git-git-726a228dfb	499	"fast-export: fix surprising behavior with --first-parent" in the git/git repository
+golang-go-c9fb4eb0a2	263	"cmd/link: handle grouped resource sections" in the golang/go repository
+neovim-neovim-d5aaad14ec	150	"Followup improvements to LSP (#11430)" in the neovim/neovim repository
+python-cpython-1b779bfb85	337	"bpo-38804: Fix REDoS in http.cookiejar (GH-17157)" in the python/cpython repository
+redis-redis-867816003e	535	"Auto-generate the command table from JSON files (#9656)" in the redis/redis repository
+torvalds-linux-730b49aac4	183	"usb: typec: port-mapper: Convert to the component framework" in the torvalds/linux repository

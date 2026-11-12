@@ -193,6 +193,10 @@ CHECKS_ES = [
     ("E3", "residuo de chatbot", "re",
      r"\b(?:espero que (?:esto|este (?:post|artículo)) te (?:ayude|sea útil)|excelente pregunta|"
      r"te gustaría que)\b|¡claro!", None),
+    # November 2026 texts: the Claude models label list items in bold, the GPT ones do not
+    ("E4", "etiquetas en negrita en los elementos de lista", "tellmd",
+     r"^\s*(?:[-*]|\d+\.)\s+\*\*[^*]+\*\*\s*[:—–-]",
+     "14% of held-out human posts, 40% to 70% of Claude posts, none of the GPT ones"),
 ]
 if LANG == "es":
     CHECKS = [c for c in CHECKS if c[0] in ("A2a", "A2b", "A6a", "A13", "A23", "A25",

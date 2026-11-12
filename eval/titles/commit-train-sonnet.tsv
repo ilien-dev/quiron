@@ -1,0 +1,8 @@
+curl-curl-9c1806ae46	189	"build: Disable Visual Studio warning "conditional expression is constant"" in the curl/curl repository
+git-git-55a9651d26	170	"upload-pack.c: increase output buffer size" in the git/git repository
+golang-go-2ebe081288	193	"internal/fuzz: handle unrecoverable errors during minimization" in the golang/go repository
+llvm-llvm-project-a697a0a4b6	165	"[OpenMP][Plugin] Introduce generic resource pool" in the llvm/llvm-project repository
+nodejs-node-d502b83cbd	196	"build: auto-load ICU data from --with-icu-default-data-dir" in the nodejs/node repository
+qemu-qemu-071b474f54	177	"block: drop tighten_restrictions" in the qemu/qemu repository
+redis-redis-41e6e05dee	310	"Allow most CONFIG SET during loading, block some commands in async-loading (#9878)" in the redis/redis repository
+systemd-systemd-bc5a9b82d5	149	"firewall-util-nft: attempt table recreation when add operation fails" in the systemd/systemd repository

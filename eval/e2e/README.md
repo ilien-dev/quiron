@@ -22,6 +22,12 @@ Paths are relative to the repo.
 - `test` has 18 other blog titles that were never used to choose anything.
 - `es` has 30 Spanish titles.
 - `fic` and `fic2` have 30 and 32 WritingPrompts stories and no notes.
+- `hum` has 16 human posts from `~/corpus/blog` as the drafts, with no notes. It shows
+  what the loop costs a text a person wrote.
+- `devnn` is `dev` without the notes.
+
+A row with no notes gets a prompt that says so and tells the rewriter not to stop and
+ask. Sonnet 5.5 otherwise refuses to write `final.md` until it has the notes.
 
 Claude wrote the notes for `test` and `es` from each human post with `gennotes.py`, as terse
 bullets like the ones in `eval/notes/` and in the post's language. The human originals are
@@ -44,6 +50,21 @@ a run cut short by a usage limit can be restarted as it is. Set `REWRITER=claude
 to change the model that rewrites. The report asks two Claude Opus 5.5 judges per text;
 `--k 3 --g 2` gives the panel behind the September numbers, three Opus and two GPT-5.6.
 Judge answers are cached by text, so a report reruns for free.
+
+A cheaper panel works too. `JUDGE=claude-sonnet-5-5` swaps the Claude judge and
+`GPT_MODEL=gpt-6.1-terra` the Codex model, for the GPT judge and for `REWRITER=codex`;
+each model keeps its own cache entries. On 58 texts already judged by Opus (18 human
+posts, 20 rewrites, 20 untouched drafts), Sonnet 5.5 gave the human posts 4.8, the
+rewrites 12.4 and the drafts 79.2, against 5.9, 32.2 and 87.8 from Opus. Terra gave 6.3,
+46.1 and 91.9. Sonnet agrees with Opus across the three groups (r = 0.96) and is easier on
+rewrites, where the two still rank the texts alike (r = 0.67); Terra is the harder judge
+(r = 0.55 with Opus on rewrites). The November 2026 rounds in `references/numbers.md` used
+Sonnet 5.5 as the rewriter with this panel, `--k 2 --g 1`.
+
+`--noise` prints how far one version moves by itself: the spread between two judges of
+the same text, and the difference between two reps of the same snapshot. Between reps the
+set mean moved by up to 3.1 points with the Opus panel and 2.1 with the Sonnet one, so a
+smaller difference between two versions is not a result.
 
 The report prints each version's mean P(AI) for both judge families and the share of
 texts over 50. Then it gives the per-title difference from the first version, how many

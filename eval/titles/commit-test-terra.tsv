@@ -1,0 +1,6 @@
+freebsd-freebsd-src-f389439f50	143	"IPv4: fix redirect sending conditions" in the freebsd/freebsd-src repository
+golang-go-29483b3dae	169	"test: re-enable a bunch of tests with types2" in the golang/go repository
+llvm-llvm-project-e5a743c4f6	154	"Add implementations of POSIX mmap and munmap functions." in the llvm/llvm-project repository
+postgres-postgres-7acd01015c	201	"Adjust behavior of some env settings for the TAP tests of MSVC" in the postgres/postgres repository
+qemu-qemu-f917eed306	335	"qobject: Fix qnum_to_string() to use sufficient precision" in the qemu/qemu repository
+systemd-systemd-715a70e721	710	"firewall-util: add nftables backend" in the systemd/systemd repository

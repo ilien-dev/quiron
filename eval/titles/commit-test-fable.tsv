@@ -1,0 +1,7 @@
+freebsd-freebsd-src-254e4e5b77	160	"Simplify swi for bus_dma." in the freebsd/freebsd-src repository
+git-git-d3115660b4	202	"branch: add flags and config to inherit tracking" in the git/git repository
+llvm-llvm-project-45acc35ac2	276	"[ELF][PPC64] Implement IPLT code sequence for non-preemptible IFUNC" in the llvm/llvm-project repository
+nodejs-node-be3c7aceba	223	"http2: wait for session socket writable end on close/destroy" in the nodejs/node repository
+qemu-qemu-7e322a7f23	303	"hw/riscv: Use load address rather than entry point for fw_dynamic next_addr" in the qemu/qemu repository
+redis-redis-d4e7ffb38c	388	"Improve active defrag in jemalloc 5.2 (#9778)" in the redis/redis repository
+torvalds-linux-e6b142060b	255	"mfd: intel-lpss: Fix I2C4 not being available on the Microsoft Surface Go & Go 2" in the torvalds/linux repository

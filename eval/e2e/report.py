@@ -71,6 +71,28 @@ def det_scores(files):
     return out
 
 
+def noise(snaps, per, allrec):
+    """How far the same version moves by itself: rep against rep, judge against judge.
+    A difference between versions smaller than these is not a result."""
+    print()
+    for s in snaps:
+        byrep, jd = {}, []
+        for n, v in per[s].items():
+            for f in v["files"]:
+                ps = [r["p_ai"] for r in allrec[s][f] if r["p_ai"] is not None and not str(r["k"]).startswith("g")]
+                if ps:
+                    byrep.setdefault(os.path.basename(os.path.dirname(os.path.dirname(f))), {})[n] = st.mean(ps)
+                if len(ps) >= 2:
+                    jd.append(ps[0] - ps[1])
+        reps = sorted(byrep)
+        line = f"{s:14} noise: judge-judge sd {st.pstdev(jd):4.1f}" if len(jd) > 1 else f"{s:14} noise:"
+        for x, y in zip(reps, reps[1:]):
+            d = [byrep[x][n] - byrep[y][n] for n in byrep[x] if n in byrep[y]]
+            if len(d) > 1:
+                line += f"   {x}-{y}: set mean {st.mean(d):+5.1f}, per-title sd {st.pstdev(d):4.1f}"
+        print(line)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("snaps", nargs="+")
@@ -80,6 +102,7 @@ def main():
     ap.add_argument("--det", action="store_true")
     ap.add_argument("--reps", default="r[0-9]")
     ap.add_argument("--reasons", action="store_true")
+    ap.add_argument("--noise", action="store_true")
     a = ap.parse_args()
     names = [r[0] for r in harness.sets()[a.set]]
     per = {}
@@ -114,6 +137,8 @@ def main():
             line += (f"   Opus {st.mean(d):+5.1f} (worse {worse}/{len(d)}, p={wilcoxon(d):.3f})"
                      f"  GPT {st.mean(dg):+5.1f} (p={wilcoxon(dg):.3f})")
         print(line)
+    if a.noise:
+        noise(a.snaps, per, allrec)
     if a.reasons:
         for s in a.snaps:
             c = Counter()

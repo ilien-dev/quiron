@@ -21,7 +21,17 @@ words, used by models at many times the human rate. One of them is English. Thre
 distinct entries in one text fail B1, which none of the 40 held-out human posts did and
 50% of the GPT posts did. In November 2026 the word lists of slop-score, Antislop and
 avoid-ai-writing were scored the same way, word by word: of 2,779 entries not already
-here, one passed, *surprisingly* (3% of human training posts, 17% of assistant ones). Technical nouns that passed the same test (*architecture*,
+here, one passed, *surprisingly* (3% of human training posts, 17% of assistant ones). The
+same test was run again on 48 posts written in November 2026 by Claude Opus 5.5, Sonnet
+5.5, Haiku 5.5 and GPT-6.1, over the same published pool plus the 2026 lists of Graphite
+and Wikipedia. Four more passed: *practical* (2% of human training posts, 23% of the new
+assistant ones), *deliberate* (0%, 21%), *preserve* (0%, 15%) and *quietly* (1%, 12%).
+With them B1 fails 14% of held-out Opus 5.5 posts (7% before), 29% of Sonnet 5.5 (14%),
+36% of GPT-6.1 (21%) and still none of the 40 held-out human posts. *Matters* passed on
+the training posts (3%, 38%) and was left out: it is in 5% of the held-out human posts,
+and with it one of them failed T1. Most of the September survivors have faded in the new
+models (*increasingly* from 21% of assistant posts to 4%, *consistently* 12% to 4%); they
+stay because the September models are still in use. Technical nouns that passed the same test (*architecture*,
 *infrastructure*, *integration*, *handling*, *complexity*) were taken out again: they are
 the field's vocabulary, and rewriters had to cut real terms to clear the check.
 

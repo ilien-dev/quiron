@@ -134,7 +134,13 @@ and 7% from Claude Opus. The em dash is now a signature of
 vendor and version, not of AI in general: per 1,000 words GPT-4.1 wrote 10.6, Claude Opus
 4.6 wrote 9.1, GPT-5.4 wrote 1.4 and Llama none (Freeburg 2026); the Economist found in
 July 2026 that only Claude still used more than professional writers. Across six model
-families the rate differs 200-fold. Its absence proves nothing.
+families the rate differs 200-fold. Its absence proves nothing. That was September 2026.
+On the November 2026 posts the same check fires on 29% from Claude Opus 5.5, 14% from
+Sonnet 5.5, 7% from Fable 5.2 and 43% from GPT-6.1, against 22% of held-out human posts:
+the Claude models now use dashes no more often than people, and the blog band no longer
+gives the dash rate an AI side (Graphite's September 2026 article corpus has Opus 5.5 at
+0.015 per 1,000 words against 2.92 for Opus 5). The skill's own rewrites carry a dash in
+1% of posts, well under the human rate, so a draft with none needs none removed.
 **Instead:** unless the writer's own sample uses dashes, replace each with a period,
 comma, colon or parentheses, or rewrite. Leave dashes in code, commands and paths alone.
 In Spanish the raya is correct punctuation for asides and dialogue; do not remove it

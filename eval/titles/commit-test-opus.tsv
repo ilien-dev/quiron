@@ -1,0 +1,7 @@
+bitcoin-bitcoin-81137c60fe	278	"test: Add new ChainTestingSetup and use it" in the bitcoin/bitcoin repository
+git-git-47ca93d071	162	"repack: make '--quiet' disable progress" in the git/git repository
+golang-go-ac7e950d38	389	"go/types: sort to reduce computational complexity of initOrder" in the golang/go repository
+mesonbuild-meson-06b1132f82	223	"Set RPATH for all non-system libs with absolute paths" in the mesonbuild/meson repository
+postgres-postgres-d2ddfa681d	281	"xlog.c: Remove global variables ReadRecPtr and EndRecPtr." in the postgres/postgres repository
+redis-redis-3bcf108416	363	"Change FUNCTION CREATE, DELETE and FLUSH to be WRITE commands instead of MAY_REPLICATE. (#9953)" in the redis/redis repository
+torvalds-linux-0fe4b381a5	195	"bpf: Allow bpf_local_storage to be used by sleepable programs" in the torvalds/linux repository

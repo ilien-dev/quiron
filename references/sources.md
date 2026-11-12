@@ -61,6 +61,34 @@ Every study and dataset behind a number in this skill.
   August 2026, detection API in private preview, what edits do and do not remove.
 - Anthropic, claude.ai system prompts (release notes, Sonnet 4.6, Opus 4.8, Opus 5): "Claude
   avoids saying 'genuinely', 'honestly', or 'straightforward'" (Opus 4.8: 'actually').
+  The prompt published for Opus 5.5 (27 October 2026) no longer carries that sentence.
+- Graphite (16 September 2026, updated for Opus 5.5 on 1 October). *AI Tells*,
+  graphite.io/research/ai-tells. A vendor study: 10,000 pre-ChatGPT human articles against
+  one article per model on the same topics, one fixed prompt; term and feature tables
+  under CC BY 4.0. The source of *practical* and *deliberate* in `ai-lean.txt` and of the
+  Opus 5.5 dash rate in pattern 8.
+- SlopShape (14 September 2026), arXiv:2609.15369. 2,250 pre-ChatGPT company blog posts
+  against 11,250 written by five 2026 models; 176 structural questions reach 97.0
+  macro-F1, and 96.1 after each post is reworded. The source of the order-and-ending
+  instruction measured in November 2026 and not shipped (`references/numbers.md`).
+- Shan, Lee & Hao (28 August 2026), arXiv:2608.27855, on what AI editing does to human
+  text (fewer content words, more transition adverbs).
+- Giammatteo & Carranza (March 2026), *Exlibris*: Spanish spelling and layout calques in
+  seven models, one text each and no human group; measured in `references/spanish.md`.
+- Jakesch, Hancock & Naaman (2023). *Human heuristics for AI-generated language are
+  flawed.* PNAS 120(11).
+- Wikipedia, *Signs of AI writing*, November 2026 version: the mid-2026 word list, the
+  source of *quietly* in `ai-lean.txt`; the em dash moved to its historical indicators on
+  7 October 2026.
+- Zhang & Tetreault (2019). *This Email Could Save Your Life: Introducing the Task of
+  Email Subject Line Generation.* ACL 2019. The AESLC corpus
+  (github.com/ryanzhumich/AESLC), cleaned Enron emails with their subject lines: the human
+  side of `bands-email.json`.
+- GitHub's public API, for the human side of `bands-pr.json`, `bands-commit.json` and
+  `bands-readme.json` (`scripts/build-corpus-work.sh`).
+- This skill's November 2026 rounds: Claude Sonnet 5.5 as rewriter, Sonnet 5.5 and
+  GPT-6.1 Terra as blind judges, on the same 20 development and 18 held-out titles
+  (`references/numbers.md`).
 - This skill's September 2026 end-to-end rounds: blind Opus 5.5 and GPT-5.6 judges on
   rewrites of 20 development and 18 held-out titles (`references/numbers.md`).
 - This skill's own run: `scripts/build-corpus.sh` for the human corpus, and

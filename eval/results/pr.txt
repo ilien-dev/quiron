@@ -1,0 +1,46 @@
+bands from 127 human texts, 43 held out
+
+group                              n        judge_p_ai       judge_as_ai      score_median      score_14plus      ai_side_mean     overshot_mean  audit_fails_mean audit_clean_share
+human-heldout                     43               0.0               0.0                21               1.0              0.84              0.91              0.02              0.98
+opus55                             9              0.92              0.89                21               1.0              1.67              0.11              0.11              0.89
+sonnet55                           9              0.78              0.78                21               1.0              2.33              0.22              0.33              0.67
+fable52                            9              0.89              0.89                20               1.0              2.22              0.11              0.11              0.89
+gpt61                              7               1.0               1.0                18               1.0              3.57              0.29              0.57              0.43
+terra                              7               1.0               1.0                17               1.0              3.43                 0              0.57              0.43
+
+AUC vs held-out humans                  opus55        sonnet55         fable52           gpt61           terra
+sentence-length CV                        0.53           0.614             0.7           0.806           0.869
+mean sentence length                     0.614           0.638           0.486           0.424           0.528
+long words (7+) /1k                      0.704           0.749           0.786             1.0           0.947
+mean word length                         0.761           0.786           0.755             1.0           0.978
+nominalizations /1k                      0.597           0.597           0.413            0.91           0.857
+lexical diversity MATTR-50               0.748           0.654           0.716           0.834           0.543
+first person /1k                         0.705           0.693           0.801           0.841           0.821
+contractions /1k                         0.444           0.528           0.687           0.568           0.613
+repeated openers /100                    0.554           0.434           0.547           0.462           0.558
+connective openers %                     0.698           0.698           0.698           0.698           0.698
+commas /1k                               0.778           0.879           0.809           0.628           0.482
+lists of three /1k                       0.906            0.84           0.795           0.899           0.723
+plain words /1k                          0.647           0.483            0.53           0.598           0.794
+parentheses /1k                          0.509           0.537           0.749           0.919           0.867
+words per paragraph                      0.742           0.788           0.751           0.379           0.372
+headings /1k                             0.641           0.755           0.733           0.279           0.409
+
+FAIL rate per check   human-heldout          opus55        sonnet55         fable52           gpt61           terra
+C1                            0.02            0.11            0.33            0.11            0.57            0.57
+
+TELL or FAIL rate    human-heldout          opus55        sonnet55         fable52           gpt61           terra
+A14                          0.023               0               0               0               0               0
+A14b                         0.023               0               0               0           0.429           0.143
+A17                          0.023               0               0               0               0               0
+A1b                          0.023           0.111           0.333           0.222               0               0
+A20                          0.023               0               0               0               0               0
+A26                          0.047           0.444           0.667           0.444           0.143           0.143
+A2b                          0.023               0               0               0               0               0
+A3                           0.023               0               0               0               0               0
+A8                           0.093               0               0               0               0           0.143
+A9                           0.023               0               0               0               0               0
+B1                           0.116           0.222           0.333           0.222           0.571           0.429
+B2                            0.14           0.444           0.111           0.556           0.714           0.143
+
+checklist AUC                0.725           0.699           0.774           0.827           0.621

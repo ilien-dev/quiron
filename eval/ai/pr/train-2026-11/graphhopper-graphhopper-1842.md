@@ -1,0 +1,5 @@
+This PR prepares the weighting API for removing `TurnWeighting` by making the distinction between edge costs and turn costs explicit. The goal is to simplify how routing algorithms obtain weights and travel times, and to move toward handling both through the `Weighting` interface.
+
+Separating these calculations makes it clearer when a cost belongs to traversing an edge and when it belongs to the transition between two edges. It also reduces the need for callers to depend on a particular weighting wrapper, making future weighting implementations easier to integrate.
+
+This is an incremental refactoring toward the broader [weighting cleanup](https://github.com/graphhopper/graphhopper/issues/1776). Existing turn restrictions and U-turn penalties should retain their behavior as the API evolves. Review should focus on consistent cost accounting in forward and reverse traversal, correct handling of transitions, and ensuring that path weights and travel times continue to include the appropriate turn contributions without counting them twice during route calculation.

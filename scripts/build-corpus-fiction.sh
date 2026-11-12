@@ -55,4 +55,4 @@ with open(os.path.join(out, "prompts.tsv"), "w") as idx:
 print(f"fiction corpus: {n} stories in {out}", file=sys.stderr)
 PY
 [ -n "${NO_CALIBRATE:-}" ] || python3 "$HERE/aimeter.py" --calibrate "$OUT" \
-  --ai "$HERE/../eval/ai/fiction/train" --out "$HERE/bands-fiction.json" --lexicon ai-lean-fiction.txt
+  --ai "$HERE/../eval/ai/fiction/train,$HERE/../eval/ai/fiction/train-2026-11" --out "$HERE/bands-fiction.json" --lexicon ai-lean-fiction.txt

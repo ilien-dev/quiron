@@ -1,0 +1,8 @@
+MacRuby-MacRuby	519	MacRuby, described as "MacRuby is an implementation of Ruby 1.9 directly on top of Mac OS X core technologies such as the Objective-C runtime and garbage collector, the LLVM compiler infrastructure and the Foundation and ICU frameworks."
+adamdbradley-foresight.js	496	foresight.js, described as "DEPRECATED: Prior to recent developments with the picture element, Foresight.js gaves webpages the ability to tell if the user's device is capable of viewing high-resolution images before the image is requested from the server. Additionally, it judges if the user's device currently has a fast enough network connection for high-resolution images. Depending on device display and network connectivity, foresight.js will request the appropriate image for the webpage."
+cameronmcefee-plax	1013	plax, described as "JQuery powered parallaxing"
+ecthros-uncaptcha	800	uncaptcha, described as "Defeating Google's audio reCaptcha with 85% accuracy."
+hazbo-httpu	683	httpu, described as "The terminal-first http client"
+kennethkalmer-daemon-kit	719	daemon-kit, described as "Daemon Kit aims to simplify creating Ruby daemons by providing a sound application skeleton (through a generator), task specific generators (jabber bot, etc) and robust environment management code."
+nbp-holyjit	822	holyjit, described as "Generic purpose Just-In-time compiler for Rust."
+reark-reark	1742	reark, described as "RxJava architecture library for Android"

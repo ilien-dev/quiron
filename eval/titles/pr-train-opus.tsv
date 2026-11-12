@@ -1,0 +1,8 @@
+Albeoris-Memoria-155	162	"Support Borderless Fullscreen" in the Albeoris/Memoria repository
+DataDog-datadog-agent-7084	165	"Do not store api key in retry file" in the DataDog/datadog-agent repository
+MarlinFirmware-Marlin-20620	163	"Fix delta moves in UBL mesh edit screen" in the MarlinFirmware/Marlin repository
+WebDevStudios-nextjs-wordpress-starter-53	615	"Feature/45 form handling" in the WebDevStudios/nextjs-wordpress-starter repository
+ceph-go-ceph-146	240	"rbd: update rbd open, create and remove image functions" in the ceph/go-ceph repository
+ezcater-sidekiq_publisher-34	218	"Gracefully handle `INT` and `TERM` process signals" in the ezcater/sidekiq_publisher repository
+iEv0lv3-futbol-18	272	"Team Season Collection and CSV.foreach" in the iEv0lv3/futbol repository
+mariokaufmann-zagreus-14	160	"Implement generating a new template." in the mariokaufmann/zagreus repository

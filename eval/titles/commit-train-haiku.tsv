@@ -1,0 +1,8 @@
+freebsd-freebsd-src-4e4e43dc9e	193	"xen: allow limiting the amount of duplicated pending xenstore watches" in the freebsd/freebsd-src repository
+git-git-a481d4378c	209	"sparse-checkout: fix segfault on malformed patterns" in the git/git repository
+golang-go-b116404444	195	"runtime: shift timeHistogram buckets and allow negative durations" in the golang/go repository
+llvm-llvm-project-f9c3c5da19	193	"[OpenMP][IR-Builder] Introduce the finalization stack" in the llvm/llvm-project repository
+postgres-postgres-0aa8a01d04	179	"Extend the output plugin API to allow decoding of prepared xacts." in the postgres/postgres repository
+qemu-qemu-7fc1dc8313	207	"target/ppc: Fix e6500 boot" in the qemu/qemu repository
+redis-redis-acf3495eb8	182	"Sort out the mess around writable replicas and lookupKeyRead/Write (#9572)" in the redis/redis repository
+torvalds-linux-35f9e773bb	201	"ACPI / x86: Add acpi_quirk_skip_[i2c_client|serdev]_enumeration() helpers" in the torvalds/linux repository
