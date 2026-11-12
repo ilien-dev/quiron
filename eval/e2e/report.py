@@ -110,7 +110,8 @@ def main():
     for s in a.snaps:
         fm = finals(s, names, a.reps)
         files = [f for fs in fm.values() for f in fs]
-        res = harness.judge_files(files, a.k, 10, a.g, harness.JPROMPT_FIC if a.set.startswith("fic") else None)
+        res = harness.judge_files(files, a.k, 10, a.g, harness.JPROMPT_FIC if a.set.startswith("fic") else
+                                   harness.script_prompt(a.set) if a.set.startswith("scr") else None)
         dets = det_scores(files) if a.det else {}
         per[s] = {}
         allrec[s] = res

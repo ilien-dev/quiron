@@ -1,0 +1,814 @@
+# Blind judges on Spanish video narrations: JUDGE=claude-sonnet-5-5, k=2, prompt JPROMPT_SCR_ES
+# JUDGE=claude-sonnet-5-5 python3 eval/script_reasons.py es -k 2
+# The judge reads the narration only (harness.narration). Human captions are not redistributed:
+# on the human side every quoted span is cut to its first four words.
+
+group                        texts  mean P(AI)  over 50
+human train captions            48         5.2        0
+assistant train scripts         48        79.9       45
+  train-gpt61                   12        87.4       12
+  train-haiku55                 12        83.0       12
+  train-opus55                  12        73.0       11
+  train-sonnet55                12        76.3       10
+
+human texts judged: academiaplay-3Wg10E4Ung0.md, cdeciencia-CR6UoZYIu14.md, curiosamente-6oG92Fl4AhI.md, dateunvlog-1GgFAYX5Y3I.md, derivando-teqFwLG2-6s.md, elrobotdeplaton-Can7RK004jg.md, jaimealtozano-9rLc_brC8DY.md, lahiperactina-FB9C4uqzJSc.md, memoriasdepez-L4ik3OsQ_Kc.md, peroesoesotrahistoria-13iZOT8-_GU.md, quantumfracture-0H6b6NKsv0Q.md, unmundoinmenso-1MSFgiDqHsc.md, visualpolitik-4Q_z-vwCAhk.md, academiaplay-hYajgwcWb1k.md, cdeciencia-EgxiXbBwAqQ.md, curiosamente-Aet-p4VdM2g.md, dateunvlog-UnFDTO_DcXM.md, derivando-yDyMSliKsxI.md, elrobotdeplaton-RSXDomuQe2g.md, jaimealtozano-BRBTCIK_9_g.md, lahiperactina-Hb6YaR1BWPM.md, memoriasdepez-OZirgERQ2qc.md, peroesoesotrahistoria-AmTG9QbVfRQ.md, quantumfracture-IEP5IM4N7GE.md, unmundoinmenso-7c_KT7VsPxw.md, visualpolitik-53WRNKbFJBg.md, cdeciencia-FCx8Cf4H18w.md, curiosamente-DgFdq5kT95M.md, dateunvlog-ap09Xw_xpEg.md, elrobotdeplaton-Ui4M0cYFZWI.md, jaimealtozano-OdYIS8KXdFI.md, lahiperactina-HfS7sTzuz1c.md, peroesoesotrahistoria-FjZjoSVeTg4.md, quantumfracture-J7FofwcNCpk.md, unmundoinmenso-9XqnDSqhfww.md, visualpolitik-LP6yMu9wdr8.md, cdeciencia-GCH_6lrHgaA.md, curiosamente-KyjjFYM8aUg.md, dateunvlog-qc6qvdwII5E.md, elrobotdeplaton-W9PCt9ptVZw.md, jaimealtozano-VEVIAF_2tUM.md, lahiperactina-TFl3nffdELI.md, peroesoesotrahistoria-Khj_5W2yafc.md, quantumfracture-JBZx03342eM.md, unmundoinmenso-YyZIRGRQ_1w.md, visualpolitik-MX6gxOVL7KY.md, cdeciencia-K0lqbaOr5dk.md, curiosamente-T55OzE-X6u0.md
+
+## Reasons on the assistant scripts: 288, grouped (a reason can be in several groups)
+  180  pulido uniforme, tono parejo    /pulid|uniform|limpi|impecable|equilibr|homog|pulcr|ordenad|cuidad|parej|regular/
+  170  estructura de plantilla, señales de orden    /estructura|plantilla|f[oó]rmula|formul|manual|esquem|secci[oó]n|enumera|primer[oa]\b|bloques|did[aá]ctic/
+  144  cierre redondo: resumen, moraleja, eco    /resum|cierre|conclusi|moralej|lecci[oó]n|redond|remate|aforism|eco\b|recapitul/
+  111  sin voz personal, genérico    /personal|voz|idiosincr|gen[eé]ric|an[eé]cdota|digresi|propio|muletilla|titube/
+   76  preguntas retóricas que se responden    /ret[oó]ric|pregunta/
+   70  gancho de apertura    /gancho|imagina|apertura|arranque|abre con|empieza con/
+   66  cierre de canal, llamada a la acción    /suscr[ií]b|coment|llamada a la acci|\bcta\b|like|despedida|me gusta|campanita/
+   66  matices y cautelas constantes, tono enciclopédico    /matiz|cautel|prudent|neutr|enciclop|equilibrado y caut/
+   57  listas de tres, paralelismo    /tres|tr[ií]ada|tricolon|paralel|an[aá]fora|repetici/
+   56  transiciones de fórmula (pero ojo, aquí viene)    /transici|pero ojo|aqu[ií] viene|aqu[ií] est[aá]|vamos al|hablemos|pasemos/
+   44  frases cortas, fragmentos, efecto    /fragment|frases cortas|cortas|ritmo|cadencia|efectis|contundent|golpe|punch/
+   43  restos de marcas, fuentes o notas    /referencia|fuente|metatexto|etiqueta|marcador|sugerencia de|instrucci|encabezado|guion original/
+   39  contrastes de fórmula (no es X, es Y)    /no es [^,]*\. es|no es x|contraste|ant[ií]tesis|no solo|sino/
+   24  promesa: quédate hasta el final, hoy vamos a    /qu[eé]date|hoy vamos|hoy te|promesa/
+    4  in none of these
+
+## Reasons on the human captions: 288, grouped (a reason can be in several groups)
+  140  errores de transcripción o de escritura    /transcri|subt[ií]tul|typo|errata|errores|tilde|falta|mayúscula|may[uú]scula|puntuaci/
+  124  habla espontánea: digresiones, autocorrecciones, muletillas    /digresi|autocorrec|muletilla|espont[aá]ne|improvis|titube|oral|hablad/
+  100  humor, coloquialismo, tacos    /humor|chiste|broma|coloquial|jerga|irreveren|taco|ironía|iron[ií]a|gracia/
+   96  voz personal, opiniones    /personal|voz|opini[oó]n|an[eé]cdota|primera persona|autorreferenc/
+   79  marca del canal: patrocinio, libro, otros vídeos    /canal|patrocin|patreon|promoci|libro|v[ií]deo anterior|otros? v[ií]deos?|episodio|comunidad|marca/
+   71  estructura desordenada o irregular    /desorden|irregular|salto|abrupt|repetitiv|desigual|torpe/
+   70  referencias concretas    /concret|espec[ií]fic|referencia|cifra|dato/
+   39  pistas que el juez leyó como IA    /pulid|f[oó]rmula|plantilla|t[ií]pic[oa] de (?:la )?ia|podr[ií]a ser ia|aunque/
+    1  in none of these
+
+## Every reason, assistant scripts
+
+train-gpt61/academiaplay-hYajgwcWb1k.md  P(AI) 88.0
+  - Estructura muy pulida y didáctica: gancho con "Imagina que...", pregunta retórica, tesis, y cierre moralizante ("Comprender cómo nació también nos ayuda a pensar cómo queremos gobernarnos").
+  - Matizaciones constantes y simétricas típicas de IA: "no apareció de golpe", "La palabra clave es «pretende»", "Es una simplificación", "no significa que el rey pudiera hacer cualquier cosa", "no fue una democracia como las actuales".
+  - Tono enciclopédico uniforme, frases cortas y equilibradas, sin digresiones, humor, errores ni voz personal; recorrido ordenado por Francia, España, Inglaterra, religión y teoría política con transiciones del tipo "Además", "Sin embargo", "Por tanto".
+  - Estructura muy pulida y didáctica: gancho con "Imagina que...", pregunta retórica, "Hoy vamos a conocer...", y cierre con moraleja ("Comprender cómo nació también nos ayuda a pensar cómo queremos gobernarnos").
+  - Matización constante y equilibrada tipo asistente: "no apareció de golpe", "Esto no significa que...", "Es una simplificación", "La palabra clave es «pretende»", con frases cortas y uniformes y poca voz personal o anécdota.
+  - Cobertura enciclopédica ordenada (Francia, España, Inglaterra, Reforma, Westfalia) con transiciones formulaicas ("Además", "Sin embargo", "Por tanto") y párrafos de longitud y ritmo muy regulares, sin digresiones ni errores humanos.
+
+train-gpt61/curiosamente-su7KrrYVkSo.md  P(AI) 88.0
+  - Estructura muy pulida y equilibrada: gancho con pregunta retórica, analogía (dominós, humo), recomendaciones en orden lógico y cierre con resumen en lista de cuatro ('conocimiento, prevención, atención oportuna y solidaridad').
+  - Lenguaje cauteloso y de salud pública genérico, con matices típicos de IA ('Ninguna medida funciona como un escudo perfecto', 'según tu situación', 'cuando sea posible') y frases de cierre sentenciosas ('No hace falta ser invencibles para ayudar').
+  - Cubre todo de forma exhaustiva y sin tono personal ni digresiones: desmiente mitos, vacunas, salud emocional, verificación de noticias y cita fuentes de la OMS al final, como un texto sintetizado y no una voz con experiencia propia.
+  - Estructura muy pulida y equilibrada: gancho con pregunta retórica, analogía (dominós, humo), recomendaciones en lista implícita y cierre con resumen tripartito ("conocimiento, prevención, atención oportuna y solidaridad").
+  - Tono cauteloso y matizado típico de asistente: "Ninguna medida funciona como un escudo perfecto", "según tu situación", "cuando sea posible", sin voz personal, humor ni anécdotas.
+  - Frases de eslogan con contraste ("No hace falta ser invencibles para ayudar. Hace falta entender..."), y el texto empieza con "Guion original." y termina citando fuentes de la OMS como un entregable generado.
+
+train-gpt61/dateunvlog-1GgFAYX5Y3I.md  P(AI) 88.0
+  - Estructura muy pulida y didáctica: gancho con preguntas retóricas en cascada, analogías (cable y hormiga, cuerda de guitarra, mapa) y cierre con "Quizá... Quizá..." y llamada a suscribirse con moraleja.
+  - Cautelas y matizaciones constantes y simétricas ("La analogía no reproduce toda la geometría...", "resulta demasiado absoluta", "no intercambiables sin explicar el contexto"), típicas de un asistente que evita afirmaciones tajantes.
+  - Frases cortas de efecto y tono uniforme ("Y esa cuenta tiene que cerrar.", "Diez."), con la inserción artificial "Referencia técnica: David Tong, Universidad de Cambridge" y sin rasgos personales ni digresiones propias de un autor humano.
+  - Estructura pedagógica muy pulida y simétrica: abre con preguntas retóricas escalonadas, define términos y cierra con una recapitulación rítmica ("Empezamos con una cuerda. Seguimos su movimiento... Diez.").
+  - Exceso de cautelas y matices con fórmulas típicas de asistente: "La analogía no reproduce toda la geometría...", "Son resultados de marcos relacionados, pero no intercambiables sin explicar el contexto", "resulta demasiado absoluta".
+  - Frases de transición y cierre genéricas ("Pero atención:", "Ese es el corazón de la respuesta", "suscríbete. Porque entender el universo también consiste en...") y ausencia de voz personal, humor o digresiones propias de un autor humano.
+
+train-gpt61/dateunvlog-ap09Xw_xpEg.md  P(AI) 88.0
+  - Estructura muy pulida de ensayo: gancho con analogía (llaves), pregunta retórica en cadena, "Vamos paso a paso", y cierre con pregunta "fascinante" sobre intuiciones cotidianas, típico de texto generado.
+  - Patrones de contraste repetidos y frases de manual: "No que haya otra copia, ni que alguien las haya movido", "No es una manera poética de hablar de nuestra ignorancia", "Pero conviene no pedirle más de lo que ofrece", con matices y cautelas constantes y equilibradas.
+  - Tono uniforme, sin digresiones, muletillas orales ni humor personal; frases cortas y limpias, definiciones precisas y párrafo-resumen final ("la puerta de entrada al misterio, no su explicación completa") muy característicos de un asistente de IA.
+  - Estructura retórica muy pulida y predecible: gancho con analogía cotidiana (las llaves), preguntas retóricas, 'Vamos paso a paso', y cierre con pregunta 'fascinante' que reformula el inicio.
+  - Patrón recurrente de 'no es X, sino Y' y de matizar cada afirmación ('Esa afirmación necesita un matiz', 'conviene no pedirle más de lo que ofrece'), con frases cortas y simétricas ('Las bolitas se comportan como bolitas. Las ondas, como ondas.').
+  - Tono expositivo uniforme y sin rastro de voz personal, anécdotas, dudas ni errores de oralidad; cobertura exhaustiva y ordenada (doble rendija, medición, gato, decoherencia, cúbits) típica de un texto generado.
+
+train-gpt61/dateunvlog-qc6qvdwII5E.md  P(AI) 88.0
+  - Estructura muy pulida y pedagógica con frases cortas y paralelas ("Sin exigir que sepas cálculo, pero sin convertirla en magia"; "Estos límites no borran sus éxitos. Señalan dónde debemos seguir buscando") y cierre con pregunta retórica tipo plantilla.
+  - Cautelas y matizaciones constantes y equilibradas ("No son fotografías de partículas", "la masa no es rozamiento", "simplificación excesiva"), muy típicas de un texto generado con revisión de exactitud.
+  - Artefactos de producción: "Referencia de producción: CERN" repetido, fórmula LaTeX mal formada (F{\mu\nu}, D\mu sin guion bajo) y metáforas genéricas (mapa del metro, sombrero mexicano) con transiciones del tipo "Ya tenemos las piezas".
+  - Estructura muy pulida y pedagógica con frases cortas de contraste y equilibrio constante: «Sin exigir que sepas cálculo, pero sin convertirla en magia», «Estos límites no borran sus éxitos. Señalan dónde debemos seguir buscando».
+  - Matizaciones y advertencias típicas de un asistente: «Y cuidado con imaginar el Higgs como una miel cósmica», «decir que el Higgs produce toda la masa de tu cuerpo sería una simplificación excesiva», «La masa no es rozamiento».
+  - Artefactos de producción y cierre retórico genérico: «Referencia de producción: CERN» repetido tres veces, tono uniforme sin digresiones personales, y final con pregunta inevitable («¿qué tendremos que añadir para contar el resto?»).
+
+train-gpt61/derivando-yDyMSliKsxI.md  P(AI) 88.0
+  - Gancho retórico en forma de pregunta con triple lista y el típico «A primera vista, muy poco. Sin embargo...», muy característico de texto generado.
+  - Estructura pulcra y equilibrada, con matices defensivos constantes («Pero atención: hay variaciones, excepciones...», «Era un modelo matemático, no una descripción biológica») y frases de cierre sentenciosas como «También nos enseñan a preguntar, comprobar y mirar con más cuidado».
+  - Registro uniforme y sin rasgos personales: números escritos con palabras para locución, párrafo único, y cierre genérico con llamada a suscribirse y pregunta al público.
+  - Gancho retórico típico de IA: «¿Qué tienen en común una pareja de conejos imaginarios, las semillas de un girasol y un número que nunca termina? A primera vista, muy poco. Sin embargo...»
+  - Estructura muy pulida y equilibrada, con contrastes y triadas recurrentes («no toda espiral es áurea ni todo lo bonito esconde una fórmula secreta», «preguntar, comprobar y mirar con más cuidado») y cautelas constantes («hay variaciones, excepciones»).
+  - Cierre genérico de manual con llamada a la acción («Si disfrutaste este viaje, suscríbete y cuéntanos...») y tono uniforme sin digresiones, muletillas ni rasgos personales de un narrador concreto.
+
+train-gpt61/jaimealtozano-BRBTCIK_9_g.md  P(AI) 88.0
+  - Estructura de manual muy pulida y sin titubeos: hook con preguntas retóricas, promesa de 'Quédate hasta el final', cierre con CTA (comentarios, suscripción) y plan de práctica 'Primer minuto... Quinto minuto'.
+  - Cautelas y matizaciones constantes típicas de un modelo: 'Hay un matiz', 'Hay una precisión importante', 'Un solo acorde no determina automáticamente una modulación', 'No son instrucciones sobre qué cambios tienes permitido hacer'.
+  - Frases antitéticas y de resumen tipo plantilla ('El material es el mismo; la organización y la sensación de reposo cambian', 'La geometría te muestra el camino; escuchar las voces te ayuda a entender') y registro uniforme sin muletillas ni digresiones personales.
+  - Estructura muy pulida y didáctica con frases de transición típicas de IA: "Hay un matiz", "Hay una precisión importante", "Eso sí:", "Pero cuidado:", "Ya tienes tres versiones de una idea".
+  - Cierre y gancho formulaicos: "Quédate hasta el final...", "Escribe en los comentarios qué instrumento tocas...", "Y ahora sí: elige un punto del círculo y empieza a tocar", más frases con ritmo de contraste como "La geometría te muestra el camino; escuchar las voces te ayuda a entender cómo funciona".
+  - Exceso de matizaciones y salvedades equilibradas ("no te obliga a tocarlas siempre subiendo", "Un solo acorde no determina automáticamente una modulación"), ejercicio de cinco minutos perfectamente estructurado y ausencia de anécdotas, dudas o tropiezos personales; incluso corrige un error propio ("Espera: antes dijimos...") de forma muy limpia.
+
+train-gpt61/jaimealtozano-VEVIAF_2tUM.md  P(AI) 85.0
+  - Estructura muy pulida y ordenada, con transiciones didácticas constantes ("Hasta ahora hemos escuchado...", "Después de escuchar estos ejemplos, podemos reconocer varias formas...") y un resumen final tipo ensayo.
+  - Abundan las construcciones de contraste y reformulación típicas de IA: "Naturalmente, un salto ascendente no significa «héroe» por sí solo", "Un personaje no cabe entero en una etiqueta musical", "Cuando vuelve una melodía, reconocemos algo. Cuando vuelve transformada, sentimos lo que ha ocurrido".
+  - Tono genérico y abstracto, con frases como "añadir profundidad sin obligar al personaje a detenerse" o "la música permite que el asombro se desarrolle", y poca anécdota concreta o idiosincrasia personal más allá del chiste del vecino y el trombón.
+  - Estructura muy pulida y didáctica con transiciones formulaicas ('Ahora comparad aquella entrada con esta melodía', 'Hasta ahora hemos escuchado...', 'Con Yoda, la aventura nos pide otra actitud') y cierre redondo que resume los temas en lista.
+  - Frecuentes contrastes retóricos y matizaciones de tipo asistente: 'Naturalmente, un salto ascendente no significa «héroe» por sí solo', 'sería demasiado sencillo reducir este tema a «Leia es delicada»', 'Un personaje no cabe entero en una etiqueta musical', 'Cuando vuelve una melodía, reconocemos algo. Cuando vuelve transformada, sentimos lo que ha ocurrido'.
+  - Tono genérico y abstracto, sin anécdotas personales ni errores de oralidad; abundan frases explicativas equilibradas ('No hace falta traducir cada acorde... Es más útil percibir el movimiento completo') y la analogía del vecino con trombón, típica de explicaciones generadas.
+
+train-gpt61/lahiperactina-FB9C4uqzJSc.md  P(AI) 82.5
+  - Estructura muy pulida de guion explicativo: gancho con situación cotidiana, pregunta retórica, «Hoy vamos a seguir el recorrido…», cierre con moraleja y llamada a compartir.
+  - Frases cortas y equilibradas, con muletillas típicas de IA como «¿Traducción?», «Primero, aclaremos algo», «Lo fundamental es que…» y contrastes del tipo «No es X: es Y» («La desinhibición no significa que… Significa que…»).
+  - Humor medido y precavido («como un teléfono que ha cargado toda la noche… hasta el doce por ciento»), con matices y salvedades constantes («puede», «suelen», «contribuye») y sin anécdotas personales ni rasgos de voz propios.
+  - Estructura muy pulida y didáctica con preguntas retóricas seguidas de respuesta ("¿Traducción?", "¿qué ha cambiado?") y transiciones tipo "Primero, aclaremos algo", "Ahora viene uno de los efectos más desconcertantes".
+  - Frases cortas de matiz y cautela repetidas con patrón "no significa X… significa Y" / "no lo neutraliza", "no borra todos los mecanismos implicados", típicas de redacción de asistente, junto a un chiste de cierre prefabricado (teléfono 'hasta el doce por ciento').
+  - Cierre y aviso de seguridad equilibrados y genéricos ("Si te ha gustado este viaje, comparte el video"; "una sustancia que forma parte de nuestras celebraciones…"), con tono uniforme y sin rasgos personales ni digresiones.
+
+train-gpt61/lahiperactina-wuDcndAWRR0.md  P(AI) 89.0
+  - Estructura muy pulida y simétrica, con muletillas retóricas típicas de IA: "Pequeñas no significa irrelevantes", "Tener un interés comercial no vuelve falsa una afirmación, pero ayuda a entender...", "Ambas posiciones caben en una conversación basada en evidencia".
+  - Tono uniformemente equilibrado y cauteloso, con citas de fuentes insertadas al final de cada bloque ("Fuente: NCCIH", "Fuente: CDC") y cero anécdotas, humor o digresiones personales; todo suena a guion de divulgación genérico.
+  - Frases de cierre y ganchos formulaicos: "Una planta. Miles de opiniones.", "Imagina a alguien que dice...", regla de cuatro preguntas más una quinta, y cierre con llamada a comentarios y compartir.
+  - Estructura muy pulida y didáctica con muletillas retóricas típicas de IA: "Pequeñas no significa irrelevantes", "Aquí conviene bajar la velocidad", "Esa precisión importa", y frases contrastivas repetidas ("X no significa Y").
+  - Citas de fuentes insertadas en bloque tras cada sección ("Fuente: NCCIH", "Fuentes: CDC, Health Canada") y cierre equilibrado con la lista de cuatro preguntas más una quinta, muy ordenado y sin voz personal ni errores ni digresiones.
+  - Tono uniformemente neutral y cauteloso, con descargos repetidos ("necesitas una valoración individual"), analogías genéricas (etiqueta "contiene alcohol") y ausencia de anécdotas o humor propios de un creador humano.
+
+train-gpt61/quantumfracture-QBTgzYmkC_I.md  P(AI) 88.0
+  - Gancho de apertura típico de IA con humor ligero ('pareces haber discutido con un enchufe') y cierre pulido ('El primer punto puede estar escondido en una flecha bien puesta').
+  - Estructura impecablemente ordenada y exhaustiva (carga, Coulomb, campo, potencial, energía, trabajo, Gauss, método), con frases cortas y contrastes tipo 'Potencial cero no significa campo cero' y 'Primero el dibujo; después las cuentas'.
+  - Contiene LaTeX crudo con errores de formato (p. ej. 'W{\mathrm{eléctrico}}' sin guion bajo) y números dictados en palabras, rasgos de texto generado y pegado en un guion sin revisar para locución.
+  - Gancho con humor pulido y estructura muy ordenada: "tú pareces haber discutido con un enchufe", "Vamos allá", y cierre en moraleja con frase ingeniosa ("El primer punto puede estar escondido en una flecha bien puesta").
+  - Aparece LaTeX impecable dentro de la narración (con errores típicos de conversión como "W{\mathrm{eléctrico}}" sin guion bajo) y cifras escritas en letras, propio de texto generado y pasado a voz.
+  - Frases cortas sentenciosas y paralelismos repetidos ("Primero el dibujo; después las cuentas", "Potencial cero no significa campo cero"), cobertura exhaustiva y equilibrada del temario sin digresiones ni titubeos de habla natural.
+
+train-gpt61/visualpolitik-sWFEyTNWNTM.md  P(AI) 88.0
+  - Estructura retórica muy pulida y predecible: preguntas enumeradas ('tres preguntas'), 'Imaginad que...', 'Pues bien', y cierre con pregunta al público; todo el guion está equilibrado de forma casi simétrica.
+  - Constante matización defensiva y de equilibrio ('Conviene precisar', 'Ahora bien', 'Eso no demuestra que...', 'no equivale a...'), con frases cortas de tipo sentencia ('Una etiqueta sirve de poco si sustituye al análisis') típicas de un asistente.
+  - Citas de fuentes insertadas como fragmentos sueltos ('Informe del CRS.', 'Comunicado de la Corte.', 'Información sobre sus reacciones.') que parecen etiquetas de referencias de un texto generado, y la apertura 'Guion original de divulgación geopolítica. Marco temporal...' suena a metadatos del prompt.
+  - Estructura retórica muy pulida y formulaica: «Imaginad que...», «Y plantea tres preguntas», cierre con pregunta al espectador; marcadores constantes de matiz equilibrado («Conviene precisar algo», «Ahora bien», «Sin embargo, ningún contrapeso funcionaba automáticamente»).
+  - Frases de contraste y paralelismo repetitivas y sentenciosas («No se discutían únicamente cargos... Se negociaba quién tendría autoridad...», «Una etiqueta sirve de poco si sustituye al análisis»), con cautelas sistemáticas y simétricas sobre cada afirmación, típicas de un asistente.
+  - Citas de fuentes insertadas como etiquetas sueltas («Informe del CRS.», «Comunicado de la Corte.», «Información sobre sus reacciones.») y la propia cabecera «Guion original de divulgación geopolítica. Marco temporal...», que delatan una generación estructurada con referencias, no una voz personal.
+
+train-haiku55/academiaplay-3Wg10E4Ung0.md  P(AI) 83.5
+  - Estructura de plantilla muy limpia: gancho, 'Empecemos', transiciones explícitas ('Aquí aparece algo importante', 'Y es importante aclarar algo') y cierre con like/suscripción y pregunta a los comentarios.
+  - Cautelas constantes y equilibradas típicas de IA: 'Las cifras varían según las fuentes', 'Las estimaciones varían', 'algunas son probablemente exageradas', más una moraleja tipo 'lección sencilla: ... hacer mucho con poco'.
+  - Frases genéricas y de relleno con paralelismos retóricos ('Cada herida fue una cicatriz más y una lección más', 'murió como había vivido: en el servicio'), sin detalles concretos ni voz personal; párrafo incoherente sobre 'una curiosidad histórica' sin referente previo.
+  - Estructura muy pulida y genérica de YouTube: gancho dramático, "quédate hasta el final", cierre con like/suscríbete y dos preguntas para comentarios.
+  - Abundantes coberturas y muletillas de IA: "Las cifras varían según las fuentes", "Las estimaciones varían", "los historiadores nos recuerdan", "Y es importante aclarar algo", más una lección moralizante final sobre estrategia y voluntad.
+  - Frases de transición formulaicas y vagas ("Aquí aparece algo importante", "Cada herida fue una cicatriz más y una lección más") y cifras imprecisas ("unos pocos miles de defensores"), con párrafos uniformes y poco detalle concreto o voz personal.
+
+train-haiku55/cdeciencia-K0lqbaOr5dk.md  P(AI) 89.0
+  - Estructura muy pulida y didáctica: introducción con gancho, 'Veámoslos uno por uno', 'El primero... El segundo... El tercero... Y el cuarto', y cierre con resumen y llamada a la acción, típico de guion generado.
+  - Frases de fórmula y contraste característico de IA: 'la mejor respuesta a la desconfianza no es creer a ciegas, sino aprender a verificar'; 'no solo la observamos: también la visitamos'.
+  - Tono uniformemente neutro y enciclopédico, sin digresiones, humor ni errores personales; hay un desliz lógico ('Eso no es imposible solo desde el punto de vista técnico, sino también desde el social') que indica generación fluida sin revisión.
+  - Estructura muy pulida y formulaica: gancho, 'Veámoslos uno por uno', 'El primero... El segundo... El tercero... Y el cuarto', cierre con llamada a la acción y eco del inicio ('la próxima vez que mires la Luna').
+  - Frases de transición típicas de IA ('Ahora viene la parte más importante', 'Además, hay un detalle que suele olvidarse', 'Pero quizá la prueba más contundente') y tono uniformemente didáctico, sin digresiones, dudas ni voz personal.
+  - Contenido enciclopédico equilibrado y sin errores, con pequeños deslices lógicos propios de generación ('Eso no es imposible solo desde el punto de vista técnico, sino también desde el social') y el comentario sobre Apolo 13 que 'no tendría sentido en la narrativa'.
+
+train-haiku55/curiosamente-DgFdq5kT95M.md  P(AI) 88.0
+  - Estructura muy pulida y predecible: gancho con pregunta retórica, "vamos paso a paso", ejercicio de tres preguntas, "tres trampas", cierre que vuelve a la pregunta inicial y llamada a comentarios.
+  - Tics típicos de IA: tríadas constantes y fórmulas de contraste ("Quizá tengas una respuesta lista. Quizá no sepas...", "El mapa se complica, y eso no es un fallo del mapa", "no es un test científico, pero...").
+  - Tono neutro, equilibrado y sin anécdotas, humor ni voz personal; afirmaciones generales sin datos concretos ("Los experimentos en psicología política han mostrado este fenómeno una y otra vez") y moraleja final tipo "pienses un segundo más".
+  - Estructura muy pulida y formulaica: apertura con "Imagina que...", "Vamos paso a paso", "primer punto clave", "tres trampas", cierre con pregunta retórica que vuelve al inicio.
+  - Abundancia de tríadas y paralelismos ("Quizá tengas una respuesta lista. Quizá no sepas...", "Puedes criticar... Puedes defender...") y fórmulas de contraste tipo "no es un fallo del mapa. Es un reflejo de...".
+  - Tono equilibrado y neutral, sin anécdotas personales, humor ni errores de oralidad; llamada a comentarios genérica ("Nos encantará leerte") y contenido enciclopédico sin voz propia.
+
+train-haiku55/curiosamente-KyjjFYM8aUg.md  P(AI) 90.0
+  - Estructura de plantilla: gancho con pregunta retórica, lista de ejemplos temáticos (cámara, satélites, epidemias, imagen médica, finanzas, música, arte) y cierre con resumen y llamada a la acción estándar.
+  - Frases genéricas y de relleno típicas de IA: "la respuesta te va a sorprender", "Dato curioso", "Es decir, las matemáticas nos mantienen en el mapa", "Están por todas partes, aunque no las veas".
+  - Tono uniforme y enciclopédico sin anécdotas personales ni rasgos de voz propios; los ejemplos están yuxtapuestos con transiciones mecánicas ("También están en...", "Y en el arte...") y la lista final tipo "tu teléfono, tu mapa, tu medicina, tu banco" es muy característica.
+  - Estructura de lista genérica y encadenada (satélites, epidemias, imagen médica, finanzas, música, arte) con transiciones formulaicas como "Es decir, las matemáticas nos mantienen en el mapa" y "Dato curioso:".
+  - Apertura y cierre de plantilla: "¿Alguna vez te has preguntado...?", "la respuesta te va a sorprender", cierre con lista triple ("tu teléfono, tu mapa, tu medicina, tu banco...") y llamada a like/suscripción/comentarios.
+  - Tono uniformemente pulido y enciclopédico, sin anécdotas personales, titubeos ni humor propio; hay incoherencias leves como "Incluso la cámara..." sin contexto previo y "Y eso sirve en todas partes" tras hablar de arte.
+
+train-haiku55/elrobotdeplaton-Can7RK004jg.md  P(AI) 56.0
+  - Estructura de guion de YouTube muy pulida: gancho, promesa de 'si te quedas hasta el final', explicación en lista y cierre con like/suscripción y pregunta a los comentarios, algo habitual tanto en humanos como en IA.
+  - Frases cortas y paralelas con tríadas ('el movimiento, la expresión, el contexto y la forma de la cara'; 'el peso, el pelo, la piel, la forma de vestir…') y tono tranquilizador ('no te preocupes. Es una señal de que tu percepción funciona exactamente como debería'), típicos de texto generado.
+  - Fallos de coherencia que sugieren recorte o edición humana: empieza con 'Hoy vamos a hablar de eso' sin antecedente, 'Y para hacerlo, se apoya en...' sin sujeto claro, y 'En una foto, en cambio, solo tienes un instante' sin contraste previo con el espejo, lo que apunta a un fragmento de un guion más largo.
+  - Estructura de guion de YouTube muy pulida y genérica: gancho, "Si te quedas hasta el final...", explicación en lista de factores (luz, ángulo, lente, distancia) y cierre con like/suscripción y pregunta en comentarios.
+  - Frases explicativas limpias y simétricas, con conectores muy regulares ("Además", "Por eso", "Así que") y tríos/listas ('el peso, el pelo, la piel, la forma de vestir'), típico de texto generado.
+  - Incoherencias de flujo y contenido: 'Y para hacerlo, se apoya en expectativas...' sin sujeto claro, y afirma que el cerebro ve la cara 'invertida' en el espejo; esto sugiere recorte o edición, lo cual también es compatible con guion humano.
+
+train-haiku55/elrobotdeplaton-Ui4M0cYFZWI.md  P(AI) 83.5
+  - Estructura muy pulcra de «tres reglas» (letalidad, alcance, velocidad) y recorrido por candidatos con cierres formulaicos como «Pero tiene un problema: no es constante» y «Mata a todo, pero no mata todo el tiempo».
+  - Frases de efecto y contrastes retóricos repetidos: «Es mortal por multiplicación», «la indiferencia puede ser más aterradora que la malicia», «no es un enemigo externo, sino una elección repetida».
+  - Cierre genérico y redundante («Pero todavía falta algo. Pero hay algo que aparece en todas las respuestas»), moraleja reflexiva sobre el tiempo y llamada a comentarios con broma final sobre los mosquitos, típico de guion generado.
+  - Estructura de enumeración muy ordenada y didáctica ("Primero: letalidad... Segundo: alcance... Tercero: velocidad") seguida de candidatos uno por uno, típica de guion generado.
+  - Frases de transición y cierre formulaicas y aforísticas: "Es mortal por multiplicación", "la indiferencia puede ser más aterradora que la malicia", "Mata a todo, pero no mata todo el tiempo", junto con cobertura equilibrada y cautelosa ("el número exacto varía según el año y el método de cálculo").
+  - Meta-comentario pulido y tics de redacción: "te lo digo con honestidad", repetición torpe "Pero todavía falta algo. Pero hay algo que aparece...", y final con llamada a comentarios y giro moralizante sobre el tiempo.
+
+train-haiku55/lahiperactina-fp9-616Yfik.md  P(AI) 83.5
+  - Estructura muy pulida de guion de divulgación: gancho con "Imagina que...", promesa de contenido ("misterio, tragedia, vacas, caníbales") y cierre con lección en tres puntos ("Y, por último, nos recuerdan..."), típico de texto generado.
+  - Metáforas didácticas y transiciones formulaicas ("Aquí hay un matiz importante", "Ahí estaba la clave", "Esta es la parte menos alentadora del guion") y uso de "guion" como autorreferencia; tono uniforme sin digresiones ni errores personales.
+  - Detalles incoherentes con una redacción cuidadosa humana: salto abrupto al kuru sin presentar a los fore ni la zona, y frases como "Hasta el año 2000 se contabilizaron centenares de muertes" (impreciso), propios de un texto ensamblado por secciones.
+  - Estructura muy pulida y predecible: gancho con 'Imagina que...', promesa de la lista 'misterio, tragedia, vacas, caníbales', analogías didácticas (origami, pila de hojas) y cierre con 'lección importante' en tres puntos.
+  - Frases de transición y contraste muy formulaicas ('Ahí estaba la clave', 'Aquí hay un matiz importante', 'Esta es la parte menos alentadora del guion'), sin digresiones, muletillas ni errores propios del habla improvisada.
+  - Pequeñas incoherencias factuales típicas de generación automática (kuru presentado sin introducir a los fore, 'conversión templada', 'casos excepcionales por periodos de incubación de décadas') y cierre genérico de suscripción y comentarios con pregunta enumerada.
+
+train-haiku55/peroesoesotrahistoria-yHwfY4uvOxs.md  P(AI) 85.0
+  - Estructura de guion genérico y pulido: introducción con promesa ("Abróchense el cinturón"), enumeración de épocas con fechas y cierre con llamada a la acción y pregunta retórica triple ("¿El caballo del alba? ¿Las ballenas que caminaban?...").
+  - Frases de moraleja y cadencia típica de IA: "Es un recordatorio de algo importante: el clima siempre ha cambiado, y la vida siempre ha tenido que adaptarse", "Cada extinción abre espacio para nuevas formas de vida", con matices cautelosos repetidos ("los científicos siguen debatiendo", "probablemente").
+  - Errores y saltos de coherencia propios de texto generado: "Hyaenodon" llamado hiénido primitivo (no lo es), "Este movimiento tuvo consecuencias enormes" y "Este evento se debió a..." sin antecedente claro, y repeticiones como "restos de un contenido estomacal" tras "contenido de su estómago preservado".
+  - Estructura de guion genérica y pulida: introducción con gancho, "Abróchense el cinturón, porque empezamos", cierre con llamada a like/suscripción y preguntas retóricas en cadena ("¿El caballo del alba? ¿Las ballenas que caminaban?").
+  - Frases-resumen y moralejas típicas de IA: "Es un recordatorio de algo importante: el clima siempre ha cambiado...", "Cada extinción abre espacio para nuevas formas de vida", "Es un ejemplo clásico de... aunque los científicos saben hoy que la historia fue más compleja".
+  - Tono equilibrado y cauteloso con matizaciones constantes ("probablemente", "los científicos siguen debatiendo"), listas ordenadas de fechas y ejemplos, y algún error factual típico ("hiénidos primitivos, como Hyaenodon"), con transiciones abruptas que sugieren secciones generadas por separado.
+
+train-haiku55/quantumfracture-JBZx03342eM.md  P(AI) 88.0
+  - Encabezado de plantilla pegado al inicio ("Tono: Cercano, didáctico, con humor ligero") y cierre "Fin del guion.", típicos de salida de un asistente
+  - Estructura muy pulida y didáctica: "Primero... Segundo... Tercero... y cuarto", enumeraciones en lista, muletillas de transición como "Vamos a verlo paso a paso" y "Aquí conviene ser prudentes"
+  - Aunque hay saltos abruptos ("No es un artículo de divulgación" sin antecedente), el texto es genérico, equilibrado y sin anécdotas personales, con frases de cierre sentenciosas como "nada de esto es magia. Es estadística a gran escala"
+  - Encabezado de plantilla "Tono: Cercano, didáctico, con humor ligero" y cierre "Fin del guion." delatan salida de un asistente a partir de un prompt.
+  - Estructura muy pulida y enumerativa ("Primero... Segundo... Tercero... y cuarto"), frases de equilibrio como "Aquí conviene ser prudentes" y "No hay mala intención en eso, pero...", típicas de IA.
+  - Explicaciones didácticas genéricas y limpias (embeddings, dos etapas), sin anécdotas personales; hay saltos de transición abruptos ("No es un artículo de divulgación" sin antecedente) propios de secciones ensambladas.
+
+train-haiku55/quantumfracture-OABUuXQcnJQ.md  P(AI) 88.0
+  - Estructura muy pulida y formulaica: gancho con 'Respiras cientos de veces al día sin pensarlo', recorrido temático, resumen 'Hemos recorrido un camino largo...' y cierre con llamada a suscribirse, todo con ritmo uniforme.
+  - Frases de efecto y antítesis típicas de IA: 'El aire no es un misterio en el sentido de algo inexplicable. Es un misterio en el sentido de algo que, cuanto más lo estudiamos, más profundo se vuelve.'
+  - Tono didáctico genérico y sin voz personal ni anécdotas, con transiciones mecánicas ('Empecemos por lo básico', 'Ahora vayamos a la pregunta...', 'Aquí aparece el primer gran acertijo') y analogías manidas (escalones y no rampa, bolitas con cinta adhesiva).
+  - Estructura muy pulcra y de manual: apertura con gancho ('Respiras cientos de veces al día sin pensarlo'), índice de lo que se verá ('Hoy vamos a descubrir por qué...'), transiciones didácticas ('Empecemos por lo básico', 'Ahora vayamos a la pregunta...', 'Aquí aparece el primer gran acertijo') y resumen final ('Hemos recorrido un camino largo...').
+  - Frases con patrón retórico típico de IA: 'El aire no es un misterio en el sentido de algo inexplicable. Es un misterio en el sentido de algo que...', 'no es un detalle menor', 'está hablando el lenguaje de los electrones', y cierres grandilocuentes ('Miles de millones de procesos cuánticos sostienen la vida').
+  - Tono uniforme y sin rasgos personales ni digresiones, con párrafos de longitud y ritmo muy parejos, cifras redondeadas y la etiqueta 'Formato: Narración en off con cortes de B-roll' pegada al inicio; el cierre genérico de suscripción y comentarios suena a plantilla.
+
+train-haiku55/unmundoinmenso-tDj0KQ4uZZE.md  P(AI) 85.0
+  - Estructura de explainer genérica y pulida: gancho, "La respuesta corta... La respuesta larga es mucho más interesante", resumen final y llamada a comentar, todo muy de plantilla.
+  - Frases de equilibrio y cierre típicas de LLM: "Es un equilibrio curioso", "Es una mezcla de tradición vikinga, medieval y democrática", "no es un país independiente en el sentido habitual, pero tampoco es una simple región británica".
+  - Transiciones incoherentes que sugieren secciones ensambladas ("Pero su historia es mucho más larga que su tamaño", "Lo que tiene es un estatus especial", "Cada año... la isla se llena" sin mencionar el TT), junto con tono neutro, sin anécdotas personales ni errores de habla.
+  - Estructura de explainer muy pulida y simétrica, con frases de manual como "La respuesta corta es... La respuesta larga es mucho más interesante" y cierre con resumen "La respuesta más precisa es..." y "no encajan en las categorías simples".
+  - Transiciones incoherentes que sugieren secciones ensambladas sin hilo: "Pero su historia es mucho más larga que su tamaño" justo tras "Acompáñame", "Lo que tiene es un estatus especial", "Eso significa que... sistema fiscal" sin antecedente claro, y el TT aparece sin haber sido presentado.
+  - Tono enciclopédico equilibrado y cauteloso ("Se suele citar el año 979... aunque la forma actual es mucho más reciente", "aunque en las últimas décadas la isla ha trabajado para cumplir con estándares"), con listas y paralelismos típicos de IA ("gobierno propio, parlamento propio, impuestos propios y moneda propia") y llamada a comentar muy genérica.
+
+train-haiku55/visualpolitik-4Q_z-vwCAhk.md  P(AI) 76.0
+  - Estructura muy pulida y didáctica con anuncios recurrentes y fórmulas de transición genéricas: "Dicho de otro modo", "Este matiz importa", "Es una solución potente, pero no gratuita", "Lo que hizo Israel no fue descubrir el agua. Fue cambiar la forma de aplicarla".
+  - Equilibrio sistemático y cuidadoso de posturas ("Israel sostiene... Los críticos responden..."), con tríadas y lecciones enumeradas ("tres cosas", "la primera... la segunda... la tercera") típicas de texto generado.
+  - Fragmentos inconexos o con orden roto ("La primera es económica" sin introducción, "El proceso es, en esencia, sencillo" sin antecedente) sugieren un guion ensamblado por secciones, y el cierre es un llamado genérico a suscribirse con muletilla de marca.
+  - Estructura muy pulcra y equilibrada, con tres lecciones/tensiones enumeradas ("La primera es económica... La segunda es alimentaria... La tercera es la más delicada") y cierre moralizante tipo "Un modelo puede ser eficiente y, al mismo tiempo, profundamente desigual".
+  - Muletillas y fórmulas típicas de LLM: "Dicho de otro modo", "Este matiz importa", "Es una solución potente, pero no gratuita", "Lo que hizo Israel no fue descubrir el agua. Fue cambiar la forma de aplicarla", y la tesis repetida de "preguntas incómodas".
+  - Tono muy neutral y de ambos lados ("Israel sostiene... Los críticos responden..."), con datos genéricos y sin anécdotas personales; las transiciones abruptas entre secciones (sin encabezados) sugieren un guion recortado, aunque la despedida de canal es plausiblemente humana.
+
+train-opus55/cdeciencia-EgxiXbBwAqQ.md  P(AI) 83.5
+  - Estructura muy pulcra y enumerada ("Uno… Dos… Tres… Cuatro…") con listas de consejos de cierre y paralelismos retóricos tipo "No es pereza. Es eficiencia" y "No es pensar más. Es dejar de poder pensar".
+  - Metáforas de manual (ciudad de noche, piano, orquesta) y frases de transición prefabricadas como "Pero aquí viene lo interesante" y "Y con esto llegamos, por fin, a la pregunta del video", con tono equilibrado y sin tropiezos ni digresiones personales.
+  - Incoherencias de guion que sugieren ensamblado automático: "Porque es una gran historia" aparece sin antecedente claro y la apertura "responder a la pregunta de verdad" es torpe; aun así el contenido es exacto y exhaustivo, típico de un modelo.
+  - Estructura muy pulida y formulaica: enumeración "Uno… Dos… Tres… Cuatro…", metáforas de manual (ciudad de noche, piano, orquesta) y cierre con "la sinfonía que eres tú".
+  - Frases de contraste características de IA: "No es pereza. Es eficiencia.", "Activar todo el cerebro no es pensar más. Es dejar de poder pensar.", "no es X, sino Y" repetido.
+  - Tono didáctico uniforme, sin dudas, digresiones ni rasgos personales; transiciones forzadas ("Porque es una gran historia." sin antecedente claro) y llamada a la acción genérica al final.
+
+train-opus55/cdeciencia-GCH_6lrHgaA.md  P(AI) 81.0
+  - Estructura muy pulida de guion explicativo: gancho con prueba interactiva, pregunta retórica en cadena ("¿Por qué no estamos repartidos mitad y mitad?") y promesa de resolver el misterio, seguido de bloques temáticos ordenados y con transiciones limpias ("Aquí viene lo interesante", "Y aquí va un dato fascinante").
+  - Tono equilibrado y cauteloso típico de IA: "No es una explicación cerrada, pero sí una pieza importante del rompecabezas", "Es un dato discutido, pero encaja con la idea", "Algunas" como respuesta a "¿Hay pruebas?"; datos con cifras redondas y sin fuentes ni anécdotas personales.
+  - Cierre genérico de llamada a la acción con pregunta al público y despedida estándar ("dale like, suscríbete"), y apenas voz personal salvo el "Yo apuesto por las tijeras"; el texto es limpio, sin muletillas ni digresiones propias del habla humana.
+  - Estructura muy pulida y predecible: gancho con prueba interactiva, pregunta retórica ('Pero ¿por qué?'), promesa ('Hoy vamos a resolver este misterio') y cierre con llamada a la acción genérica.
+  - Frases de transición típicas de IA ('Aquí viene lo interesante', 'Aquí va un dato fascinante', 'una pieza importante del rompecabezas', 'Piénsalo') y cifras redondas y matizadas ('cerca del 95 %', 'alrededor del 70 %', 'en torno a una cuarta parte').
+  - Tono expositivo uniforme, sin digresiones ni errores ni voz personal; las secciones se encadenan de forma ordenada, con cautelas equilibradas ('No es una explicación cerrada', 'Es un dato discutido, pero encaja con la idea').
+
+train-opus55/cdeciencia-fus7NyqEz4w.md  P(AI) 72.0
+  - Estructura muy pulida y didáctica: anuncio de contenido, transiciones como "Vamos con la noticia de la semana", listas paralelas (Durante/Antes/Después) y cierre con resumen y llamada a la acción, típico de texto generado.
+  - Frases de equilibrio y moraleja muy características de IA: "La mejor respuesta a estas noticias no es el miedo, sino la preparación", "La naturaleza no avisa con fechas, pero sí deja pistas"; analogías estándar (cremallera, uñas).
+  - Hay un guion humano de noticiero (fecha "lunes 24 de octubre de 2016", "vuestras experiencias" junto a "Cuídense") y mezcla de registros, lo que resta algo de certeza, pero la prosa es demasiado uniforme y exhaustiva.
+  - Estructura muy pulida y enumerativa: introducción que anuncia el guion ("veremos qué descubrieron, por qué es importante, qué zonas..."), listas con encabezados "Durante/Antes/Después del terremoto" y cierre con resumen y preguntas al público.
+  - Tono didáctico y equilibrado, con frases de manual como "La respuesta honesta es que nadie puede predecir...", analogías típicas (cremallera, uñas) y moraleja final ("no es el miedo, sino la preparación"), sin rastro de digresiones o rasgos personales.
+  - Datos con apariencia de rigor pero inconsistencias internas: dice que el estudio es de "la semana pasada" y un pronóstico UCERF3 "del año pasado", mezcla 'vuestras' con 'Cuídense', y cuadra los cálculos (1868+148=2016) de forma demasiado limpia.
+
+train-opus55/derivando-teqFwLG2-6s.md  P(AI) 67.0
+  - Estructura muy formulaica y repetitiva: cada libro cierra con "Ideal si: ..." y hay transiciones tipo "Cambiamos de registro", "Ahora, una novela", "Damos un salto en profundidad".
+  - Retórica de manual de IA: "No es un libro para leer de un tirón. Es un libro para leer con lápiz y papel", "Si te fijas, el recorrido va de...", cierre aforístico y pulido con tríadas y contrastes.
+  - Hay rasgos humanos de YouTuber ("like, suscríbete y activa la campanita", "que siempre los leo", comentario personal) y el texto omite títulos/autores en la transcripción, lo que da algo de incertidumbre.
+  - Estructura muy formulaica y repetitiva: cada libro cierra con "Ideal si: ..." y se presenta con un resumen pulido y equilibrado, típico de generación por IA.
+  - Retórica de manual: "Cambiamos de registro", "Damos un salto en profundidad", "Y te deja con una pregunta incómoda..." y tríos/antítesis como "pasar de espectador a protagonista", "no es un libro para leer de un tirón. Es un libro para leer con lápiz y papel".
+  - Falta de voz personal o anécdotas propias; los datos son correctos y genéricos, y el cierre con llamada a la acción ("like, suscríbete y activa la campanita") es estándar, aunque el tono cercano de YouTuber deja cierta duda.
+
+train-opus55/elrobotdeplaton-W9PCt9ptVZw.md  P(AI) 82.5
+  - Estructura de guion muy pulida y formulaica: gancho con preguntas retóricas ("¿Por qué no es verde, morado o simplemente blanco?"), "Y aquí está la clave de todo", "Pero espera… Buena pregunta", cierre con resumen y llamada a suscribirse.
+  - Explicación impecablemente ordenada y sin errores, con frases cortas y equilibradas, metáforas típicas ("ondas largas y perezosas", "pintan el horizonte de fuego") y tres razones enumeradas con paralelismo perfecto.
+  - Falta de rasgos personales, digresiones, muletillas o imperfecciones propias del habla humana; tono genérico de divulgación, aunque la fórmula también la usan creadores humanos.
+  - Estructura de guion muy pulida y formulaica: gancho con preguntas retóricas ("¿Por qué no es verde, morado o simplemente blanco?"), "Y aquí está la clave de todo", "Pero espera… ¿por qué el cielo no es violeta? Buena pregunta".
+  - Explicación impecablemente ordenada, sin errores, digresiones, muletillas ni rasgos personales; frases cortas y paralelas ("ondas largas y perezosas" vs "cortas y rápidas") típicas de texto generado.
+  - Cierre genérico de llamada a la acción ("suscríbete y deja en los comentarios...") y frases de relleno como "Lo fascinante es que", "el resultado final es el azul que conocemos".
+
+train-opus55/jaimealtozano-OdYIS8KXdFI.md  P(AI) 50.0
+  - Estructura muy pulida y didáctica: preguntas retóricas al inicio, metáfora del 'menú' repetida, cierre redondo ('Eso es una escala'), típico de guion generado.
+  - Frases cortas con ritmo de efecto ('Casi. Ese "casi" es una historia...', 'Mismas piezas, otro orden.') y construcciones como 'Pero ojo, que esto no se acaba aquí' que suenan a oralidad natural humana.
+  - Referencias a acciones en pantalla ('Esta cuerda vibra 220 veces...', 'suena así'), la mezcla de 'Fíjate' y 'ya sabéis' (tú/vosotros) y la despedida 'Chao' apuntan a un presentador real, aunque podrían ser imitadas.
+  - Estructura muy pulida y didáctica: preguntas retóricas iniciales, 'Empecemos por el principio', 'Así de simple', metáfora del 'menú' repetida de forma ordenada y cierre con resumen.
+  - Rasgos humanos de oralidad: referencias a lo que se toca en cámara ('Esta cuerda vibra 220 veces', 'suena así'), el gato sobre el piano, 'Casi. Ese casi es una historia de siglos de afinadores peleándose', y el cierre típico 'like, suscripción... ¡Chao!'.
+  - Fórmulas de contraste frecuentes en texto generado ('No solo... sino', 'Lo importante no son las notas, sino...', 'Mismas piezas, otro orden') y un error leve ('Es imposible que suene mal'), con tono entre guion humano cuidado y IA.
+
+train-opus55/lahiperactina-Hb6YaR1BWPM.md  P(AI) 96.0
+  - Quedan marcadores de plantilla sin rellenar ("En , las últimas cifras indican .", "la variante predominante en es .") y una nota final al creador: "Rellena todos los con datos de esta semana", típico de un texto generado por IA.
+  - Estructura muy pulida y didáctica: enumeraciones "Uno/Dos/Tres", frases tipo "ni en el pánico ni en el 'aquí no pasa nada'", aclaraciones de descargo ("no soy médico") y cierre con llamada a comentarios, todo con un tono uniforme de asistente.
+  - Comienza con acotaciones de formato ("Presentador a cámara + gráficos de apoyo (B-roll)") y termina con fuentes sugeridas y recomendaciones de verificación, propio de un guion generado por encargo.
+  - Quedan marcadores de plantilla sin rellenar ("En , las últimas cifras indican .", "la variante predominante en es .") y una nota final al creador: "Rellena todos los con datos de esta semana", típico de un borrador generado por IA.
+  - Estructura muy pulida y formulaica: "Uno/Dos/Tres", listas de grupos, aclaraciones de descargo ("no soy médico"), tono equilibrado "ni pánico ni aquí no pasa nada", y cierre con llamada a comentarios y suscripción.
+  - Encabezado de guion "Formato: Presentador a cámara + gráficos de apoyo (B-roll)" y fuentes sugeridas al final, propio de un asistente que entrega un guion listo para producción.
+
+train-opus55/memoriasdepez-OZirgERQ2qc.md  P(AI) 60.5
+  - Estructura muy pulcra y de manual: apertura dramática con escena, promesa de 'diez minutos', secciones con etiquetas cortas ('Reforma militar.', 'Reforma educativa.', 'Reforma agraria.') y cierre equilibrado ('Sus defensores... Sus críticos... Probablemente, ambas cosas son ciertas').
+  - Frases típicas de generación: 'Lo que nadie discute es que, para bien y para mal...', 'Para muchos republicanos... Para millones de católicos...', y el paralelismo repetido 'Para la derecha... Para la izquierda...'.
+  - Hay saltos y huecos que sugieren texto humano recortado o ensamblado (empieza hablando de Primo de Rivera sin presentarlo, '¿Qué decía?' sin referente claro, el estraperlo y el Frente Popular sin transición), y los cierres de YouTube son muy genéricos, lo que deja la duda.
+  - Estructura de guion muy pulida y didáctica: gancho dramático inicial ("se respira algo que muchos españoles no habían sentido nunca"), promesa de 'diez minutos', 'Quédate hasta el final' y cierre con llamada a comentarios/suscripción, muy de plantilla.
+  - Prosa equilibrada y enciclopédica con fórmulas simétricas: "Para la derecha, demostró... Para la izquierda, la represión confirmó...", "Sus defensores destacan... Sus críticos...", "Probablemente, ambas cosas son ciertas".
+  - Saltos abruptos y fallos de cohesión (pasa de Primo de Rivera sin presentarlo, 'Reforma militar.' como etiquetas sueltas, '¿Qué decía?' sin referente), que sugieren texto recortado o ensamblado de un guion más largo, lo que resta algo de peso a la hipótesis IA pura.
+
+train-opus55/peroesoesotrahistoria-13iZOT8-_GU.md  P(AI) 62.0
+  - Estructura muy pulida y enciclopédica con transiciones formulaicas ('Pero ojo:', 'Así que vamos al principio de todo', 'Y no olvidemos...') y listas ordenadas de datos (Kojiki 712, Nihon Shoki 720, 660 a.C., 1946) sin digresiones personales ni errores de oralidad.
+  - Apertura retórica con paralelismos ('no en un cielo lejano, sino en las montañas...') y cierre estándar de YouTube con preguntas al público ('¿Qué historia te ha gustado más?...'), típico de guiones generados.
+  - Hay saltos abruptos que sugieren edición humana o montaje de texto (p. ej. 'Allí encontró a una pareja de ancianos...' sin presentar el viaje a Izumo; 'Están los kitsune...' sin introducción), lo que resta algo de certeza a la hipótesis de IA.
+  - Estructura muy pulida y enciclopédica con transiciones formulaicas ('Pero ojo:', 'Así que vamos al principio de todo', 'Y no olvidemos...') y cierre típico de CTA genérico (like, suscríbete, comentarios)
+  - Datos exactos y bien ordenados (Kojiki 712, Nihon Shoki 720, 660 a.C., 1946 Hirohito, 'ocho millones de kami') con glosas entre comillas sistemáticas de cada término, como un resumen de Wikipedia
+  - Algunos fallos de continuidad (salto abrupto a 'Allí encontró a una pareja de ancianos' sin presentar el viaje de Susanoo a Izumo; 'Estos son los Tres Tesoros' sin introducirlos) sugieren un guion humano editado o fragmentado, lo que impide mayor certeza
+
+train-opus55/peroesoesotrahistoria-AmTG9QbVfRQ.md  P(AI) 62.0
+  - Estructura muy pulida y enciclopédica: datos densos (fechas, nombres de reyes y dinastías) en frases cortas y regulares, con cierres pulidos como "Fueron seis siglos sin un gran imperio, pero no fueron siglos oscuros" y la apertura "fragmentación. Y es una palabra engañosa".
+  - Muletillas típicas de guion generado o de narración con voz de presentador: "Recuerden ese nombre", "Por cierto", "una de las maravillas del mundo", y un cierre estándar de YouTube con petición de me gusta y comentarios sobre "qué dinastía te parece la más fascinante".
+  - Hay saltos y frases truncadas ("En el año 606 su hermano mayor fue asesinado" sin presentar a Harsha; "Era una dinastía tamil antigua" sin nombrar a los Cholas; "Destacaban cuatro:"), que sugieren secciones recortadas o unidas a partir de un guion largo, algo más propio de edición humana que de una generación continua.
+  - Estructura muy pulida y enciclopédica, con glosas sistemáticas entre comillas y comas ("el conquistador de Vatapi", "la ley de los peces", "el río de los reyes") y fechas y nombres densos y uniformes, típico de un texto generado o resumido por IA.
+  - Cierre y transiciones de guion estándar ("Bienvenidos a la tercera parte...", "Recuerden ese nombre...", "dale a 'me gusta'... cuéntanos en los comentarios") y frases de síntesis como "no fueron siglos oscuros", propias de plantillas de divulgación.
+  - Hay saltos y cortes abruptos ("En el año 606 su hermano mayor fue asesinado" sin presentar a Harsha; "Era una dinastía tamil antigua" sin nombrar a los Cholas), que parecen fragmentos de guion unidos o recortados más que errores típicos de un texto humano fluido.
+
+train-opus55/unmundoinmenso-7c_KT7VsPxw.md  P(AI) 83.5
+  - Estructura de guion de plantilla: gancho con tríada anafórica ('Un país que... Un país que...'), 'Quédate hasta el final', datos enumerados con transiciones genéricas ('Empecemos por la más famosa', 'Este dato pocos lo conocen', 'Esta es menos pintoresca').
+  - Tono enciclopédico y pulido, con cifras exactas y sin voz personal ni errores; cierre con resumen sentencioso ('perder el mar no es solo perder costa') y llamada estándar a comentarios/suscripción.
+  - Frases de transición huérfanas que parecen restos de encabezados eliminados ('Esta es menos pintoresca, pero afecta a millones'), típico de texto generado por secciones.
+  - Estructura de guion de plantilla: gancho con "Imagina un país...", "Quédate hasta el final, porque algunas parecen inventadas", y cierre genérico con pregunta, "me gusta", suscripción y campanita.
+  - Tono enciclopédico y muy ordenado: datos precisos (120 000 km², 400 km de costa, fallo 12 a 3) en frases cortas y paralelas, con transiciones de manual como "Primero, un poco de historia" y "Empecemos por la más famosa".
+  - Fórmulas típicas de IA: "Este dato pocos lo conocen", "Esta es menos pintoresca, pero afecta a millones" (restos de encabezados de lista convertidos en prosa) y moraleja final tipo resumen "Bolivia demuestra que perder el mar no es solo perder costa".
+
+train-opus55/unmundoinmenso-9XqnDSqhfww.md  P(AI) 76.0
+  - Estructura muy pulcra y didáctica: pregunta gancho, "Vamos a repasarlos", enumeración de modelos paralelos y cierre de resumen ("siete, seis, seis otra vez, cinco y cuatro") típicos de guion generado.
+  - Frases de transición formulaicas como "Y aquí la cosa se pone interesante", "La respuesta honesta es: depende" y "no están mal; cada uno responde a una forma distinta de mirar el mundo", con tono equilibrado y conclusión moralizante propia de IA.
+  - Cierre estándar de YouTube ("dale a me gusta, suscríbete y activa la campanita") con teaser del siguiente video, y datos precisos y bien ordenados (Waldseemüller 1507, Zelandia 2017) sin voz personal ni digresiones propias de un humano.
+  - Estructura muy pulida y didáctica con enumeraciones tipo lista ('El modelo de seis continentes, versión América unida', 'versión Eurasia') y resumen final 'Si cuentas... Si sigues... Si sigues...' de manera simétrica
+  - Muletillas retóricas típicas de IA: 'Y aquí está la clave de todo este video', 'Y aquí la cosa se pone interesante', 'La respuesta honesta es: depende de qué criterio uses', 'Ninguno de estos modelos está "mal"'
+  - Cierre genérico de YouTube y gancho al siguiente video, además de frases con tono neutro y sin voz personal ni errores o digresiones humanas; incluso restos de encabezados fusionados en el texto ('Es el más común en el mundo anglosajón')
+
+train-sonnet55/cdeciencia-CR6UoZYIu14.md  P(AI) 96.0
+  - Estructura de plantilla muy pulida: gancho, promesa de "Quédate hasta el final", pasos numerados, "Mito uno/dos/tres", cierre con llamada a comentarios y suscripción.
+  - Tono equilibrado y enciclopédico, con frases de manual como "Hay que decirlo con claridad", "tiene más matices de los que sugieren los titulares" y "sin alarmismos pero también sin ingenuidad".
+  - Incluye metainstrucciones de producción al final ("Sugerencia de descripción del vídeo... Tono: divulgativo, cercano y riguroso") y una nota de formato al inicio, típico de salida de asistente.
+  - Estructura típica de LLM: gancho inicial, preguntas retóricas, "Paso uno… Paso cinco", "Mito uno/dos/tres", cierre con llamada a comentarios y suscripción, todo muy pulido y simétrico.
+  - Frases de plantilla como "Hay que decirlo con claridad", "Aquí hay un matiz", "Más adelante te explico por qué esto importa mucho" y "sin alarmismos pero también sin ingenuidad", con tono equilibrado y neutro de asistente.
+  - Metatexto de generación al final: "Sugerencia de descripción del vídeo… Tono: divulgativo, cercano y riguroso. Evitar titulares sensacionalistas", además del encabezado "Formato: vídeo de noticias con locución", propios de una respuesta a un encargo.
+
+train-sonnet55/curiosamente-Y25yXtxH6qY.md  P(AI) 81.0
+  - Estructura de guion formulaica: gancho dramático, "la respuesta no es tan sencilla como parece", resumen final repitiendo la pregunta y respuestas en tres frases paralelas.
+  - Frases de transición y énfasis típicas de IA: "Pero ojo:", "Hermosas historias, sí. Pero son mitos.", "Un detalle fascinante:", "Es decir, no hubo un único inventor".
+  - Tono pulido y uniforme, sin digresiones ni rasgos personales; cierre genérico de llamada a la acción con pregunta al público.
+  - Estructura de guion de plantilla: gancho dramático ("No había cronómetros, ni medallas de oro, ni televisión. Solo una corona de olivo"), desarrollo ordenado, recapitulación explícita ("Entonces, ¿quién inventó...?") y cierre estándar con llamada a suscribirse y pregunta a los comentarios.
+  - Frases y ritmo típicos de IA: "la respuesta no es tan sencilla como parece", "Hermosas historias, sí. Pero son mitos.", "Un detalle fascinante", "Es decir, no hubo un único inventor", con oraciones cortas y contrastes muy pulidos.
+  - Contenido enciclopédico, equilibrado y sin voz personal, anécdotas propias ni errores o titubeos; todo se presenta de forma limpia y neutral, como un resumen bien organizado.
+
+train-sonnet55/curiosamente-YFryL8XWqZY.md  P(AI) 72.0
+  - Estructura de manual muy pulida: gancho con fragmentos cortos ("Más de medio millón de muertos. Millones de personas obligadas a huir."), pregunta retórica y cierre con resumen en tres "Por..." más "Ninguna causa, por sí sola, lo explica".
+  - Tono neutro y enciclopédico, sin anécdotas, opiniones ni giros personales; cada párrafo cubre un tema de forma equilibrada y ordenada ("Aquí el conflicto se complica, porque...", "Después aparecieron los yihadistas").
+  - Cierre de YouTube genérico ("dale like, suscríbete y cuéntame en los comentarios qué otro conflicto quieres que explique") y transiciones formulaicas como "Quédate hasta el final, porque la historia no es tan simple como parece".
+  - Estructura muy pulida y didáctica: gancho con frases cortas ('Más de medio millón de muertos. Millones de personas obligadas a huir.'), preguntas retóricas y cierre con resumen en tríada ('Por un régimen... Por una sociedad... Por una población...').
+  - Frases de transición típicas de guion generado: 'Aquí el conflicto se complica, porque...', 'Ninguna causa, por sí sola, lo explica', 'la historia no es tan simple como parece'; tono enciclopédico uniforme, sin digresiones, humor ni opiniones personales.
+  - Datos densos y equilibrados, listados en series ('suníes, alauíes, chiíes, cristianos, drusos y kurdos'), con llamada a la acción genérica al final ('dale like, suscríbete y cuéntame en los comentarios'); aunque un youtuber humano podría escribir así, la limpieza y simetría sugieren IA.
+
+train-sonnet55/dateunvlog-UnFDTO_DcXM.md  P(AI) 50.0
+  - Estructura muy pulida y didáctica de guion de divulgación (gancho, 'Guarda esa idea, porque será clave en un rato', cierre con llamada a suscribirse), típica tanto de YouTubers como de IA.
+  - Hay incoherencias de fluidez que parecen humanas o de transcripción: 'millón y medio de... perdón, en uno coma cinco días', 'mucho hierro menos de lo esperado', y el arranque sobre 'Su misión era vigilar estrellas' sin antecedente claro.
+  - Errores factuales y saltos lógicos (la estrella 'poco mayor que Júpiter', 'billones de años', afirmar que Venus y Marte están en la zona habitable) mezclados con frases de ritmo muy limpio y tríadas retóricas ('Es un trabajo lento...', 'no significa estar habitado, ni siquiera ser habitable') que sugieren posible generación por IA con edición humana.
+  - Estructura muy pulida de guion de divulgación: gancho, hitos, 'Pero seamos rigurosos', cierre con llamada a suscribirse; plantilla típica de IA pero también de YouTubers reales.
+  - Incoherencias raras: abre diciendo que la misión era vigilar estrellas sin antecedente claro, y errores como 'tamaño poco mayor que el de Júpiter' o 'millón y medio de... perdón, en uno coma cinco días' (autocorrección insertada, típica de humano o de imitación de humano).
+  - Frases como 'mucho hierro menos de lo esperado' y 'Venus y Marte... ya sabes cómo son' suenan a habla natural y a fallos de edición humanos, mientras que el tono equilibrado y la cautela constante ('los resultados deben tomarse con cautela') sugieren generación automática.
+
+train-sonnet55/elrobotdeplaton-suJyEJquz7g.md  P(AI) 87.5
+  - Estructura de listicle muy pulida con gancho inicial en tres frases paralelas ("Hay una cúpula... Hay un rascacielos... Y hay una catedral...") y cierre genérico de CTA ("dale a me gusta, suscríbete... campanita")
+  - Fórmulas retóricas típicas de IA: "Lo que ves es la parte pequeña del iceberg", "Fíjate en la lección", "Una conversación entre dos épocas", "Lo que une todas estas obras es una idea", preguntas retóricas seguidas de respuesta ("¿Cómo no se vino abajo? Los romanos fueron muy listos")
+  - Tono expositivo uniforme, datos aproximados y ordenados ("unos cuarenta y tres metros", "unos ocho metros"), frases cortas y fragmentos tipo "Sin varillas. Sin nada. Solo hormigón." sin digresiones ni rasgos personales
+  - Estructura de lista pulida y formulaica: gancho inicial con tres datos, 'quédate hasta el final', cierre con llamada a comentarios, 'me gusta' y campanita, típico de guion generado.
+  - Tics retóricos de IA: 'Y aquí viene lo sorprendente', 'Fíjate en la lección', 'Una conversación entre dos épocas', 'Lo que une todas estas obras es una idea...', preguntas retóricas seguidas de respuesta, frases cortas como 'Sin varillas. Sin nada.'
+  - Tono uniformemente didáctico y datos precisos sin voz personal ni titubeos; transiciones suaves entre secciones y moraleja final que resume el tema, con cierre limpio sin rastro de improvisación humana.
+
+train-sonnet55/jaimealtozano-9rLc_brC8DY.md  P(AI) 81.0
+  - Estructura muy pulida y retórica de manual: gancho, 'Por tres razones. Primera... Segunda... Tercera', cierre con resumen 'Una... Dos... Y tres...' y llamada a comentarios, todo muy simétrico.
+  - Frases aforísticas y contrastes recurrentes tipo plantilla: 'no tiene que ver con una melodía genial, sino con lo que no suena', 'El silencio no es la ausencia de música, es lo que le da valor', 'Lo discreto ganó por goleada', 'esa canción no los llevó a un lugar nuevo, los llevó a su lugar'.
+  - Contenido genérico y con transiciones forzadas e incoherentes ('Entonces aparece Daniel Rosenfeld', 'En Minecraft pasa algo muy distinto' tras ya decirlo), con pocas anécdotas concretas y afirmaciones vagas como 'Para muchos fue como abrir una caja' o 'Otros compositores se han sumado'.
+  - Estructura muy pulcra y didáctica: "Por tres razones. Primera... Segunda... Tercera, y para mí la más bonita", seguida de un cierre con "Una:... Dos:... Y tres:..." típico de guion generado.
+  - Fórmulas retóricas y aforismos recurrentes: "no tiene que ver con una melodía genial, sino con lo que no suena", "Lo discreto ganó por goleada", "cuando quitas elementos, lo que queda pesa más", con analogías tópicas (la vela, la habitación a oscuras).
+  - Tono genérico y sin datos concretos o anécdotas propias verificables, con transiciones de relleno ("Y aquí empieza lo interesante", "Fíjate en lo interesante que resulta") y un llamado final a comentar muy estándar; además hay incoherencias como "Entonces aparece Daniel Rosenfeld" fuera de contexto.
+
+train-sonnet55/memoriasdepez-L4ik3OsQ_Kc.md  P(AI) 67.0
+  - Estructura de guion de plantilla: gancho dramático, «Quédate hasta el final», «Bienvenidos a un nuevo vídeo», «Empezamos» y cierre estándar con like/suscripción, todo muy pulido y sin tropiezos.
+  - Frases cortas y efectistas en cadena, con tríadas retóricas y contrastes: «Cojo, tuerto y manco», «Había perdido... Pero Lezo no recibió ningún desfile», «perdió una pierna, un ojo y un brazo, pero nunca la determinación».
+  - Tono enciclopédico uniforme con hedges tipo «Se dice que», «Cuentan que» y cierre de síntesis genérico («sin Blas de Lezo, la historia de América habría sido muy distinta»), sin voz personal, digresiones ni errores propios de un guionista humano.
+  - Estructura de gancho muy pulida y formulaica: «Imagina a un hombre cojo, tuerto y manco... No es una película. Es la historia real», seguida de «Quédate hasta el final» y cierre estándar de suscripción.
+  - Ritmo uniforme de frases cortas y paralelismos limpios («Cojo, tuerto y manco», «Seis barcos habían derrotado a casi doscientos»), con datos ordenados cronológicamente y sin digresiones, titubeos ni voz personal.
+  - Tono enciclopédico con coletillas hedge típicas («Se dice que», «Cuentan que») y cierre sentencioso («perdió una pierna, un ojo y un brazo, pero nunca la determinación»), aunque el guion de canal divulgativo humano también usa estas fórmulas.
+
+train-sonnet55/peroesoesotrahistoria-cv_UWJXIK-c.md  P(AI) 85.0
+  - Estructura de guion pulida y genérica: apertura con lista retórica ('Fueron cazadores, agricultores, herreros...'), 'Soy tu guía en este documental' y cierre con llamada a suscribirse y 'FIN DEL CAPÍTULO 1'.
+  - Tono enciclopédico y equilibrado con cautelas típicas de IA ('aunque conviene ser prudentes', 'Es una hipótesis sugerente, aunque no puede demostrarse con certeza', 'la magnitud exacta sigue en debate').
+  - Frases cortas y paralelas, transiciones dramáticas ('Y entonces llegó una crisis que nadie esperaba') y saltos abruptos de contexto (el futhark aparece sin presentar las runas, la crisis sin nombrar su causa), señales de ensamblaje de secciones generadas.
+  - Estructura muy pulida y didáctica con tríadas y cierres retóricos ("Fueron cazadores, agricultores, herreros, navegantes y reyes"; "el norte se preparó, sin saberlo, para cambiar el mundo"), y cautelas típicas de IA ("conviene ser prudentes", "Es una hipótesis sugerente, aunque no puede demostrarse con certeza").
+  - Frases de transición genéricas y de guion de documental ("Y entonces llegó una crisis que nadie esperaba", "Y con las élites debilitadas...algo nuevo comenzó a surgir") y llamadas a suscribirse/"FIN DEL CAPÍTULO 1" propias de un guion generado en serie.
+  - Saltos y referencias sin antecedente ("En 1881... excavar allí", "en ellos se incineró", "Este primer sistema se conoce como el futhark") sugieren secciones omitidas o ensambladas, aunque el contenido factual es denso, ordenado y sin errores personales o digresiones humanas.
+
+train-sonnet55/quantumfracture-wqH9J_o46hE.md  P(AI) 50.0
+  - Estructura muy pulida y didáctica, con transiciones tipo guion y cierre típico de YouTube ('suscríbete... Nos vemos en el próximo'), compatible con humano o IA.
+  - Frases de contraste y ritmo muy marcados ('El cerebro no mide el espacio, lo infiere'; 'El espacio no se perdió en los ojos. Se perdió en la representación interna.') y listas de tres elementos, rasgos frecuentes en texto generado.
+  - Hay saltos y fragmentos pegados ('Con pistas. Muchísimas...', 'Tiene tres canales semicirculares...', 'Algunas neuronas disparaban...') con sujetos omitidos, como si faltaran secciones del guion, lo que sugiere edición humana o extracción de un guion real.
+  - Estructura muy pulida y didáctica: cada bloque abre con una analogía (reloj con manecillas, gota de aceite, papel milimetrado) y cierra con una frase redonda, algo típico de guiones generados por IA.
+  - Hay fragmentos cortados o desconectados, como 'Con pistas. Muchísimas…' y 'Tiene tres canales semicirculares…', que sugieren un texto pegado por partes desde una fuente humana, y también indican posible edición posterior.
+  - Tono cercano y con humor ('amigos', 'un amigo que siempre se pierde', 'Quizá le toque entrenar el hipocampo como un taxista de Londres'), y precisión en datos (Maguire, DF, Constantinescu, 1,4), lo que puede ser de un divulgador humano documentado o de un modelo.
+
+train-sonnet55/unmundoinmenso-c715wbpMhco.md  P(AI) 90.0
+  - Marcadores de guion de plantilla sin rellenar: ": Saludo y una frase sobre por qué le obsesiona la Antártida" y ": Opinión sobre por qué la península era tan codiciada" son instrucciones de un esquema generado, no habla del presentador.
+  - Estructura muy pulida y típica de IA: apertura con gancho, "Primero, situémonos", "Entonces, ¿por qué...?", listas de ideas con dos puntos, y cierre con resumen en tríada ("Técnicamente... Políticamente... Científicamente...").
+  - Frases de efecto y matizaciones enciclopédicas muy equilibradas ("Diplomacia de nevera", "Lo cierto es que el protocolo no caduca ese año", "conviene no ignorarlo") y datos densos y correctos sin tono personal.
+  - Marcadores de guion sin rellenar como ": Saludo y una frase sobre por qué le obsesiona la Antártida" y ": Opinión sobre por qué la península era tan codiciada" delatan una plantilla generada para un colaborador (TKM).
+  - Estructura muy pulida y didáctica, con listas y frases de efecto tipo "Diplomacia de nevera" y "Sus ideas básicas son pocas y potentes", además de cierres con triples paralelos ("Técnicamente, de nadie. Políticamente... Científicamente... Moralmente...").
+  - Datos enciclopédicos precisos y matizados (el Protocolo de Madrid no caduca en 2048, Marie Byrd sin reclamar) con tono neutro de resumen, y un cierre genérico de llamada a la acción.
+
+train-sonnet55/visualpolitik-yWzhJjUprc0.md  P(AI) 67.0
+  - Estructura muy ordenada y enumerativa ("Segunda pieza", "Sexta pieza", "Primero... Segundo... Tercero... Y por último") con cierre de resumen tipo lista: "No hay una única razón. Es la suma de varias".
+  - Frases de contraste y aforismos típicos de IA: "No son industrias baratas ni de volumen: son industrias donde el valor está en la marca, la patente y la calidad"; "sería injusto pintar Suiza como un paraíso sin problemas"; tono equilibrado, sin opinión marcada.
+  - Datos muy pulidos y hedged ("ronda el 35-40 %", "cifras que superan con facilidad los cientos de miles de millones") y un guion de formato VisualPolitik muy genérico, aunque la intro y el cierre imitan bien el estilo del canal, lo que deja algo de duda.
+  - Estructura muy ordenada y enumerativa: 'Segunda pieza', 'Sexta pieza', 'Primero... Segundo... Tercero... Y por último', cierre con 'No hay una única razón. Es la suma de varias' que resume todo de forma de ensayo escolar.
+  - Cifras y datos muy pulidos y equilibrados, con matices y salvedades constantes ('Esto no significa que Suiza sea un paraíso', 'sería injusto pintar Suiza como un paraíso sin problemas'), tono neutro y redondeado típico de un modelo.
+  - Fórmulas retóricas frecuentes ('Es más', 'Vamos con ellas', 'el elefante en la habitación', 'la previsibilidad vale oro') pero encajan con el estilo real de VisualPolitik, lo que impide mayor certeza; algunos fallos de ritmo como 'A eso añade la alimentación' sugieren posible edición humana.
+
+train-sonnet55/visualpolitik-zRFDAh4xNV0.md  P(AI) 89.0
+  - Estructura de guion muy pulida y formulaica: gancho con preguntas retóricas en cascada ('¿Qué ha pasado? ¿Se agotó el modelo?...') y 'Quédate, porque la respuesta es más incómoda de lo que parece'.
+  - Transiciones y enumeraciones muy regulares ('Hablemos de la primera pieza del puzle', 'Pasemos a la política', 'La primera... La segunda... La tercera... Y la cuarta') y frases de contraste típicas de IA ('Chile no está en recesión. Simplemente ha dejado de ser lo que era').
+  - Cierre con moraleja aforística y aplicación de tópicos ('el crecimiento no es un derecho adquirido, sino una tarea que hay que renovar'), cifras abundantes y equilibradas sin fuentes ni voz personal, más llamada a suscribirse genérica.
+  - Estructura de guion muy pulida y formulaica: gancho con preguntas retóricas en cadena ('¿Qué ha pasado? ¿Se agotó el modelo? ¿Fue la política?'), 'Quédate, porque la respuesta es más incómoda de lo que parece', y cierre con resumen en lista de factores más una 'lección más importante'.
+  - Frases de transición y contrastes típicos de IA: 'Hablemos de la primera pieza del puzle', 'Pasemos a la política', 'Es decir: Chile no está en recesión. Simplemente ha dejado de ser lo que era', 'No es X, sino Y', 'Ninguno de estos problemas es una condena', tríadas constantes ('apertura, estabilidad y reglas claras').
+  - Datos numerosos, ordenados y equilibrados, sin anécdotas personales, errores ni voz propia; tono expositivo uniforme, con definiciones didácticas insertadas ('la ley del mineral, es decir...') y mezcla de léxico peninsular ('puzle', 'vídeo') con chilenismos ('permisología').
+
+## Every reason, human captions (quotes cut)
+
+academiaplay-3Wg10E4Ung0.md  P(AI) 3.0
+  - Es una transcripción automática de un diálogo hablado: saludos ('Buenos días Fernando. Buenos …'), muletillas ('bueno', 'pues vamos'), puntuación y mayúsculas erráticas ('portovelo', 'panamá', 'sevilla'), frases sin pausas que un redactor de IA no produciría.
+  - Errores típicos de reconocimiento de voz y de habla ('al Virreinato', 'se la mitad', 'Sir Andrew Vernon', 'a los mandados', 'con lecho seguro', 'tente mientras cobro') y cifras dichas en voz alta ('6068 y ocho bombas').
+  - Voz personal con opiniones, ironía y giros idiomáticos españoles ('la bicoca', 'vender la piel del …', 'odiadores profesionales de España') y cierre con el típico anuncio de membresía del canal de YouTube, nada propio de un texto generado.
+  - Es una transcripción de habla espontánea con dos voces: saludos ('Buenos días Fernando. Buenos …'), muletillas y fórmulas orales como 'bueno y en general' o 'pues veamosla'.
+  - Tiene errores típicos de subtitulado automático y de habla: puntuación ausente o rota ('Portobelo' y 'portovelo', 'a la habana y …'), cambios de sujeto y frases sin cerrar.
+  - Estilo personal e irreverente con ironías y giros castizos ('el país de la …', 'vender la piel del …'), y cierra con una promoción de membresía del canal, algo propio de un youtuber real.
+
+cdeciencia-CR6UoZYIu14.md  P(AI) 3.5
+  - Errores tipográficos y ortográficos humanos: "dudada", "simientes", "Gumpertz", "nación" por nació, "ultimas" sin tilde, "mandibula", "diametro"; una IA no los cometería de forma tan inconsistente
+  - Registro oral y personal de youtuber: "Y bueno, nos queda …", "NOTICIÓN", "Si es miércoles, lastima", "Estaré haciendo una retransmisión …", con promoción de su canal secundario y hora española
+  - Sintaxis desordenada con frases mal pegadas y comas arbitrarias ("sintetizando se extrajeron dos …", "No envejecen, lo hacen …"), propia de una transcripción o redacción apresurada humana
+  - Errores humanos típicos de escritura y tipeo: "dudada", "simientes", "nación" por nació, "mandibula", "ultimas" sin tilde, "Gumpertz", frases con puntuación irregular.
+  - Estilo oral y personal de youtuber: "Y bueno, nos queda …", "NOTICIÓN", "Si es miércoles, lastima", más el anuncio de una retransmisión en directo del Falcon Heavy con enlaces en la descripción.
+  - Estructura desordenada y sintaxis improvisada (cambios de tema abruptos, comas mal colocadas, "sintetizando se extrajeron dos …"), impropia de un texto generado por IA que suele ser pulido y coherente.
+
+curiosamente-6oG92Fl4AhI.md  P(AI) 7.0
+  - Voz muy humana y coloquial con errores y rarezas: "de la o la …", "carpabenemas", "transfiréndole", "SE PRONUNCIA ESKERIKIA COLI" en mayúsculas, "Peeero…" y "¡ups! Mira,".
+  - Humor y marca propia del canal ("pasado sin pena ni …", "bichos", "¡CuriosaMente!", llamado a suscribirse) y errores factuales como penicilina en el siglo XIX, que una IA pulida habría evitado.
+  - Estructura de guion oral con preguntas retóricas, inexactitudes y decisiones irregulares de puntuación, sin la limpieza y el equilibrio típicos de un texto generado.
+  - Voz humana muy marcada y coloquial: "Peeero… no contábamos con …", "(SE PRONUNCIA ESKERIKIA COLI)", "pasó sin pena ni …", "bichos con montones de …".
+  - Errores y descuidos típicos de un guion humano: "de la o la …", "carpabenemas", "a la mayor parte …", "transfiréndole", además de imprecisiones como situar los antibióticos en el siglo XIX.
+  - Marca de canal y cierre propios ("¡CuriosaMente!", "suscríbete... cada semana", Instagram y Facebook), con humor y opiniones personales ("Evita comer animales") poco comunes en texto generado.
+
+dateunvlog-1GgFAYX5Y3I.md  P(AI) 4.0
+  - Es una transcripción oral claramente humana: dirigida a «hijos de Santaolalla», con chistes («como diría Jack el …») y referencia a «lo que hablaba Javier …».
+  - Errores típicos de transcripción automática de habla: «poden/pode» por podar, «artículo» por retículo, «Vilaciones», «me lleva», frases truncadas donde faltan términos («se llaman:»), cosas que una IA no escribiría.
+  - Digresiones, repeticiones y correcciones espontáneas («Bien en general si …», «no voy a entrar …»), con referencias a una figura en pantalla («Lo que ven ahí …»), propias de un divulgador hablando.
+  - Transcripción de habla espontánea con errores típicos de reconocimiento automático ("poden"/"pode", "artículo" por retículo, "Vilaciones", "enegía", "Sino" por "Si no") y frases sin cerrar, como "Puestos en una coctelera …".
+  - Voz personal y oral, con humor y referencias propias: "hijos de Santaolalla", "como diría Jack el …", "De ahí viene el …", además de regionalismos como "acá" y "que ven en la …".
+  - Desorden y digresiones de un divulgador que improvisa ("Bien en general si …", "Toda la física de …" con el término omitido), nada que se parezca a una redacción pulida de IA.
+
+derivando-teqFwLG2-6s.md  P(AI) 3.5
+  - Habla oral espontánea con tropiezos y repeticiones: "hasta hasta el problema …", "de estos de estos …"
+  - Errores típicos de transcripción automática y de improvisación: "Marcus du Satoy", "Riemman", "Marcos du Sautoy", frases sueltas como "Yo con estas manitas …"
+  - Referencias personales y deícticas al vídeo ("tengo una caja", "este lo he escrito …", "no me entraban todos …") y tono coloquial propio de un divulgador real
+  - Habla oral espontánea con titubeos y repeticiones: "muy muy recomendable", "de estos de estos …", "hasta hasta el problema …"
+  - Errores típicos de transcripción automática y de improvisación: "Marcus du Satoy", "Riemman", "Marcos du Sautoy", frases sin cerrar y puntuación irregular
+  - Voz personal con referencias directas al momento y al objeto físico ("aquí tengo una caja", "Yo con estas manitas", "este libro lo he …"), humor y fórmulas de youtuber español ("amigos de las mates", "me habéis pedido")
+
+elrobotdeplaton-Can7RK004jg.md  P(AI) 6.0
+  - Errores y tropiezos típicos del habla transcrita: "Hola soy Aldo y …", "recuedan", "huececillos", "diferente.Cuando" sin espacio; una IA rara vez los comete.
+  - Contenido desordenado y con fallos factuales: dice que el sonido llega a los "canales auditivos" y "transforman esa información", y la frase "Si alguien les dice …" cierra de forma incoherente con lo explicado.
+  - Tono oral y espontáneo: "Vamos a unas tiendas. …", "¿O sí?", la despedida torpe con "espejismos"; sin la estructura pulida ni las transiciones suaves típicas de una IA.
+  - Errores y irregularidades típicas del habla transcrita: "Hola soy Aldo y …", "recuedan", "huececillos", "diferente.Cuando" sin espacio.
+  - Contenido confuso y con fallos factuales (canales auditivos en vez de cóclea, "el sonido sale por …", "los espejos son ilusiones …"), algo que una IA pulida rara vez produciría.
+  - Tono conversacional e improvisado con giros torpes ("Vamos a unas tiendas. …", "Agarren una foto de …") y cierre espontáneo poco estructurado.
+
+jaimealtozano-9rLc_brC8DY.md  P(AI) 3.0
+  - Registro oral muy espontáneo y coloquial con muletillas y juramentos: "La música es la …", "sabes? y a mi …", propio de un youtuber hablando, no de un asistente.
+  - Errores y desorden típicos de transcripción de voz: "the gardian", "desición", "estrechos de 15 minutos", frases que se cortan o se repiten ("Y que aquí va …" al final), sin puntuación coherente.
+  - Referencias personales y específicas con humor improvisado (AntVenom, Bruno Mars en el aeropuerto, "Vamos eso opino yo", despedida con ":)"y":D"), además de saltos de tema y autocorrecciones que una IA no produciría.
+  - Habla oral muy natural con muletillas y coloquialismos: "La música es la …", "sabes? y a mi …", "Vamos eso opino yo".
+  - Errores y desorden propios de una transcripción humana: "desición", "the gardian", "estrechos de 15 minutos", frases que se rompen y cambian de idea a mitad ("no te encajo con …").
+  - Referencias visuales y de edición del vídeo ("esto, o esto, o …", "AntVenom", despedida con ":)"y":D", y un fragmento …"Y que aquí va a salir un 3 y un 4") que una IA no produciría así.
+
+lahiperactina-FB9C4uqzJSc.md  P(AI) 3.5
+  - Voz personal y coloquial muy marcada: "el 'trinki trinki'", "la cogorza de toda …", "Troll.", "un cuervo o lo …", con humor autorreferencial.
+  - Errores y irregularidades de habla natural: "de el alcohol etílico", "se creía era precisamente", "es una droga whatever …", "esto, en esto… o …" (señalando objetos en pantalla).
+  - Referencias a su canal y comunidad ("Ya había hablado en …", "Me parece súper adorable …") y mayúsculas enfáticas típicas de guion hablado, no de texto generado.
+  - Voz personal muy marcada y coloquial: "Vamos, la cogorza de …", "dándole al 'trinki trinki'", "Troll.", "un cuervo o lo …".
+  - Errores y irregularidades de habla natural: "de el alcohol etílico", "se creía era precisamente", "más les va afectar", "Para empezar decir que...", más referencias a vídeos propios ("el vídeo de la …") y a deixis visual ("en esto, en esto… …").
+  - Cierre con humor y firma personales ("Me parece súper adorable …"), mayúsculas enfáticas ("PERDERLA") y digresiones propias de un divulgador real, no del tono neutro y pulido de una IA.
+
+memoriasdepez-L4ik3OsQ_Kc.md  P(AI) 4.0
+  - Errores humanos típicos de transcripción oral: 'sino el mejor', 'españa', 'blas de lezo' sin mayúsculas, 'presidiendo' por 'persiguiendo', 'incasable', 'aplazamiento' por 'emplazamiento'.
+  - Faltan puntos y comas de forma irregular, con frases pegadas ('...historia de España Blas …'), propio de subtítulos automáticos o texto copiado de una narración hablada.
+  - Tono de documental coloquial con giros como 'nuestro joven marino', 'como no podría ser …' y cierre con la cita 'mear siempre mirando hacia …'; sin estructura pulida ni fórmulas típicas de IA.
+  - Errores de ortografía y puntuación típicos de transcripción humana: "españa", "sino el mejor", "flota anglo-holandes", "presidiendo el pirata" (por persiguiendo), "trae portaban", "incasable", "aplazamiento" (por emplazamiento)
+  - Faltan puntos y mayúsculas entre oraciones, con párrafos corridos y mezcla de "Blas de lezo" y "Blas de Lezo"; es un texto de subtítulos automáticos sin pulir, no prosa de IA
+  - Tono coloquial y expresiones propias de un narrador humano: "como no podría ser …", "nuestro joven marino", "con su frase más …", y cierre con la cita sobre mear hacia Inglaterra
+
+peroesoesotrahistoria-13iZOT8-_GU.md  P(AI) 3.5
+  - Voz muy personal y coloquial de España: "el pavo se largó …", "tocador de cojones oficial", "le hacía tilín", con humor irreverente y vulgarismos poco propios de una IA.
+  - Citas cómicas intercaladas ("El muerto al hoyo... …", "¡A tu casa!") y promoción propia ("MI LIBRO DE HISTORIA …", "Preparaos para la locura") que son típicas de un youtuber real.
+  - Errores y rarezas humanas: "Amatarasu", "Hori/Hoori", "acojonaos", "enamorao", coma sobrante en "sagradas,." y datos algo confusos, frente a la pulcritud habitual de un texto generado.
+  - Voz muy personal y coloquial de España: "el pavo se largó …", "tocador de cojones oficial", "el chaval acabó enamorao", con humor irreverente e imperfecciones.
+  - Citas cómicas intercaladas entre comillas ("El muerto al hoyo... …", "¡A tu casa!") y referencias a la cultura pop, propias de un youtuber humorista.
+  - Errores humanos: "Amatarasu", "Hori/Hoori", "reliquias sagradas,." y promoción de su libro al inicio y de sus próximos vídeos al final.
+
+quantumfracture-0H6b6NKsv0Q.md  P(AI) 4.0
+  - Voz oral muy personal y coloquial con jerga española: "lo petaba muy fuerte", "no le molaron", "la mayor pifiada", "¿sabéis qué, gente?" repetido como muletilla de presentador.
+  - Errores tipográficos y ortográficos humanos: "la maquina", "las misma conclusiones", "menera", "fué", "Osea", "quien que la propuso", espacios antes de comas; una IA los habría evitado.
+  - Estructura digresiva y humorística (metáfora de la "máquina de Einstein" sostenida, "Bien, niños, ¿cuál es …", promesas de futuros vídeos) típica de un divulgador real con guion propio.
+  - Voz oral muy personal y coloquial con jerga española: "lo petaba muy fuerte", "no le molaron", "pifiada", "¿sabéis qué, gente?" repetido como muletilla de presentador.
+  - Errores tipográficos y ortográficos humanos: "la maquina", "misma conclusiones", "menera", "fué", "se dió", "Osea", "quien que la propuso", espacios antes de comas, y variación Friedman/Friedmann.
+  - Estructura de guion de divulgador (metáfora de la "máquina" de Einstein, remates a otro vídeo, "Bien, niños, ¿cuál es …") con digresiones e imprecisiones informales, sin el pulido ni la neutralidad típicos de una IA.
+
+unmundoinmenso-1MSFgiDqHsc.md  P(AI) 12.0
+  - Errores y torpezas típicamente humanas: "nuestro planeta orbita ante …", "se pueden llegara producir", "cada un año y …", "Dejanos tu comentario" (voseo rioplatense).
+  - Tono oral de YouTube con muletillas y gancho de suscripción ("Pero antes no dejes …", "¿no?", "Bueno, es que..."), humor espontáneo sobre terraplanistas.
+  - Imprecisiones factuales y estructura algo desordenada (sol 400 veces más grande, 'eclipse en 2019 próximo', 360 años) propias de un guionista humano apurado, no de una IA pulida.
+  - Errores y deslices típicamente humanos: 'nuestro planeta orbita ante …', 'llegara producir', 'cada ese tiempo', 'Dejanos' (voseo rioplatense), además de imprecisiones factuales (eclipse total cada 360 años, 'cada un año y …')
+  - Tono oral de YouTube con muletillas y retórica espontánea: 'Bueno, es que se …', 'terraplanistas', 'no dejes de suscribirte', preguntas retóricas al espectador
+  - Contenido atado a su época (próximo eclipse 'el 2 de julio …') y estructura algo desordenada con repeticiones, poco pulida como para un texto generado por IA
+
+visualpolitik-4Q_z-vwCAhk.md  P(AI) 3.0
+  - Marcas de oralidad espontánea y errores humanos: "que está está presente", "3º fases", "1939,,", "Creés", "nos apoyais", "entorno a" por "en torno a", mezcla de vosotros/ustedes.
+  - Muletillas y giros coloquiales típicos de un presentador: "¿cómo demonios...?", "el novamás de la …", "pasó tres cuartas partes …", "Fijaos", "Atentos", "tirando por lo alto".
+  - Referencias personales y contextuales de un canal real (Patreon, tema elegido por la comunidad, despedida) y marcas de guion/transcripción como paréntesis y títulos de sección en mayúsculas, con repeticiones retóricas desiguales.
+  - Marcas de oralidad espontánea y errores humanos: "que está está presente", "3º fases", "3.000 millones" con signos mal puestos, "1939,,", "Creés" mezclado con "os"y"vosotros"
+  - Muletillas y giros de presentador de YouTube: "Pues queridos amigos, amigas", "y vaya si lo …", "pasó tres cuartas partes …", "el novamás de la …"
+  - Estructura de guion real con paréntesis de bloques de texto, títulos en mayúsculas, dedicatoria a Patreon y cita de entrevistados, sin la pulcritud ni la simetría típicas de un texto generado
+
+academiaplay-hYajgwcWb1k.md  P(AI) 10.0
+  - Errores ortográficos y de tipeo típicos de transcripción humana: "heruditos", "Bocaccia", "Leondardo", "aquitecto", "Catalina de Argón", "retractra", "consquista", "fuero conocidos".
+  - Puntuación irregular y frases sin punto final ("cierta recuperación La conquista", "goces terrenales El Decameron"), además de opiniones y giros coloquiales como "un pedazo de ese …", "puso patas arriba la …", "le daba de comer".
+  - Estructura de guion divulgativo oral con preguntas retóricas y generalizaciones personales ("los países protestantes son …"), sin el tono pulido y neutral típico de una IA.
+  - Abundantes errores tipográficos y de ortografía humanos: "heruditos", "Bocaccia", "Leondardo", "aquitecto", "astromonía", "consquista", "retractra", "Catalina de Argón", "respueta".
+  - Puntuación irregular y frases sin punto final ("cierta recuperación La conquista", "los goces terrenales El …"), típico de transcripción o texto escrito a mano sin revisión.
+  - Voz de divulgador con opiniones y giros coloquiales ("querían un pedazo de …", "puso patas arriba la …", "y un largo etc.") y algunas inexactitudes, impropio de un texto generado y pulido.
+
+cdeciencia-EgxiXbBwAqQ.md  P(AI) 3.5
+  - Errores típicos de transcripción oral y de habla improvisada: "ah llevado", "a observado", "cuidad", "precesar", "lengua de sinos", "100x100", "100%%"
+  - Marcas de guion de youtuber: "intro saluda el emisor", "Wow", "Fascinante", "Lee esta palabra metalmente", puntuación irregular y frases sin cierre
+  - Datos con imprecisiones y digresiones personales (75 mil millones de neuronas, 'tal vez tu experiencia …'), propias de un humano; una IA sería más pulida y estructurada
+  - Typos y errores de transcripción oral: "ah llevado", "a observado", "precesar", "cuidad", "sinos", "100x100", "100%%"
+  - Estilo hablado con muletillas, puntuación irregular y digresiones filosóficas ("Wow", "Fascinante", "¿de quién es esa …"), con datos imprecisos típicos de un divulgador humano
+  - Contiene restos de guion/transcripción ("intro saluda el emisor") y cierre natural "Muchas gracias por ver …"
+
+curiosamente-Aet-p4VdM2g.md  P(AI) 12.0
+  - Tono oral muy espontáneo con efectos de voz escritos como "laaarga", "¡Maaaas lejos!", "M-mh…" y pausas teatrales que una IA rara vez produce.
+  - Errores humanos de ortografía y puntuación: "no se acabo" sin tilde, "¿y qué crees?" en minúscula, "se va acabar" sin "a", "A no menos de".
+  - Humor improvisado y estructura de guion de YouTuber (chiste de verificar si el mundo se acabó, juego de "¿así? No, más lejos", cierre con tataranietos en cadena) más desordenado que un texto generado.
+  - Voz oral muy natural con interacción teatral: "¿Así? No, más lejos. …" y "laaarga lista", alargamientos de letras típicos de un guion hablado humano.
+  - Errores y descuidos humanos: "¿y qué crees?" en minúscula tras signo, "no se acabo" sin tilde, "se va acabar" sin "a", además del dato impreciso del asteroide.
+  - Humor improvisado y cierre con cadena de "tataranietos" y chiste "voy a verificar"; estructura algo desordenada (pedido de comentarios a mitad) poco típica de texto generado.
+
+dateunvlog-UnFDTO_DcXM.md  P(AI) 3.0
+  - Transcripción de voz con errores típicos de subtítulos automáticos y habla espontánea: "un8%", "no sé fríen", "producíados", "entono a un estrella", "acaber si dejarles", "prxóximo".
+  - Contenido muy personal y específico: promoción de su libro "El bosón de Higgs", venta de 3.000 ejemplares, "mi amigo Mariano", saludo "camaradas" y colaboración con las científicas de Star Tres, con diálogo entre varios hablantes.
+  - Estilo oral con titubeos, giros coloquiales y errores factuales ("se parece más a …", "miles de millones de …", "Esa no, esa, esa, …") que una IA no suele producir.
+  - Errores de transcripción automática y de habla oral ("esa calle", "no sé fríen", "producíados", "acaber si dejarles", "prxóximo") que una IA no produciría
+  - Estilo hablado espontáneo con muletillas, cambios de tema y anécdotas personales (promoción de su libro, venta de 3.000 ejemplares, "mi amigo Mariano", "camaradas")
+  - Diálogo entre varias personas con nombres propios (Javiera, Javi, Star Tres) y errores factuales/desorden típicos de divulgación humana improvisada
+
+derivando-yDyMSliKsxI.md  P(AI) 3.0
+  - Colloquial, spontaneous Spanish with typos and errors ("Quíeres", "osea", "Flipas he !!", "ya lo vez", "Ok, oc") that an AI would not typically produce
+  - Strong personal voice and humor: "Es una palabra antigua …", "Esto último os va …", "la abejota reina", closing with "Beso" and a subscribe pitch
+  - Transcribed spoken math read aloud ("F sub N /10 …", "raíz del E cuadrado …") with loose, improvised structure and fragmentary ellipses typical of an automatic transcript of a human presenter
+  - Oral, colloquial Spanish with typos and errors ("Quíeres", "osea", "Flipas he !!", "ya lo vez", "Ok, oc") that an AI would not produce
+  - Spoken-style humor and personal asides ("Esto último os va …", "Es una palabra antigua …", "Beso") and a YouTube-style sign-off with a subscribe hook
+  - Messy transcription of spoken math ("F sub N /10 …", "raíz del E cuadrado …"), with small slips like "Phideas" and "tatatarabuelos", typical of a human speaker's subtitles
+
+elrobotdeplaton-RSXDomuQe2g.md  P(AI) 4.0
+  - Errores ortográficos y de puntuación típicos de transcripción humana: "sufuciente", "escacha", "tambien", "mas", "Kilocalorias por cucharaditas", "un dieta".
+  - Marcas de guion de video y espontaneidad: "(desmintiendo)", "(CLIC)", "(respondiendo a su pregunta)", "ya vengo", "¡Ah! sí esto es …", más digresiones y cortes bruscos ("Bueno, igual y no …").
+  - Voz personal y coloquial, con presentación propia ("Hola soy Aldo y …"), chistes y estructura desordenada, algo que una IA no produce normalmente.
+  - Typos y errores espontáneos de transcripción oral ('sufuciente', 'escacha', 'tambien', 'mas', 'Kilocalorias por cucharaditas') que una IA no produciría
+  - Acotaciones de edición y humor personal ('( desmintiendo )', '(CLIC)', 'ya vengo', 'me acabo de romper …', 'Bueno, igual y no …') con una voz propia y desorden natural
+  - Estructura caótica y saltos de tema (té, nubes, calcio), frases a medio cerrar y autocorrecciones típicas de un guion hablado por una persona
+
+jaimealtozano-BRBTCIK_9_g.md  P(AI) 3.0
+  - Muletillas y titubeos orales muy humanos: "A ver, no, cómo …", "No sé si me …", "Aunque a lo mejor …".
+  - Chistes internos y referencias personales ("Miku, explícaselo tú", "ese era un poco …", broma inicial de cortar el vídeo) y párrafo final divagante sobre aprender algo desde cero.
+  - Errores y desorden típicos de transcripción hablada ("Fa sostenido, Do sostenido, …" mal encadenado, "metarmonizar la segunda Subcuaternación", frases repetidas, "que hay comentar"), que una IA no produciría.
+  - Joke opening ('Y hasta aquí el …') and self-interruptions ('Miku, explícaselo tú') are typical of a real YouTuber's spoken style, not AI.
+  - Spontaneous digressions and slips: 'Aunque a lo mejor …', 'No sé si me …', and the garbled gibberish 'metarmonizar la segunda Subcuaternación'.
+  - Transcription errors, personal anecdotes ('Cuando llevas muchos años... …'), and channel-specific references to their own videos, with an irregular, oral structure.
+
+lahiperactina-Hb6YaR1BWPM.md  P(AI) 3.0
+  - Voz oral muy personal y coloquial: "nos ha jodido pero …", "nos pilla 'en pelotas'", "¿Y el tratamiento pa' …", "a saco", con muletillas como "vamos a ver" y "o sea".
+  - Errores y torpezas típicas de un guion hablado: "tos laos", "puede peligroso", "todo ha ido tan …", la pregunta repetida "¿Cómo puede ser que …", y referencias al momento como "a no ser que …" y "si estornudas, hazlo aquí" (gesto en pantalla).
+  - Contexto personal y específico de una creadora: queja sobre la desmonetización de YouTube, mensajes de los suscriptores, "siento que haya tenido …", con mayúsculas enfáticas y cambios de registro poco pulidos.
+  - Voz oral muy personal y coloquial, con muletillas y expresiones como "nos ha jodido pero …", "nos pilla 'en pelotas'", "crecen a saco", "es que es una …", "qué más quieres".
+  - Errores y desorden típicos del habla transcrita: repite la pregunta "¿Cómo puede ser que …" dos veces, "tos laos", "peligroso a la hora …", "por eso todo ha …", y frases largas que se enredan.
+  - Referencias muy específicas y humor propio ("a no ser que …", "si estornudas, hazlo aquí", "el tono más serio …"), con comentarios sobre el canal, la desmonetización y su audiencia que una IA no generaría así.
+
+memoriasdepez-OZirgERQ2qc.md  P(AI) 4.0
+  - Errores y descuidos típicos de un humano: "Como véis", "La noches del 13 …", "mandaselo", "animos", "mayoria", frases con comas mal puestas y concordancias flojas ("Ley de implantación... crea").
+  - Tono coloquial y expresiones idiomáticas espontáneas: "El ejército no se …", "hacer las maletas", "para que él también …", además del cierre humorístico de YouTuber con LIKE y suscripción.
+  - Estructura irregular, con listas incrustadas sin puntuación ("1. la sociedad española …"), cifras inconsistentes (1.325 vs 3000) y opiniones implícitas; una IA habría producido un texto más pulido y uniforme.
+  - Errores humanos típicos: "Como véis", "La noches del 13 …", "mayoria", "animos", "pactaran", y puntuación inconsistente (listas sin comas, "Que gana restableciendo..." como fragmento).
+  - Voz oral y coloquial de youtuber: "El ejército no se …", "hacer las maletas", "para que él también …", cierre con "LIKE" y ":)".
+  - Estructura irregular y detalles con ligeros errores o sesgo ("Gran Huelga", numeración incrustada "1. ... 2." sin formato, tono de guion transcrito), impropio de la redacción pulida y uniforme de una IA.
+
+peroesoesotrahistoria-AmTG9QbVfRQ.md  P(AI) 3.0
+  - Voz muy personal y coloquial con jerga española ("movidas a saco", "fuckin owners", "No se tiene ni …", "emigraos", "acojonaos vivos"), difícil de imitar por una IA.
+  - Referencias propias de un youtuber: promoción del libro, "ya hablé en otro …", "Como podéis ver", citas humorísticas entre comillas como "¡ATRÁS!" que parecen subtítulos de imágenes.
+  - Imperfecciones humanas: "siglo XVI 16", "Kemer", "Chalukias/Chalukios/Chalukyos" inconsistentes, "acabaría desgastando" y chistes como "resucitaron como Lázaro".
+  - Voz coloquial muy personal y con humor propio: "Hubo movidas a saco", "los fuckin owners del …", "No se tiene ni …", "se fueron a cagar"; una IA no suele escribir así.
+  - Contiene marcas de youtuber real: publicidad de su libro al inicio, citas de memes entre comillas ("¡ATRÁS!", "Qué bonito, ¿eh?"), "del que ya hablé …", "Como podéis ver".
+  - Errores y descuidos humanos: "siglo XVI 16", "Kemer", "emigraos", "acojonaos", "el Templo... situado como …", concordancia irregular ("El norte estaba siendo …"), y chistes como "resucitaron como Lázaro".
+
+quantumfracture-IEP5IM4N7GE.md  P(AI) 4.0
+  - Voz muy humana y coloquial con rasgos regionales de España: "¡Que demonios!", "¿Que me decís...?", "Ya sabéis", y el chiste de cambiar la moneda "por chicles".
+  - Errores tipográficos y de puntuación típicos de escritura humana: falta de tildes ("mas", "Que"), "¿...?¿...?" sin espacio, "movimientos" en plural incorrecto, "el siguiente" omitido, y "Fuerza Gravitatoria" con mayúsculas arbitrarias.
+  - Digresiones improvisadas y autocorrecciones ("fuera cargas positivas... vale …"), cierre informal con "suscríbete. Y gracias por …"; una IA habría producido texto más pulido y estructurado.
+  - Voz muy humana y coloquial con vosotros peninsular: "¡Que demonios!", "¿Que me decís de …", "Ya sabéis", y el chiste de la moneda que se cambia por chicles.
+  - Errores tipográficos y de puntuación típicos de una persona: "¿Que" sin tilde, "mas" sin tilde, "¿y si...?¿Que" sin espacio, "cargas en movimientos", "gracias por vernos! :)".
+  - Estructura digresiva e improvisada ("vale tal vez es …", la división repetida de la Tierra en 100 partes) y cierre informal con emoticono, nada del pulido uniforme de un texto generado.
+
+unmundoinmenso-7c_KT7VsPxw.md  P(AI) 6.0
+  - Contiene fragmentos de sketches/humor con voces y exclamaciones coloquiales ('¡Aleeeexisss! ¡Gooooooool!', 'Hable español, por favor. …') y un anuncio insertado ('métete a TocToc.com'), típicos de un video real transcrito.
+  - Errores y rasgos humanos de transcripción/oralidad: 'Chilenos de mieda', 'devuelveme', 'SI quieres', 'lo cierto que no …', censura 'hijos de pta', 'La cncha de su …'.
+  - Estructura de divulgación oral con preguntas retóricas al espectador ('¿se acuerdan de la …', 'Ya se imaginan, ¿no?') y humor local, no el tono neutro y pulido de un texto generado.
+  - Incluye fragmentos de sketches/parodias con voces y modismos reales ("¡Oye, chileno, devuelveme el …", "Tata ¿y dónde se …"), típicos de una transcripción de video humano con publicidad insertada.
+  - Errores y irregularidades de transcripción oral: "devuelveme", "Tu me lo quitaste", "SI quieres", "de mieda", "lo cierto que no …", insultos censurados ("hijos de pta"), cosa que un asistente de IA no produciría.
+  - Tono conversacional con humor y apartes ("¿En qué andábamos?", "Ya se imaginan, ¿no?", chiste del pisco) y referencias culturales específicas (Alexis Sánchez, Copa América 2015), propios de un guionista humano.
+
+visualpolitik-53WRNKbFJBg.md  P(AI) 3.5
+  - Typos y errores de dedo típicos de humanos ("VisualPoltiik", "Illionios", "Lastima", "experimentó" por "experimente", "se han huido"), que un modelo de IA rara vez produciría.
+  - Restos de guion/producción: "(CHART: en telegram)", "(LOS ESTADOS: LA DEUDA …", paréntesis sueltos y una cita en inglés sin traducir, claramente un guion editado a mano.
+  - Voz oral muy marcada y coloquial del canal: "Diantres, no os enteráis", "ojo", "Atentos", "queridos amigos", "bastante pero que bastante …", con muletillas repetidas y estructura algo desordenada.
+  - Errores tipográficos y de concordancia típicos de humanos: «Illionios», «VisualPoltiik», «las 50 estados», «experimentó tantos desequilibrios», «Lastima»
+  - Marcas de guion de vídeo y notas de producción: «(CHART: en telegram)», «(LOS ESTADOS: LA DEUDA …», fragmentos entre paréntesis pegados, frase en inglés sin traducir
+  - Voz oral muy característica de VisualPolitik: «Queridos amigos», «Tal cual como lo …», «Diantres», «ojo», «pero bastante peor», con coloquialismos y giros irregulares que una IA no suele producir
+
+cdeciencia-FCx8Cf4H18w.md  P(AI) 4.0
+  - Errores humanos típicos de transcripción hablada: "intenso intenso" repetido, "Teméd lo peor", "esperabamos" y "rapido" sin tilde, "sino el que más" mal escrito.
+  - Estilo oral y espontáneo con muletillas y estructura irregular ("Así estamos,", "Para que te hagas …", puntuación con punto y coma extraña), nada pulido como una IA.
+  - Contenido anclado a noticias concretas de 2016 con voz propia del canal ("Hola, bienvenido a C …"), con imprecisiones y giros coloquiales que una IA suele corregir.
+  - Errores y descuidos típicos de transcripción humana: "intenso intenso", "Teméd lo peor", "esperabamos", "fotovoltáicos", "sino el que más"
+  - Estilo oral con muletillas y puntuación irregular (puntos y comas en medio de frases, "Así estamos," como cierre abrupto, falta de punto tras "kilómetros de diámetro")
+  - Tono de presentador de canal concreto ("C de Ciencia"), con opiniones y citas informales ("da miedo lo que …") y datos específicos de 2016, impropio de un texto generado
+
+curiosamente-DgFdq5kT95M.md  P(AI) 12.0
+  - Marcas de escritura humana y descuidos de transcripción: "Es curioso es que", "la libertad positiva:, es …", "la para la izquierda", "en el extremos de …", "capacidades.." que una IA rara vez produciría.
+  - Voz de marca muy particular y coloquial ("¡en batalla campal!", "agarrarnos a golpes", "brincó a otros países") con cierre publicitario de Platzi propio de un canal real (CuriosaMente).
+  - Contenido con matices y opiniones específicas (Skynner, amígdala, brújula política, inversión histórica de proteccionismo/libre comercio) en una estructura algo digresiva, no el esquema pulido y simétrico típico de un texto generado.
+  - Typos y errores de edición propios de transcripción humana: "la para la izquierda", "libertad positiva:,", "capacidades..", "Es curioso es que", "en el extremos de …".
+  - Voz de marca muy específica y coloquial ("¡en batalla campal!", "agarrarnos a golpes", "brincó a otros países") con mexicanismos y un cierre publicitario de Platzi, típico de un guion de CuriosaMente.
+  - Estructura argumentativa con matices y ejemplos poco genéricos (amígdala, Skynner, Berlin, inversión histórica del proteccionismo) en vez de listas pulidas y simétricas de IA.
+
+dateunvlog-ap09Xw_xpEg.md  P(AI) 2.5
+  - Transcripción de habla espontánea con errores típicos de subtitulado automático: «electores» por electrones, «e´ famoso», «piedar», «alernas», «ls dos rendijas», «Quñé».
+  - Voz personal y humor improvisado: «rollo Marichalar pero en …», «le da un retweet …», «que no, hombre», «A la fina cuántica …».
+  - Autorreferencias y digresiones propias de un youtuber real: «date un voltio», colaboración con Big Van, La Caixa y Reina Mono, «este vídeo se me …».
+  - Transcripción de habla oral con errores típicos de ASR y desorden espontáneo: "electores" por electrones, "hijos de Young", "e´ famoso", "Quñé", "piedar", "alernas", frases cortadas.
+  - Humor improvisado y autorreferencial, con muletillas y rectificaciones en directo ("que no, hombre", "que no tonto, que …", "Pero metafóricamente, guarro") y referencias culturales locales (Marichalar, Big Van, La Caixa).
+  - Incluye un sketch con otra voz, promociona sus redes y vídeos propios ("date un voltio"), y comete deslices que una IA no produciría ("les aconsejó", "a tener diferentes niveles", "me lo quito de …").
+
+elrobotdeplaton-Ui4M0cYFZWI.md  P(AI) 3.0
+  - Voz oral muy personal y espontánea: "Hola soy Aldo y …", con bromas improvisadas como "Es más hay un …" y el cierre "les ha hablado Aldo …".
+  - Abundantes errores humanos de ortografía, puntuación y sintaxis: "estár", "fué", "bateria", "Imaginense", "estubieras", "Si se meteria a …", "Esta interacción hace dentro", "¿Qué sea tan mortal...?", mayúsculas y signos de interrogación irregulares; una IA no produciría esto de forma tan consistente.
+  - Divagaciones, autocorrecciones y datos desactualizados o imprecisos típicos de un guion de YouTuber ("Nada que virus, nada …", "¡¿WHAT?!", "Chao Hola neutrones"), con estructura desordenada y repeticiones como "fracciones de fracciones de …".
+  - Voz oral muy personal y espontánea: "Hola soy Aldo y …", con chistes improvisados y cierre fallido "les ha hablado Aldo …".
+  - Abundantes errores y descuidos humanos: "estár", "bateria", "Imaginense", "estubieras", "fracciónes", puntuación irregular, frases mal armadas ("Esta interacción hace dentro …", "Si se meteria a …"), y datos algo imprecisos.
+  - Digresiones y humor coloquial típicos de un youtuber: "Es más hay un …", "Nada que virus, nada …", "adiós Helio... Chao Hola …", sin la estructura pulida de un texto generado.
+
+jaimealtozano-OdYIS8KXdFI.md  P(AI) 8.0
+  - Errores típicos de transcripción automática de voz: "entre 1000 y fa" (do y fa), "dow" por do, "rey" por re, "desde mí", "frIgia", "dos sostenidos" por "do sostenido"; una IA que escribe texto no cometería estos fallos fonéticos.
+  - Estilo oral y personal con marcas de habla espontánea: "Bien pues ninguna nota…", "voilà", "fijaos en lo chulo …", "ni vosotros ni yo …", con referencias a lo que suena en el video ("Y suena así").
+  - Falta de puntuación y estructura típica de subtítulos transcritos, con frases largas encadenadas sin pausas, y explicación pedagógica con digresiones naturales, no el pulido uniforme de un texto generado.
+  - Errores típicos de transcripción automática de voz ("1000 y fa" por "do y fa", "dow", "rey", "desde mí", "los chulo que es") que una IA no produciría al escribir
+  - Tono oral y personal con digresiones y marcas de habla ("Bien pues", "voilà", "ni vosotros ni yo …"), con "Y suena así" indicando partes musicales del video
+  - Falta de puntuación y estructura irregular propia de subtítulos transcritos; un texto generado sería más pulido y ordenado
+
+lahiperactina-HfS7sTzuz1c.md  P(AI) 3.0
+  - Voz oral muy personal con errores y desajustes típicos de un guion hablado: "a mi toda esta …", "lo que algunas cosas …", "la información genética de …", "tener que que tener …".
+  - Marcas de creador de YouTube: MAYÚSCULAS para énfasis, anglicismos coloquiales ("disclaimer", "disappointing", "LAME"), "qué narices", "jodida y puñetera", y referencia a su canal "La Hiperactina" y a los mensajes de su audiencia.
+  - Contenido anclado en el momento (cifras de casos que "estarán desfasadas mañana"), agradecimientos a una persona concreta y construcciones desordenadas e inconsistentes que una IA no suele producir.
+  - Voz oral muy personal y desordenada: "Y digo han saltado …", "HIPERACTINA QUÉ PASA CON …", mezcla de inglés coloquial ("disappointing", "LAME", "disclaimer").
+  - Errores y erratas típicos de transcripción humana: "a mi toda esta …", "lo que algunas cosas …", "la información genética de …", "que que tener cuidado", "hasta aquí por nada".
+  - Referencias específicas y cambiantes del momento (cifras de 12.000 infectados y 200 muertos, "estará desfasada mañana"), agradecimiento a una persona real y expresiones como "jodida y puñetera", "nos la ha liado", impropias de un texto generado.
+
+peroesoesotrahistoria-FjZjoSVeTg4.md  P(AI) 3.0
+  - Voz muy personal y coloquial con vulgarismos y jerga española: "la radiación del puto …", "raros de cojes", "acojaos vivos", "lo petan".
+  - Incluye chistes, referencias de cultura pop y acotaciones de audio/vídeo ("Opening de Dragon Ball …", "Chillidos de niños", "Olé olé olé", "La vida es un …"), propias de un youtuber humano.
+  - Puntuación irregular, erratas y errores ("No es posiblee", "si esta se vuestra …", falta de puntos, "Éstos"), sin la pulcritud ni la estructura uniforme típicas de un texto generado por IA.
+  - Voz muy personal y coloquial con humor e improvisación: "la radiación del puto …", "raros de cojes", "acojaos vivos", "La vida es un …".
+  - Incluye acotaciones de edición y efectos de vídeo mezclados con el texto ("Chillidos de niños", "-Olé olé olé olé …", "Fragmento de Opening de …"), típico de una transcripción de un YouTuber real.
+  - Errores y irregularidades humanas: puntuación inconsistente, "esta se vuestra época", "No se sabe bien …", "posiblee", y referencias internas a un vídeo anterior de la serie.
+
+quantumfracture-J7FofwcNCpk.md  P(AI) 8.0
+  - Errores humanos típicos de transcripción hablada: faltan tildes ("mas", "si", "ira", "ayudaran"), "se está movimiento", "en vez sumar ambas", "vamos representarlo", "Pero que pasaría" sin acento; una IA no los cometería.
+  - Voz de youtuber española con cercanía y coloquialismos: "Queridos suscriptores", "os voy a enseñar", "dos viejas amigas", "lógico!", "aquí viene lo bueno", y cierre "si quieres más ciencia, …".
+  - Imprecisiones y desvíos propios de un divulgador humano ("cuerpo" por "energía" en "La energía, entre otras …", "teóricas clásicas de campos", "Aunque no tiene relación... …"), sin la estructura pulida típica de un texto generado.
+  - Errores humanos típicos: faltan tildes ("mas", "si", "ira", "observare"), "movimiento" por "moviendo", "vamos representarlo" sin "a", "Que pasaría" sin tilde, y la puntuación torpe "lógico!." y "suscríbete…."
+  - Voz de youtuber de divulgación en español de España ("os voy a enseñar", "Queridos suscriptores", "Y aquí viene lo …") con coloquialismos y humor ("viejas amigas", "un tanto siniestro") y despedida improvisada.
+  - Explicación algo desordenada y con digresiones ("no puedo evitar haceros …", cambio de "vosotros" a "recuerda"), imprecisiones físicas propias de un humano, poco habituales en un texto de IA pulido.
+
+unmundoinmenso-9XqnDSqhfww.md  P(AI) 12.0
+  - Voseo rioplatense ('creés', 'Dejanos tu comentario') y cierre con llamado a ser miembro de 'Un Mundo Inmenso': típico de un canal humano real
+  - Errores y irregularidades naturales del habla escrita: 'Groenlandia mantiene el récord …' tras una lógica confusa, comas faltantes, 'Rusia' sin coma en la primera frase, 'Francia... desbloqueó un nuevo …'
+  - Tono conversacional con humor y preguntas retóricas ('Bueno, estamos ante un …', 'esto se empieza a …'), sin la estructura pulida y simétrica de un texto generado
+  - Voseo rioplatense ('creés', 'Dejanos') y tono conversacional con retórica espontánea ('Bueno, partamos de esa …', 'Claro, con el Canal …')
+  - Errores e imprecisiones humanas: puntuación irregular ('Islandia Nueva Zelanda o …'), frases torpes ('Groenlandia mantiene el récord... …'), falta de punto tras 'tierras asiáticas'
+  - Cierre típico de canal real con llamado a ser miembro de 'Un Mundo Inmenso' y humor propio ('Francia desbloqueó un nuevo …'), sin estructura ni listas genéricas de IA
+
+visualpolitik-LP6yMu9wdr8.md  P(AI) 3.0
+  - Voz muy personal y específica de VisualPolitik: bromas internas ("Fonseca", "A ver, Couto", "A ver, Alberto"), insultos coloquiales ("ni puta idea tienes") y marcas de transcripción como "(((TOSER)))".
+  - Errores y irregularidades humanas: "Xi Jimping", "Den Xiaoping", "estandar", "Por que sí", frases con puntuación descuidada y repeticiones propias de guion hablado.
+  - Referencias contextuales concretas (estudio de Brookings, "hace este vídeo, en …", The China Hustle "no es un patrocinio") y cierre típico del canal; una IA habría sido más pulida y genérica.
+  - Voz muy personal y específica de VisualPolitik: bromas internas ("Fonseca", "Couto", "Alberto"), insultos coloquiales ("ni puta idea tienes") y marcador de transcripción "(((TOSER)))".
+  - Errores y erratas humanas típicas de un guion hablado: "Xi Jimping", "Den Xiaoping", "estandar", "Por lo visto, se …" (sintaxis rota), "el PIB es una …".
+  - Referencias a producción real del canal ("como siempre hacemos en …", "Esto no es un …", petición de likes y campanita) y ritmo oral con preguntas retóricas encadenadas, sin la pulcritud de un texto generado.
+
+cdeciencia-GCH_6lrHgaA.md  P(AI) 7.0
+  - Typos y errores humanos: "fectación", "musica" sin tilde, "éso", "en cómo será", "una formas", "tiene dos alelos"; una IA rara vez los comete.
+  - Voz oral y marca de canal: "Hola, bienvenido a CdeCiencia", referencias a "esta imagen que estás …" y "sino esto", propias de un youtuber real.
+  - Errores de contenido y digresiones coloquiales ("multiplicándolo x100", "% de zurdos", cálculo del 25% sin explicar), con estructura desordenada que no es típica de texto generado.
+  - Errores y descuidos típicamente humanos: "fectación", "musica" sin tilde, "éso", "Lo que no sabemos …", "una formas", "x100", "%"en lugar de"por ciento"
+  - Referencias visuales y estilo oral de youtuber: "Hola, bienvenido a CdeCiencia", "en esta imagen que …", "Muchas gracias por ver …"
+  - Contenido con imprecisiones y digresiones propias de un guionista aficionado (ambidiestros que "ven sonidos", cálculo del 25% sin explicar, repeticiones de "Curiosamente"), sin la pulcritud ni estructura uniforme de un texto generado
+
+curiosamente-KyjjFYM8aUg.md  P(AI) 12.0
+  - Voz de guion de divulgación con humor idiosincrásico ("además de para reprobar …", "seguro ya espantamos a …") y giros coloquiales mexicanos que una IA rara vez produce así.
+  - Errores y rarezas humanas: "teorema de pitágoras" sin mayúscula, "cincuentava parte", "¡Curiosamente!" como marca de cierre del video, y puntuación irregular ("¡...pizarrones interactivos!.").
+  - Contenido comercial muy específico (CuriosaMente, SEP, Google Play/App Store, pizarrones interactivos) y estructura de anuncio incrustado, típica de un guion real de producción educativa.
+  - Voz de guion humano con humor local y coloquial: "además de para reprobar …", "Con estas palabras seguro …".
+  - Imperfecciones propias de escritura humana: "teorema de pitágoras" en minúscula, "¡Curiosamente!" suelto como transición de marca, "¡Además es compatible con …" con puntuación errónea.
+  - Contenido específico y comercial (CuriosaMente, SEP, Google Play/App Store) y datos con matices (estadio egipcio de 158 m, John D. Barrow) típicos de un guion de divulgación real, no de texto genérico de IA.
+
+dateunvlog-qc6qvdwII5E.md  P(AI) 2.0
+  - Voz personal y muy coloquial con humor autodespectivo y digresiones espontáneas: "huele un poquito a …", "¿Por qué no tengo …", "justo en mi pezón"
+  - Marcas de habla oral y de edición en directo: onomatopeyas, risas, canto, "(chirrido)", "bitita-titatitatita", autocorrecciones como "hermítico, no hermético"
+  - Referencias a su propio canal y comunidad ("hijos de Weinberg", "Date un Vlog"), con errores y descuidos típicos de transcripción humana ("lo físicos", "más dos mil años")
+  - Voz muy personal e improvisada: bromas sobre la camiseta que huele a choto, "¿Por qué no tengo …", "justo en mi pezón", cantando y riendo, con indicaciones de sonido como (chirrido) y (ríe).
+  - Errores y torpezas típicos del habla oral: "bitita-titatitatita", "más dos mil años", "lo físicos", frases cortadas como "una teoría cuántica de …".
+  - Referencias propias del canal ("hijos de Weinberg", "Date un Vlog", "amigos del dolor cerebral") y despedida con coletilla personal, algo que una IA no suele generar de forma tan idiosincrásica.
+
+elrobotdeplaton-W9PCt9ptVZw.md  P(AI) 6.0
+  - Texto con marcas claras de transcripción oral humana: titubeos, muletillas y falsos comienzos como "¿Por qué la cámara …" y "Es un poco... Es …".
+  - Errores ortográficos típicos de subtítulos o transcripción automática/humana: "azúl", "mas fácilmente", "de bañaran en el", y contradicciones de guion improvisado ("El cielo no es …").
+  - Humor y referencias visuales al video ("Como pueden ver, este …", "saldría más o menos …"), digresiones espontáneas sobre planetas y cierre informal; una IA suele ser más pulida, estructurada y sin errores.
+  - Texto desordenado y coloquial, con falsos comienzos y errores de transcripción ('azúl', 'mas', 'de bañaran en el', 'Su color' con mayúscula), propios de una transcripción automática de habla real.
+  - Humor espontáneo y referencias visuales ('Como pueden ver, este …', 'saldría más o menos …', 'verde grisáceo tirando para …') que dependen de imágenes en pantalla.
+  - Cierre típico de youtuber y digresiones personales ('uno que otro planeta', 'Pero eso es otro …'), sin la estructura pulida ni el tono neutro de un texto generado por IA.
+
+jaimealtozano-VEVIAF_2tUM.md  P(AI) 4.0
+  - Texto con marcas de transcripción oral espontánea: puntos sueltos que marcan pausas de música ('.'), muletillas como 'A ver', 'ya os podéis imaginar …', 'Y si os fijáis, …'
+  - Referencias deícticas a la acción del presentador ('si miráis mi mano …', 'la que oís') y a patrocinadores Patreon, propias de un YouTuber real
+  - Errores y irregularidades humanas: 'Leie', 'Este video lo echó …', falta de puntuación, 'hoy es un viento …', y análisis musical personal ('me dio la sensación …')
+  - Texto típico de transcripción automática de un video hablado: marcadores de pausa con puntos sueltos ('.'), sin puntuación coherente, y referencias a elementos visuales ('si miráis mi mano …').
+  - Errores y rarezas de habla/transcripción humana: 'Leie', 'Este video lo echó …', 'cuando hoy es un …', 'ésto' con tilde, y frases entrecortadas que ningún asistente de IA produciría.
+  - Voz personal y espontánea: 'A ver,', 'La primera vez que …', menciones a Patreons, twitteadlo y el próximo video, con digresiones y autocorrecciones propias de un presentador real.
+
+lahiperactina-TFl3nffdELI.md  P(AI) 2.5
+  - Voz oral muy personal y espontánea: muletillas como "eehh... lo siento", "no sé qué estoy …", "y esas cosas...", "Si es que la …".
+  - Coloquialismos españoles de España y jerga ("chicha científica", "mola", "qué rollo", "MAINSTREAM", "cómo narices") con mayúsculas enfáticas y autorreferencias a su canal, logo y cuarentena.
+  - Imperfecciones gramaticales y de transcripción típicas del habla ("de forma cuando la …", "a grande escala", frases inconclusas) que una IA no produciría.
+  - Voz oral muy personal y espontánea con muletillas y vacilaciones: "eehh... lo siento", "no sé qué estoy …", "A ver", "Vale pues", típico de un guion hablado real.
+  - Anécdotas y referencias personales concretas (abril de 2018, el logo olvidado, 'esta cuarentena', agradecimientos a la audiencia) y jerga coloquial española ('chicha científica', 'mola', 'MAINSTREAM', 'cómo narices').
+  - Errores y irregularidades de transcripción natural (frases incompletas como 'En abril de 2018 …', 'de forma cuando la …', 'a grande escala'), impropios de texto generado por IA.
+
+peroesoesotrahistoria-Khj_5W2yafc.md  P(AI) 2.5
+  - Voz muy personal y coloquial con humor irreverente: "por sus cojones iba …", "magufada", "petada de oro", "mandó a los atlantes …"
+  - Citas de memes/clips intercaladas ("Fliiiipa", "Viva el semen español", "Qué putada") y autorreferencias a otros episodios ("Como ya dije en …", "de la que ya …")
+  - Errores y desorden típicos de transcripción humana ("relato de gripe a …", "Clito o Clitoé" luego "Quito", cierre sin puntuación con el texto promocional del canal mezclado y "pero eso es otra …")
+  - Voz muy personal y coloquial con humor irreverente ("por sus cojones", "magufada", "mandó a los atlantes …") y autorreferencias a otros episodios ("Como ya dije en …", "de la que ya …").
+  - Restos de transcripción automática y de subtítulos de memes intercalados ("Fliiiipa", "Viva el semen español", "gripe a" por "relato", "Quito" por Clito) y un cierre desordenado sin puntuación ("hazte fan de la …").
+  - Errores y digresiones propios de un guion humano ("Donelly" y "Donnelly", "Critias/Crítias", "Realmente esta reunión sólo …") y comentarios entre comillas de reacción, nada del tono pulido y neutro de una IA.
+
+quantumfracture-JBZx03342eM.md  P(AI) 3.0
+  - Voz personal y coloquial con jerga española ("la peña", "a su bola", "movida", "os ha molado", "Nope"), y referencias a su propio canal y a CdeCiencia que una IA no inventaría así.
+  - Errores humanos de transcripción/escritura: "la propia de gente …", "a pillado", "No hecho nada de …", "est video", "reduciendolos", "bajaramos", concordancias rotas.
+  - Estructura oral improvisada con autocorrecciones, analogías propias (batidora, orquesta, pelota en el valle) y cierre típico de youtuber pidiendo likes con ironía; contexto temporal específico del creador.
+  - Voz personal y coloquial muy marcada de youtuber: "La peña piensa", "va a su bola", "si os ha molado …", "una movida así", con referencias a su propio canal y a CdeCiencia.
+  - Errores y descuidos típicos de transcripción hablada: "la propia de gente …", "ha pillado" por "a pillado", "bajaramos o subieramos", "No hecho nada de …", "quién controla", mezcla de tiempos y concordancias que una IA rara vez produce.
+  - Humor, autocorrecciones y analogías improvisadas (batidora que hace tartas, orquesta, pelota en el valle), además de opiniones y cierre propios ("Nos vemos la semana …", "pedir una cantidad absurda …") que reflejan una experiencia concreta y no una estructura genérica.
+
+unmundoinmenso-YyZIRGRQ_1w.md  P(AI) 10.0
+  - Voz de canal real con marcas orales y rioplatenses: "A ver, vamos de …", "Dejanos tu comentario", "Bueno, esto se explica …"
+  - Errores y desprolijidades humanas: "no tiene forma de …", datos inconsistentes (Krakatoa 2020, "hace tres siglos"), el chiste sobre "adjetivos más adecuados que …"
+  - Cierre con promoción específica ("miembro de Un Mundo …", "mientras hacemos este video …") y explicación repetitiva e informal, poco típica de texto generado
+  - Voz de canal real con marcas orales y rioplatenses: "A ver, vamos de …", "Dejanos tu comentario", "Bueno, esto se explica …"
+  - Errores e imprecisiones propios de un guionista humano: "si no que se …", "Krakatoa... abril de 2020", "epicentro fue Traiguén", y el chiste sobre "adjetivos más adecuados que …"
+  - Cierre con llamado a la acción específico ("Un Mundo Inmenso", membresía) y referencias situadas como "mientras hacemos este video …", poco típicos de texto generado
+
+visualpolitik-MX6gxOVL7KY.md  P(AI) 4.0
+  - Marcas de habla oral y errores humanos: 'Está ayuda', 'véis', 'salgas adelante', 'dónde', 'cómo' con tilde mal puesta, 'mismamente en el Whatsapp'.
+  - Restos de guion/transcripción: marcadores '//', títulos entre paréntesis'(EL MÉTODO QUE NUNCA FUNCIONA)', diálogo de entrevista sin comillas y cortes abruptos.
+  - Voz muy personal y coloquial de VisualPolitik: 'Houston, tenemos un problema', 'Agarraos a la silla', 'cómo diantres', patrocinio de Microwd, referencias a eventos y a la descripción.
+  - Marcas claras de habla improvisada humana: muletillas y repeticiones como 'Pues… ¿Sabéis qué?', 'empleos, empleos y empleos', 'capital, capital y capital', 'Houston, tenemos un problema'.
+  - Errores tipográficos y gramaticales típicos de transcripción humana: 'véis', 'Está ayuda', 'cómo' por 'como', 'salgas adelante', 'la la', además de marcas '//' y notas de …'(EL MÉTODO QUE NUNCA FUNCIONA)'.
+  - Voz muy personal y específica del canal (VisualPolitik): chistes de Messi y Apple, referencias a un evento el 25 de febrero, patrocinio de Microwd con entrevista a Alejandro; no tiene el tono neutro y pulido de una IA.
+
+cdeciencia-K0lqbaOr5dk.md  P(AI) 6.0
+  - Errores y torpezas típicas del habla humana: "las fotos que se …", "Y no es por …", "los 60's".
+  - Errores factuales y de razonamiento propios de un guionista aficionado (la bandera oscila "como la Tierra gira …", isótopo del hidrógeno como "único combustible viable"), que una IA pulida tendería a evitar.
+  - Tono oral y espontáneo con apelaciones directas ("Puedes ir, si quieres", "Bueno, vale... ¿pero entonces..."), referencias a imágenes en pantalla ("Esta foto pertenece...", "Y este hombre es …") y saludo/despedida de canal propios de un youtuber real.
+  - Errores y torpezas típicas del habla humana: "Y estas fueron las …" sin citar nada, "no se ve ninguna …", "Y no es por …"
+  - Imprecisiones factuales y razonamientos confusos ("la Tierra gira alrededor …" como analogía, "isótopo del hidrógeno", "misiones propuestas para 2020") impropios de un texto pulido por IA
+  - Tono oral de divulgador con saludo de canal ("¡Hola! Bienvenido a CdeCiencia"), referencias a imágenes en pantalla ("Estos son los retroreflectores", "Este hombre es Heinz …") y coloquialismos ("Puedes ir, si quieres")
+
+curiosamente-T55OzE-X6u0.md  P(AI) 12.0
+  - Voz de canal de YouTube con marcas humanas: promoción del libro, 'Patreon y del botón …', 'Así que hoy platicaremos …', exclamaciones coloquiales como '¡Divide y vencerás!' y '¡Curiosamente!'
+  - Errores y descuidos propios de escritura humana: 'Lo puedes en diferentes …' (falta verbo), 'Tangajoan' vs 'Tangaojan', 'en otras las regiones', 'allá por el año …'
+  - Estructura de secciones por región con datos y fechas desiguales, y cambios de tiempo verbal ('llegan', 'se va') poco típicos de un texto generado por IA
+  - Voz de canal con muletillas humanas y coloquiales: "Así que hoy platicaremos …", "¡Divide y vencerás!", "¡Curiosamente!", y promoción propia del libro, Patreon y botón Unirse, típica de un guion real.
+  - Errores y descuidos propios de un humano: "Lo puedes en diferentes …" (falta el verbo), "Tangaojan" vs "Tangajoan", "como en otras las …", puntuación irregular.
+  - Estructura por secciones con encabezados sueltos ("Oaxaca.", "Michoacán.") y datos históricos densos con detalles algo desiguales, sin la pulcritud uniforme ni el cierre resumen genérico que suele dar una IA.
