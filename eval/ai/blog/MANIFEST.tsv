@@ -1,0 +1,118 @@
+test-fable52	antjanus-159358	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "Using Prefetch and Caching For Better JavaScript Bundle Loading". Around 1351 words.
+test-fable52	aspittel-835909	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "Three New Next.js Features and How to Use Them". Around 1400 words.
+test-fable52	bholmesdev-611363	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "4 Git shortcuts that define my workflow". Around 1192 words.
+test-fable52	cassidoo-822612	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "Build a your own online shop with Next.js and Shopify". Around 1187 words.
+test-fable52	codemouse92-374751	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "Development Log: One Month In". Around 600 words.
+test-fable52	dabit3-833259	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "10 Minute Tutorial - Full Stack GitHub Authentication with Supabase & React". Around 828 words.
+test-fable52	emmabostian-257515	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "Six Data Structures To Help You Ace Your Technical Interview". Around 655 words.
+test-fable52	heymichellemac-898757	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "The 7 Step Process I Used To Build A Landing Page To Promote My Book". Around 1400 words.
+test-fable52	jacobherrington-188001	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "Git Rebase Explained Simply". Around 995 words.
+test-fable52	jess-643315	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "The 7 Most Popular DEV Posts from the Past Week". Around 600 words.
+test-fable52	nickytonline-556980	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "My 2020 Year in Review". Around 1379 words.
+test-fable52	rachelsoderberg-323021	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "Integrating C# .NET and Salesforce's REST API". Around 787 words.
+test-fable52	swyx-821090	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "September 11th from Singapore". Around 600 words.
+test-fable52	sylwiavargas-666280	claude-fable-5-2	2026-11-12	Write a blog post for dev.to titled "Talk Notes: "Implicit to Explicit: Decoding Ruby's Magical Syntax" (RailsConf 2021)". Around 600 words.
+test-gpt61	aspittel-782713	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "Build a Serverless Subscription Site with Stripe". Around 1400 words.
+test-gpt61	ben-844325	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "Using FastImage to detect image dimensions in Ruby". Around 600 words.
+test-gpt61	cassidoo-721780	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "React 18 Alpha is out! Now what?". Around 741 words.
+test-gpt61	chrisachard-201842	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "How to Find Consulting Clients". Around 1115 words.
+test-gpt61	dabit3-744589	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "How to Build a Full Stack NFT Marketplace - V2 (2022)". Around 1400 words.
+test-gpt61	deciduously-882090	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "Workstation Management With Nix Flakes: Jupyter Notebook Example". Around 1400 words.
+test-gpt61	heymichellemac-867655	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "10 Ways I Use Figma As A Creator". Around 1400 words.
+test-gpt61	isaacdlyman-50841	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "If you don't hire juniors, you don't deserve seniors". Around 1400 words.
+test-gpt61	jess-622142	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "The 7 Most Popular DEV Posts from the Past Week". Around 600 words.
+test-gpt61	laurieontech-726344	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "`at` coming soon to ECMAScript". Around 600 words.
+test-gpt61	rachelsoderberg-168075	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "How I Am Getting Out From Under My Student Debt". Around 1301 words.
+test-gpt61	rhymes-737862	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "How to wrap a Preact component into a Stimulus controller". Around 1060 words.
+test-gpt61	sylwiavargas-665065	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "Talk Notes: "Self-Care on Rails" (RailsConf 2021)". Around 600 words.
+test-gpt61	tracycss-513257	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "A React website with Styled-components for beginners ✨". Around 1400 words.
+test-opus55	antjanus-159358	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Using Prefetch and Caching For Better JavaScript Bundle Loading". Around 1351 words.
+test-opus55	aspittel-835909	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Three New Next.js Features and How to Use Them". Around 1400 words.
+test-opus55	bholmesdev-611363	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "4 Git shortcuts that define my workflow". Around 1192 words.
+test-opus55	cassidoo-822612	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Build a your own online shop with Next.js and Shopify". Around 1187 words.
+test-opus55	codemouse92-374751	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Development Log: One Month In". Around 600 words.
+test-opus55	dabit3-833259	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "10 Minute Tutorial - Full Stack GitHub Authentication with Supabase & React". Around 828 words.
+test-opus55	emmabostian-257515	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Six Data Structures To Help You Ace Your Technical Interview". Around 655 words.
+test-opus55	heymichellemac-898757	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "The 7 Step Process I Used To Build A Landing Page To Promote My Book". Around 1400 words.
+test-opus55	jacobherrington-188001	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Git Rebase Explained Simply". Around 995 words.
+test-opus55	jess-643315	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "The 7 Most Popular DEV Posts from the Past Week". Around 600 words.
+test-opus55	nickytonline-556980	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "My 2020 Year in Review". Around 1379 words.
+test-opus55	rachelsoderberg-323021	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Integrating C# .NET and Salesforce's REST API". Around 787 words.
+test-opus55	swyx-821090	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "September 11th from Singapore". Around 600 words.
+test-opus55	sylwiavargas-666280	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Talk Notes: "Implicit to Explicit: Decoding Ruby's Magical Syntax" (RailsConf 2021)". Around 600 words.
+test-sonnet55	antjanus-274252	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Demystifying GREP". Around 600 words.
+test-sonnet55	ben-722174	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "CodeLand 2021: Motivation & Career-Long Connections For Early-Career Devs". Around 600 words.
+test-sonnet55	bholmesdev-696022	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Want CSS variables in media query declarations? Try this!". Around 662 words.
+test-sonnet55	chrisachard-186230	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Intro to Regex for Web Developers". Around 600 words.
+test-sonnet55	codemouse92-527664	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Type Literal Tabs Anywhere". Around 600 words.
+test-sonnet55	deciduously-422862	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Using Bitwise Operators: Why Waste Space Use Many Bits When Few Bits Do Trick?". Around 1400 words.
+test-sonnet55	emmabostian-414787	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "5 Tips On Landing Your First Developer Job". Around 1313 words.
+test-sonnet55	isaacdlyman-259750	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Load testing with JMeter". Around 1400 words.
+test-sonnet55	jacobherrington-220565	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "How I Handle the Fear of Rejection". Around 902 words.
+test-sonnet55	laurieontech-696190	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Diving into Husky and Lint-staged". Around 736 words.
+test-sonnet55	nickytonline-792119	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "First impressions of Polywork as a software engineer". Around 1141 words.
+test-sonnet55	rhymes-195050	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "State of the API, October/November 2019". Around 600 words.
+test-sonnet55	swyx-891466	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Community Heat, or Why You Should Get Good at Events". Around 1400 words.
+test-sonnet55	tracycss-474329	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "How to participate in the Hacktoberfest as a Code Newbie 💻". Around 1400 words.
+test-terra	aspittel-782713	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "Build a Serverless Subscription Site with Stripe". Around 1400 words.
+test-terra	ben-844325	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "Using FastImage to detect image dimensions in Ruby". Around 600 words.
+test-terra	cassidoo-721780	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "React 18 Alpha is out! Now what?". Around 741 words.
+test-terra	chrisachard-201842	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "How to Find Consulting Clients". Around 1115 words.
+test-terra	dabit3-744589	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "How to Build a Full Stack NFT Marketplace - V2 (2022)". Around 1400 words.
+test-terra	deciduously-882090	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "Workstation Management With Nix Flakes: Jupyter Notebook Example". Around 1400 words.
+test-terra	heymichellemac-867655	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "10 Ways I Use Figma As A Creator". Around 1400 words.
+test-terra	isaacdlyman-50841	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "If you don't hire juniors, you don't deserve seniors". Around 1400 words.
+test-terra	jess-622142	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "The 7 Most Popular DEV Posts from the Past Week". Around 600 words.
+test-terra	laurieontech-726344	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "`at` coming soon to ECMAScript". Around 600 words.
+test-terra	rachelsoderberg-168075	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "How I Am Getting Out From Under My Student Debt". Around 1301 words.
+test-terra	rhymes-737862	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "How to wrap a Preact component into a Stimulus controller". Around 1060 words.
+test-terra	sylwiavargas-665065	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "Talk Notes: "Self-Care on Rails" (RailsConf 2021)". Around 600 words.
+test-terra	tracycss-513257	gpt-6.1-terra	2026-11-12	Write a blog post for dev.to titled "A React website with Styled-components for beginners ✨". Around 1400 words.
+train-2026-11	antjanus-252761	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "The Wild SQL Query I Wrote For Work This Week". Around 1400 words.
+train-2026-11	antjanus-258322	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Demystifying the TAR command". Around 656 words.
+train-2026-11	antjanus-336042	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Demystifying the find command". Around 600 words.
+train-2026-11	aspittel-782714	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "Add Sign in with Apple to your React App using AWS Amplify!". Around 1154 words.
+train-2026-11	aspittel-884471	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "What is the Cloud?". Around 819 words.
+train-2026-11	aspittel-925431	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Build a Vacation Rental Site with Amplify Studio". Around 1400 words.
+train-2026-11	ben-723072	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Buckle Up For a Wild Decade in Cloud Computing". Around 828 words.
+train-2026-11	ben-848060	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "Forem Hacktoberfest: Let’s Internationalize!". Around 720 words.
+train-2026-11	bholmesdev-651388	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "I'm building a new home outside of DEV. Here's why (and where to find me!)". Around 1002 words.
+train-2026-11	bholmesdev-707640	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Sexy, accessible show-hide animations in any web framework". Around 1400 words.
+train-2026-11	bholmesdev-721076	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Grabbing subsets of JS object properties with... GraphQL?". Around 1400 words.
+train-2026-11	cassidoo-743237	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "Connection and Collaboration on Polywork". Around 651 words.
+train-2026-11	cassidoo-878930	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "Use Next.js 12 on Netlify". Around 600 words.
+train-2026-11	chrisachard-189623	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Music to Listen to While Coding". Around 694 words.
+train-2026-11	chrisachard-198707	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Fear Driven Development". Around 600 words.
+train-2026-11	chrisachard-283499	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "Tips for Organizing React Projects". Around 600 words.
+train-2026-11	codemouse92-374773	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "Goodbye Master, Hello...What?". Around 677 words.
+train-2026-11	codemouse92-644602	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "News: Call to remove RMS from FSF". Around 818 words.
+train-2026-11	dabit3-757537	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "Magic Link Authentication and Route Controls with Supabase and Next.js". Around 1400 words.
+train-2026-11	dabit3-801489	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "The New Creator Economy - DAOs, Community Ownership, and Cryptoeconomics". Around 1400 words.
+train-2026-11	dabit3-850803	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "The Cloud is Your Development Environment". Around 812 words.
+train-2026-11	deciduously-819808	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Rust Function Pointers Across FFI Boundary". Around 804 words.
+train-2026-11	deciduously-883016	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "Workstation Management With Nix Flakes: Build a Cmake C++ Package". Around 1400 words.
+train-2026-11	deciduously-904992	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Oops, I Did It Again...I Made A Rust Web API And It Was Not That Difficult". Around 1400 words.
+train-2026-11	emmabostian-267751	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "DISCUSS: Technical Interview Horror Stories". Around 600 words.
+train-2026-11	emmabostian-439219	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Creating A Custom Scroll Bar In 24 Lines Of CSS". Around 815 words.
+train-2026-11	heymichellemac-875235	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "How To Add Related Posts In Jekyll To Increase Engagement". Around 1292 words.
+train-2026-11	heymichellemac-905412	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "How To Add A Table Of Contents To Jekyll Blog Posts". Around 698 words.
+train-2026-11	heymichellemac-912032	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "How I Use Obsidian As A Creative - Part 2". Around 1400 words.
+train-2026-11	isaacdlyman-268447	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Project and Porfolio Ideas 2020". Around 785 words.
+train-2026-11	isaacdlyman-811526	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "JSPS: A VS Code extension for more powerful codebase searches". Around 1400 words.
+train-2026-11	jacobherrington-191962	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "Give Your Terminal Super Powers: tmux Cheatsheet!". Around 951 words.
+train-2026-11	jacobherrington-204287	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "How to Find Mentors, Grow a Network, and Make Friends". Around 1400 words.
+train-2026-11	jacobherrington-233427	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Easily Squash, Reword, Amend, and Sort Commits with Git Rebase". Around 1088 words.
+train-2026-11	jess-627979	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "SheCoded 2021 — Stories From Women Building Software and the Allies Supporting Them". Around 857 words.
+train-2026-11	jess-663671	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "The 7 Most Popular DEV Posts from the Past Week". Around 600 words.
+train-2026-11	laurieontech-718347	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "Let's talk about Lodash". Around 634 words.
+train-2026-11	laurieontech-723840	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "React 18: Terms and Functionality". Around 600 words.
+train-2026-11	laurieontech-729141	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "Introducing `findLast` and `findLastIndex`". Around 600 words.
+train-2026-11	nickytonline-669619	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "My Twitch Stream Setup". Around 600 words.
+train-2026-11	nickytonline-921462	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "How I Do Code Reviews". Around 821 words.
+train-2026-11	nickytonline-940887	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "My 2021 Year in Review". Around 1073 words.
+train-2026-11	rachelsoderberg-175454	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "Update Salesforce Fields With A Button Click (Salesforce Classic)". Around 677 words.
+train-2026-11	rachelsoderberg-353335	gpt-6.1-sol	2026-11-12	Write a blog post for dev.to titled "Querying a Record Using C# .NET and the Salesforce REST API". Around 724 words.
+train-2026-11	rhymes-300038	claude-sonnet-5-5	2026-11-12	Write a blog post for dev.to titled "A semi technical explainer of all known Zoom issues". Around 1400 words.
+train-2026-11	rhymes-77848	claude-haiku-5-5	2026-11-12	Write a blog post for dev.to titled "The dangers of the unibrow(ser)". Around 600 words.
+train-2026-11	rhymes-804297	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "How to combine Rails's Ajax support and Stimulus". Around 1400 words.
+train-2026-11	swyx-937703	claude-opus-5-5	2026-11-12	Write a blog post for dev.to titled "Why TurboRepo Will Be The First Big Trend of 2022". Around 1400 words.
