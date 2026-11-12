@@ -66,4 +66,4 @@ with open(index, "a") as idx:
 PY
 echo "corpus: $(ls "$OUT"/*.md | wc -l) texts in $OUT"
 [ -n "${NO_CALIBRATE:-}" ] || python3 "$(dirname "$0")/aimeter.py" --calibrate "$OUT" \
-  --ai "$(dirname "$0")/../eval/ai/blog/train"
+  --ai "$(dirname "$0")/../eval/ai/blog/train,$(dirname "$0")/../eval/ai/blog/train-2026-11"

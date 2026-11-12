@@ -1,28 +1,43 @@
-bands from 175 human texts, 58 held out
+bands from 179 human texts, 58 held out
 
 group                              n        judge_p_ai       judge_as_ai      score_median      score_14plus      ai_side_mean     overshot_mean  audit_fails_mean audit_clean_share
-human-heldout                     58               0.0               0.0              21.0               1.0              1.09              0.64              0.05              0.95
-opus                              10              0.05               0.0              20.5               1.0               2.3               0.2               0.2               0.8
-sonnet                            10               0.0               0.0              18.5               1.0               2.9               0.5               0.4               0.6
-gpt                               10               0.5               0.5              16.0               1.0               6.2                 0                 1               0.0
+human-heldout                     58               0.0               0.0              21.0               1.0              0.81              0.74              0.09              0.93
+opus                              10               0.3               0.3              21.0               1.0               1.7               0.2               0.3               0.7
+sonnet                            10               0.1               0.1              18.0               1.0               1.9               0.6               0.2               0.8
+gpt                               10               0.9               0.9              16.0               1.0               5.2                 0               0.9               0.1
+opus55                            10              0.71               0.7              20.0               1.0               2.2               0.4               0.4               0.6
+sonnet55                          10              0.89               0.9              21.0               1.0               1.5               0.5               0.1               0.9
+fable52                           10              0.72               0.7              20.0               1.0                 2               0.3               0.2               0.8
+gpt61                             10               1.0               1.0              16.5               1.0               5.7                 0                 1               0.0
+terra                             10               0.8               0.8              19.5               1.0               3.3                 0               0.5               0.5
 
-AUC vs held-out humans                    opus          sonnet             gpt
-sentence-length CV                       0.671            0.77           0.747
-mean sentence length                     0.777           0.138           0.861
-long words (7+) /1k                      0.576           0.623             1.0
-mean word length                         0.586           0.768             1.0
-nominalizations /1k                      0.448           0.578           0.816
--ly adverbs /1k                          0.632           0.929           0.905
-lexical diversity MATTR-50               0.826           0.761           0.954
-first person /1k                         0.844           0.916           0.895
-connective openers %                     0.739            0.69           0.478
-commas /1k                                 0.7           0.828           0.686
-AI-lexicon words /1k                     0.519           0.519           0.572
-lists of three /1k                       0.833            0.64           0.986
-plain words /1k                          0.428           0.528            0.86
-words per paragraph                      0.584           0.529           0.775
-headings /1k                             0.888           0.853           0.703
+AUC vs held-out humans                    opus          sonnet             gpt          opus55        sonnet55         fable52           gpt61           terra
+sentence-length CV                       0.614           0.724           0.699           0.685           0.604           0.668           0.878           0.843
+mean sentence length                     0.768           0.137           0.849           0.944            0.92           0.943           0.983           0.808
+long words (7+) /1k                      0.522           0.556           0.993           0.331           0.347           0.371           0.993           0.902
+mean word length                         0.497           0.678           0.997           0.339           0.359            0.37           0.995           0.878
+nominalizations /1k                      0.459           0.576           0.826           0.434             0.5           0.438           0.866           0.719
+lexical diversity MATTR-50               0.788           0.716           0.942           0.784           0.613           0.782           0.981           0.889
+first person /1k                         0.862           0.917           0.909            0.89           0.916           0.872           0.871           0.909
+connective openers %                     0.756           0.712           0.509           0.785           0.666           0.728           0.505           0.476
+commas /1k                               0.714           0.834           0.695           0.709           0.743           0.724           0.516           0.543
+AI-lexicon words /1k                     0.511           0.511           0.566           0.503           0.457           0.566           0.511           0.457
+lists of three /1k                       0.852           0.678            0.99           0.916           0.942           0.953           0.955           0.883
+plain words /1k                          0.498           0.584           0.893           0.509           0.529           0.449           0.781           0.733
+parentheses /1k                          0.414           0.264           0.957           0.462           0.352           0.508           0.957           0.939
+headings /1k                             0.926           0.902           0.784           0.893           0.914           0.834           0.553           0.745
 
-FAIL rate per check   human-heldout            opus          sonnet             gpt
-C1                            0.03             0.2             0.3             1.0
-E3                            0.02               0             0.1               0
+FAIL rate per check   human-heldout            opus          sonnet             gpt          opus55        sonnet55         fable52           gpt61           terra
+C1                            0.05             0.2             0.1             0.9             0.3               0             0.2             1.0             0.5
+E3                            0.02               0             0.1               0               0               0               0               0               0
+T1                            0.02             0.1               0               0             0.1             0.1               0               0               0
+
+TELL or FAIL rate    human-heldout            opus          sonnet             gpt          opus55        sonnet55         fable52           gpt61           terra
+A2b                          0.034               0               0               0               0               0               0               0               0
+B1                           0.086             0.1             0.1             0.2             0.1               0             0.2             0.1               0
+E1                           0.034             0.1               0             0.3             0.1             0.1             0.2               0               0
+E2                            0.19             0.8             1.0             0.6             0.7             0.9             0.5               0               0
+E3                           0.017               0             0.1               0               0               0               0               0               0
+E4                           0.138             0.5             0.2               0             0.6             0.4             0.7               0               0
+
+checklist AUC                0.817           0.841           0.726           0.817           0.797           0.883           0.332           0.284

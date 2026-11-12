@@ -24,7 +24,7 @@ held-out titles (see AI_REF). The directions come from the published studies:
 
 Usage:
   aimeter.py FILE...               score files against the shipped bands
-  aimeter.py --calibrate DIR [--ai AI_DIR] [--out FILE] [--lexicon NAME]
+  aimeter.py --calibrate DIR [--ai AI_DIR[,AI_DIR]] [--out FILE] [--lexicon NAME]
                                [--lang es] [--plain NAME]
                                    rebuild bands from a corpus of human texts; with
                                    AI texts of the same register, also learn which
@@ -204,33 +204,35 @@ HEDGE = re.compile(
 # "hi" means assistant text runs higher than human text, "lo" lower, None means the
 # direction depends on register or model and only the band is scored. Directions
 # come from the published studies (TextPulse 2026; Reinhart et al. 2025, PNAS; the
-# Economist 2026) and were each checked on this skill's own run: held-out pre-2022
-# dev.to posts against 42 posts written in 2026 by Claude Opus, Claude Sonnet and
-# GPT on the same titles. The AI reference is the median of those 42 posts.
+# Economist 2026) and were each checked on this skill's own run: pre-2022 dev.to posts
+# against the 96 training posts written on the same titles in September and November
+# 2026 by Claude Opus, Sonnet and Haiku and by GPT. The values mirror bands.json: the AI
+# reference is the median of those 96 posts, and a feature whose AUC against the human
+# posts is between 0.4 and 0.6 has no direction.
 AI_REF = {
-    "cv_sentence_len":   ("lo", 0.513),
-    "mean_sentence_len": (None, 15.6),
-    "long_words_1k":     ("hi", 252.8),
-    "mean_word_len":     ("hi", 4.92),
-    "nominalizations_1k":("hi", 26.7),
-    "ly_adverbs_1k":     ("hi", 16.0),
-    "passive_1k":        ("lo", 3.74),
-    "mattr50":           ("hi", 0.851),
-    "first_person_1k":   ("lo", 4.36),
-    "contractions_1k":   ("lo", 19.2),
-    "questions_1k":      ("lo", 0.0),
-    "repeated_openers":  ("lo", 3.55),
-    "connective_openers":("lo", 3.3),
-    "commas_1k":         ("hi", 56.2),
+    "cv_sentence_len":   ("lo", 0.49),
+    "mean_sentence_len": ("lo", 15.1),
+    "long_words_1k":     ("hi", 251.5),
+    "mean_word_len":     ("hi", 4.88),
+    "nominalizations_1k":("hi", 24.8),
+    "ly_adverbs_1k":     (None, 13.0),
+    "passive_1k":        ("lo", 3.86),
+    "mattr50":           ("hi", 0.841),
+    "first_person_1k":   ("lo", 3.27),
+    "contractions_1k":   (None, 20.6),
+    "questions_1k":      (None, 0.3),
+    "repeated_openers":  (None, 3.25),
+    "connective_openers":("lo", 2.9),
+    "commas_1k":         ("hi", 57.6),
     "semicolons_1k":     (None, 0.0),
-    "em_dashes_1k":      ("hi", 1.09),
-    "ai_lexicon_1k":     ("hi", 1.80),
-    "triads_1k":         ("hi", 7.2),
-    "participles_1k":    ("hi", 2.25),
-    "plain_words_1k":    ("lo", 55.0),
-    "parens_1k":         ("lo", 0.0),
+    "em_dashes_1k":      (None, 0.00),
+    "ai_lexicon_1k":     ("hi", 2.07),
+    "triads_1k":         ("hi", 6.5),
+    "participles_1k":    (None, 0.94),
+    "plain_words_1k":    ("lo", 55.9),
+    "parens_1k":         ("lo", 0.9),
     "para_words":        (None, None),
-    "headings_1k":       ("hi", 12.2),
+    "headings_1k":       ("hi", 11.9),
 }
 LABELS = {
     "cv_sentence_len": "sentence-length CV", "mean_sentence_len": "mean sentence length",
@@ -360,12 +362,14 @@ def bands_from(rows, ai_rows=None):
 
 
 def measure_dir(directory):
+    """Measured texts of a folder, or of several folders joined with commas."""
     rows = []
-    for name in sorted(os.listdir(directory)):
-        if name.endswith((".md", ".txt")):
-            m = measure(open(os.path.join(directory, name), encoding="utf-8").read())
-            if m:
-                rows.append(m)
+    for d in directory.split(","):
+        for name in sorted(os.listdir(d)):
+            if name.endswith((".md", ".txt")):
+                m = measure(open(os.path.join(d, name), encoding="utf-8").read())
+                if m:
+                    rows.append(m)
     return rows
 
 

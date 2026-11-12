@@ -1,7 +1,9 @@
 # AI-lean words. Every entry comes from a published list with a measured human
 # baseline (source after '#': lexa = Juzek 2026, arXiv:2605.25358, by model and
 # register; kobak2025 = Science Advances 11:eadt3813; reinhart2025 = PNAS; liang2024
-# = ICML; wikipedia2026 = WikiProject AI Cleanup; legacy = Kobak, Liang, TextPulse and
+# = ICML; wikipedia2026 = WikiProject AI Cleanup; graphite2026 = Graphite, AI Tells,
+# CC BY 4.0; "November 2026" = the same rule on 120 human posts and the 48 posts of
+# eval/ai/blog/train-2026-11; legacy = Kobak, Liang, TextPulse and
 # Wikipedia words this file held before). An entry was kept only if, on this skill's
 # own run, it appeared in at most 4% of 125 pre-2022 dev.to posts and in at least 10%
 # of 48 assistant posts written in 2026 on other titles; a legacy entry was kept if it
@@ -51,3 +53,7 @@ underscores underscoring                         # legacy; bare "underscore" dro
 utilize utilized utilizing                       # legacy
 versatile                                        # legacy
 genuinely                                        # anthropic2026-sysprompt
+practical                                        # wikipedia2026,graphite2026; November 2026
+quietly                                          # wikipedia2026; November 2026
+deliberate deliberately                          # graphite2026; November 2026
+preserve preserves preserved preserving          # lexa-sci-gpt5.2; November 2026

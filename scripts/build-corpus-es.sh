@@ -66,4 +66,4 @@ with open(os.path.join(out, "titles.tsv"), "w") as idx:
 print(f"spanish corpus: {kept} posts by {len(per_author)} authors in {out}", file=sys.stderr)
 PY
 [ -n "${NO_CALIBRATE:-}" ] || python3 "$HERE/aimeter.py" --calibrate "$OUT" \
-  --ai "$HERE/../eval/ai/es/train" --out "$HERE/bands-es.json"
+  --ai "$HERE/../eval/ai/es/train,$HERE/../eval/ai/es/train-2026-11" --out "$HERE/bands-es.json"
