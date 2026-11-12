@@ -101,7 +101,7 @@ $ python3 scripts/aimeter.py eval/ai/blog/e2e-raw/aspittel-782713.md
 feature                   this   human band      verdict
 long words (7+) /1k     353.83   159.68 - 250.46  above band, AI side
 nominalizations /1k      55.21     7.29 - 32.65   above band, AI side
-em dashes /1k             3.76     0.00 - 2.74    above band, AI side
+mean word length          5.46     4.28 - 4.86    above band, AI side
 lists of three /1k       11.29     0.00 - 5.51    above band, AI side
 plain words /1k          33.88    43.19 - 95.24   below band, AI side
 ...
@@ -138,7 +138,8 @@ este repo. Nada entra porque "se lee mejor".
   elegir nada.
 - **Texto de IA de 2026 con los mismos títulos.** Claude Opus, Sonnet, Haiku y GPT
   escribieron los textos de comparación que hay en `eval/ai/`, a partir de la petición
-  simple que escribiría cualquier usuario.
+  simple que escribiría cualquier usuario. Se escribieron en septiembre de 2026 y otra
+  vez en noviembre, con los modelos de ese momento.
 - **Dos formas de fallar.** Un texto puede quedar del lado de la IA o *pasarse* al otro
   lado de la banda humana. Pasarse también delata: los modelos a los que se les pide
   "escribir como humano" acaban más cortados y más planos que cualquier persona. El
@@ -205,7 +206,8 @@ herramientas leen probabilidades de tokens, y Quirón no las toca. Trabaja únic
 lo que realmente nota alguien al leer.
 
 **¿Con qué modelos funciona?** Con cualquier modelo detrás de un agente que cargue skills.
-Se probó con texto de tres modelos de Claude y uno de GPT.
+Se probó con texto de diez modelos de Claude y GPT, cuatro de septiembre de 2026 y seis
+de noviembre.
 
 **¿Se inventa cosas para sonar humano?** Sus instrucciones se lo prohíben. Una nueva
 versión solo puede usar datos de tu texto o de tus notas. `scripts/factdiff.py` lista los

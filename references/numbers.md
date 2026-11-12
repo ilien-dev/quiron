@@ -10,6 +10,7 @@ The bands, the AI directions, what the whole apparatus does on held-out texts, h
 - Four counter-intuitive results
 - What the apparatus does on held-out texts
 - What the loop does to a text
+- The November 2026 rounds
 - Checks measured and not shipped
 - Calibrating for another register
 - Part D: what this does not do
@@ -33,38 +34,54 @@ a user would type. Every fourth human text is held out; the bands, the AI direct
 the lexicons and the thresholds were all chosen on the rest, and every figure below is
 on the held-out texts unless it says otherwise.
 
+In November 2026 the assistant side was written again, same titles and same request, by
+the models then current: Claude Opus 5.5, Sonnet 5.5, Haiku 5.5 and GPT-6.1 for training
+(`train-2026-11/`), and Opus 5.5, Sonnet 5.5, Fable 5.2, GPT-6.1 and GPT-6.1 Terra on the
+held-out titles (`test-opus55/` and so on). `eval/ai/*/MANIFEST.tsv` records the model,
+date and prompt of each text; the September texts have no such record. The AI medians
+and directions in the three band files now come from both months together (96 blog posts,
+64 stories, 64 Spanish posts); the human edges are unchanged, except the AI-lexicon band,
+which follows the lexicon. The local human corpora were rebuilt in between, so the
+November figures are on 40 held-out blog posts, 40 stories and 58 Spanish posts.
+
 ### Blog bands
 
-**Blog posts** (`bands.json`), 42 held-out human posts against 42 assistant posts. AUC is
-the chance an assistant post sits further to the AI side than a human post; 0.5 is no
-signal. *Either* means the direction was too weak on the training split to score, so
-only the band applies.
+**Blog posts** (`bands.json`). AI median and AI side are from the 96 training posts of
+both months. AUC is the chance a held-out assistant post sits further to the AI side than
+a held-out human post (40 of them), for the 42 September posts and the 70 November posts;
+0.5 is no signal. *Either* means the direction was too weak on the training posts to
+score, so only the band applies.
 
-| feature | human p10–p90 | AI median | AI side | AUC |
-|---|---|---|---|---|
-| sentence-length CV | 0.43 – 0.72 | 0.51 | lower | 0.64 |
-| mean sentence length | 14.1 – 24.4 | 15.6 | lower | 0.62 |
-| long words (7+) /1k | 160 – 250 | 253 | higher | 0.78 |
-| mean word length | 4.3 – 4.9 | 4.9 | higher | 0.81 |
-| nominalizations /1k | 7.3 – 32.6 | 26.7 | higher | 0.67 |
-| -ly adverbs /1k | 4.8 – 19.2 | 16.0 | higher | 0.68 |
-| passive voice /1k | 1.9 – 11.3 | 4.0 | lower | 0.67 |
-| lexical diversity MATTR-50 | 0.763 – 0.850 | 0.850 | higher | 0.85 |
-| first person /1k | 8.6 – 65.2 | 4.3 | lower | 0.79 |
-| contractions /1k | 10.4 – 37.0 | 19.2 | either | – |
-| questions /1k | 0 – 6.5 | 0 | lower | 0.55 |
-| repeated openers /100 | 0 – 11.9 | 3.5 | lower | 0.56 |
-| connective openers % | 0 – 14.3 | 3.3 | either | – |
-| commas /1k | 25.1 – 58.0 | 56.2 | higher | 0.83 |
-| semicolons /1k | 0 – 3.4 | 0 | lower | 0.60 |
-| em dashes /1k | 0 – 2.7 | 1.1 | higher | 0.74 |
-| AI-lexicon words /1k | 0 – 1.4 | 1.0 | higher | 0.69 |
-| lists of three /1k | 0 – 5.5 | 7.2 | higher | 0.86 |
-| participial clauses /1k | 0 – 2.3 | 1.6 | higher | 0.64 |
-| plain words /1k | 43 – 95 | 55 | lower | 0.63 |
-| parentheses /1k | 0 – 11.0 | 0 | lower | 0.67 |
-| words per paragraph | 23.5 – 74.2 | 34.8 | either | – |
-| headings /1k | 0 – 17.1 | 12.2 | higher | 0.75 |
+| feature | human p10–p90 | AI median | AI side | AUC Sept | AUC Nov |
+|---|---|---|---|---|---|
+| sentence-length CV | 0.43 – 0.72 | 0.49 | lower | 0.67 | 0.68 |
+| mean sentence length | 14.1 – 24.4 | 15.1 | lower | 0.63 | 0.84 |
+| long words (7+) /1k | 160 – 250 | 251 | higher | 0.76 | 0.71 |
+| mean word length | 4.3 – 4.9 | 4.9 | higher | 0.80 | 0.73 |
+| nominalizations /1k | 7.3 – 32.6 | 24.8 | higher | 0.67 | 0.64 |
+| -ly adverbs /1k | 4.8 – 19.2 | 13.0 | either | – | – |
+| passive voice /1k | 1.9 – 11.3 | 3.9 | lower | 0.67 | 0.76 |
+| lexical diversity MATTR-50 | 0.763 – 0.850 | 0.841 | higher | 0.85 | 0.76 |
+| first person /1k | 8.6 – 65.2 | 3.3 | lower | 0.79 | 0.81 |
+| contractions /1k | 10.4 – 37.0 | 20.6 | either | – | – |
+| questions /1k | 0 – 6.5 | 0.3 | either | – | – |
+| repeated openers /100 | 0 – 11.9 | 3.2 | either | – | – |
+| connective openers % | 0 – 14.3 | 2.9 | lower | 0.65 | 0.70 |
+| commas /1k | 25.1 – 58.0 | 57.6 | higher | 0.81 | 0.72 |
+| semicolons /1k | 0 – 3.4 | 0 | either | – | – |
+| em dashes /1k | 0 – 2.7 | 0 | either | – | – |
+| AI-lexicon words /1k | 0 – 1.6 | 2.1 | higher | 0.79 | 0.77 |
+| lists of three /1k | 0 – 5.5 | 6.5 | higher | 0.88 | 0.79 |
+| participial clauses /1k | 0 – 2.3 | 0.9 | either | – | – |
+| plain words /1k | 43 – 95 | 56 | lower | 0.62 | 0.62 |
+| parentheses /1k | 0 – 11.0 | 0.9 | lower | 0.67 | 0.75 |
+| words per paragraph | 23.5 – 74.2 | 37.6 | either | – | – |
+| headings /1k | 0 – 17.1 | 11.9 | higher | 0.78 | 0.68 |
+
+Six directions held in September and are gone with both months together: -ly adverbs,
+questions, repeated openers, semicolons, em dashes and participial clauses. Connective
+openers gained one (lower). The November models are shorter in the sentence than the
+September ones (0.84) and closer to people in word length, vocabulary range and headings.
 
 ### Fiction bands
 
@@ -75,6 +92,11 @@ AUC 0.83), words per paragraph (human 26 – 106, AI median 22.5, lower, AUC
 *higher*, 0.77), lexical diversity (0.839, 0.77), contractions (*higher*, 0.75), mean word
 length (0.73), commas (0.72). One learned direction did not hold up: nominalizations
 looked higher in the training stories (0.61) and were lower in the held-out ones (0.38).
+With the November stories added, nominalizations and first person lose their direction
+and passive voice gains one (lower). On the 50 held-out November stories the strongest
+features are words per paragraph (AI median 26.4, AUC 0.90), mean sentence length (11.4,
+lower, 0.85) and contractions (0.76); the title heading (0.64) and the em dash (0.57)
+have faded.
 
 ### Four counter-intuitive results
 
@@ -112,6 +134,31 @@ own directions, learned from assistant texts of that register (`--calibrate --ai
 | fiction: Claude Opus, untouched | 10 | 90% | 20% |
 | fiction: Claude Sonnet, untouched | 10 | 10% | 40% |
 | fiction: GPT, untouched | 10 | 0% | 90% |
+
+The same table in November 2026, with both months' training texts behind the directions
+and the judge, on the rebuilt corpora (`eval/results/`):
+
+| group | texts | checklist clean | independent judge says AI |
+|---|---|---|---|
+| blog: human, held out | 40 | 100% | 3% |
+| blog: Claude Opus 5.5 | 14 | 71% | 100% |
+| blog: Claude Sonnet 5.5 | 14 | 57% | 100% |
+| blog: Claude Fable 5.2 | 14 | 93% | 93% |
+| blog: GPT-6.1 | 14 | 7% | 100% |
+| blog: GPT-6.1 Terra | 14 | 29% | 93% |
+| blog: September Opus, Sonnet, GPT | 14 each | 71%, 0%, 7% | 64%, 93%, 93% |
+| fiction: human, held out | 40 | 97% | 0% |
+| fiction: Opus 5.5, Sonnet 5.5, Fable 5.2 | 10 each | 80%, 60%, 100% | 100% each |
+| fiction: GPT-6.1, GPT-6.1 Terra | 10 each | 40%, 80% | 100% each |
+| Spanish: human, held out | 58 | 93% | 0% |
+| Spanish: Opus 5.5, Sonnet 5.5, Fable 5.2 | 10 each | 60%, 90%, 80% | 70%, 90%, 70% |
+| Spanish: GPT-6.1, GPT-6.1 Terra | 10 each | 0%, 50% | 100%, 80% |
+
+The checklist sees less of each new Claude model than of the one before: Sonnet went from
+0% clean in September to 57%, and Fable 5.2 passes almost untouched. Before the November
+changes Opus 5.5 was at 79% clean, Sonnet 5.5 at 79%, Terra at 36% and Fable 5.2 at the same 93%. The
+word-frequency judge still separates all of them once it has seen the new models' posts,
+so the difference is in which words they use, and a regex list does not hold it.
 
 The independent judge is a word-frequency classifier trained on other human and
 assistant texts, which never sees the bands or the checklist, so tuning a text to the
@@ -152,8 +199,11 @@ generated, and neither makes a text indistinguishable from the writer's own roug
 `scripts/evaluate.py` reruns all of this:
 
 ```
-python3 scripts/evaluate.py --human CORPUS --ai-train eval/ai/blog/train \
-    opus=eval/ai/blog/test-opus sonnet=eval/ai/blog/test-sonnet gpt=eval/ai/blog/test-gpt
+python3 scripts/evaluate.py --human CORPUS \
+    --ai-train eval/ai/blog/train,eval/ai/blog/train-2026-11 \
+    opus=eval/ai/blog/test-opus sonnet=eval/ai/blog/test-sonnet gpt=eval/ai/blog/test-gpt \
+    opus55=eval/ai/blog/test-opus55 sonnet55=eval/ai/blog/test-sonnet55 \
+    fable52=eval/ai/blog/test-fable52 gpt61=eval/ai/blog/test-gpt61 terra=eval/ai/blog/test-terra
 ```
 
 ### What the rewrite adds: the September 2026 rounds
@@ -222,6 +272,66 @@ overshoot: *so* at 6.7 per 1,000 words against 4.0, *lot*, *too*, *back*, *gets*
 sentences (15.4 against 18.9 words); fewer semicolons, parentheses, questions,
 exclamation marks and *we*. Taking the plain-word list out of the instructions did not
 change that, so it stays; what moved the judges was content and structure.
+
+### The November 2026 rounds: three instructions that did not ship
+
+A cheaper panel, checked against the Opus one first. Claude Sonnet 5.5 rewrites, two
+Sonnet 5.5 judges and one GPT-6.1 Terra judge read each rewrite alone. On 58 texts the
+Opus judges had already scored (18 human posts, 20 rewrites, 20 untouched drafts), Sonnet
+gave 4.8, 12.4 and 79.2 and Terra 6.3, 46.1 and 91.9, against 5.9, 32.2 and 87.8 from Opus:
+the same order, with Sonnet easier on rewrites and Terra harder. With this rewriter and
+panel the current version scores 15.0 (Sonnet) and 50.0 (Terra) on the 20 development
+titles and 13.2 and 49.6 on the 18 held-out ones, two rewrites per title.
+
+How far one version moves by itself, from the cached rewrites: between two reps of the
+same snapshot the set mean differs by 0.1 to 3.1 points with the Opus panel and by 0.6
+and 2.1 with the Sonnet one, and one title differs by 5 to 14 points (standard
+deviation). A change that moves the mean by less than about three points has to show up
+on both sets and both judges to count.
+
+Three instructions were measured against that baseline, on both sets.
+
+- **Order and ending from the notes.** A structure-only classifier separates assistant
+  blog posts from human ones at 97.0 macro-F1, and at 96.1 after each post is reworded
+  (SlopShape 2026); its strongest signals are an ending that restates the thesis, a
+  synthesis stage and a thesis placed before the first section. The instruction: before
+  writing, take from the notes the last fact (the post ends there), the place of the main
+  point, and the dates and links, and add no stage the notes lack. Development titles:
+  Sonnet 15.0 to 13.1 (worse on 5 of 20, p = 0.018), Terra 50.0 to 46.3 (p = 0.098).
+  Held-out titles: 13.2 to 12.3 (worse on 9 of 18, p = 0.64) and 49.6 to 46.7 (p = 0.31).
+  Pooled over the 38 titles, -1.5 (p = 0.061) and -3.4 (p = 0.048). The overshot count went
+  from 1.83 to 2.03 features per text (higher on 18 titles, lower on 9, p = 0.19) and
+  rewrites with a figure or link in no source from 3 to 5 of 76. A gain the size of the
+  rep noise, not significant on the held-out titles, with overshoot no rarer: not shipped.
+- **Undoing the overshoot.** On top of that, an instruction to read the `overshot` rows
+  and put back the exact word or the adverb the rewrite had taken out. Overshot rose
+  instead, to 2.19 (higher on 19 of 38 titles, lower on 6, p = 0.008). Terra fell by 11.5
+  on the development titles (p = 0.001) and by 2.1 on the held-out ones (p = 0.62); Sonnet
+  did not move on those (+0.0). Not shipped.
+- **Leaving a human text alone.** Measure the draft first; with no notes and no FAIL,
+  change only a TELL you would rule against. On 16 human posts given as drafts with no
+  notes, the originals score 5.5 and 6.4, the current version's rewrites 6.5 and 8.2, and
+  with the rule 5.7 and 6.9 (Sonnet -0.8, worse on 2 of 16, p = 0.15; Terra -1.3, p =
+  0.31). On the 20 development drafts with the notes withheld it changed nothing: 67.0 to
+  65.2 and 81.7 to 82.5. No measurable gain: not shipped. With Sonnet 5.5 rewriting, the
+  loop costs a human text about one point, less than the 1.5 measured with Opus.
+
+Rewriting without the notes leaves a draft where it was: 67.0 and 81.7 against 79.2 and
+91.9 untouched, and 15.0 and 50.0 with the notes.
+
+The November changes that did ship touch the meter and the checklist, not the
+instructions: the band directions from both months, four lexicon words and the Spanish
+bold-label check. Rewrites made with them were judged like the ones before. Development
+titles: Sonnet 15.0 to 15.5 (p = 0.72), Terra 50.0 to 47.7 (p = 0.43). Held-out titles:
+13.2 to 13.4 (p = 0.67) and 49.6 to 47.9 (p = 0.74). The 30 Spanish titles, one rewrite
+each: 13.8 to 14.3 (p = 0.55) and 45.7 to 45.0 (p = 0.80). Overshot per text, 1.83 to 1.99
+(higher on 15 of 38 titles, lower on 9, p = 0.15). They change what the checklist catches
+in a draft, and they do not change what a reader makes of the rewrite.
+
+Three instructions aimed at what blind judges and the 2026 literature name, and none
+cleared the noise on the held-out titles. Together with the candidates below, that is
+where the instructions stand: what still separates a rewrite from a human post is not
+something another sentence in SKILL.md has moved.
 
 ### Fiction
 
@@ -299,6 +409,21 @@ in September 2026.
   the same cost per rewrite (0.52 USD, 13 turns), so it bought nothing measurable.
 - **Placeholders and date notes as checklist items**: in 12 and 10 of 176 human posts
   (placeholders in code, "at the time of writing"), so they stay instructions only.
+- **November 2026, the current models' own tells.** Graphite's zero-human trigrams for
+  Claude Opus 5.5 ("this matters because", "taken together these", "the takeaway is",
+  "just as importantly", "helps to understand") are in no human post here and in 0% to 14%
+  of any assistant group, 2% of the November training posts: they belong to Graphite's
+  article-from-a-brief prompt. The 2026 contrast forms ("not simply", "rather than
+  merely", "less like X, more like Y", "without sacrificing") are each in 0% to 7% of the
+  November groups. *Real* and *actual* as emphasis ("the real problem"), which readers
+  of Claude name, is in 15% of held-out human posts and 43% to 50% of the Opus 5.5,
+  Sonnet 5.5 and Fable 5.2 posts; as a TELL it raised the checklist AUC (Opus 5.5 0.71 to
+  0.74) and made one held-out human post fail T1, and the rewrites already carry it less
+  often than people (12%). *Matters* failed the same way (`references/word-choice.md`).
+  A list of quoted spans that are in no source, for `factdiff.py`: 8 flagged in 76
+  rewrites, 6 of them the text between two quotations. Rewrites of different titles do not
+  share openings (the commonest three words open 4 of 40), so SlopBench's same-prompt
+  measure has nothing to count here.
 - **November 2026 upstream intake** (slop-score, Antislop, unslop, humanize, humanizer,
   stop-slop, no-ai-slop, avoid-ai-writing), on the rebuilt corpus (160 dev.to posts, 40
   held out; 157 stories; 245 Spanish posts). A cross-sentence contrast with any subject

@@ -99,7 +99,7 @@ $ python3 scripts/aimeter.py eval/ai/blog/e2e-raw/aspittel-782713.md
 feature                   this   human band      verdict
 long words (7+) /1k     353.83   159.68 - 250.46  above band, AI side
 nominalizations /1k      55.21     7.29 - 32.65   above band, AI side
-em dashes /1k             3.76     0.00 - 2.74    above band, AI side
+mean word length          5.46     4.28 - 4.86    above band, AI side
 lists of three /1k       11.29     0.00 - 5.51    above band, AI side
 plain words /1k          33.88    43.19 - 95.24   below band, AI side
 ...
@@ -132,7 +132,8 @@ repo. Nothing ships on "this reads better".
   stories, all written before ChatGPT existed, plus a Spanish set. A quarter of each is
   held out and never used to pick anything.
 - **2026 AI text on the same titles.** Claude Opus, Sonnet, Haiku and GPT wrote the
-  comparison texts in `eval/ai/`, from the plain prompt a user would type.
+  comparison texts in `eval/ai/`, from the plain prompt a user would type. They were
+  written in September 2026 and again in November with the models current then.
 - **Two failure modes.** Text can sit on the AI side of a band or *overshoot* past the
   human side. Overshoot is a tell too: models told to "write like a human" go choppier
   and plainer than any person does. The meter flags both.
@@ -193,7 +194,8 @@ token probabilities, and Quirón doesn't touch them. It works only on what a hum
 actually notices.
 
 **Which models does it work with?** Any model behind an agent that loads skills. It was
-tested on text from three Claude models and one GPT model.
+tested on text from ten Claude and GPT models, four from September 2026 and six from
+November.
 
 **Does it make things up to sound human?** Its instructions forbid it. A rewrite may use only
 facts from your text or your notes. `scripts/factdiff.py` lists the numbers and links in

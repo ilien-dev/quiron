@@ -53,8 +53,8 @@ measurement step exists because you cannot feel where the ceiling is.
 ## How to work
 
 **Pick the register first.** The meter compares a text with human writing of the same
-kind, and the kinds differ in opposite directions: assistant blog posts have longer,
-more even sentences than human ones, while assistant fiction has shorter, choppier ones.
+kind, and the kinds differ in opposite directions: assistant blog posts have more even
+sentences than human ones, while assistant fiction has choppier ones (both run shorter).
 
 - `scripts/bands.json` (default): technical and personal blog posts, articles, essays.
 - `scripts/bands-fiction.json`: short stories and narrative prose. **For a story, read
@@ -253,8 +253,9 @@ cannot tell, so the honesty is yours.
 - `FAIL`: something almost no human text does: chatbot residue (A21, E3 in Spanish),
   knowledge-limit disclaimers (A22), three or more AI-lexicon entries (B1), five or more
   rates on the AI side (C1; four for fiction and Spanish), six or more overshot (C2), five
-  or more TELL items at once (T1; four for fiction, three for Spanish). About 2% to 5% of
-  human writing trips any of them. Fix every FAIL; any FAIL resets the streak.
+  or more TELL items at once (T1; four for fiction, three for Spanish). Of the held-out
+  human texts, none of the blog posts, 3% of the stories and 7% of the Spanish posts trip
+  any of them. Fix every FAIL; any FAIL resets the streak.
 - `TELL`: a pattern humans use too, which assistants use more. One or two are normal in
   human writing; none at all is not the goal. Change it when it is the default rather
   than a choice.
@@ -269,8 +270,11 @@ the overshoot problem again.
 
 FAIL is kept narrow on purpose. The first version failed any em dash, any "rather than",
 any Title Case heading and any rate outside the band; it failed every one of 42 held-out
-human posts. The current rules pass 98% of them clean and still fail 86% of the Claude
-Sonnet and 93% of the GPT posts written on the same titles.
+human posts. The current rules pass all 40 held-out human posts clean and still fail 93%
+of the GPT-6.1 posts written on the same titles. Each new Claude model gets past them
+more often: they fail every Sonnet post from September 2026, 43% of the Sonnet 5.5 ones,
+29% of Opus 5.5 and 7% of Fable 5.2. A clean checklist on a Claude draft says little; the
+writer's material and the cold read do the work there.
 
 ## Cold read
 
@@ -374,7 +378,8 @@ them, but their absence proves nothing.
 
 **What counts now.** `scripts/lexicons/ai-lean.txt` keeps only words that were in at most
 4% of human posts and at least 10% of assistant posts: ordinary words like *increasingly*,
-*significantly*, *consistently*, *comprehensive*, *meaningful*, *merely*, *remains*.
+*significantly*, *consistently*, *comprehensive*, *meaningful*, *merely*, *remains*, and
+from the November 2026 models *practical*, *quietly*, *deliberate*, *preserve*.
 Three or more distinct entries in one text fail B1.
 
 **The stronger signal is the plain words that are missing:** *very, get, about, because,
@@ -429,7 +434,7 @@ casual tone.
 "Honestly, I think he'd be a great fit". Sincerity markers (*honestly*, *genuinely*,
 *frankly*, *to be honest*, *truly*) are how Claude signals candour: in this skill's own
 rewrites *honestly* was in 33% of posts, against 2% to 5% of human posts and none of the
-writers' notes. Anthropic's claude.ai system prompts tell Claude to avoid the same words.
+writers' notes. Anthropic's claude.ai system prompts up to Opus 5 told Claude to avoid the same words.
 Keep one only when the writer's notes or sample use it.
 
 ## When not to act
