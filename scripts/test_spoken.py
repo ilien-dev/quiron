@@ -1,4 +1,4 @@
-import json, os, subprocess, sys, tempfile, unittest, aimeter
+import contextlib, io, json, os, subprocess, sys, tempfile, unittest, aimeter
 
 
 class Spoken(unittest.TestCase):
@@ -15,6 +15,27 @@ class Spoken(unittest.TestCase):
     def test_sentence_with_colon_is_not_a_label(self):
         t = "Here is the thing: it works."
         self.assertEqual(aimeter.spoken(t), t)
+
+    def test_bold_wrapped_direction(self):
+        self.assertEqual(aimeter.spoken("**[VISUAL: map]** This river is old."), "This river is old.")
+
+    def test_bold_timestamp_then_label(self):
+        self.assertEqual(aimeter.spoken("**[00:15]** HOST: Hi there."), "Hi there.")
+
+    def test_direction_then_label(self):
+        self.assertEqual(aimeter.spoken("**[VISUAL: x]** HOST: Hi there."), "Hi there.")
+
+    def test_speech_that_opens_with_a_time_or_an_acronym_is_kept(self):
+        for t in ("10:30 is when we left.", "AI: it is everywhere.", "IMPORTANT: wash hands.",
+                  "NOTE: this is spoken."):
+            self.assertEqual(aimeter.spoken(t), t)
+
+    def test_bare_timestamp_with_dash_and_numbered_speaker(self):
+        self.assertEqual(aimeter.spoken("0:15 - SPEAKER 1: Hi there."), "Hi there.")
+
+    def test_short_direction_words(self):
+        self.assertEqual(aimeter.spoken("(pause) Hello."), "Hello.")
+        self.assertEqual(aimeter.spoken("*(beat)* Well then."), "Well then.")
 
     def test_two_column_table_keeps_audio(self):
         src = "| VISUAL | AUDIO |\n|---|---|\n| Map zooms in | This river is two thousand years old. |"
@@ -46,6 +67,21 @@ class Spoken(unittest.TestCase):
                 f.write("[B-ROLL: a river at dawn. The camera pans left slowly.]\n" * 40 + body)
             self.assertEqual(len(aimeter.measure_dir(d)), 1)
             self.assertEqual(aimeter.measure_dir(d, spoken_only=True), [])
+
+    def test_recalibration_keeps_spoken(self):
+        t = "".join(f"Sentence number {i} is plain speech about rivers and the people near them.\n"
+                    for i in range(15))
+        with tempfile.TemporaryDirectory() as d:
+            for i in range(8):
+                with open(os.path.join(d, f"{i}.txt"), "w", encoding="utf-8") as f:
+                    f.write("[B-ROLL: a river]\n" + t)
+            out = os.path.join(d, "bands.json")
+            with open(out, "w", encoding="utf-8") as f:
+                json.dump({"_spoken": True}, f)
+            with contextlib.redirect_stdout(io.StringIO()):
+                aimeter.calibrate(d, out=out)
+            with open(out, encoding="utf-8") as f:
+                self.assertTrue(json.load(f)["_spoken"])
 
 
 class AuditSpoken(unittest.TestCase):

@@ -278,12 +278,23 @@ def prose(md):
 # it, so a band file calibrated on captions ("_spoken": true) measures spoken() only.
 _UP = r"A-ZÁÉÍÓÚÑÜ"
 STAGE_LINE = re.compile(r"^\s*[*_]*(?:\[[^\]]*\]|\([^)]*\))[*_]*\s*$")
-STAGE_INLINE = re.compile(r"\[[^\]\n]*\](?!\()")  # a link, [text](url), is not one
-TIMESTAMP = re.compile(r"^\s*[\[(]?\d{1,2}:\d{2}(?::\d{2})?(?:\s*[-–]\s*\d{1,2}:\d{2}(?::\d{2})?)?[\])]?\s*[-–:]?\s*")
-# up to four capitals-only words, an optional (V.O.), then a colon; "Here is the thing:" has
-# lower case, so an ordinary sentence with a colon is never a label
-SPEAKER = re.compile(rf"^\s*[*_]{{0,2}}[{_UP}][{_UP}0-9.'’-]*(?:\s+[{_UP}0-9.'’-]+){{0,3}}"
-                     r"(?:\s*\([^)]*\))?\s*[*_]{0,2}\s*:\s*[*_]{0,2}\s*")
+STAGE_INLINE = re.compile(r"[*_]*\[[^\]\n]*\](?!\()[*_]*")  # a link, [text](url), is not one
+STAGE_WORD = re.compile(r"^\s*[*_]*\((?:pause|beat|laughs|laughter|sighs|smiles|silence|"
+                        r"pausa|risas|suspira|sonríe|silencio)\)[*_]*\s*", re.I)
+# [00:15], (0:15) or **[0:15]** anywhere before the speech; a bare time needs a dash after
+# it, or "10:30 is when we left." would lose its first words
+_TS = r"\d{1,2}:\d{2}(?::\d{2})?"
+TIMESTAMP = re.compile(rf"^\s*[*_]*(?:[\[(]{_TS}(?:\s*[-–]\s*{_TS})?[\])]\s*[-–:]?"
+                       rf"|{_TS}(?:\s*[-–]\s*{_TS})?(?:\s+[-–—]\s+|\s*$))[*_]*\s*")
+# A label is a known production word (NARRATOR, HOST 2), any capitals word with a (V.O.),
+# or two to four capitals words, then a colon. "Here is the thing:" has lower case, and
+# "AI:", "IMPORTANT:" or "NOTE:" open sentences that are speech, so none of them is one.
+_CAP = rf"[{_UP}][{_UP}0-9.'’-]*"
+_KNOWN = (r"NARRATOR|NARRADORA?|HOST|PRESENTER|PRESENTADORA?|LOCUTORA?|VOICE-?OVER|VO|V\.O\."
+          r"|ANCHOR|SPEAKER|INTERVIEWER|ENTREVISTADORA?|GUEST|INVITADA?|REPORTER|NARRATION")
+SPEAKER = re.compile(rf"^\s*[*_]{{0,2}}(?:(?:{_KNOWN})(?:\s*\d+)?(?:\s*\([^)]*\))?"
+                     rf"|{_CAP}\s*\([^)]*\)|{_CAP}(?:\s+{_CAP}){{1,3}}(?:\s*\([^)]*\))?)"
+                     r"\s*[*_]{0,2}\s*:\s*[*_]{0,2}\s*")
 SCENE = re.compile(r"^\s*(?:#{1,6} .*|(?:INT|EXT|INT\./EXT)\.\s.*)$")
 MUSIC = re.compile(r"[♪♫]+")
 AUDIO_COLUMN = re.compile(r"^[*_]*(?:AUDIO|NARRATION|NARRACI[OÓ]N|VO|V\.O\.|SCRIPT|GUION)[*_]*$", re.I)
@@ -328,12 +339,16 @@ def _spoken(text):
         if STAGE_LINE.match(l):
             n["stage"] += 1
             continue
+        m = STAGE_WORD.match(l)
+        if m:
+            n["stage"] += 1
+            l = l[m.end():]
+        l, k = STAGE_INLINE.subn("", l)  # before the label: "[B-ROLL] HOST: hi"
+        n["stage"] += k
         m = SPEAKER.match(l)
         if m:
             n["speaker"] += 1
             l = l[m.end():]
-        l, k = STAGE_INLINE.subn("", l)
-        n["stage"] += k
         l = MUSIC.sub("", l)
         if l != old:
             l = re.sub(r"[ \t]{2,}", " ", l).strip()
@@ -472,19 +487,21 @@ def apply_skip(bands):
 
 def calibrate(directory, ai_dir=None, out=None, lexicon=None, lang=None, plain=None,
               spoken_only=False):
+    out = out or BANDS_FILE
+    try:  # keep the register's own lexicon and thresholds across a recalibration
+        with open(out) as f:
+            old = json.load(f)
+    except (OSError, ValueError):
+        old = {}
+    spoken_only = spoken_only or bool(old.get("_spoken"))  # a spoken register stays spoken
     rows = measure_dir(directory, spoken_only)
     if len(rows) < 8:
         sys.exit(f"need at least 8 usable texts, got {len(rows)}")
     ai_rows = measure_dir(ai_dir, spoken_only) if ai_dir else None
     bands = {"_corpus": os.path.basename(os.path.abspath(directory)),
              **bands_from(rows, ai_rows)}
-    out = out or BANDS_FILE
-    try:  # keep the register's own lexicon and thresholds across a recalibration
-        old = json.load(open(out))
-        bands.update({k: old[k] for k in ("_lexicon", "_thresholds", "_lang", "_plain", "_skip")
-                      if k in old})
-    except (OSError, ValueError):
-        pass
+    bands.update({k: old[k] for k in ("_lexicon", "_thresholds", "_lang", "_plain", "_skip")
+                  if k in old})
     for key, val in (("_lexicon", lexicon), ("_lang", lang), ("_plain", plain)):
         if val:
             bands[key] = val
