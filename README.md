@@ -131,7 +131,8 @@ repo. Nothing ships on "this reads better".
 - **Human baselines.** The bands come from 167 dev.to posts and 157 WritingPrompts
   stories, all written before ChatGPT existed, plus a Spanish set. Since November 2026
   there are also bands for pull request descriptions, commit messages, READMEs and work
-  email. A quarter of each is
+  email, and for the narration of YouTube video scripts in English and Spanish, built from
+  manual captions uploaded before ChatGPT existed. A quarter of each is
   held out and never used to pick anything.
 - **2026 AI text on the same titles.** Claude Opus, Sonnet, Haiku and GPT wrote the
   comparison texts in `eval/ai/`, from the plain prompt a user would type. They were
@@ -184,6 +185,14 @@ scripts/check.sh FILE                  # one pass of the full loop
 
 For fiction or Spanish, set `QUIRON_BANDS=scripts/bands-fiction.json` or
 `scripts/bands-es.json`. Texts under about 120 words get no measurement.
+
+For the narration of a YouTube video script, set `QUIRON_BANDS=scripts/bands-script.json`,
+or `scripts/bands-script-es.json` in Spanish. The meter reads only the spoken words and
+leaves the stage directions alone. It measures a script and checks it for patterns that
+assistant scripts share. It has not been shown to make a rewritten script read as
+human-written: blind judges rated the rewrites about as AI as the ones made without the
+register, and rated a script a person wrote as more AI after a rewrite. For your own
+script, measure it and change what you choose to change.
 
 Other languages get the same checklist as a best effort. There is no human baseline for
 them yet. The meter says so and shows only the numbers that don't depend on the words,

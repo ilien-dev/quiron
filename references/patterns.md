@@ -37,6 +37,7 @@ The 33 patterns `scripts/audit.py` checks, with the measured rate for each and t
 - 31. Generic where a specific exists [READ]
 - 32. Announcing what the post will cover [TELL]
 - 33. Too many headings [rate]
+- Checks for video scripts: S1 to S7 in English, SE1 to SE8 in Spanish
 
 Rates below are from this skill's run: the share of 167 pre-2022 dev.to posts (human)
 and of 90 assistant posts written in 2026 on the same kind of titles (AI) in which
@@ -322,3 +323,71 @@ against one every 150. Rewrites that fixed every word left them in place. Merge 
 that make one point, and do not give a two-paragraph idea its own heading. A story does
 not need a title heading unless the user asked for one: no human story in the fiction
 corpus had one, and most assistant stories did.
+
+## Checks for video scripts
+
+These run only when the band file says `"_register": "script"`: S1 to S7 under `scripts/bands-script.json` (English) and SE1 to SE8 under `scripts/bands-script-es.json` (Spanish). They read the spoken words, so stage directions and speaker labels never trip them. A sentence starts at the start of the text, after a blank line, or after a full stop, a question mark or an exclamation mark and a space or line break. Rates are the share of held-out human scripts, of train human scripts and of the assistant test scripts (pooled over five models) in which the check fires at least once; the counts are in `eval/results/script-candidates.txt` and `script-es-candidates.txt` (`python3 eval/script_candidates.py en|es`). The Spanish checks were written from Spanish texts, not translated from the English ones.
+
+Twelve checks from the sections above are switched off for English scripts because on narration they fire on people about as often as on assistants: A1, A1b, A2b, A3, A4, A8, A9, A14b, A15, A26, A32 and the TELL state of B1 (it still fails at four lexicon words). In Spanish scripts A2b is off. The thresholds for C1, T1 and B1 are the band file's own.
+
+These are checks on a draft. Rewriting to clear them did not change what blind judges made of a script end to end, and rules built from the same patterns made the judges rate rewrites more AI (`references/numbers.md`, video scripts). Look at what a TELL points to and keep the sentence when the narrator means it.
+
+### S1. A sentence opens with Imagine [TELL]
+
+**Watch for:** "Imagine you're…", "Picture this", also after "Now," or "So,". **Measured:** 1 of 49 held-out human scripts, 8 of 144 train, 31% of assistant scripts. Start with the fact or the scene when the opening is only a device.
+
+### S2. Staged reveals [TELL]
+
+**Watch for:** "here's the twist", "here's the catch", "here's why", "here's how", "then there's", "the honest answer", "the short answer", "sounds simple", "sounds logical". One check for the family. **Measured:** 6 of 49 held-out human scripts, 23 of 144 train, 49% of assistant scripts. Say the thing.
+
+### S3. A request for comments [TELL]
+
+**Watch for:** "tell me in the comments", "let us know below", "leave a comment", "comment below". A mention of the comments ("someone in the comments pointed out") does not trip it. **Measured:** 0 of 49 held-out human scripts, 5 of 144 train, 24% of assistant scripts. It is a TELL and not a FAIL because a channel that asks for comments is making its own call; as a FAIL it took the train humans from 91% clean to 88%. It still counts toward S7.
+
+### S4. "Next time you" [TELL]
+
+**Measured:** 2 of 49 held-out human scripts, 1 of 144 train, 16% of assistant scripts.
+
+### S5. A bare noun-phrase question [TELL]
+
+**Watch for:** "The catch?" or "The result?" as a sentence, answered at once. **Measured:** 1 of 49 held-out human scripts, 1 of 144 train, 9% of assistant scripts. Write the answer as a statement.
+
+### S6. Two sentences on one opener [TELL]
+
+**Watch for:** "No roads. No cars.", "Maybe… Maybe…", "Which… Which…". **Measured:** 0 of 49 held-out human scripts, 4 of 144 train, 11% of assistant scripts.
+
+### S7. Three of S1 to S6 in one script [FAIL]
+
+A combined check, like T1. **Measured:** no human script, train or held out; 18% of assistant scripts (33% of Opus 5.5 and Sonnet 5.5, 11% of GPT-6.1 and Terra, none of Fable 5.2). Three, not two: two cost two held-out human scripts when it was chosen. S7 leans on S3; without it, three of the other five fire on 2 of 45 assistant scripts.
+
+### SE1. "Quédate hasta el final" [FAIL]
+
+**Watch for:** "quédate hasta el final", "quedaos hasta el final". **Measured:** no human script, train or held out; 40% of Opus 5.5 and 80% of Sonnet 5.5 test scripts, 10 of 48 assistant train scripts. "No te pierdas" was left out because people use it.
+
+### SE2. The promise [TELL]
+
+**Watch for:** "hoy te cuento", "hoy vamos a", "hoy veremos", "hoy descubriremos". **Measured:** 3 of 27 held-out human scripts, 8 of 80 train, 36% of assistant scripts. Start with the first real thing.
+
+### SE3. A sentence opens with "imagina" [TELL]
+
+**Measured:** 2 of 27 held-out human scripts, 4 of 80 train, 44% of assistant scripts.
+
+### SE4. "Y aquí viene" [TELL]
+
+**Watch for:** "y aquí viene", "aquí está la clave", "lo curioso es que", "lo fascinante es que", "dato curioso". **Measured:** 1 of 27 held-out human scripts, 4 of 80 train, 32% of assistant scripts.
+
+### SE5. Closing on "entonces, ¿…?" [TELL]
+
+**Measured:** 2 of 27 held-out human scripts, 5 of 80 train, 36% of assistant scripts.
+
+### SE6. A request for comments [TELL]
+
+**Watch for:** a verb of asking ("cuéntame", "déjanos", "escríbeme", "dime") and then "en los comentarios". A bare "en los comentarios" is a mention and does not trip it. **Measured:** 1 of 27 held-out human scripts, 4 of 80 train, 52% of assistant scripts. It counts toward SE8.
+
+### SE7. "La próxima vez que" [TELL]
+
+**Measured:** 0 of 27 held-out human scripts, 1 of 80 train, 4% of assistant scripts (one Fable 5.2 script; 11 of 48 on the train side).
+
+### SE8. Three of SE1 to SE7 in one script [FAIL]
+
+A combined check. **Measured:** no human script, train or held out; 40% of assistant scripts, 20% to 60% of each model's.

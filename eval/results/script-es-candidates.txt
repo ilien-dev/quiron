@@ -99,7 +99,7 @@ union: 3+ de SE1-SE7 sin SE6 (comentarios)                               0/80   
 #        dime ...) and then "en los comentarios" .............. 1/27, 4/80, 52%
 #        The first version also had a bare "en los comentarios" (4/27, 11/80, 76%); it is a FAIL by the
 #        rule now (Opus 5.5 4/5), but as a FAIL it would cost visualpolitik-MuUDQS8w3j0 ("Déjanos tu
-#        respuesta en los comentarios", held out, clean today), so it stays a TELL. Adding "déjanos tu
+#        respuesta en…", held out, clean today), so it stays a TELL. Adding "déjanos tu
 #        comentario" (a sign-off of one human channel) gives 2/27, 11/80, 56%: not added.
 #   SE7  la próxima vez que ................................... 0/27, 1/80, 4%
 #        It rests on one assistant test script (Fable 5.2); on train it is 11 of 48.

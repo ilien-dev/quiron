@@ -135,7 +135,9 @@ este repo. Nada entra porque "se lee mejor".
 - **Bases humanas.** Las bandas salen de 167 posts de dev.to y 157 cuentos de
   WritingPrompts escritos antes de que existiera ChatGPT, y de 241 posts de dev.to en
   español de 118 autores. Desde noviembre de 2026 hay también bandas para descripciones
-  de pull request, mensajes de commit, README y correo de trabajo, en inglés. Una cuarta parte de cada conjunto se reserva y nunca se usa para
+  de pull request, mensajes de commit, README y correo de trabajo, en inglés, y para la
+  narración de guiones de video de YouTube, en inglés y en español, sacadas de subtítulos
+  manuales de antes de que existiera ChatGPT. Una cuarta parte de cada conjunto se reserva y nunca se usa para
   elegir nada.
 - **Texto de IA de 2026 con los mismos títulos.** Claude Opus, Sonnet, Haiku y GPT
   escribieron los textos de comparación que hay en `eval/ai/`, a partir de la petición
@@ -195,6 +197,14 @@ scripts/check.sh ARCHIVO                  # una pasada del ciclo completo
 
 Para ficción en inglés se usa `scripts/bands-fiction.json`, y sin la variable se mide
 contra posts de blog en inglés. Los textos de menos de unas 120 palabras no se miden.
+
+Para la narración de un guion de video de YouTube se usa `scripts/bands-script-es.json`, o
+`scripts/bands-script.json` si el guion está en inglés. El medidor lee solo las palabras
+que se dicen y deja quietas las acotaciones. Mide el guion y busca los patrones que
+comparten los guiones de los asistentes. No se ha visto que un guion reescrito suene más a
+persona: jueces ciegos puntuaron las reescrituras casi igual de IA que las hechas sin este
+registro, y puntuaron como más IA un guion escrito por una persona después de reescribirlo.
+Si el guion es tuyo, mídelo y cambia lo que tú decidas cambiar.
 
 Otros idiomas reciben la misma lista como mejor esfuerzo, porque todavía no tienen una base
 humana. El medidor lo dice y solo muestra los números que no dependen de las palabras, como

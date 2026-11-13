@@ -230,3 +230,53 @@ sonnet55             5                     3           2.60       0 of 5 (0%)
 fable52              5                     2           2.20      3 of 5 (60%)
 gpt61                5                     7           6.20       0 of 5 (0%)
 terra                5                     5           4.40      2 of 5 (40%)
+
+## The shipped state, in full (added with the documentation: the first evaluation above is the state at cafd8ed, before the checks)
+# Same command as the first evaluation, run on the tree as it ships (band file rebuilt in task 6b, script checks on). The per-feature AUC table
+# above is the old one; this is the current one, and the group rows end with the clean share of each group (audit_clean_share).
+# QUIRON_BANDS=scripts/bands-script-es.json python3 scripts/evaluate.py --human ~/corpus/script-es --ai-train eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55 opus55=eval/ai/script-es/test-opus55 sonnet55=eval/ai/script-es/test-sonnet55 fable52=eval/ai/script-es/test-fable52 gpt61=eval/ai/script-es/test-gpt61 terra=eval/ai/script-es/test-terra
+bands from 80 human texts, 27 held out
+
+group                              n        judge_p_ai       judge_as_ai      score_median      score_14plus      ai_side_mean     overshot_mean  audit_fails_mean audit_clean_share
+human-heldout                     27              0.11              0.11                21               1.0              1.22              1.15              0.04              0.96
+opus55                             5               1.0               1.0                21               1.0                 2               0.2               1.4               0.2
+sonnet55                           5               0.8               0.8                20               1.0               2.6               0.2               1.8               0.0
+fable52                            5               1.0               1.0                21               1.0               2.2                 0               0.6               0.6
+gpt61                              5               1.0               1.0                16               0.8               6.2                 1               1.4               0.0
+terra                              5               1.0               1.0                18               1.0               4.4                 0               0.8               0.4
+
+AUC vs held-out humans                  opus55        sonnet55         fable52           gpt61           terra
+sentence-length CV                       0.689           0.781           0.748           0.867           0.937
+mean sentence length                     0.793           0.885           0.815           0.926           0.804
+long words (7+) /1k                      0.637           0.778           0.541            0.97           0.785
+mean word length                         0.615           0.744           0.526           0.985           0.796
+nominalizations /1k                       0.57             0.6           0.385           0.852             0.6
+-ly adverbs /1k                          0.489           0.807           0.741           0.089           0.548
+lexical diversity MATTR-50               0.763           0.978           0.763             1.0           0.963
+first person /1k                         0.652           0.667           0.607           0.459           0.741
+commas /1k                               0.563           0.593           0.533           0.119           0.415
+lists of three /1k                       0.681           0.711           0.667           0.619            0.77
+plain words /1k                          0.415            0.57           0.674           0.711           0.781
+parentheses /1k                          0.759           0.696           0.759           0.759           0.759
+
+FAIL rate per check   human-heldout          opus55        sonnet55         fable52           gpt61           terra
+C1                            0.04               0               0               0             0.8             0.2
+E3                               0             0.2               0             0.2               0               0
+SE1                              0             0.4             0.8               0               0               0
+SE8                              0             0.4             0.6             0.2             0.4             0.4
+T1                               0             0.4             0.4             0.2             0.2             0.2
+
+TELL or FAIL rate    human-heldout          opus55        sonnet55         fable52           gpt61           terra
+B1                           0.111             0.2               0             0.2             0.6             0.4
+E1                           0.037             0.6             0.6             0.4             0.2               0
+E3                               0             0.2               0             0.2               0               0
+E4                               0               0             0.2               0               0               0
+SE1                              0             0.4             0.8               0               0               0
+SE2                          0.111             0.8             0.4               0             0.2             0.4
+SE3                          0.074               0             0.6             0.6             0.6             0.4
+SE4                          0.037             0.6             0.2             0.2             0.6               0
+SE5                          0.074               0             0.4             0.4             0.6             0.4
+SE6                          0.037             0.8             0.4             0.6               0             0.8
+SE7                              0               0               0             0.2               0               0
+
+checklist AUC                0.993           0.952           0.985           0.952           0.904

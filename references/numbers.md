@@ -8,6 +8,7 @@ The bands, the AI directions, what the whole apparatus does on held-out texts, h
 - Blog bands
 - Fiction bands
 - Work registers: pull requests, commit messages, READMEs, email
+- Video scripts, English and Spanish: the corpus, the bands, the checks, the end-to-end runs
 - Four counter-intuitive results
 - What the apparatus does on held-out texts
 - What the loop does to a text
@@ -140,6 +141,186 @@ failed no held-out human text in any of the four. And the rewrite rules were not
 to end here: these files tell a draft from human text of its kind, and nothing yet shows
 what the loop does to a pull request description. The checklist catches GPT-6.1 in all
 four and lets most Claude drafts through, as it does in blog posts.
+
+### Video scripts: English and Spanish
+
+Two band files, `bands-script.json` and `bands-script-es.json`, built on 12 November 2026 for the narration of a YouTube video. They read the spoken words only: a band file with `"_spoken": true` makes the meter and the checklist call `aimeter.spoken()` first, which drops scene headings, stage directions, speaker labels, timestamps, word-count trailers, production notes and source lists and counts each as markup. Assistant scripts carry plenty of it (a median of 0 to 18.4 stage directions per 1,000 spoken words by folder in English, 7.3 to 13.5 in Spanish) and human captions carry none (`eval/results/script-markup.txt`, `script-es-markup.txt`, from `python3 eval/markup.py script ~/corpus/script OUT`). The rewrite keeps all of that markup where it was.
+
+The register measures a draft and its checks catch a share of assistant scripts. The end-to-end runs below say what it does not do: it did not make a rewritten script read as human-written to blind judges.
+
+**Corpus.** Manual captions of YouTube videos uploaded on or before 31 December 2021, so every text predates ChatGPT. Only manual tracks are read, never automatic ones. A video is kept when it has 300 to 3,000 spoken words, no more than five speaker changes, no more than two hesitations ("uh", "um"; "eh", "em", "o sea" in Spanish) per 1,000 words and normal punctuation. The channels are narrated explainers. `scripts/build-corpus-script.sh en|es [OUTDIR]` builds the corpus and needs `yt-dlp` and `node`. It writes `eval/titles/script-manifest.tsv` and `script-es-manifest.tsv`, one row per video examined with its upload date, track, word count and status, so the choice can be audited. The texts are not redistributed.
+
+| | English | Spanish |
+|---|---|---|
+| videos examined | 424 | 615 |
+| kept as human scripts | 193 | 107 |
+| channels | 17 (6 to 12 each) | 13 (3 to 12 each) |
+| upload dates | 9 July 2009 to 11 November 2021 | 28 April 2013 to 10 November 2021 |
+| median length | 1,177 words | 1,452 words |
+| train, held out (every 4th file) | 144, 49 | 80, 27 |
+| assistant scripts, train | 48 (12 each: GPT-6.1, Haiku 5.5, Opus 5.5, Sonnet 5.5) | 48 (same) |
+| assistant scripts, test | 45 (9 each: Opus 5.5, Sonnet 5.5, Fable 5.2, GPT-6.1, Terra) | 25 (5 each) |
+
+The English channels are 3Blue1Brown, CGP Grey, Every Frame a Painting, Johnny Harris, Kurzgesagt, LEMMiNO, Nerdwriter1, Oversimplified, PBS Space Time, Real Engineering, TED-Ed, Tom Scott, Veritasium, Vox, Vsauce, Wendover Productions and exurb1a. The Spanish ones are Academia Play, C de Ciencia, CuriosaMente, Date un Vlog, Derivando, El Robot de Platón, Jaime Altozano, La Hiperactina, Memorias de Pez, Pero eso es otra historia, QuantumFracture, Un Mundo Inmenso and VisualPolitik. The rest of the videos examined: in English 92 had no manual track, 59 were over 3,000 words, 59 unscripted, 11 under 300, 5 unpunctuated, 3 translated and 2 failed to download; in Spanish 399 had no manual track, 36 were unpunctuated, 35 failed, 17 were too long, 9 unscripted, 8 unavailable, 3 translated and 1 too short. Spanish manual tracks are rarer, which is why 615 videos gave 107 scripts. The assistant scripts come from the plain request `Write the script for a YouTube video titled "…". Around N words.` (`Escribe el guion de un video de YouTube titulado "…". Unas N palabras.`), with the title and length of a human script on the training split; `eval/ai/script*/MANIFEST.tsv` records model, date and prompt for each. A caption is what was said, put into text by whoever captioned it, so the human side is narration with the captioner's punctuation and no paragraphs.
+
+**Bands** (`bands-script.json`, `bands-script-es.json`). Built with `python3 scripts/aimeter.py --calibrate TRAIN --ai AI_TRAIN_DIRS --out FILE --spoken`; the exact commands, with every rebuild, are at the top of `eval/results/script.txt` and `script-es.txt`. Only the scored features are listed. *AUC, train* is the chance an assistant script sits further to the AI side than a human one on the 144 or 80 and 48 training scripts (the band file stores the chance that an AI value is the higher one; the table shows it from the AI side). *AUC, held out* is the range over the five test models against the held-out humans, from the section "The shipped state, in full" of the same results files. A range that crosses 0.5 means the models disagree. *Either* means the direction was too weak to score, so only the band applies.
+
+English, 17 of 23 features scored:
+
+| feature | human p10–p90 (median) | AI median | AI side | AUC, train | AUC, held out |
+|---|---|---|---|---|---|
+| sentence-length CV | 0.446 – 0.797 (0.579) | 0.531 | lower | 0.64 | 0.59 to 0.88 |
+| mean sentence length | 13.1 – 25.4 (17.8) | 12.3 | lower | 0.93 | 0.88 to 0.94 |
+| long words (7+) /1k | 141 – 250 (196) | 216 | higher | 0.66 | 0.50 to 0.86 |
+| mean word length | 4.22 – 4.82 (4.53) | 4.71 | higher | 0.71 | 0.53 to 0.82 |
+| nominalizations /1k | 5.8 – 35.6 (13.8) | 18.0 | higher | 0.61 | 0.37 to 0.79 |
+| -ly adverbs /1k | 8.8 – 21.7 (14.5) | 13.0 | lower | 0.61 | 0.35 to 0.72 |
+| passive voice /1k | 2.2 – 12.8 (6.0) | 5.0 | either | – | – |
+| lexical diversity MATTR-50 | 0.77 – 0.833 (0.807) | 0.832 | higher | 0.81 | 0.70 to 0.88 |
+| first person /1k | 1.8 – 34.6 (14.4) | 4.9 | lower | 0.72 | 0.59 to 0.80 |
+| contractions /1k | 10.0 – 37.8 (21.9) | 24.1 | either | – | – |
+| questions /1k | 0 – 10.1 (2.7) | 3.4 | either | – | – |
+| repeated openers /100 | 0 – 9.1 (3.5) | 5.2 | higher | 0.64 | 0.55 to 0.76 |
+| connective openers % | 7.1 – 28.7 (17.2) | 12.1 | lower | 0.70 | 0.57 to 0.68 |
+| AI-lexicon words /1k | 0 – 1.79 (0.43) | 1.73 | higher | 0.70 | 0.38 to 0.73 |
+| lists of three /1k | 0 – 5.15 (2.08) | 6.21 | higher | 0.81 | 0.70 to 0.88 |
+| participial clauses /1k | 0 – 2.84 (1.01) | 1.04 | either | – | – |
+| plain words /1k | 44 – 108 (75) | 62.5 | lower | 0.67 | 0.61 to 0.70 |
+
+Spanish, 19 of 23 features scored:
+
+| feature | human p10–p90 (median) | AI median | AI side | AUC, train | AUC, held out |
+|---|---|---|---|---|---|
+| sentence-length CV | 0.474 – 0.813 (0.601) | 0.518 | lower | 0.76 | 0.69 to 0.94 |
+| mean sentence length | 14.6 – 29.1 (21.1) | 14.4 | lower | 0.88 | 0.79 to 0.93 |
+| long words (7+) /1k | 218 – 303 (263) | 291 | higher | 0.73 | 0.54 to 0.97 |
+| mean word length | 4.46 – 4.94 (4.74) | 4.85 | higher | 0.68 | 0.53 to 0.98 |
+| nominalizations /1k | 11.7 – 34.8 (22.1) | 25.4 | higher | 0.63 | 0.39 to 0.85 |
+| -mente adverbs /1k | 2.8 – 9.8 (5.9) | 3.9 | lower | 0.66 | 0.09 to 0.81 |
+| passive voice /1k | 0 – 5.4 (2.1) | 1.4 | either | – | – |
+| lexical diversity MATTR-50 | 0.755 – 0.825 (0.797) | 0.823 | higher | 0.83 | 0.76 to 1.00 |
+| first person /1k | 1.1 – 14.6 (5.4) | 2.8 | lower | 0.65 | 0.46 to 0.74 |
+| contractions /1k | 0 – 0 (0) | 0 | either | – | – |
+| questions /1k | 0.45 – 10.7 (3.7) | 4.0 | either | – | – |
+| repeated openers /100 | 0 – 6.1 (2.4) | 2.35 | either | – | – |
+| connective openers % | 8.8 – 26.9 (18.2) | 16.4 | either | – | – |
+| commas /1k | 34 – 77 (60) | 66.5 | higher | 0.67 | 0.12 to 0.59 |
+| AI-lexicon words /1k | 0 – 0.48 (0) | 0 | either | – | – |
+| lists of three /1k | 0 – 4.95 (2.23) | 5.55 | higher | 0.82 | 0.62 to 0.77 |
+| participial clauses /1k | 0 – 2.53 (0.89) | 0.56 | either | – | – |
+| plain words /1k | 24.8 – 51.7 (40.35) | 31.5 | lower | 0.65 | 0.41 to 0.78 |
+| parentheses /1k | 0 – 5.09 (0.61) | 0 | lower | 0.73 | 0.70 to 0.76 |
+
+Two features hold in both languages on every channel: shorter sentences (assistant median 12.3 and 14.4 words, the human median on the human side in 17 of 17 and 10 of 10 channels) and more lists of three (6.21 and 5.55 per 1,000 words against human medians of 2.08 and 2.22, on the human side in 17 of 17 and 10 of 10 channels). Lexical diversity is on the human side in 16 of 17 and 10 of 10 channels. In English the AI-lexicon rate is on the human side in 17 of 17; in Spanish it is 0 against 0, so only the band applies. The counts are in `eval/results/script-channels.txt` and `script-es-channels.txt`, from `QUIRON_BANDS=scripts/bands-script.json python3 eval/script_channels.py eval/titles/script-manifest.tsv ~/corpus/script AI_TRAIN_DIRS`. Spanish counts ten channels, the ones with four or more texts. In Spanish, GPT-6.1 writes more -mente adverbs and fewer commas than people (held-out AUC 0.09 and 0.12), against the direction the other four models give, which is why the ranges of those two features cross 0.5.
+
+**Features switched off (`_skip`).** English: words per paragraph, headings, commas, em dashes, semicolons and parentheses. Spanish: words per paragraph, headings, semicolons and em dashes. Captions have no paragraphs or headings (a caption is one line, a human median of 1,186 words per paragraph in English), so those two say nothing. The other four depend on the captioner more than on the speaker. The rule, written before the numbers: a punctuation feature goes to `_skip` when fewer than three quarters of the counted channels sit on the human side of the AI median. In English commas had 11 of 17, and em dashes, semicolons and parentheses 0 of 17 (a tie at 0 per 1,000 words on both sides for the first two). In Spanish commas had 9 of 10 and parentheses 8 of 10, so they stay scored; semicolons and em dashes tie at 0.
+
+**Thresholds** (`_thresholds`). English: C1 (rates on the AI side) fails at 4, T1 (tells together) at 6, B1 (AI-lexicon words) at 4. Spanish: C1 at 6, T1 at 4. They were picked from a grid with the human train scripts added (`eval/results/script.txt` and `script-es.txt`, "Shape patterns"): of the values that keep the train humans as clean as before the new checks and the held-out humans no less clean, the one that catches the most assistant scripts, a tie going to the higher value. Under the chosen ones 91% of the English and 96% of the Spanish train humans are clean. The choice looked at the held-out humans too, so the held-out clean rates below are optimistic.
+
+**Checks.** They run only when the band file says `"_register": "script"`. Each rate is held-out humans, train humans, and the assistant test scripts pooled (`python3 eval/script_candidates.py en|es`, `eval/results/script-candidates.txt` and `script-es-candidates.txt`, section "Decisions"). The Spanish checks were written from the judges' reasons on Spanish texts and counted on Spanish texts on both sides; the English patterns were not translated. All are in `references/patterns.md`.
+
+| check | what it finds | held-out humans | train humans | assistant test |
+|---|---|---|---|---|
+| S1 | a sentence opens with "Imagine" or "Picture this" | 1 of 49 | 8 of 144 | 31% |
+| S2 | staged reveals: "here's the twist", "here's why", "then there's", "the honest answer", "sounds simple" | 6 of 49 | 23 of 144 | 49% |
+| S3 | a request for comments ("let us know in the comments", "leave a comment") | 0 of 49 | 5 of 144 | 24% |
+| S4 | "next time you" | 2 of 49 | 1 of 144 | 16% |
+| S5 | a bare noun-phrase question ("The catch?") | 1 of 49 | 1 of 144 | 9% |
+| S6 | two sentences on one opener: "No X. No Y.", "Maybe… Maybe…" | 0 of 49 | 4 of 144 | 11% |
+| S7 (FAIL) | three of S1 to S6 in one script | 0 of 49 | 0 of 144 | 18% |
+| SE1 (FAIL) | "quédate hasta el final" | 0 of 27 | 0 of 80 | Opus 5.5 2 of 5, Sonnet 5.5 4 of 5 |
+| SE2 | "hoy te cuento", "hoy vamos a" | 3 of 27 | 8 of 80 | 36% |
+| SE3 | a sentence opens with "imagina" | 2 of 27 | 4 of 80 | 44% |
+| SE4 | "y aquí viene", "lo curioso es que", "dato curioso" | 1 of 27 | 4 of 80 | 32% |
+| SE5 | "entonces, ¿…?" | 2 of 27 | 5 of 80 | 36% |
+| SE6 | a request for comments with a verb ("cuéntame", "déjanos", "escríbeme") | 1 of 27 | 4 of 80 | 52% |
+| SE7 | "la próxima vez que" | 0 of 27 | 1 of 80 | 4% (one Fable 5.2 script) |
+| SE8 (FAIL) | three of SE1 to SE7 in one script | 0 of 27 | 0 of 80 | 40% |
+
+S1 to S6 and SE2 to SE7 are TELLs. S7 and SE8 are combined checks, like T1, and SE1 is a pattern no human caption used. Share of each model's scripts that fail S7: Opus 5.5 33%, Sonnet 5.5 33%, Fable 5.2 0%, GPT-6.1 11%, Terra 11%. SE1 fails 40%, 80%, 0%, 0%, 0% and SE8 40%, 60%, 20%, 40%, 40% in the same order. A FAIL needs at most 5% of the held-out humans, and in Spanish at most 5% of the train humans too, since one text is 4% of 27.
+
+Twelve checks from the blog register are switched off for English scripts and one for Spanish, because on scripts they fire on humans about as often as on assistants (`SCRIPT_OFF` and `SCRIPT_B1_TELL_OFF` in `audit.py`). The rule: a TELL whose pooled assistant rate is under twice its held-out human rate goes off. English: A1, A1b, A2b, A3, A4, A8, A9, A14b, A15, A26, A32 and the TELL state of B1 (one to three lexicon words: 47% of held-out humans, 60% of assistants; B1 still fails at four). Spanish: A2b (2 of 27 humans, 1 of 25 assistant scripts). A17, A20, A4b, A5 and B2 stay on in English, and B1, E1, E3 and E4 in Spanish (`script-candidates.txt`, "Existing checks in this register" and "re-applied on whole narrations").
+
+**On held-out texts.** Checklist clean means no FAIL. The word-frequency judge is the one in `evaluate.py`, trained on the training texts of the same register. The "before" row reads the same texts with the blog or Spanish blog bands and no spoken filter.
+
+| English | texts | checklist clean | blog bands, clean | word-frequency judge says AI | checklist AUC |
+|---|---|---|---|---|---|
+| human, held out | 49 | 94% (46 of 49) | 82% (40 of 49) | 2% | – |
+| Opus 5.5 | 9 | 22% | 56% | 67% | 0.745 |
+| Sonnet 5.5 | 9 | 33% | 67% | 44% | 0.887 |
+| Fable 5.2 | 9 | 78% | 56% | 56% | 0.836 |
+| GPT-6.1 | 9 | 33% | 33% | 67% | 0.963 |
+| Terra | 9 | 44% | 44% | 67% | 0.963 |
+
+| Spanish | texts | checklist clean | Spanish blog bands, clean | word-frequency judge says AI | checklist AUC |
+|---|---|---|---|---|---|
+| human, held out | 27 | 96% (26 of 27) | 96% (26 of 27) | 11% | – |
+| Opus 5.5 | 5 | 20% | 80% | 100% | 0.993 |
+| Sonnet 5.5 | 5 | 0% | 80% | 80% | 0.952 |
+| Fable 5.2 | 5 | 60% | 80% | 100% | 0.985 |
+| GPT-6.1 | 5 | 0% | 40% | 100% | 0.952 |
+| Terra | 5 | 40% | 40% | 100% | 0.904 |
+
+Sources: `eval/results/script.txt` and `script-es.txt`, section "The shipped state, in full" (clean share, judge, AUC; rerun with the command at its head) and the "Before and after on the same texts" blocks (the blog-bands column, from `eval/band_compare.py`; the "after" counts in the last block of "Shape patterns" agree with the clean column). Fable 5.2 is the model the English checks catch least, as in every other register: 78% of its scripts are clean against 56% under the blog bands. Read these with their limits. The thresholds, the switch-offs, the size of the combined checks (three, not two) and T1 were chosen with the held-out rates in view, so the held-out columns are optimistic; the train humans are 91% and 96% clean. The test folders hold 9 and 5 scripts per model, so one script moves a rate by 11 or 20 points. The assistant scripts were written from a title alone.
+
+**What the blind judges say, on narrations.** `JUDGE=claude-sonnet-5-5 python3 eval/script_reasons.py en|es -k 2` (`eval/results/script-reasons.txt`, `script-es-reasons.txt`). Two Sonnet 5.5 judges read each narration alone and gave P(AI): human train captions 6.1 in English and 5.2 in Spanish (0 of 48 over 50), assistant train scripts 83.3 (48 of 48 over 50) and 81.8 (46 of 48). Held-out human captions, judged in the end-to-end runs, are at 7.8 and 8.1. Of 288 reasons on assistant scripts in English, 217 name even polish, 144 signposting or explainer scaffolding, 114 a tidy ending, 104 no personal voice and 80 rhetorical questions answered at once; the Spanish counts run the same way (190, 167, 144, 120, 87). On human captions the commonest reasons are caption artifacts (103), personal voice (96) and spontaneous speech (90). The checks above come from these reasons and from reading ten human and ten assistant scripts in full.
+
+### Video scripts end to end
+
+The same protocol as the blog rounds of November 2026 (`eval/e2e/README.md`): Claude Sonnet 5.5 rewrites an untouched assistant script with a copy of the skill, two Sonnet 5.5 judges and one GPT-6.1 Terra judge read the narration alone (`--k 2 --g 1`), and differences are paired per title with a Wilcoxon test. 20 scripts in each set: `scr` and `scr-es` (development), `scr2` and `scr2-es` (held out, chosen the same way and never used to choose anything). No notes and no stopping to ask. The judge reads only the narration, so the stage directions the rewrite keeps cannot help or hurt. Every line has its command in `eval/results/script-e2e.txt` and `script-es-e2e.txt` (a "Verdict" block at the top, the commands in the sections below it). "Over" is the mean number of features per text past the human band on the overshoot side, "AI side" those on the AI side.
+
+Snapshots. *main* is the skill before the register (`origin/main`). *Bands only* is the register with its checks switched off (`harness.py snapshot NAME --no-script-rules`). *Ships* is the tree as it ships: the bands, the checks on and no script rules. Two rule sets were tried and are described below.
+
+| English, `scr` | Claude judge | GPT judge | over | AI side |
+|---|---|---|---|---|
+| untouched drafts | 82.3 | 87.1 | 0.00 | 3.15 |
+| main | 71.6 | 82.0 | 0.30 | 2.65 |
+| bands only | 73.1 | 82.2 | 0.25 | 1.50 |
+| ships | 72.3 | 81.9 | 0.23 | 1.52 |
+
+| Spanish, `scr-es` | Claude judge | GPT judge | over | AI side |
+|---|---|---|---|---|
+| untouched drafts | 79.4 | 84.3 | 0.40 | 2.85 |
+| main | 69.5 | 79.2 | 0.85 | 2.50 |
+| bands only | 70.6 | 79.6 | 0.85 | 2.17 |
+| ships | 69.4 | 79.9 | 0.70 | 2.12 |
+
+On the held-out sets: English `scr2` drafts 75.5, bands only 69.3, ships 69.1; Spanish `scr2-es` drafts 81.5, bands only 70.2, ships 69.9. Human narrations: ten held-out captions per language are judged 7.8 (English) and 8.1 (Spanish), and the judges call none of them AI. How far one version moves by itself, the difference between its two reps in the set mean: 0.7 and 1.5 on `scr` (bands only, ships), 3.4 and 3.2 on `scr2`, 2.2 and 2.8 on `scr-es`, 3.4 and 3.7 on `scr2-es`. A difference under about three points means nothing.
+
+**What the runs showed, four findings.**
+
+1. **The register does not move the judges beyond what the skill on `main` already did.** Ships against main: English +0.7 (worse on 13 of 20 titles, p = 0.433), Spanish −0.1 (9 of 20, p = 0.778). The bands alone against main: +1.0 (p = 0.381) and −0.5 (p = 0.295). They move the meter, not the reader: AI-side features per text fell from 2.65 to 1.32 and from 2.50 to 2.12. The script checks on against off while rewriting: −0.8 and −1.1 on the development sets, −0.2 and −0.3 on the held-out ones, all inside the noise. The checks do what they are written for, and no judge sees it: staged reveals fell from 0.60 to 0.15 per 1,000 words in English. They stay on, because they cost nothing measurable. Any rewrite cuts an untouched draft by 6 to 12 points (82.3 to 72.3, 79.4 to 69.4, 75.5 to 69.1, 81.5 to 69.9), and 88% to 98% of the rewrites are still judged AI.
+2. **No rule for the shape of a script held, and two attempts made it worse.** See the list below. Both attempts moved sentence length into the band and the judges rated the rewrites more AI. No `references/script.md` ships.
+3. **Rewriting a script a person wrote costs it.** Ten held-out human captions per language, one rewrite with what ships: English 7.8 to 14.2 (+6.4, worse on 8 of 10, p = 0.012; GPT-6.1 Terra 8.1 to 24.6), Spanish 8.1 to 15.2 (+7.1, 8 of 10, p = 0.012; Terra 11.6 to 29.5). The rewriter shortens and evens sentences: mean sentence length 18.9 to 15.3 and 19.9 to 15.2, CV 0.606 to 0.542 and 0.634 to 0.521, against what the bands ask of narration. None went over 50. So a script a person wrote is measured and not rewritten.
+4. **The rewrites that ship overshoot more than the untouched drafts.** Features past the human band per text: English 0.00 to 0.23 on `scr` and 0.10 to 0.28 on `scr2`; Spanish 0.40 to 0.70 on `scr-es` and 0.30 to 0.82 on `scr2-es`. A draft with few features past the band comes back with more of them.
+
+**What was tried and did not work.** All of it on whole narrations (`eval/results/script-e2e.txt`, `script-es-e2e.txt`).
+
+- **Rules for the shape of a script, one per measured pattern** (`references/script.md` at commit `37a1cff`: longer sentences joined with "and", "but" or "so"; fewer lists of three; repeat the plain word; more first person; no "Imagine" opening, no staged reveal, no request for comments, no "next time you", no bare-noun question, no pairs of fragments; the Spanish equivalents). Against the bands alone: English 72.6 to 75.0 (+2.5, worse on 13 of 20, p = 0.117; noise 0.6; GPT judge +1.3, p = 0.012), Spanish 69.0 to 74.2 (+5.2, worse on 17 of 20, p = 0.018; noise 2.1; GPT +3.3). Overshot fell (0.23 to 0.15, 0.80 to 0.45) and the rewrites did what the rules said: sentence length 13.2 to 16.8 and 14.6 to 18.3, "Imagine" openings and staged reveals nearly gone. The judges did not follow. The decision rule, set before any number, was to ship rules that beat the bands by more than the noise on `scr` and then confirm on `scr2`; they failed on `scr`, so `scr2` was never run for them.
+- **The same rules without the sentence-length bullets** (one rep): English +2.1 (p = 0.240), Spanish +2.0 (p = 0.205). Removing the rule that lengthens sentences removed little of the loss.
+- **A short rule, "keep sentences whole, join short ones to the band median, keep the narrator's I and we"** (called `join`), against what ships. English +5.1 (worse on 16 of 20, p = 0.004; GPT +2.2, p = 0.001), Spanish +1.8 (14 of 20, p = 0.167). Sentence length reached the band (18.1 and 20.6), overshot fell (0.23 to 0.10, 0.70 to 0.45), and the judges still rated the rewrites more AI. Its text is in both e2e files. Longer sentences alone do not read as human.
+- **The register alone** (the bands without any rule, against main): +1.0 and −0.5, noise.
+- **Candidates for checks that did not ship** (`script-candidates.txt`). Out by the rule, because humans use them as much as assistants do: the promise "in this video / today we" (14% of held-out humans, 22% of assistants), a question in the first three sentences (14%, 9%), a short question answered at once (53%, 69%), runs of very short sentences (14%, 24%), "Now" or "Well" openers under 1% (33% of held-out humans, 71% of assistants), em dashes (18%, 24%). Ellipses (51% of held-out humans, 13% of assistants), the tag ", right?", "you know", "kind of" and "basically" lean human. Spanish: "en este video" (30%, 36%), "es decir" (44%, 28%), "fascinante" (11%, 8%). Counted and never proposed, because a creator's sign-off is the channel's own call: "subscribe" (8% of held-out humans, 33% of assistants), "thanks for watching" (27%, 42%), sponsor reads (29% of held-out humans, no assistant script).
+- **S3 as a FAIL.** Narrowed to a request ("let us know in the comments"), it passes the rule on the held-out humans (0 of 49, and 4 of 9 Opus 5.5 scripts). It stays a TELL because 5 of the 144 train captions ask for comments and a FAIL took the train humans from 91% clean to 88%, under the 90% they had before this register. A human creator asking for comments is the channel's choice. As a TELL it still feeds S7, and S7 leans on it: without S3, three of the other five fire on 2 of 45 assistant test scripts. The first version also had a bare "in the comments", which a mention ("someone in the comments") trips.
+- **Two of S1 to S6 as the combined FAIL.** It fires on 42% of assistant test scripts with no held-out human and 5 of 144 train captions; it was found after looking at the held-out row, so S7 stays at three. In Spanish two of SE1 to SE7 fails 1 of 27 held-out humans and 6 of 80 train, so it is a TELL by the rule and not shipped.
+- **S1 and S4 as FAILs.** S1 would fail 6 of 9 GPT-6.1 scripts and one clean held-out human; S4 would fail Terra and Sonnet 5.5 at 3 of 9 and two held-out humans (clean held-out humans 46 to 45 and 46 to 44 of 49). In Spanish "imagina" in the first three sentences and SE4 as FAILs each cost one held-out human, and SE6's bare "en los comentarios" would fail a clean one. "No te pierdas" was dropped from SE1 for the same reason. They are TELLs.
+- **Left out because the audit cannot compute them.** A closing question that repeats the title's words (0 of 49 and 2 of 144 humans, 9% of assistants in English) needs the video title, which a caption or a user's script does not carry. "So, <question>?" in the last tenth meets the TELL rule in English now (0 of 49, 4 of 144, 9%) and is in no shipped check.
+- **"Piénsalo como" in Spanish.** A FAIL by the rule (no human caption, Opus 5.5 2 of 5) but it fires on 3 of 73 assistant scripts, all by one model; two test texts of one model are not evidence.
+
+**Limits.** The judges are Claude Sonnet 5.5 and GPT-6.1 Terra and the rewriter is Sonnet 5.5, so the Claude judge shares a family with the rewriter. Each language has one human corpus of narrated explainer channels, so the bands say nothing about a tutorial, a vlog or an interview. The held-out sets have 49 and 27 human scripts. No rewrite was judged by a person. The meter reads the narration only, as the judges do, so stage directions and layout are outside every number here.
+
+Rebuild the corpus and the bands:
+
+```
+scripts/build-corpus-script.sh en ~/corpus/script      # needs yt-dlp and node
+scripts/build-corpus-script.sh es ~/corpus/script-es
+TRAIN=$(mktemp -d); ls ~/corpus/script/*.md | awk 'NR%4!=1' | xargs -I{} cp {} $TRAIN
+QUIRON_BANDS=scripts/bands-script.json python3 scripts/aimeter.py --calibrate $TRAIN \
+    --ai eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 \
+    --out scripts/bands-script.json --spoken
+```
+
+The Spanish command adds `--lang es --lexicon ai-lean-es.txt --plain human-lean-es.txt`. A calibration rewrites the band file's `_corpus`, so set it back to `script-train` by hand, as the results files record. The held-out evaluation is the `evaluate.py` command at the head of the section "The shipped state, in full".
 
 ### Four counter-intuitive results
 
@@ -504,6 +685,13 @@ Without `--ai` the defaults in `AI_REF` apply: directions from the literature, c
 on blog posts. `--out` defaults to the
 shipped `bands.json`, so name a new file.
 
+A register whose texts carry markup around the words, such as stage directions and speaker
+labels in a script, needs `--spoken`: the band file is then marked `"_spoken": true` and the
+meter and the checklist read only the spoken words. Check which punctuation features depend
+on whoever transcribed the text with `eval/script_channels.py`, which prints each channel's
+median beside the AI median, and put the ones most channels do not separate in `_skip`
+(video scripts, above).
+
 ## Part D: what this does not do
 
 In the TextPulse prompting study, all 120 AI texts under every prompt from every model
@@ -532,6 +720,13 @@ Claude was involved. Nothing is visible and no style edit touches it: light edit
 it, a rewrite where every word changes removes it, and it is thin where Claude only
 proofread a human text (Anthropic, *How Claude's text watermarking works*, 2026). This is
 one more reason the writer's own words beat a rewrite.
+
+One limit of the meter itself. `aimeter.prose()` drops a line that starts with four or
+more whitespace characters, to skip indented code, and the match runs across line breaks:
+four blank lines in a row, or a few blank lines with spaces in them, make it drop the line
+after them, in every register. `spoken()` closes those runs in its own output, so scripts
+are not affected, and `prose()` is left as it was so that the other bands keep measuring
+what they measured.
 
 Two more limits. Stylometric classifiers reach 86% to 90% accuracy at population scale
 but produce unreliable individual verdicts: in TextPulse's classification study,

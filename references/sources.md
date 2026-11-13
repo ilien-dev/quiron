@@ -86,6 +86,21 @@ Every study and dataset behind a number in this skill.
   side of `bands-email.json`.
 - GitHub's public API, for the human side of `bands-pr.json`, `bands-commit.json` and
   `bands-readme.json` (`scripts/build-corpus-work.sh`).
+- YouTube manual caption tracks, for the human side of `bands-script.json` and
+  `bands-script-es.json`: 193 English scripts from 17 channels (3Blue1Brown, CGP Grey, Every
+  Frame a Painting, Johnny Harris, Kurzgesagt, LEMMiNO, Nerdwriter1, Oversimplified, PBS
+  Space Time, Real Engineering, TED-Ed, Tom Scott, Veritasium, Vox, Vsauce, Wendover
+  Productions, exurb1a) and 107 Spanish ones from 13 (Academia Play, C de Ciencia,
+  CuriosaMente, Date un Vlog, Derivando, El Robot de Platón, Jaime Altozano, La Hiperactina,
+  Memorias de Pez, Pero eso es otra historia, QuantumFracture, Un Mundo Inmenso,
+  VisualPolitik). Every video was uploaded on or before 31 December 2021, and only manual
+  tracks are read, never automatic captions. `scripts/build-corpus-script.sh` fetches them
+  with `yt-dlp` (tested with 2026.10.26) and records every video it examined, with its
+  status, in `eval/titles/script-manifest.tsv` and `script-es-manifest.tsv`. The texts are
+  not redistributed.
+- This skill's video-script rounds, November 2026: Claude Sonnet 5.5 as rewriter, Sonnet 5.5
+  and GPT-6.1 Terra as blind judges, on 20 development and 20 held-out assistant scripts in
+  each language, and on 10 held-out human captions in each (`references/numbers.md`).
 - This skill's November 2026 rounds: Claude Sonnet 5.5 as rewriter, Sonnet 5.5 and
   GPT-6.1 Terra as blind judges, on the same 20 development and 18 held-out titles
   (`references/numbers.md`).

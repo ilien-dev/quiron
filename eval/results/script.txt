@@ -268,3 +268,56 @@ sonnet55             9                     4           2.67      3 of 9 (33%)
 fable52              9                     3           2.44      7 of 9 (78%)
 gpt61                9                     5           4.67      3 of 9 (33%)
 terra                9                     4           3.78      4 of 9 (44%)
+
+## The shipped state, in full (added with the documentation: the first evaluation above is the state at cafd8ed, before the checks)
+# Same command as the first evaluation, run on the tree as it ships (band file rebuilt in task 6b, script checks on). The per-feature AUC table
+# above is the old one; this is the current one, and the group rows end with the clean share of each group (audit_clean_share).
+# QUIRON_BANDS=scripts/bands-script.json python3 scripts/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
+bands from 144 human texts, 49 held out
+
+group                              n        judge_p_ai       judge_as_ai      score_median      score_14plus      ai_side_mean     overshot_mean  audit_fails_mean audit_clean_share
+human-heldout                     49              0.02              0.02                21              0.98              0.78                 1              0.06              0.94
+opus55                             9              0.67              0.67                20               1.0              2.78              0.11              0.89              0.22
+sonnet55                           9              0.44              0.44                19               1.0              2.67              0.56              0.78              0.33
+fable52                            9              0.56              0.56                20               1.0              2.44              0.33              0.22              0.78
+gpt61                              9              0.68              0.67                18               1.0              4.67              0.22              0.89              0.33
+terra                              9              0.67              0.67                19               1.0              3.78              0.11              0.89              0.44
+
+AUC vs held-out humans                  opus55        sonnet55         fable52           gpt61           terra
+sentence-length CV                       0.594           0.732            0.68            0.88           0.777
+mean sentence length                     0.905           0.916           0.914           0.941           0.882
+long words (7+) /1k                       0.58           0.501           0.551           0.862           0.728
+mean word length                          0.71           0.533           0.588           0.821           0.755
+nominalizations /1k                       0.37            0.41           0.484           0.785           0.611
+-ly adverbs /1k                          0.724           0.604           0.518           0.347           0.508
+lexical diversity MATTR-50               0.876           0.721           0.696           0.862           0.774
+first person /1k                         0.743            0.59           0.645           0.619             0.8
+repeated openers /100                    0.632           0.546           0.659           0.744           0.764
+connective openers %                     0.676           0.573           0.638           0.588           0.613
+AI-lexicon words /1k                     0.594           0.381           0.608           0.732           0.735
+lists of three /1k                       0.841           0.823           0.789           0.703           0.876
+plain words /1k                          0.621           0.653           0.611           0.701           0.673
+
+FAIL rate per check   human-heldout          opus55        sonnet55         fable52           gpt61           terra
+A21                              0               0            0.11               0               0               0
+B1                            0.02            0.11               0            0.11            0.11            0.22
+C1                            0.02            0.44            0.33            0.11            0.67            0.56
+C2                            0.02               0               0               0               0               0
+S7                               0            0.33            0.33               0            0.11            0.11
+
+TELL or FAIL rate    human-heldout          opus55        sonnet55         fable52           gpt61           terra
+A17                              0           0.222               0               0               0               0
+A20                          0.122               0               0               0           0.667           0.778
+A21                              0               0           0.111               0               0               0
+A4b                           0.02           0.111           0.111               0               0               0
+A5                               0           0.111               0               0               0               0
+B1                            0.02           0.111               0           0.111           0.111           0.222
+B2                           0.061           0.111           0.222           0.222           0.444           0.111
+S1                            0.02           0.111           0.222           0.111           0.667           0.444
+S2                           0.122           0.333           0.667           0.667           0.444           0.333
+S3                               0           0.444           0.333           0.333               0           0.111
+S4                           0.041           0.111           0.333               0               0           0.333
+S5                            0.02           0.111           0.111               0           0.111           0.111
+S6                               0           0.222           0.111               0           0.111           0.111
+
+checklist AUC                0.745           0.887           0.836           0.963           0.963

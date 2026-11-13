@@ -1,6 +1,6 @@
 ---
 name: quiron
-description: Writes, rewrites or reviews prose so it reads as a person wrote it, and verifies the result with measurements (a meter against human baselines and a pattern checklist) instead of impressions. Use it whenever text a person will read needs to stop sounding like AI, such as blog posts, articles, essays, stories, guides, docs, READMEs, emails, messages to a boss or a team, PR descriptions. That includes removing "AI slop", making text sound less like ChatGPT or a chatbot, humanizing a draft, and reviewing or checking prose for AI tells such as em dashes, "not just X but Y", lists of three, headings everywhere or a summary at the end. Works in any language; English and Spanish have measured baselines, other languages get the same patterns as a best effort.
+description: Writes, rewrites or reviews prose so it reads as a person wrote it, and verifies the result with measurements (a meter against human baselines and a pattern checklist) instead of impressions. Use it whenever text a person will read needs to stop sounding like AI, such as blog posts, articles, essays, stories, video scripts, guides, docs, READMEs, emails, messages to a boss or a team, PR descriptions. That includes removing "AI slop", making text sound less like ChatGPT or a chatbot, humanizing a draft, and reviewing or checking prose for AI tells such as em dashes, "not just X but Y", lists of three, headings everywhere or a summary at the end. Works in any language; English and Spanish have measured baselines, other languages get the same patterns as a best effort.
 license: AGPL-3.0-only. See LICENSE and NOTICE.
 compatibility: Python 3 standard library only. The scripts need a shell and file access.
 ---
@@ -22,7 +22,8 @@ prefix them with the full path: `python3 <skill-dir>/scripts/aimeter.py FILE`.
 Read these when the step you are on needs them. Each is one level deep and self-contained.
 
 - [references/patterns.md](references/patterns.md): the 33 structural patterns in full,
-  with the measured rate and fix for each. Read the entry when `audit.py` flags it.
+  with the measured rate and fix for each, and the checks for video scripts. Read the
+  entry when `audit.py` flags it.
 - [references/word-choice.md](references/word-choice.md): the lexicons, the plain words
   models leave out, and the Claude-specific words.
 - [references/spanish.md](references/spanish.md): bands, checks and word lists for Spanish.
@@ -66,10 +67,17 @@ sentences than human ones, while assistant fiction has choppier ones (both run s
   English. They measure a draft; the rewrite rules were not tested end to end in these
   registers. Most commit messages and many emails are under the meter's 120 words, and
   for those the patterns apply by eye.
-- `scripts/bands-script.json`, `bands-script-es.json`: the narration of a YouTube video
-  script, in English and in Spanish. Only the spoken words are measured: scene headings,
-  stage directions, speaker labels and timestamps are dropped first. Rewrite only what is
-  said and keep those where they are; whoever records the video needs them.
+- `scripts/bands-script.json` (English), `scripts/bands-script-es.json` (Spanish): the
+  narration of a YouTube video script. Only the spoken words are measured: scene headings,
+  stage directions, speaker labels, timestamps and source lists are dropped before the
+  meter and the checklist read the text. Rewrite only what is said and keep those where
+  they are; whoever records the video needs them. These files score 17 and 19 of the 23
+  features and carry checks and thresholds of their own (`references/patterns.md`). They
+  were validated on held-out scripts: they measure a draft. End to end they did not move
+  blind judges beyond what the default rules already did, and no rewrite rule for scripts
+  held. A rewrite shortens sentences, so on a script do not split them, and stop at the
+  human band. A script a person wrote is measured, not rewritten: rewriting human
+  narration made judges rate it more AI. The numbers are in `references/numbers.md`.
 
 Select a file by putting `QUIRON_BANDS=<skill-dir>/scripts/bands-fiction.json` (or
 another of these files) in front of every command, including `check.sh`. The scripts print a

@@ -1,4 +1,26 @@
 # Video scripts end to end (en), November 2026 protocol (eval/e2e/README.md).
+
+## Verdict (written for the documentation; every number is in a section below, found by its command)
+# What the end-to-end runs showed for English video scripts, in four findings. P(AI) is the Claude judge's
+# mean (column "Opus", Sonnet 5.5 here), 20 titles per set, two rewrites per snapshot unless a row says one.
+# 1. The register does not move the judges beyond what the skill on main already did.
+#    scr: main 71.6, the shipped tree 72.3 (+0.7, worse on 13 of 20, p=0.433; section "Ship against main").
+#    The band files alone against main: +1.0 (p=0.381). The shipped checks against the same tree with them off: -0.8 (p=0.185,
+#    noise 1.5); on scr2 69.1 against 69.3 (-0.2, p=0.794). Any rewrite does cut an untouched draft, 82.3 to 72.3 on scr and
+#    75.5 to 69.1 on scr2, and 98% and 88% of the shipped rewrites are still judged AI (over 50).
+# 2. No rule for the shape of a script held. Two sets were tried against the band files alone, both on whole narrations.
+#    The pattern rules (one rule per measured pattern): 72.6 to 75.0, +2.5 (worse on 13 of 20, p=0.117; noise 0.6).
+#    The same rules without the sentence-length bullets: +2.1 (1 rep). The short rule "keep sentences whole, join short ones
+#    up to the band median" (join): +5.1 against the shipped tree (worse on 16 of 20, p=0.004). All three scored higher
+#    (read more AI; the join result is the one with a small p) while they brought overshot down (0.23 to 0.15, 0.23 to 0.10)
+#    and sentence length into the band.
+#    So no references/script.md ships.
+# 3. Rewriting a script a person wrote costs it. Ten held-out human captions, one rewrite with the shipped tree: 7.8 to 14.2
+#    (+6.4, worse on 8 of 10, p=0.012), GPT judge 8.1 to 24.6; mean sentence length 18.9 to 15.3, CV 0.606 to 0.542. None over 50.
+#    The rewriter shortens and evens sentences, against what the bands ask for narration.
+# 4. The rewrites that ship overshoot more than the untouched drafts: features past the human band per text, 0.00 to 0.23 on
+#    scr and 0.10 to 0.28 on scr2.
+# The meter and the checklist were validated on held-out scripts (eval/results/script.txt); this file is about rewriting.
 # Rewriter REWRITER=claude-sonnet-5-5; judges two Claude Sonnet 5.5 (column "Opus", the Claude judge) and one GPT-6.1 Terra (column "GPT"), --k 2 --g 1.
 # Snapshots: main = git archive origin/main (39b39c1); bands = 37a1cff with --no-script-rules; rules = 37a1cff;
 # rules-nolen = rules with the sentence-length bullets removed from references/script.md (English: "Longer sentences"; Spanish: "Frases más largas", "Vary the length");
@@ -206,3 +228,10 @@ ship         files= 10 measured= 10 mean_sentence_len=15.3 cv_sentence_len=0.542
 #   - Short sentences in a row that make one point get joined with "y", "pero" or "así que" until the mean sentence length is inside the band. Stop at 21.1.
 #   - Keep the narrator's "yo" and "nosotros".
 #   - Do not add fillers, typos or ellipses.
+
+## Ship against main (added with the documentation; the verdict at the top cites it)
+# The shipped tree against the skill before the script register, same titles, same panel. Judge answers are cached by text, so this reruns for free.
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py main ship --set scr --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
+main            20    20   71.6    95%   82.0                0.30   2.65
+ship            20    40   72.3    98%   81.9                0.23   1.52   Opus  +0.7 (worse 13/20, p=0.433)  GPT  -0.1 (p=0.968)  over -0.07 (higher 1, lower 3, p=0.273)

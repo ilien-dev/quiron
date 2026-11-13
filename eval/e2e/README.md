@@ -88,6 +88,7 @@ REWRITER=claude-sonnet-5-5 python3 $H/harness.py rewrite rules 0 --set scr -j 6
 JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 $H/report.py bands rules --set scr --k 2 --g 1 --noise
 ```
 
+A snapshot leaves out the `.*.quiron.json` files that `check.sh` writes next to a text.
 A snapshot name is never reused once rewrites exist under it, because finished rewrites
 are kept and would be judged together with the new ones.
 
