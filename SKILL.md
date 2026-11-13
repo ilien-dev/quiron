@@ -75,9 +75,9 @@ sentences than human ones, while assistant fiction has choppier ones (both run s
   features and carry checks and thresholds of their own (`references/patterns.md`). They
   were validated on held-out scripts: they measure a draft. End to end they did not move
   blind judges beyond what the default rules already did, and no rewrite rule for scripts
-  held. A rewrite shortens sentences, so on a script do not split them, and stop at the
-  human band. A script a person wrote is measured, not rewritten: rewriting human
-  narration made judges rate it more AI. The numbers are in `references/numbers.md`.
+  held. A rewrite shortens and evens sentences, which the bands do not ask of narration. A
+  script a person wrote is measured, not rewritten: rewriting human narration made judges
+  rate it more AI. The numbers are in `references/numbers.md`.
 
 Select a file by putting `QUIRON_BANDS=<skill-dir>/scripts/bands-fiction.json` (or
 another of these files) in front of every command, including `check.sh`. The scripts print a
