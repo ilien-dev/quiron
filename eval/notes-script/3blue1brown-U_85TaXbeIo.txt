@@ -1,0 +1,15 @@
+- footnote attached to the creator's earlier Bayes' theorem video
+- goal: fast mathematical reason the theorem holds, via how "and" works in probability
+- chance of A and B together: P(A) times the share of A-cases that also have B, i.e. P(B|A)
+- creator finds the lopsided look of that expression, A versus B, strange
+- swap roles: P(B) times P(A|B) gives the same quantity; equating the two lets you solve for either conditional
+- main video chose belief-updating framing deliberately: aims at a "third level" of understanding, spotting when this formula is the right tool among many in math
+- worry: without that, people look at the formula, nod, forget it
+- common misconception flagged: P(A and B) = P(A) × P(B)
+- example: 1 in 4 die of heart disease, so tempting to claim 1 in 16 that you and your brother both do
+- the temptation is fed by two tails in a row (½ × ½) and double ones on two dice (1/6 × 1/6)
+- real problem is correlation: genes and lifestyle mean a sibling's death raises your own risk; creator calls the formula flat-out wrong here
+- coins and dice work because each outcome is unaffected by the other, so P(B|A) = P(B); that is what independence means
+- opinion: intro examples built on dice and coins, where independence truly holds, can distort intuition
+- irony: probability's most interesting applications matter only when events are not independent
+- closer: Bayes' theorem quantifies the degree to which one quantity relies on a second, so it's a perfect example

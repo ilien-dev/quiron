@@ -1,0 +1,20 @@
+- topic: how Super Nintendo sound hardware works and how composers squeezed good music out of it; 16-bit console, US launch 1991
+- opens with a look at the SNES motherboard, then introduces the pair of audio chips cooperating
+- first chip: SMP aka SPC 700, a processor core; musician programs it to instruct the second chip
+- second chip: DSP, generates the actual audio
+- vs NES: only 5 channels, mostly variations of one basic tone; SNES has 8 dedicated channels and sample-based playback, so artists load sounds from instruments they pick
+- major bottleneck: 64 KB of audio RAM across both chips, covering every song and sound effect in a whole title
+- size comparison: typical 3-min iTunes mp3 about 6 MB, ~100x the console's total audio memory, and that's one track only (sad face)
+- consequence: music often sounded mediocre
+- sampling in pop usually means looping a snippet of a vintage drum break; even seconds of audio is a lot of data, so SNES samples shrank to tiny slivers, sometimes one waveform cycle
+- example: "Aquatic Ambience" from Donkey Kong Country (1994) by David Wise, praised as a top-tier game composer's masterpiece
+- the track's shifting, watery background pads; that kind of sweep wasn't feasible on the hardware, and a long complex sample would exceed memory
+- Wise borrowed from the Korg Wavestation (early 90s synth); Nerdwriter-style transition parody plus a vintage promo clip (400+ internal waves, up to 255 chained, pitch/duration/crossfade control)
+- method: wave sequencing, chaining many tiny samples quickly to build evolving timbres
+- console can't sequence samples itself, so Wise recorded single waveforms at many pitches and hand-placed each in the coding tool
+- tool = music tracker: music as numbers, vertical timeline, columns for note, octave, sample, volume, basic effects like pan, fade, echo
+- took Wise five whole weeks to enter every sample for the song; creator admits it's laborious, results justify it
+- gags: on-screen "typical" caption, a sudden interruption
+- ending: composers faced tight constraints, yet limits spur creativity; two chips, 64 KB RAM, heaps of hex still yield lovely music
+- sponsor VRV: bundles Roosterteeth, Mondo, Crunchyroll, Funimation channels; also Mubi with 30 rotating indie films, which creator personally loves
+- creator recommends Gary and His Demons (guy fated to fight demons but reluctant; funny, Rick and Morty vibe); premium removes ads; 30-day free trial through first description link

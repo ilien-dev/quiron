@@ -1,0 +1,20 @@
+- channel: Real Engineering; subject is how Burj Khalifa stays stable in wind with no tuned mass damper
+- opening: flight Ireland to Dubai earlier that month; sunset viewed from 12 km up; creator felt grateful and awed to live now
+- Burj Khalifa described as unbelievable; kept climbing past where creator expected the top
+- aside: creator lived 3 years in Malaysia, loved seeing Petronas Towers glow from the Bangsar hills; they held the height record until 2004; Burj nearly twice as tall
+- history: 1929 height contest, Chrysler vs the Manhattan bank tower; concealed spire revealed, jokingly called a rude gesture; boosted Chrysler's image in US car industry
+- skyscrapers = company clout and American optimism/wealth; boom enabled by elevators and cheap steel
+- Frank Lloyd Wright, 1956: "The Illinois", 1.7 km; possible in theory, impractical (elevators not ready, sway discomfort)
+- physics setup: slender tall structures vibrate in wind; shaking lamp posts as familiar case; cylinder in wind tunnel as the model
+- low speed: force just follows wind direction; higher speed: flow detaches, two symmetric eddies form; Galway river eddy, kayakers rest in it
+- critical point: eddies lose symmetry and oscillate, vortex shedding starts, sideways force alternates
+- danger when shedding frequency equals structure's natural frequency; sway amplitude builds each cycle; natural damping (materials, joint friction) can fall short, so engineers add mechanical dampers
+- Taipei 101, once world's tallest, displays a 730-tonne tuned mass damper publicly
+- 8 August 2015: category 5 typhoon on Taiwan, damper moving, caught by webcam
+- mechanism: damper lags the tower, tuned to building's frequency so moves opposite; pistons carry opposing force, dissipating kinetic energy
+- creator finds it amazing Burj has no damper; shape stops vortices organising
+- constant cross-section lets poles shed vortices in step along full height; fix = helical strakes on chimneys and offshore platforms (liquids shed vortices too)
+- Burj footprint modelled on a desert flower (hymenocallis); Y-shaped wings with concrete core for torsion, buttresses for bending like I-beam; promised future video
+- setbacks spiral upward like strakes, so vortices can't line up; design relied on computer analysis and wind tunnel testing
+- outlook: supertalls getting easier to build, record will keep changing hands; urban population passed 50% in 2007, 33% twenty years earlier, ~80% projected by 2050; supertalls may become urban necessity rather than showy status symbols
+- sponsor: TheGreatCoursesPlus, 7000+ lectures, own pace, no tests, free month via RealEngineering link; thanks to subscribers, Patreon backers

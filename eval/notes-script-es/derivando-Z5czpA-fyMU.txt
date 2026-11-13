@@ -1,0 +1,18 @@
+- tema: defensa del número e, eclipsado por π; nadie lo estampa en una camiseta
+- apertura humorística: paralelismo entre ambos — decimales infinitos sin patrón, irracionales, trascendentes
+- ironía: π se escribe con letra griega; el autor se hace el sorprendido ante el argumento
+- reconoce que π gana en marketing: definición (longitud de cualquier circunferencia dividida por su diámetro) la entiende cualquiera
+- primer dato de e: sirve de fundamento a los logaritmos naturales (neperianos), útiles en cálculo y para aparentar inteligencia; chiste de la colección de logaritmos en casa
+- descubrimiento: Jakob Bernoulli, matemático y científico, analizaba cómo rentabilizar una inversión según se cobren los intereses anualmente o fraccionados
+- ejemplo inicial: 1€ al 100% anual da 2€ (fórmula 1+1); chiste: ese tipo de interés ni existe en el banco de juguete del Monopoly
+- dos pagos, medio interés cada uno: 1,5€ a los seis meses y 2,25€ a fin de año
+- tres pagos cuatrimestrales, un tercio de interés cada vez: 2,37€
+- chiste recurrente: esperar que el banco no se dé cuenta; duda de si se llega a dinero infinito
+- fórmula con N tramos: (1+1/N)^N; al hacer tender N a infinito (límite) el capital se estanca en 2,718281…, que es e
+- opinión: resultado "flipante"; e surge por doquier en matemáticas, con mil definiciones distintas
+- suma de inversos de factoriales desde 1/0! también da e
+- e sustenta la función exponencial, que modela procesos de electricidad, electrónica, biología, mecánica y química
+- en la naturaleza rige la velocidad a la que se desintegran los átomos → fechado con Carbono-14 y cálculo del tiempo transcurrido desde un fallecimiento
+- chiste de series policiacas: el forense da un plazo precisísimo y por detrás está e
+- e y π son grandes amigos, pero queda para otra ocasión
+- final: adelanto sobre π y el Quijote, y Durero (pintor renacentista) con los cuadrados mágicos; invita a suscribirse

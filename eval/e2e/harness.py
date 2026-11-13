@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """End-to-end harness: rewrite drafts with a skill snapshot, then judge blind.
 
-  harness.py snapshot NAME [SRC] [--no-script-rules]
-                                          copy SKILL.md, references/, scripts/ from SRC (repo) to snaps/NAME
+  harness.py snapshot NAME [SRC] [--no-script-rules] [--script-edit]
+                                          copy SKILL.md, references/, scripts/ from SRC (repo) to snaps/NAME;
+                                          --script-edit adds eval/e2e/script-edit.md as references/script.md
+                                          and the line of SKILL.md that points to it
   harness.py rewrite SNAP REP [-j N] [--set dev|test|scr|...] [--names a,b]
   harness.py judge FILES... [-k 3] [-j N]  prints per-file mean P(AI); cached in judge-cache.jsonl
   harness.py report SNAP [SNAP...] [--set dev]
@@ -31,11 +33,13 @@ def sets():
             r[1] = os.path.join(REPO, os.path.expanduser(r[1]))  # ~/corpus/... for human originals
             if r[2] != "-":
                 r[2] = os.path.join(REPO, r[2])
+            if len(r) > 4:  # scrs sets: two earlier human scripts of the creator, comma-separated
+                r[4] = [os.path.join(REPO, os.path.expanduser(x)) for x in r[4].split(",") if x]
         out[p[:-4]] = rows
     return out  # rows: name, draft_path, notes_path ("-" for none)[, fiction prompt]
 
 
-def snapshot(name, src, no_script_rules=False):
+def snapshot(name, src, no_script_rules=False, script_edit=False):
     dst = os.path.join(H, "snaps", name)
     if os.path.exists(dst):
         shutil.rmtree(dst)
@@ -46,6 +50,8 @@ def snapshot(name, src, no_script_rules=False):
                         ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "build-*.sh", ".*.quiron.json"))
     if no_script_rules:
         strip_script_rules(dst)
+    if script_edit:
+        add_script_edit(dst)
     print(dst)
 
 
@@ -68,6 +74,26 @@ def strip_script_rules(dst):
     if os.path.exists(rules):
         os.remove(rules)
         edits += SCRIPT_RULE_EDITS
+    apply_edits(dst, edits, "--no-script-rules")
+
+
+# The "edit" snapshot of the November 2026 round: the tree plus the edit-only rule, which lives
+# in eval/e2e/script-edit.md until a run confirms it (it is not in references/ of the repo).
+# The two insertions are the inverse of SCRIPT_RULE_EDITS, so --no-script-rules removes them again.
+SCRIPT_EDIT_FILE = os.path.join(CODE, "script-edit.md")
+SCRIPT_EDIT_ADDS = [
+    ("SKILL.md", "- [references/numbers.md](references/numbers.md): every band",
+     SCRIPT_RULE_EDITS[0][1] + "- [references/numbers.md](references/numbers.md): every band"),
+    ("SKILL.md", "whoever records the video needs them.", "whoever records the video needs them." + SCRIPT_RULE_EDITS[1][1]),
+]
+
+
+def add_script_edit(dst):
+    shutil.copy(SCRIPT_EDIT_FILE, os.path.join(dst, "references", "script.md"))
+    apply_edits(dst, SCRIPT_EDIT_ADDS, "--script-edit")
+
+
+def apply_edits(dst, edits, flag):
     for rel, old, new in edits:
         p = os.path.join(dst, rel)
         with open(p, encoding="utf-8", newline="") as f:
@@ -75,7 +101,7 @@ def strip_script_rules(dst):
         nl = "\r\n" if "\r\n" in text else "\n"  # match the file's own line endings
         o, n = old.replace("\n", nl), new.replace("\n", nl)
         if text.count(o) != 1:
-            sys.exit(f"--no-script-rules: {rel} does not have exactly one {old!r}")
+            sys.exit(f"{flag}: {rel} does not have exactly one {old!r}")
         with open(p, "w", encoding="utf-8", newline="") as f:
             f.write(text.replace(o, n))
 
@@ -109,13 +135,31 @@ PROMPT_SCR = ('Use the quiron skill. This video script (draft.md) I generated fo
 PROMPT_SCR_ES = ('Usa la skill quiron. Este guion de video (draft.md) lo generé para un video de YouTube titulado '
                  '"%s". Reescríbelo para que no se lea como escrito por una IA. No tengo notas; no te detengas a '
                  'preguntar. Conserva las acotaciones. Escribe el resultado en final.md.')
+# With the creator's notes (scrn sets: notes.txt beside draft.md), and with two earlier scripts of
+# the same creator (scrs sets: the folder samples/ beside draft.md, passed to check.sh --sample).
+PROMPT_SCR_NOTES = ('Use the quiron skill. This video script (draft.md) I generated for a YouTube video titled "%s". '
+                    'Rewrite it so it does not read as AI-written. My notes about the video, what it covers and '
+                    'what I think, are in notes.txt. Keep the stage directions. Write the result to final.md.')
+PROMPT_SCR_NOTES_ES = ('Usa la skill quiron. Este guion de video (draft.md) lo generé para un video de YouTube titulado '
+                       '"%s". Reescríbelo para que no se lea como escrito por una IA. Mis notas sobre el video, lo que '
+                       'cuenta y lo que pienso yo, están en notes.txt. Conserva las acotaciones. Escribe el resultado en final.md.')
+SAMPLE_SENTENCE = (" The folder samples/ holds two earlier scripts by the same creator; use it as the writer's own "
+                   "texts, with --sample.")
+SAMPLE_SENTENCE_ES = (" La carpeta samples/ tiene dos guiones anteriores del mismo creador; úsala como textos propios "
+                      "del autor, con --sample.")
 SCR = {r[0]: (PROMPT_SCR_ES if s.endswith("-es") else PROMPT_SCR) % r[3]
        for s, rows in sets().items() if s.startswith("scr") for r in rows}
+SCR_ES_NAMES = {r[0] for s, rows in sets().items() if s.startswith("scr") and s.endswith("-es") for r in rows}
+SCR_TITLE = {r[0]: r[3] for s, rows in sets().items() if s.startswith("scr") for r in rows}
 
 
-def rewrite_prompt(name, notes):
+def rewrite_prompt(name, notes, samples=False):
+    """notes: the notes path or "-"; samples: the row has a samples/ folder."""
     if name in SCR:
-        return SCR[name]
+        es = name in SCR_ES_NAMES
+        if notes != "-":
+            return (PROMPT_SCR_NOTES_ES if es else PROMPT_SCR_NOTES) % SCR_TITLE[name]
+        return SCR[name] + ((SAMPLE_SENTENCE_ES if es else SAMPLE_SENTENCE) if samples else "")
     if name in FIC:
         return PROMPT_FIC % FIC[name]
     return PROMPT_ES if name in ES_NAMES else PROMPT if notes != "-" else PROMPT_NONOTES
@@ -133,8 +177,13 @@ def rewrite_one(snap, rep, row):
     shutil.copy(draft, os.path.join(wd, "draft.md"))
     if notes != "-":
         shutil.copy(notes, os.path.join(wd, "notes.txt"))
+    samples = row[4] if len(row) > 4 else []
+    if samples:
+        os.makedirs(os.path.join(wd, "samples"))
+        for x in samples:
+            shutil.copy(x, os.path.join(wd, "samples", os.path.basename(x)))
     cmd = ["claude", "-p", "--model", os.environ.get("REWRITER", MODEL), *ISO, "--permission-mode", "bypassPermissions",
-           "--output-format", "json", rewrite_prompt(name, notes)]
+           "--output-format", "json", rewrite_prompt(name, notes, bool(samples))]
     if os.environ.get("REWRITER") == "codex":  # a non-Claude agent: point it at the skill file
         cmd = ["codex", "exec", "--skip-git-repo-check", "--ephemeral", "--ignore-user-config",
                "-s", "workspace-write", "-m", GPT,
@@ -280,9 +329,10 @@ def main():
     ap.add_argument("--set", default="dev")
     ap.add_argument("--names")
     ap.add_argument("--no-script-rules", action="store_true")
+    ap.add_argument("--script-edit", action="store_true")
     a = ap.parse_args()
     if a.cmd == "snapshot":
-        snapshot(a.args[0], a.args[1] if len(a.args) > 1 else REPO, a.no_script_rules)
+        snapshot(a.args[0], a.args[1] if len(a.args) > 1 else REPO, a.no_script_rules, a.script_edit)
     elif a.cmd == "rewrite":
         snap, rep = a.args[0], a.args[1]
         rows = sets()[a.set]

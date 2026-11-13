@@ -1,0 +1,16 @@
+- format: Tom Scott lightning talk (~8 min), spoof graphs in Hans Rosling's manner; addresses Herb, from University of York but explicitly not speaking for them
+- Twitter graph: posts per day vs. his level of caring; interest vanishes past one or two; dotted pink line = cheeky flirting exception
+- graph on who grasps bar vs. line charts; quips it ought to be a pie chart; tallies audiences that laughed at it
+- bedtime graph: planned vs. real; blue is normal, red is when online
+- Hans Zimmer segment: hugely famous film composer; ranks three themes, clips played
+- number three-to-one picks: Pirates of the Caribbean (shorthand for pirates), Gladiator (changed film scoring afterwards), Going for Gold (game show theme, joke is Zimmer really wrote it)
+- swap experiment: Gladiator score under the quiz show, then the quiz tune over Gladiator; Henry Kelly appears; announcer intro; verdict: swapped version tops both originals
+- DJ chatter vs. his urge to see them die; red = himself, blue = Morrissey
+- effort on an idea vs. odds of success; claims not bitter, yet a long, elaborate Apple heads-up display video got nothing, while a one-or-two-hour site restoring deleted tweets went viral
+- Gapminder (Rosling's tool) fed Eurovision data, since contest is next day; x = number of entries, y = five-year rolling average score; hours of work
+- Eurovision story: begins 1957; red = traditional Western countries; 1994 sees Balkan and Soviet successor states arrive (blue/green); televoting, late 90s to early 2000s, sends red dots falling
+- UK: high in the 1980s with Katrina and the Waves, only Ireland above, whose broadcaster was nearly broke; slides after televoting ~2002; sarcastic aside wondering what else could explain it; points to 2007
+- red-green colourblind graph: deadpan line that all are normal, productive members of society
+- countdown to his unemployment; says he isn't joking
+- Connolly's law: man alone with tea cosy, odds he puts it on his head approach 1; hidden-camera clip of friend Richard cracking at about seven minutes, then by eight minutes raising the roof and giving papal blessings
+- last graph: effort (x) vs. awesome (y); red zone do it, blue zone skip; insists it's genuine life advice; ends "good night"

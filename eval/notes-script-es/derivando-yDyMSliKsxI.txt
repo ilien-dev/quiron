@@ -1,0 +1,14 @@
+- tema: Fibonacci, matemático famoso por su sucesión; el vídeo promete enlazarla con la Razón Áurea y dejar asombrado al espectador
+- construcción: arranca con dos unos; cada término nuevo es la suma de los dos precedentes (2, 3, 5...); muestra en pantalla los primeros valores
+- propiedad: cualquier entero imaginable se descompone en suma de términos Fibonacci diferentes
+- regularidades: solo cada tercer término es par; cada cuarto es divisible entre 3; cada quinto lo es entre 5; sigue igual después
+- serie infinita de F_n dividido entre 10^n suma justo 10/89; nota con gracia que 89 también pertenece a la sucesión
+- los números reaparecen dentro del triángulo de Pascal, lo enseña con un gráfico
+- naturaleza: lo que más fama le dio y nadie lo esperaba; ramas de árboles, escamas de la piña, alcachofas, piñas de pino
+- segunda mitad: la Proporción Áurea; chiste de que "áurea" sería un término viejo equivalente a "genial"
+- bautiza PHI a esa razón porque queda bien y como tributo a Fidias, escultor de la antigüedad que la aplicaba
+- resulta PHI² − PHI − 1 = 0; resuelve con la fórmula de segundo grado y se queda con la raíz positiva, (1+√5)/2
+- conexión: el cociente entre un término y el anterior tiende a PHI cuando se avanza sin límite
+- fórmula de Binet: F_n = (1/√5)(PHI^n − (−1/PHI)^n); dice que son casi dos maneras de expresar lo mismo
+- guiño final sobre quienes niegan que las matemáticas sean bonitas; se despide con un beso
+- adelanto del próximo vídeo: Pi y el Quijote; Durero, pintor del Renacimiento, y los cuadrados mágicos; pide suscribirse

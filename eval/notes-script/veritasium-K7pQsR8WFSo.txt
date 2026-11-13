@@ -1,0 +1,15 @@
+- Veritasium follow-up to earlier Schlieren imaging video; method reveals tiny air variations (temperature, pressure, composition), e.g. heat plume from a lit match
+- plan: demo viewer-suggested experiments, but first untangle confusion about how the rig works
+- confusion 1: he called the mirror parabolic but also sphere-like; commenters pushed back; reply: small enough patch that both curves almost match; joke about physicists treating a cow as a sphere
+- confusion 2: where does enough light come from when footage hits 2,000 fps off one tiny LED
+- he worried about this too when building; hunted for the strongest flashlights available
+- first schlieren attempt mediocre since flashlight is no point source; fix: tin foil with small hole, dimmer yet bright enough, nice flare effect
+- razor blade logic: refractive index changes are minuscule, so bent light lands nearly on the same spot; blocking roughly half the spot cuts deflected rays, boosting contrast
+- viewer alternative: two cellophane colors (magenta, cyan) meeting at the focal point; slightly bent light switches sides, changing the color seen
+- helium balloon test: shows up tinted; once popped, the helium clumps and floats up in balloon shape
+- other viewer ideas: letting out lighter fuel and igniting it, flame creeping along the gas; a rainbow-schlieren soap bubble
+- setting a ping-pong ball alight (tournament-grade ones burn readily); he's thrilled, says it's awesome
+- sound suggestions like clapping largely failed: shock wave barely visible at 2,000 fps; sound travels above 300 m/s, so one or two frames at best; visible motion is air squeezed out between hands, slower than sound; needs outside help for real sound imaging
+- invites more suggestions in comments; replies may be slow, flying to Australia next week
+- sponsor Audible: free 30-day trial via audible.com/veritasium; listening to Algorithms To Live By on the flight (computer science meets human decision-making); audiobooks make commutes something to look forward to
+- Audible marks 20 years; giveaway of 20 Volvo SUVs

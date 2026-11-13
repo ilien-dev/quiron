@@ -1,0 +1,15 @@
+- apertura con saludo a los "hijos de Fermi"; pregunta del día: ¿tienen color las partículas?; planteado como duelo entre un "Sí" y un "No", termina en empate
+- punto de partida: el color pertenece a la luz; onda electromagnética definida por la distancia entre dos crestas seguidas (longitud de onda)
+- rojo ≈ 700 nm, azul ≈ 400 nm; los demás colores quedan en el intervalo intermedio
+- ejemplo: su camiseta azul; la luz blanca llega, átomos y moléculas absorben casi todo y rebotan solo la longitud azul
+- idea clave: el color es una ilusión cerebral, la interpretación de cómo responde una superficie al iluminarla con luz blanca
+- los electrones dan el tono a una sustancia: absorben energía y saltan de nivel dentro del átomo o la molécula
+- postura del "No": las partículas son diminutas en exceso; el ojo no distingue nada menor que la luz visible (~500 nm), así que hablar del color de un electrón carece de sentido
+- remite a su vídeo anterior con el listado de partículas, que califica de "tan bonito"
+- historia: a mediados del siglo XX se descubrió que protones y neutrones no son elementales y contienen quarks
+- posible error del creador: da al protón dos up y un down, y repite la misma composición para el neutrón (correcto: dos down y un up)
+- los quarks jamás aparecen solos; solo en parejas o tríos fuertemente unidos por gluones, portadores de la interacción fuerte
+- se propone la carga de color, número cuántico de esa interacción; parecida a la carga eléctrica, pero con tres valores: rojo, verde, azul
+- solo hay combinaciones de color total blanco: bariones (protón, neutrón) con tres quarks de colores distintos; mesones con quark y antiquark, color más anticolor
+- confinamiento: separar los quarks de un mesón acumula energía suficiente para crear otra pareja y acabar con dos mesones (cuatro quarks); analogía con romper un imán y obtener dos imanes completos
+- cierre: ambos tienen algo de razón, empate; falta mucho por comprender de esta interacción; pide comentarios y sugerencias en Facebook, Twitter e Instagram

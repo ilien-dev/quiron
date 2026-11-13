@@ -1,0 +1,17 @@
+- topic: intuitive explanation of why e^(πi) = −1, no calculus or advanced math needed
+- opening: three audience types — understands each symbol but finds the full statement absurd; saw a calculus proof yet it remains mysterious; doesn't know what the terms are
+- creator thinks the third group has the advantage; only requires willingness to rethink what numbers are
+- first fix: e^x isn't repeated multiplication; that only works for whole-number exponents, and e would have to be defined beforehand
+- central move: treat numbers as actions, not counts; counting intuition strains with fractions, worse with irrationals, collapses with √−1
+- every number is three things at once: a point on an endless line, an "adder" that shifts the line, a "multiplier" that scales it
+- adder rule: shift so the zero point lands on the adder's starting spot; chaining two shifts gives one shift, which is how sums get defined
+- multiplier rule: zero pinned, the point at one moves to the multiplier's original spot, uniform spacing preserved; products defined as chained scalings
+- joke: e^x's "life's ambition" is converting adders to multipliers as smoothly as possible
+- key property: e^(x+y) = e^x · e^y; creator insists this defines the function, with repeated multiplication for counting numbers only a side effect
+- other functions meet the condition (exponentials in other bases), but one is the most natural, given by an infinite series
+- e is simply that function evaluated at 1; creator calls the number much less special than the whole function; the notation is a leftover from the repeated-multiplication view
+- complex numbers: same shifting and scaling game in a plane; each is a point, an adder, and a multiplier that can also turn the plane
+- i: as adder shifts upward; as multiplier rotates by a quarter turn; doing it twice matches the −1 action, so it's √−1
+- expectation: e^x carries the vertical line of up-down adders onto the radius-one circle of rotation multipliers
+- conclusion: e^x takes the adder πi to the multiplier −1
+- creator refers viewers to another video for the complete reason e^x behaves this way

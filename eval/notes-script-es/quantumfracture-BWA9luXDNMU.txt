@@ -1,0 +1,19 @@
+- tema: Relatividad Especial de Einstein y la simultaneidad; choca con la intuición cotidiana sobre el tiempo
+- arranque: avisa de que lo que sigue sacudirá nuestras ideas; propone abordar el primer tren disponible para experimentar
+- experimento 1: en un vagón que avanza, el señor A activa un lanzador con dos salidas que envía pelotas a los dos extremos al mismo instante
+- cuando una pelota choca con la pared, se enciende una luz
+- A ve que ambas pelotas chocan contra las paredes simultáneamente
+- el señor B, quieto junto a la vía, a cada velocidad le suma la del vagón; las pelotas viajan con el tren, así que también las ve llegar juntas; sin sorpresa
+- pregunta retórica: lo simultáneo para A, ¿lo es siempre para B?
+- experimento 2: el lanzador emite haces de luz en lugar de pelotas
+- para A no cambia nada: salida conjunta, llegada conjunta a los extremos del vagón
+- la intuición dice que B vería lo mismo, con la luz arrastrada por el tren; el creador dice que es imposible
+- si los haces acompañaran al vagón, uno sería más veloz que c y otro más lento; la luz debe viajar ajena al movimiento del tren
+- resultado: B ve que un haz toca su pared antes que el otro; simultáneo para A, sucesivo para B
+- opinión del creador: lo considera muy extraño y una conclusión rompedora
+- ejemplo: afirmar que Marte explotó en este instante y creer que todos lo perciben a la vez; no es así
+- el "ahora" de A correspondería a dos "ahoras" para B; el creador lo califica de absurdo
+- conclusión: cada observador tiene su propio "ahora"; es relativo; no hay que esperar que alguien en movimiento coincida con el tuyo
+- paralelo: igual que las velocidades medidas varían según el observador, el tiempo se percibe de forma distinta
+- avance: el próximo vídeo tratará el efecto sobre el espacio
+- despedida: invita a suscribirse para más ciencia y agradece

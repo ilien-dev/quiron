@@ -189,6 +189,48 @@ class ScriptSets(unittest.TestCase):
         other = {r[0] for s, rows in self.sets.items() if not s.startswith("scr") for r in rows}
         self.assertFalse(script_names & other)
 
+    def test_notes_sets_are_the_script_sets_with_their_notes(self):
+        """scrn, scr2n, scrn-es, scr2n-es: same rows as scr, scr2, scr-es, scr2-es, a notes file in
+        the third column, and the notes prompt in the set's language (with the title)."""
+        for base, name in (("scr", "scrn"), ("scr2", "scr2n"), ("scr-es", "scrn-es"), ("scr2-es", "scr2n-es")):
+            rows, nrows = self.sets[base], self.sets[name]
+            self.assertEqual([r[:2] for r in rows], [r[:2] for r in nrows], name)
+            self.assertEqual([r[3] for r in rows], [r[3] for r in nrows], name)
+            for r in nrows:
+                self.assertTrue(r[2].replace(os.sep, "/").endswith(
+                    f"eval/notes-script{'-es' if name.endswith('-es') else ''}/{r[0]}.txt"), r[2])
+                self.assertTrue(os.path.getsize(r[2]) > 50, r[2])
+                self.assertEqual(r[2].count("\t"), 0)
+        en, es = self.sets["scrn"][0], self.sets["scrn-es"][0]
+        self.assertEqual(self.h.rewrite_prompt(en[0], en[2]), self.h.PROMPT_SCR_NOTES % en[3])
+        self.assertIn("notes.txt", self.h.rewrite_prompt(en[0], en[2]))
+        self.assertNotIn("no notes", self.h.rewrite_prompt(en[0], en[2]))
+        self.assertEqual(self.h.rewrite_prompt(es[0], es[2]), self.h.PROMPT_SCR_NOTES_ES % es[3])
+        self.assertIn("están en notes.txt", self.h.rewrite_prompt(es[0], es[2]))
+        self.assertIs(self.h.script_prompt("scrn-es"), self.h.JPROMPT_SCR_ES)
+        self.assertIs(self.h.script_prompt("scr2n"), self.h.JPROMPT_SCR)
+
+    def test_sample_sets_name_two_earlier_scripts_of_the_same_channel(self):
+        """scrs, scr2s, scrs-es, scr2s-es: a fifth column of at most two corpus paths, from the row's
+        channel, never the row's own video, never a held-out file (the 1st, 5th ... by sorted name)."""
+        for base, name in (("scr", "scrs"), ("scr2", "scr2s"), ("scr-es", "scrs-es"), ("scr2-es", "scr2s-es")):
+            self.assertEqual([r[:4] for r in self.sets[base]], [r[:4] for r in self.sets[name]], name)
+            for r in self.sets[name]:
+                self.assertEqual(r[2], "-")
+                self.assertTrue(1 <= len(r[4]) <= 2, r[0])
+                for x in r[4]:
+                    stem = os.path.basename(x)[:-3]
+                    self.assertEqual(stem.split("-", 1)[0], r[0].split("-", 1)[0])
+                    self.assertNotEqual(stem, r[0])
+        es = self.sets["scrs-es"][0]
+        en = self.sets["scrs"][0]
+        self.assertEqual(self.h.rewrite_prompt(en[0], "-", True), self.h.PROMPT_SCR % en[3] + self.h.SAMPLE_SENTENCE)
+        self.assertIn("samples/", self.h.rewrite_prompt(en[0], "-", True))
+        self.assertIn("--sample", self.h.rewrite_prompt(es[0], "-", True))
+        self.assertIn("La carpeta samples/", self.h.rewrite_prompt(es[0], "-", True))
+        self.assertEqual(self.h.rewrite_prompt(en[0], "-"), self.h.PROMPT_SCR % en[3])
+        self.assertEqual(len(self.sets["scr"][0]), 4)  # a set without samples has no fifth column
+
     def test_narration_keeps_every_paragraph_after_stacked_directions(self):
         text = ("Every town on the river has a story about the water.\n\n---\n\n**[SECTION 1 - 0:45]**\n\n"
                 "*(Wide shot of a river.)*\n\nThe river floods every spring and the town knows it.\n\n"
@@ -259,6 +301,30 @@ class ScriptSets(unittest.TestCase):
         self.assertIn("\r\n", got)
         with open(os.path.join(d, "scripts", "audit.py"), encoding="utf-8", newline="") as f:
             self.assertIn("_new = []\r\n", f.read())
+
+    def test_edit_snapshot_adds_the_rule_and_the_bands_snapshot_removes_it(self):
+        """--script-edit puts eval/e2e/script-edit.md in as references/script.md with the two pointer
+        lines, and --no-script-rules takes exactly those out again."""
+        repo = os.path.abspath(os.path.join(HERE, ".."))
+        files = {rel: open(os.path.join(repo, rel), encoding="utf-8").read()
+                 for rel in ("SKILL.md", "scripts/audit.py")}
+        files["references/other.md"] = "x"
+        dst = self.snap_from(files)
+        self.h.add_script_edit(dst)
+        skill = open(os.path.join(dst, "SKILL.md"), encoding="utf-8").read()
+        self.assertIn("[references/script.md](references/script.md): the rewrite rules for video scripts.", skill)
+        self.assertIn("**Read [references/script.md](references/script.md) before rewriting a\n  script.**", skill)
+        self.assertEqual(open(os.path.join(dst, "references", "script.md"), encoding="utf-8").read(),
+                         open(self.h.SCRIPT_EDIT_FILE, encoding="utf-8").read())
+        self.h.strip_script_rules(dst)
+        self.check_stripped(dst)
+        self.assertEqual(open(os.path.join(dst, "SKILL.md"), encoding="utf-8").read(), files["SKILL.md"])
+
+    def test_edit_snapshot_stops_when_an_anchor_is_missing(self):
+        dst = self.snap_from({"SKILL.md": "nothing to anchor on\n"})
+        os.makedirs(os.path.join(dst, "references"), exist_ok=True)
+        with self.assertRaises(SystemExit):
+            self.h.add_script_edit(dst)
 
     def test_snapshot_leaves_out_check_state_files(self):
         """The .*.quiron.json files check.sh writes next to a text are not copied into a snapshot."""

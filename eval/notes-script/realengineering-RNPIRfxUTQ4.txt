@@ -1,0 +1,16 @@
+- intro: humans have used wind power for millennia; oldest documented traces in Persia, more than a thousand years back
+- early uses: milling grain, pumping water; modern versions are giant and can supply electricity to whole towns
+- past designs varied widely, yet today's turbines have settled on one near-uniform blade count of three
+- video's core question: reason behind three blades
+- analogy: blade = spanner turning a bolt; longer spanner gives more torque (the rotation-causing force); adding a second spanner adds force
+- obvious reaction: just stack on loads of blades, each one as lengthy as can be
+- reality check: largest turbine spans 164 m across; each blade 33 tonnes; manufacturing costs run to six figures per blade
+- extra blades add mass and expense, so perhaps fewer blades wins
+- comparison: 3 blades against 2 and 4, same blade shape assumed throughout
+- 4-blade dropped quickly on cost; fourth blade adds so little performance it isn't worth paying for
+- 2-blade can equal 3-blade output by making each blade 50% wider in chord (erases savings) or by rotating 22.5% quicker
+- 2-blade rotor turns faster in identical wind because it has less drag, but higher speed is bad
+- problem one: noise; plays audio of a turbine from close range; aside that nobody wants to live next door, so speed should be kept low
+- problem two: centrifugal force makes blades effectively heavier at speed; hub and blades need reinforcing, adding cost
+- footage of a turbine failing in high wind when its brakes give out
+- verdict: three blades yield more power at low rotation than two and cost less than four; "goldilocks" pick, neither too many nor too few

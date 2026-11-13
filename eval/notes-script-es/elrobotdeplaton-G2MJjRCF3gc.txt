@@ -1,0 +1,12 @@
+- presentador Aldo; arranca con dudas clásicas de quien observa un cielo despejado: vida extraterrestre, número de estrellas y galaxias, universo finito o infinito; broma de que se atragantó con un hueso de ave durante la cena y teme morir
+- tema del video: qué hay en la parte inferior de nuestro sistema planetario
+- aclaración inicial: ni sistemas ni galaxias poseen arriba o abajo reales; sí tienen eje de giro con dos polos, pero al espacio eso le es indiferente
+- la galaxia rota sin parar y arrastra al Sistema Solar; velocidad media 828000 km/h
+- animación popular de planetas girando alrededor del Sol: válida según la perspectiva, pero no refleja el desplazamiento conjunto con la galaxia
+- menciona a Vsauce y su video sobre cómo se mueve la Tierra (solo Tierra y Sol); la versión con todo el sistema tiene años de fama, circuló como gif en redes
+- esa animación molestó a algunos astrónomos: la hizo alguien ajeno a la ciencia y ponía al Sol delante del resto de planetas, como si estuviera por encima de la eclíptica; en realidad algunos planetas son los que se desvían de ese plano
+- su creador publicó una versión corregida; enlace en la descripción
+- ambas bandas se cruzan inclinadas 63°; también se aprecia en infrarrojo: galaxia lo más brillante, "S" azul = Sistema Solar
+- conclusión: el "abajo" del eje queda de lado o debajo de un costado; todo es relativo
+- sitio interactivo (enlace en descripción): sistema solar como plano fijo; alejando el zoom salen estrellas vecinas, después la ubicación del Sol en la galaxia y el universo observable, donde existimos de forma minúscula
+- cierre: deja de tarea investigar el origen del nombre "zodiacal"
