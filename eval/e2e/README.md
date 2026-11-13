@@ -37,7 +37,20 @@ Paths are relative to the repo.
   the ten English ones and all ten Spanish ones are on the same titles as `scr2` and
   `scr2-es`, so their names start with `h-`.
 
-`mksets.py` writes the six script sets, and its docstring gives the rule that picks the
+- `scrn`, `scr2n`, `scrn-es` and `scr2n-es` are the rows of `scr`, `scr2`, `scr-es` and
+  `scr2-es` with the creator's notes in the third column, from `eval/notes-script/` and
+  `eval/notes-script-es/`. `gennotes.py` wrote them with Claude Sonnet 5.5 from the human
+  caption of the same video (`CORPUS=script python3 eval/e2e/gennotes.py eval/notes-script
+  NAME...`; `NOTES_MODEL` overrides the model) and checks each note against its caption:
+  a note that shares a run of five or more words is asked again, and a bullet that still does is
+  dropped. `scannotes.py` repeats the scan over the committed notes where the corpus is.
+  The rewriter's prompt says they are the creator's notes (`PROMPT_SCR_NOTES`).
+- `scrs`, `scr2s`, `scrs-es` and `scr2s-es` have a fifth column with two train captions of
+  the row's channel, as `~/corpus` paths (never the row's own video, never a held-out file;
+  a channel with fewer than two gets what it has). They are local, like `scrh`. The harness
+  copies them into a `samples/` folder and the prompt asks for `check.sh --sample`.
+
+`mksets.py` writes the script sets, and its docstring gives the rule that picks the
 rows. A script set gets a rewriter prompt with the title in the set's language, and the
 judges read only the narration (`harness.narration`), with a prompt of their own.
 `scriptstats.py SET SNAP ...` prints what the rewrites did to the text: a few meter
@@ -88,6 +101,22 @@ python3 $H/harness.py snapshot bands /tmp/quiron-rules --no-script-rules
 python3 $H/harness.py snapshot rules /tmp/quiron-rules
 REWRITER=claude-sonnet-5-5 python3 $H/harness.py rewrite rules 0 --set scr -j 6
 JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 $H/report.py bands rules --set scr --k 2 --g 1 --noise
+```
+
+The November 2026 round (notes, samples, edit only) compared four snapshots of one tree,
+`ship2` (the shipped tree, rewritten again because SKILL.md and `patterns.md` had changed since
+`ship`), `notes` and `samp` (copies of it, so their rewrites do not collide with its own), and
+`edit` (`harness.py snapshot edit SRC --script-edit`: the tree plus `eval/e2e/script-edit.md`
+as `references/script.md` and the two lines of `SKILL.md` that point to it; the rule lives
+under `eval/e2e/` until a run confirms it, and `--no-script-rules` removes it again).
+`snaphash.py` names a snapshot by a hash of its files, `armstats.py SET SNAP...` prints the
+figures and links a rewrite adds beyond its draft and notes, the share of the draft's sentences
+that survive byte-identical, and mean sentence length and CV before and after.
+
+```sh
+python3 $H/harness.py snapshot ship2 /tmp/quiron-head
+REWRITER=claude-sonnet-5-5 python3 $H/harness.py rewrite notes 0 --set scrn -j 6
+JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 $H/report.py ship2 notes samp edit --set scr --k 2 --g 1 --noise
 ```
 
 A snapshot leaves out the `.*.quiron.json` files that `check.sh` writes next to a text.

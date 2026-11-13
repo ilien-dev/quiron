@@ -240,3 +240,89 @@ $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py mai
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
 main            20    20   69.5    80%   79.2                0.85   2.50
 bands2          20    40   70.6    90%   79.6                0.85   2.17   Opus  +1.1 (worse 8/20, p=0.920)  GPT  +0.4 (p=0.868)  over +0.00 (higher 4, lower 3, p=0.866)
+
+## The November 2026 rewrite round: notes, samples, edit only (ce0d109 and the commit after it)
+# Three untried ways of rewriting a Spanish script, decided by rules fixed in the brief before any number existed. Every number below
+# is printed by the command above it; each report was run twice with identical output (every snapshot at files=40, so no judge answer was dropped).
+# Rewriter REWRITER=claude-sonnet-5-5, judges JUDGE=claude-sonnet-5-5 (column "Opus") and GPT_MODEL=gpt-6.1-terra (column "GPT"), --k 2 --g 1, 2 reps per snapshot.
+# Baseline ship2 (fc7ef7c7), not ship (df3f6914): what the rewriter reads changed after 455a6cc (SKILL.md's register entry, the script-check
+#   section of references/patterns.md, the table-column logic of aimeter.spoken, one audit.py label), so the shipped tree of ecb3b39 was
+#   rewritten again: git archive ecb3b39 into a scratch folder, harness.py snapshot ship2 SCRATCH. ship2 against ship: scr 73.8 against 72.3
+#   (+1.5), scr-es 71.4 against 69.4 (+2.0). Hashes: python3 eval/e2e/snaphash.py ship ship2 notes samp edit (ship df3f6914, ship2 fc7ef7c7,
+#   notes fc7ef7c7, samp fc7ef7c7, edit cbce09fa).
+# Arms (snapshot, set): N notes = the ship2 tree copied as "notes", set scrn[-es] (the same rows with the notes of eval/notes-script[-es]/, written by
+#   CORPUS=script gennotes.py from the human caption of the same video with claude-sonnet-5-5, scanned with eval/e2e/scannotes.py: longest shared
+#   run 4 words); S samples = the ship2 tree copied as "samp", set scrs[-es] (a fifth column: two train captions of the same channel, local);
+#   E edit only = the ship2 tree plus eval/e2e/script-edit.md as references/script.md and its two pointer lines in SKILL.md, "edit"
+#   (harness.py snapshot edit SCRATCH --script-edit). Rewrites: REWRITER=claude-sonnet-5-5 python3 eval/e2e/harness.py rewrite SNAP REP --set SET -j 6.
+# Decision rules, copied from the brief: (1) an arm passes dev if its mean P(AI) is lower than ship2's by more than the rep noise (the larger of the two snapshots'
+#   r0-r1 set-mean differences below) and its overshot features per text are not higher than ship2's; (2) only an arm that passes dev is run on the confirmation
+#   set; (3) a combination only if two arms are confirmed; (4) arm E also needs the human-cost check before it ships.
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py ship2 notes samp edit --set scr-es --k 2 --g 1 --noise
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs ship2
+ship2           20    40   71.4    88%   80.3                0.60   2.02
+notes           20    40   21.5     2%   64.9                1.50   2.60   Opus -50.0 (worse 0/20, p=0.000)  GPT -15.4 (p=0.000)  over +0.90 (higher 14, lower 3, p=0.015)
+samp            20    40   64.2    72%   80.3                0.68   2.12   Opus  -7.2 (worse 4/20, p=0.008)  GPT  +0.0 (p=0.981)  over +0.07 (higher 3, lower 3, p=0.675)
+edit            20    40   77.2    88%   84.0                0.30   2.55   Opus  +5.8 (worse 16/20, p=0.005)  GPT  +3.7 (p=0.000)  over -0.30 (higher 0, lower 7, p=0.018)
+
+ship2          noise: judge-judge sd  4.5   r0-r1: set mean  +0.2, per-title sd  8.8
+notes          noise: judge-judge sd  3.0   r0-r1: set mean  +2.5, per-title sd 10.6
+samp           noise: judge-judge sd  5.0   r0-r1: set mean  +0.7, per-title sd  9.7
+edit           noise: judge-judge sd  4.6   r0-r1: set mean  +0.1, per-title sd 10.2
+$ python3 eval/e2e/armstats.py scr-es draft ship2 edit   (E: sentences kept byte-identical, mean sentence length and CV, draft -> final)
+draft      scr-es   texts= 20 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 14.1 -> 14.1 cv 0.503 -> 0.503 not_lower_on_both=20/20
+ship2      scr-es   texts= 40 facts_not_in_sources=0.00/text kept_identical=17.6% mean_sentence_len 14.1 -> 14.8 cv 0.503 -> 0.513 not_lower_on_both=14/40
+edit       scr-es   texts= 40 facts_not_in_sources=0.00/text kept_identical=83.7% mean_sentence_len 14.1 -> 14.7 cv 0.503 -> 0.514 not_lower_on_both=27/40
+$ python3 eval/e2e/armstats.py scrs-es draft samp
+draft      scrs-es  texts= 20 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 14.1 -> 14.1 cv 0.503 -> 0.503 not_lower_on_both=20/20
+samp       scrs-es  texts= 40 facts_not_in_sources=0.00/text kept_identical=11.3% mean_sentence_len 14.1 -> 15.1 cv 0.503 -> 0.513 not_lower_on_both=12/40
+$ python3 eval/e2e/armstats.py scrn-es draft notes   (N: figures and links in final.md that the draft and the notes lack; ship2 above has no notes)
+draft      scrn-es  texts= 20 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 14.1 -> 14.1 cv 0.503 -> 0.503 not_lower_on_both=20/20
+notes      scrn-es  texts= 40 facts_not_in_sources=0.30/text kept_identical=0.6% mean_sentence_len 14.1 -> 13.2 cv 0.503 -> 0.504 not_lower_on_both=10/40
+$ python3 eval/e2e/scriptstats.py scr-es ship2 notes samp edit
+ship2        files= 40 measured= 40 mean_sentence_len=14.8 cv_sentence_len=0.513 first_person_1k=4.04 triads_1k=4.89 mattr50=0.814 imagine=0.01 reveals=0.00 comments=0.21 fillers=1.40 ellipses=0.34 leaks=4/40 lost=0.0% (>10%: 0, max 0%)
+notes        files= 40 measured= 40 mean_sentence_len=13.2 cv_sentence_len=0.504 first_person_1k=5.81 triads_1k=4.45 mattr50=0.805 imagine=0.00 reveals=0.00 comments=0.08 fillers=1.97 ellipses=0.07 leaks=1/40 lost=0.0% (>10%: 0, max 0%)
+samp         files= 40 measured= 40 mean_sentence_len=15.1 cv_sentence_len=0.513 first_person_1k=3.98 triads_1k=5.04 mattr50=0.813 imagine=0.06 reveals=0.00 comments=0.34 fillers=1.81 ellipses=0.94 leaks=4/40 lost=0.0% (>10%: 0, max 0%)
+edit         files= 40 measured= 40 mean_sentence_len=14.7 cv_sentence_len=0.514 first_person_1k=3.86 triads_1k=4.74 mattr50=0.822 imagine=0.05 reveals=0.00 comments=0.02 fillers=1.53 ellipses=1.01 leaks=4/40 lost=0.0% (>10%: 0, max 0%)
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft ship ship2 --set scrh-es --k 2 --g 1   (information only: arm E failed dev, so the human-cost check was not required)
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
+draft           10    10    8.1     0%   11.6                1.60   1.90
+ship            10    10   15.2     0%   29.5                1.50   2.80   Opus  +7.1 (worse 8/10, p=0.012)  GPT +17.9 (p=0.005)  over -0.10 (higher 1, lower 2, p=0.593)
+ship2           10    10   15.4     0%   25.5                1.40   2.30   Opus  +7.3 (worse 7/10, p=0.050)  GPT +13.9 (p=0.050)  over -0.20 (higher 0, lower 2, p=0.180)
+$ python3 eval/e2e/armstats.py scrh-es draft ship2
+draft      scrh-es  texts= 10 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 19.9 -> 19.9 cv 0.634 -> 0.634 not_lower_on_both=10/10
+ship2      scrh-es  texts= 10 facts_not_in_sources=0.30/text kept_identical=22.9% mean_sentence_len 19.9 -> 16.5 cv 0.634 -> 0.534 not_lower_on_both=1/10
+
+### Decision by the rules (applied as written)
+# Spanish, baseline ship2 on scr-es: P(AI) 71.4, overshot 0.60 per text. Rep noise = larger |r0-r1| set mean of the two snapshots compared.
+#   N notes:   21.5, -50.0 (worse on 0 of 20, p=0.000; GPT -15.4), noise 2.5 -> P(AI) clause passes by 47 points. Overshot 1.50 against 0.60 (higher on 14, lower on 3, p=0.015): HIGHER, so rule 1 fails. Not run on scr2n-es.
+#   S samples: 64.2, -7.2 (worse on 4 of 20, p=0.008; GPT +0.0), noise 0.7 -> P(AI) clause passes. Overshot 0.68 against 0.60 (higher on 3, lower on 3, p=0.675): higher by 0.07, so rule 1 fails as written. Not run on scr2s-es.
+#   E edit:    77.2, +5.8 (worse on 16 of 20, p=0.005; GPT +3.7), noise 0.2 -> fails. Overshot 0.30 (lower, p=0.018). Not run on scr2-es.
+# No arm passed dev in Spanish: no confirmation, no combination, no human-cost check.
+# Diagnostics: with notes, final.md carries 0.30 figures or links per text that neither draft nor notes have (ship2 without notes 0.00); E kept 83.7% of the draft's sentences identical,
+#   mean sentence length 14.1 -> 14.7 (ship2 14.8), CV 0.503 -> 0.514 (ship2 0.513), P(AI) 77.2 against the draft's 79.4. Notes: overshot features of the notes rewrites are word length (mean word length 20, long words 17,
+#   plain words 15 of 40 texts).
+# Verdict, Spanish: nothing in this round ships as a rule. The notes lowered P(AI) by 50.0 and the samples by 7.2, and both missed the overshot clause fixed in the brief (by 0.90 and 0.07 features per text).
+# Text of eval/e2e/script-edit.md, the edit-only rule that was tested (not shipped; the file stays under eval/e2e/):
+#   # Video scripts: edit, do not rewrite
+#   
+#   Read this before rewriting a video script. Run the meter and the checklist on the draft first
+#   (with `bands-script.json`, or `bands-script-es.json` for Spanish) and write down the draft's
+#   mean sentence length and sentence-length CV. Rewrites of scripts in this skill's tests came back
+#   shorter and more even than the draft, and judges rated them more AI. Edit the draft in place.
+#   
+#   ## English
+#   
+#   - Change only the sentences that `aimeter.py` or `audit.py` point at. Leave every other sentence exactly as it is, word for word.
+#   - Never split a sentence. Fix a flagged pattern inside its own sentence.
+#   - When the meter says sentences run short, merge two neighbouring sentences that make one point instead of rewording them.
+#   - When you finish, the mean sentence length and the sentence-length CV must not be lower than the draft's. If one is, undo edits until it is not.
+#   - Keep the stage directions, headings and labels where they are. Add no fillers, typos or ellipses.
+#   
+#   ## Español
+#   
+#   - Cambia solo las frases que señalan `aimeter.py` o `audit.py`. Deja todas las demás exactamente como están, palabra por palabra.
+#   - No partas ninguna frase. Corrige el patrón señalado dentro de su propia frase.
+#   - Si el medidor dice que las frases son cortas, une dos frases seguidas que expresan una sola idea en vez de reescribirlas.
+#   - Al terminar, la longitud media de frase y el CV de la longitud de frase no pueden ser menores que los del borrador. Si alguno lo es, deshaz ediciones hasta que no lo sea.
+#   - Deja las acotaciones, los encabezados y las etiquetas donde están. No añadas muletillas, erratas ni puntos suspensivos.

@@ -157,9 +157,8 @@ def rewrite_prompt(name, notes, samples=False):
     """notes: the notes path or "-"; samples: the row has a samples/ folder."""
     if name in SCR:
         es = name in SCR_ES_NAMES
-        if notes != "-":
-            return (PROMPT_SCR_NOTES_ES if es else PROMPT_SCR_NOTES) % SCR_TITLE[name]
-        return SCR[name] + ((SAMPLE_SENTENCE_ES if es else SAMPLE_SENTENCE) if samples else "")
+        base = ((PROMPT_SCR_NOTES_ES if es else PROMPT_SCR_NOTES) % SCR_TITLE[name]) if notes != "-" else SCR[name]
+        return base + ((SAMPLE_SENTENCE_ES if es else SAMPLE_SENTENCE) if samples else "")
     if name in FIC:
         return PROMPT_FIC % FIC[name]
     return PROMPT_ES if name in ES_NAMES else PROMPT if notes != "-" else PROMPT_NONOTES

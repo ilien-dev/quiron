@@ -231,6 +231,12 @@ class ScriptSets(unittest.TestCase):
         self.assertEqual(self.h.rewrite_prompt(en[0], "-"), self.h.PROMPT_SCR % en[3])
         self.assertEqual(len(self.sets["scr"][0]), 4)  # a set without samples has no fifth column
 
+    def test_notes_and_samples_together_keep_both_sentences(self):
+        """A row with notes and samples (a combination run) gets the notes prompt and the sample sentence."""
+        en, es = self.sets["scrn"][0], self.sets["scrn-es"][0]
+        self.assertEqual(self.h.rewrite_prompt(en[0], en[2], True), self.h.PROMPT_SCR_NOTES % en[3] + self.h.SAMPLE_SENTENCE)
+        self.assertEqual(self.h.rewrite_prompt(es[0], es[2], True), self.h.PROMPT_SCR_NOTES_ES % es[3] + self.h.SAMPLE_SENTENCE_ES)
+
     def test_narration_keeps_every_paragraph_after_stacked_directions(self):
         text = ("Every town on the river has a story about the water.\n\n---\n\n**[SECTION 1 - 0:45]**\n\n"
                 "*(Wide shot of a river.)*\n\nThe river floods every spring and the town knows it.\n\n"

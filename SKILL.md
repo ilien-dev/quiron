@@ -77,7 +77,14 @@ sentences than human ones, while assistant fiction has choppier ones (both run s
   blind judges beyond what the default rules already did, and no rewrite rule for scripts
   held. A rewrite shortens and evens sentences, which the bands do not ask of narration. A
   script a person wrote is measured, not rewritten: rewriting human narration made judges
-  rate it more AI. The numbers are in `references/numbers.md`.
+  rate it more AI. Three more ways of rewriting were tried on development sets and none was
+  confirmed. Editing only the flagged sentences read more AI than the shipped rewrite (P(AI)
+  82.5 against 73.8 in English, 77.2 against 71.4 in Spanish). Two earlier scripts by the
+  creator passed with `--sample` changed nothing in English (-0.3) and 7.2 points in
+  Spanish, with a little more overshoot. The creator's notes cut P(AI) to 29.2 and 21.5 but
+  put more features past the human band (0.65 against 0.25 per text, 1.50 against 0.60),
+  which the test's rule counted against them. No held-out run followed. The numbers are in
+  `references/numbers.md`.
 
 Select a file by putting `QUIRON_BANDS=<skill-dir>/scripts/bands-fiction.json` (or
 another of these files) in front of every command, including `check.sh`. The scripts print a
