@@ -74,12 +74,12 @@ sentences than human ones, while assistant fiction has choppier ones (both run s
   a person wrote is measured, not rewritten: rewriting human narration made judges rate it
   more AI. For a draft an assistant wrote, first ask the creator for their notes about that
   video (what it covers, names, numbers, their opinions and asides), build the script from
-  them as the notes-first rules above say, and run `check.sh --source` with the draft and the
+  them as the notes-first rules below say, and run `check.sh --source` with the draft and the
   notes. In testing that was the only thing that moved blind judges: on held-out titles the
   Claude judge went from 71.0 for a rewrite without notes to 24.7 in English and to 20.3 in
   Spanish, while a GPT judge saw about 15 points and still rated those rewrites around 65.
   The test notes were outlines written from the finished human script of the same video, so
-  a creator's rough notes may do less. Without notes a rewrite gains 5 to 10 points and still
+  a creator's rough notes may do less. Without notes a rewrite gains 4.5 to 10.5 points and still
   reads as AI: tell the user so. No script-specific rewrite rule held; the numbers and what
   was tried are in `references/numbers.md`.
 
