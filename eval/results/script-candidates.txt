@@ -1,0 +1,233 @@
+# Shape patterns of video scripts: candidates and verdicts (English)
+# Written on 12 November 2026 by the commands below, run from the repository root.
+# Human texts are not in the repository; the split is the one used everywhere (sorted by name,
+# the 1st, 5th, ... held out). TRAIN=$(mktemp -d); ls ~/corpus/script/*.md | awk 'NR%4!=1' | xargs -I{} cp {} $TRAIN
+#
+# Where the candidates came from: the brief's starting list (hook, promise, question answered at
+# once, recap, stock transitions, the close), the judges' grouped reasons in
+# eval/results/script-reasons.txt, and reading ten human train captions and ten assistant train
+# scripts in full. The rates that decide are those of held-out humans (49) and of the five test
+# folders (45 scripts); train rates are shown beside them.
+#
+# Verdict rule (the one the script prints): FAIL if at most 5% of held-out humans and at least
+# 30% (3 of 9) of some test model; TELL if humans use it and the pooled AI test rate is at least
+# twice the held-out human rate and twice the train human rate; out otherwise.
+# A FAIL that would fail a held-out human script that is clean today is reported as a choice and
+# shipped as a TELL. A rule that needs the video's title cannot run in audit.py, which never sees it.
+
+## Every candidate
+# python3 eval/script_candidates.py en
+# A sentence start in these regexes is the start of the text, a blank line, or . ! ? and a space or a
+# line break (a hard-wrapped line is not a sentence start); captions are single lines, and every
+# human rate is the same as with the earlier ^-anchored version. spoken() now also drops a leading
+# "(B-roll: ...)" direction and source links and closing source lists: that changed 11 assistant
+# scripts (6 of them GPT-6.1 test or train, with inline "[Source: ...](url)" links) and no human one.
+# Rerun at 3095346 on whole narrations: spoken() no longer leaves the blank-line runs after stacked
+# directions that prose() took for indented code (assistant scripts had lost 5% to 10% of their
+# narration there; no human caption lost a word, so every human column is unchanged). The verdict
+# column is the script's rule; what ships is decided below with the brief's rule.
+candidate                                                            h-train     h-held   tr-gpt61 tr-haiku55  tr-opus55tr-sonnet55 te-fable52   te-gpt61  te-opus55te-sonnet55   te-terra  AI test  verdict
+texts                                                                     144         49         12         12         12         12          9          9          9          9          9       45
+hook: Imagine/Picture this opens a sentence                             8/144       1/49       8/12       5/12       5/12       4/12        1/9        6/9        1/9        2/9        4/9     0.31  FAIL
+hook: Imagine in the first 3 sentences                                  2/144       0/49       4/12       3/12       1/12       1/12        0/9        1/9        0/9        1/9        0/9     0.04  TELL
+hook: Imagine opens 2+ sentences                                        2/144       0/49       4/12       3/12       0/12       2/12        0/9        1/9        0/9        0/9        2/9     0.07  TELL
+hook: Imagine you/a world/being...                                      2/144       1/49       4/12       2/12       2/12       1/12        0/9        2/9        0/9        0/9        1/9     0.07  TELL
+hook: first sentence is a question                                     10/144       0/49       0/12       1/12       0/12       0/12        0/9        0/9        0/9        0/9        0/9     0.00  out
+hook: a question in the first 3                                        30/144       7/49       1/12       2/12       1/12       1/12        0/9        0/9        2/9        1/9        0/9     0.07  out
+promise: in this video / today we                                      15/144       7/49       2/12       5/12       1/12       4/12        2/9        0/9        2/9        5/9        1/9     0.22  out
+promise: we'll explore / look at                                        7/144       0/49       1/12       1/12       0/12       2/12        0/9        0/9        1/9        1/9        1/9     0.07  out
+promise: stay / stick with me                                           2/144       0/49       1/12       3/12       0/12       1/12        1/9        0/9        0/9        0/9        0/9     0.02  out
+Q answered: question <=6 words, then a statement                       73/144      26/49       8/12       2/12      10/12       9/12        9/9        5/9        7/9        5/9        6/9     0.71  out
+Q answered: question <=3 words, then a statement                       46/144      17/49       3/12       1/12       4/12       3/12        3/9        2/9        5/9        3/9        2/9     0.33  out
+Q answered: bare noun phrase (The catch?)                               1/144       1/49       2/12       0/12       1/12       0/12        0/9        1/9        1/9        1/9        1/9     0.09  TELL
+Q answered: The answer? / The catch:                                    0/144       0/49       1/12       0/12       1/12       1/12        0/9        0/9        1/9        0/9        1/9     0.04  out
+Q answered: one-word question (Why?)                                    6/144       2/49       0/12       0/12       1/12       1/12        1/9        0/9        2/9        0/9        0/9     0.07  out
+recap: to recap / what does this mean                                   3/144       1/49       1/12       2/12       0/12       0/12        0/9        0/9        0/9        0/9        0/9     0.00  out
+recap: so that's how / why / what / it                                  3/144       5/49       0/12       0/12       0/12       1/12        2/9        0/9        0/9        2/9        0/9     0.09  out
+transition: here's the X / here's why                                  15/144       5/49       2/12       5/12       7/12       7/12        3/9        2/9        3/9        5/9        0/9     0.29  TELL
+transition: here's the X (noun only)                                    8/144       4/49       1/12       1/12       7/12       5/12        2/9        0/9        3/9        3/9        0/9     0.18  TELL
+transition: here's why / how / what                                     8/144       1/49       1/12       2/12       1/12       3/12        2/9        2/9        1/9        3/9        0/9     0.18  FAIL
+transition: but here's                                                  8/144       3/49       1/12       1/12       4/12       3/12        1/9        0/9        1/9        1/9        0/9     0.07  out
+transition: here's the twist / catch / kicker                           2/144       1/49       3/12       1/12       1/12       3/12        0/9        0/9        0/9        1/9        0/9     0.02  out
+transition: that's where X comes in                                    11/144       5/49       3/12       1/12       2/12       1/12        1/9        1/9        0/9        0/9        0/9     0.04  out
+transition: (and) then there's / comes                                  5/144       1/49       2/12       0/12       6/12       2/12        2/9        1/9        1/9        1/9        1/9     0.13  TELL
+transition: the honest / short answer                                   3/144       0/49       0/12       2/12       2/12       0/12        1/9        0/9        0/9        1/9        0/9     0.04  TELL
+transition: sounds simple / logical                                     2/144       0/49       1/12       0/12       0/12       1/12        0/9        2/9        0/9        0/9        2/9     0.09  TELL
+family: staged reveals (here's, then there's, the honest answer, s     23/144       6/49       3/12       5/12      10/12       9/12        6/9        4/9        3/9        6/9        3/9     0.49  TELL
+close: question with the title's words in the last 10%                  2/144       0/49       3/12       2/12       1/12       0/12        1/9        1/9        1/9        0/9        1/9     0.09  TELL
+close: So, <question>? in the last 10%                                  4/144       0/49       2/12       1/12       0/12       0/12        2/9        1/9        1/9        0/9        0/9     0.09  TELL
+close: bookend (end echoes the first 3 sentences)                      35/144      10/49       2/12       0/12       3/12       1/12        1/9        1/9        1/9        1/9        1/9     0.11  out
+close: next time you                                                    1/144       2/49       0/12       2/12       1/12       3/12        0/9        0/9        1/9        3/9        3/9     0.16  FAIL
+close: asking for comments                                              5/144       0/49       2/12       6/12       7/12       7/12        3/9        0/9        4/9        3/9        1/9     0.24  FAIL
+close: asking for comments, with the bare 'in the comments' (first      8/144       3/49       2/12       8/12       7/12       8/12        3/9        1/9        4/9        5/9        1/9     0.31  TELL
+count only: subscribe                                                  13/144       4/49       1/12       6/12       7/12      11/12        6/9        0/9        3/9        6/9        0/9     0.33  counted, not proposed
+count only: sponsor read                                               37/144      14/49       0/12       0/12       0/12       0/12        0/9        0/9        0/9        0/9        0/9     0.00  counted, not proposed
+count only: thanks for watching / see you next                         30/144      13/49       1/12       9/12       5/12       7/12        6/9        0/9        5/9        8/9        0/9     0.42  counted, not proposed
+struct: questions are 10%+ of sentences                                27/144       6/49       2/12       0/12       0/12       1/12        0/9        2/9        1/9        0/9        1/9     0.09  out
+struct: questions are 15%+ of sentences                                11/144       5/49       0/12       0/12       0/12       0/12        0/9        0/9        0/9        0/9        0/9     0.00  out
+struct: 4 sentences of <=4 words in a row                              16/144       5/49       2/12       1/12       2/12       3/12        2/9        2/9        0/9        3/9        0/9     0.16  out
+struct: 3 sentences of <=3 words in a row                              17/144       7/49       3/12       0/12       1/12       5/12        4/9        2/9        1/9        3/9        1/9     0.24  out
+struct: under 8% of sentences open with And/But/So                     33/144      13/49       6/12      10/12       5/12       2/12        3/9        1/9        2/9        2/9        1/9     0.20  out
+struct: under 1% of sentences open with Now/Well                       62/144      16/49      10/12       7/12      11/12       9/12        5/9        6/9        7/9        3/9        8/9     0.64  out
+read: Really X. fragment                                                0/144       0/49       1/12       0/12       1/12       0/12        0/9        0/9        2/9        0/9        0/9     0.04  out
+read: No X. No Y. / Maybe... Maybe... / Which... Which...               4/144       0/49       2/12       0/12       1/12       2/12        0/9        1/9        2/9        1/9        1/9     0.11  TELL
+read: think of it like / as                                             2/144       3/49       3/12       1/12       4/12       1/12        1/9        1/9        0/9        0/9        1/9     0.07  out
+read: welcome to / welcome back                                         6/144       1/49       0/12       4/12       1/12       0/12        0/9        0/9        0/9        1/9        0/9     0.02  out
+read: let's start / let's look at                                      20/144       5/49       5/12       1/12       6/12       6/12        2/9        0/9        3/9        3/9        0/9     0.18  out
+read: Which means / That means opens a sentence                        22/144       5/49       1/12       1/12       1/12       1/12        1/9        0/9        0/9        2/9        1/9     0.09  out
+read: ..., right? tag                                                  11/144       6/49       0/12       1/12       0/12       1/12        0/9        0/9        0/9        0/9        0/9     0.00  out
+read: em or en dash                                                    22/144       9/49       9/12       0/12       1/12       0/12        1/9        3/9        1/9        0/9        6/9     0.24  out
+read: ellipsis                                                         63/144      25/49       2/12       1/12       4/12       2/12        2/9        2/9        1/9        2/9        0/9     0.16  out
+read: you / your above 30 per 1,000 words                              22/144      10/49       3/12       1/12       1/12       0/12        1/9        2/9        1/9        2/9        3/9     0.20  out
+read: you know / kind of / basically / I mean                         108/144      35/49       0/12       1/12       6/12       4/12        4/9        3/9        4/9        2/9        7/9     0.44  out
+union: 2+ of the stock moves                                            7/144       0/49       3/12       6/12       9/12       7/12        3/9        4/9        3/9        5/9        3/9     0.40  FAIL
+union: 3+ of the stock moves                                            0/144       0/49       3/12       4/12       4/12       4/12        0/9        2/9        2/9        3/9        1/9     0.18  FAIL
+union: 2+ of the checks S1-S6                                           5/144       0/49       4/12       6/12       8/12       7/12        3/9        4/9        3/9        5/9        4/9     0.42  FAIL
+union: 3+ of the checks S1-S6                                           0/144       0/49       3/12       4/12       3/12       5/12        0/9        1/9        3/9        3/9        1/9     0.18  FAIL
+union: 3+ of S1-S6 without S3 (comments)                                0/144       0/49       3/12       0/12       2/12       3/12        0/9        1/9        0/9        1/9        0/9     0.04  out
+
+## Decisions
+# (794b9d1: the figures in the "Out" paragraph below were corrected to the table above; four assistant rates were stale from before 3095346.)
+# Shipped as FAIL
+#   S7  three of S1-S6 in one script: 0/144 train and 0/49 held-out humans; Opus 5.5 and Sonnet 5.5
+#       3/9, GPT-6.1 and Terra 1/9, Fable 5.2 0/9 (18% pooled; 13% before 3095346). A combined check (evaluate.py COMBINED),
+#       like T1. Three, not two: when it was chosen two or more cost two held-out human scripts, so
+#       three was picked with the held-out row in view. S7 leans on S3: without the comment ask, three
+#       of the other five fire on 2 of 45 assistant test scripts (the row "without S3"), under the bar.
+# Shipped as TELL (held-out human, train human, pooled AI test)
+#   S1  Imagine / Picture this opens a sentence ............ 1/49, 8/144, 31% (29% before 3095346)
+#   S2  staged reveals (here's the X / why / how / what, then there's, the honest answer, sounds
+#       simple), one check for the family ................... 6/49, 23/144, 49% (47%)
+#   S3  asking for comments, a request and not a mention ("tell me / let us know in the comments",
+#       "leave a comment", "comment below") ................. 0/49, 5/144, 24%
+#       (Opus 5.5 4/9, Fable 5.2 and Sonnet 5.5 3/9, Terra 1/9, GPT-6.1 0/9). The first version also had
+#       a bare "in the comments", which a mention ("Someone in the comments pointed out ...") trips:
+#       3/49, 8/144, 31% (the row "first version" above). Narrowed, S3 meets the FAIL rule on held-out
+#       (0/49, and 4/9 of Opus) and is kept as a TELL because of the train rate: 5 of 144 human train
+#       captions ask for comments, and as a FAIL it took the train humans clean from 0.91 to 0.88, under
+#       the 0.90 before these checks (cafd8ed). A human creator asking for comments is the channel's call, like
+#       subscribe (controller ruling). As a TELL it still feeds S7.
+#   S4  next time you ....................................... 2/49, 1/144, 16% (11%)
+#   S5  a bare noun-phrase question (The catch?) ............ 1/49, 1/144, 9%
+#   S6  No X. No Y. / Maybe... Maybe... / Which... Which... ... 0/49, 4/144, 11%
+# Choices, not shipped (a FAIL that costs a held-out human script that is clean today)
+#   S1 as a FAIL: GPT-6.1 6/9 and Terra 4/9 would fail it, and so would johnnyharris-9PbgYReEUO8 (held
+#      out, clean now): held-out humans clean 46 -> 45 of 49. Train humans 8/144 (6%), over 5% there.
+#   S4 as a FAIL ("next time you"): Terra and Sonnet 5.5 3/9; costs everyframeapainting-FfGKNJ4mldE and
+#      everyframeapainting-jGc-K7giqKM (46 -> 44 of 49).
+#   two or more of S1-S6 (union 2+), a recorded option, not shipped: with S3 narrowed it no longer
+#      costs a held-out human (0/49, 5/144 train) and fires on 42% of the assistant test scripts,
+#      every model 3/9 to 5/9 (38% and 2/9 to 4/9 before 3095346), so it meets the FAIL rule. It was found after looking at the held-out
+#      row, and it would fail 5 of 144 train captions; S7 stays at three (controller ruling).
+# Not computable in audit.py
+#   the closing question that restates the title (TELL by the rule: 0/49 and 2/144 humans, 9% of
+#   assistant scripts): it needs the title, which a caption or a user's script does not carry.
+# Subsumed (TELL by the rule, kept inside a shipped check instead of on its own)
+#   Imagine opens 2+ sentences, Imagine you / a world ..., here's why / how / what, (and) then
+#   there's, the honest / short answer, sounds simple / logical: inside S1 or S2.
+#   Rows whose verdict moved at 3095346 (whole narrations), none shipped on its own:
+#   - Imagine in the first 3 sentences: out -> TELL (0/49, 2/144, 4%); inside S1.
+#   - here's the X (noun only): out -> TELL (4/49, 8/144, 18%); inside S2.
+#   - here's why / how / what: TELL -> FAIL by the script's rule (1/49, Sonnet 5.5 3/9), but 8/144
+#     train humans (6%) is over the brief's 5% train bar, so a TELL; inside S2.
+#   - So, <question>? in the last 10%: out -> TELL (0/49, 4/144, 9%); not in any shipped check.
+#   - 3+ of the stock moves: out -> FAIL (0/49, 0/144, 18%, Sonnet 5.5 3/9); S7 is the same move
+#     on the shipped checks and stays the one FAIL.
+# Counted, not proposed
+#   subscribe: 8% of held-out humans, 33% of assistants; thanks for watching / see you next: 27%
+#   and 42%; sponsor reads: 29% of held-out humans and no assistant script (a human marker, and a
+#   sponsor segment is the channel's to keep).
+# Out (the rows marked out above): they fail the rule on held-out humans or on train humans. The
+#   ones worth naming: the promise "in this video / today we" (14% held out, 22% AI); a question
+#   in the first three sentences (14%, 7%); short questions answered at once (53%, 71%); runs of
+#   very short sentences (14%, 24%); Now/Well openers under 1% (33% held out, 43% train, 64% AI:
+#   under twice either human rate); And/But/So openers under 8% (27%, 20%);
+#   em dashes (18%, 24%). Ellipses (51% of held-out humans, 16% of assistants), the tag ", right?"
+#   (12%, 0%) and you know / kind of / basically (71%, 44%) lean human.
+
+## The shipped checks as audit.py runs them, train and test folders included
+# QUIRON_BANDS=scripts/bands-script.json python3 scripts/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 human-train=$TRAIN tr-gpt61=eval/ai/script/train-gpt61 tr-haiku55=eval/ai/script/train-haiku55 tr-opus55=eval/ai/script/train-opus55 tr-sonnet55=eval/ai/script/train-sonnet55 opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
+# (the AI train folders also train the bands, so C1 and C2 are in-sample there; rows: the two rate tables)
+FAIL rate per check   human-heldout     human-train        tr-gpt61      tr-haiku55       tr-opus55     tr-sonnet55          opus55        sonnet55         fable52           gpt61           terra
+A21                              0            0.01               0               0               0               0               0            0.11               0               0               0
+B1                            0.02            0.04             0.5            0.17            0.08            0.08            0.11               0            0.11            0.11            0.22
+C1                            0.02            0.05            0.92            0.08            0.08            0.33            0.44            0.33            0.11            0.67            0.56
+C2                            0.02               0               0               0               0               0               0               0               0               0               0
+S7                               0               0            0.25            0.33            0.25            0.42            0.33            0.33               0            0.11            0.11
+
+TELL or FAIL rate    human-heldout     human-train        tr-gpt61      tr-haiku55       tr-opus55     tr-sonnet55          opus55        sonnet55         fable52           gpt61           terra
+A14                              0           0.007               0               0               0               0               0               0               0               0               0
+A16                              0           0.007               0               0               0               0               0               0               0               0               0
+A17                              0           0.042               0               0               0               0           0.222               0               0               0               0
+A20                          0.122            0.16           0.583               0               0               0               0               0               0           0.667           0.778
+A21                              0           0.014               0               0               0               0               0           0.111               0               0               0
+A4b                           0.02           0.014               0           0.083               0               0           0.111           0.111               0               0               0
+A5                               0           0.028               0               0               0               0           0.111               0               0               0               0
+B1                            0.02           0.042             0.5           0.167           0.083           0.083           0.111               0           0.111           0.111           0.222
+B2                           0.061            0.09           0.417           0.333           0.167           0.083           0.111           0.222           0.222           0.444           0.111
+S1                            0.02           0.056           0.667           0.417           0.417           0.333           0.111           0.222           0.111           0.667           0.444
+S2                           0.122            0.16            0.25           0.417           0.833            0.75           0.333           0.667           0.667           0.444           0.333
+S3                               0           0.035           0.167             0.5           0.583           0.583           0.444           0.333           0.333               0           0.111
+S4                           0.041           0.007               0           0.167           0.083            0.25           0.111           0.333               0               0           0.333
+S5                            0.02           0.007           0.167               0           0.083               0           0.111           0.111               0           0.111           0.111
+S6                               0           0.028           0.167               0           0.083           0.167           0.222           0.111               0           0.111           0.111
+
+## Existing checks in this register
+# The TELL or FAIL table of the held-out evaluation before this change (eval/results/script.txt,
+# "Held-out evaluation with the shipped thresholds", commit cafd8ed); AI pooled is the mean of the
+# five test folders (9 scripts each). Rule: a TELL whose pooled AI rate is not at least twice its
+# held-out human rate is switched off when the band file says "_register": "script" and the
+# language is English. A21 is a FAIL check and stays. A TELL that no held-out human trips stays (no
+# evidence against it). Other registers are untouched.
+check    human    opus55  sonnet55   fable52     gpt61     terra  AI pooled  ratio  rule
+A1       0.163     0.333     0.333     0.222     0.000     0.000      0.178   1.09  OFF
+A14b     0.102     0.000     0.111     0.000     0.111     0.333      0.111   1.09  OFF
+A15      0.041     0.000     0.000     0.000     0.000     0.000      0.000   0.00  OFF
+A17      0.000     0.222     0.000     0.000     0.000     0.000      0.044    inf  keep
+A1b      0.367     0.222     0.222     0.556     0.222     0.333      0.311   0.85  OFF
+A20      0.122     0.000     0.000     0.000     0.667     0.778      0.289   2.37  keep
+A21      0.000     0.000     0.111     0.000     0.000     0.000      0.022    inf  keep
+A26      0.020     0.000     0.000     0.000     0.000     0.000      0.000   0.00  OFF
+A2b      0.184     0.111     0.222     0.333     0.222     0.222      0.222   1.21  OFF
+A3       0.041     0.000     0.000     0.111     0.000     0.000      0.022   0.54  OFF
+A32      0.020     0.111     0.000     0.000     0.000     0.000      0.022   1.11  OFF
+A4       0.041     0.000     0.111     0.222     0.000     0.000      0.067   1.62  OFF
+A4b      0.020     0.111     0.111     0.000     0.000     0.000      0.044   2.22  keep
+A5       0.000     0.111     0.000     0.000     0.000     0.000      0.022    inf  keep
+A8       0.204     0.111     0.000     0.111     0.333     0.667      0.244   1.20  OFF
+A9       0.041     0.000     0.000     0.000     0.000     0.111      0.022   0.54  OFF
+B1       0.469     0.667     0.222     0.556     0.778     0.778      0.600   1.28  OFF
+B2       0.061     0.111     0.111     0.222     0.444     0.111      0.200   3.28  keep
+# Switched off: A1, A1b, A2b, A3, A4 (partly inside S2: here's the thing, here's where it gets; not
+# let's be honest, buckle up, without further ado), A8, A9, A14b, A15, A26, A32,
+# and the TELL state of B1 (one to three lexicon words: 47% of held-out humans, 60% of assistants);
+# B1 still FAILs at four words. Kept: A17, A20 (curly quotes: GPT-6.1 and Terra only, 2.4x), A4b
+# (2.2x, one human text), A5, B2.
+
+## Existing checks re-applied on whole narrations (3095346)
+# The same rule on the TELL or FAIL table of an evaluation with nothing switched off: a copy of scripts/ whose
+# audit.py has SCRIPT_OFF = {} and SCRIPT_B1_TELL_OFF = set(), run as
+# QUIRON_BANDS=scripts/bands-script.json python3 <copy>/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 human-train=$TRAIN opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
+# "train" is the human-train rate; "2x train" says whether the pooled AI rate is also twice it (the stricter
+# rule of script_candidates.py). No state changes: every switched-off check stays off and every kept one stays.
+check    human    train   opus55  sonnet55   fable52     gpt61     terra  AI pooled  ratio  rule  2x train
+A1       0.163    0.076    0.333     0.333     0.222     0.000     0.000      0.178   1.09  OFF   yes
+A14b     0.102    0.174    0.000     0.111     0.000     0.111     0.333      0.111   1.09  OFF   no
+A15      0.041    0.007    0.000     0.000     0.000     0.000     0.000      0.000   0.00  OFF   no
+A17      0.000    0.042    0.222     0.000     0.000     0.000     0.000      0.044    inf  keep  no
+A1b      0.367    0.278    0.222     0.222     0.556     0.222     0.333      0.311   0.85  OFF   no
+A20      0.122    0.160    0.000     0.000     0.000     0.667     0.778      0.289   2.37  keep  no
+A26      0.020    0.007    0.000     0.000     0.000     0.000     0.000      0.000   0.00  OFF   no
+A2b      0.184    0.181    0.111     0.222     0.333     0.222     0.222      0.222   1.21  OFF   no
+A3       0.041    0.069    0.000     0.000     0.222     0.000     0.000      0.044   1.08  OFF   no
+A32      0.020    0.007    0.111     0.000     0.000     0.000     0.000      0.022   1.11  OFF   yes
+A4       0.041    0.062    0.000     0.111     0.222     0.000     0.000      0.067   1.62  OFF   no
+A4b      0.020    0.014    0.111     0.111     0.000     0.000     0.000      0.044   2.22  keep  yes
+A5       0.000    0.028    0.111     0.000     0.000     0.000     0.000      0.022    inf  keep  no
+A8       0.204    0.250    0.111     0.000     0.111     0.333     0.667      0.244   1.20  OFF   no
+A9       0.041    0.035    0.000     0.000     0.000     0.000     0.111      0.022   0.54  OFF   no
+B1       0.469    0.535    0.667     0.222     0.556     0.778     0.778      0.600   1.28  OFF   no
+B2       0.061    0.090    0.111     0.222     0.222     0.444     0.111      0.222   3.64  keep  yes
+# Moved since cafd8ed: A3 0.022 -> 0.044 pooled (Fable 5.2 2/9), B2 0.200 -> 0.222; no ratio crosses 2.
+# A17, A20 and A5 would be off under the stricter rule (their AI rate is under twice the train rate): A20 was
+# kept by the held-out rule at c2e6f98 and its train rate (0.16) is the same as then, so this is not new.

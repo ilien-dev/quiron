@@ -1,0 +1,18 @@
+- intro: says music terminology tends to hinder rather than help; suggests dropping prior knowledge and returning to basics
+- raw material: twelve pitches labelled one through twelve, repeating higher once the top is reached; gap between neighbours = semitone
+- no pitch ranks above another, yet songs draw on a subset rather than all twelve; a subset like that is a scale
+- a tone is two semitones, following historical custom and conservatory teaching; so the major pattern reads tone, tone, semitone, then tone three times, then semitone
+- twelve possible starting pitches, so twelve distinct major scales
+- thought experiment: design an instrument where a blues scale on pitch 4 (chosen randomly) is easiest; out-of-scale pitches shown black, smaller, in a back row
+- result has a weird shape nobody (creator included) has seen in a store; plays the white notes as a demo; also shows a layout built for the double harmonic scale
+- repeating this with the major scale yields the standard piano keyboard, which the creator says we have just invented
+- piano is built around the major scale on the pitch historically named Do
+- of the other eleven, only in-scale ones get their own names; explains why no black key sits between mi and fa but one sits between fa and sol
+- out-of-scale pitches get relative names: sharp (above Do) or flat (Re flat, below Re), same for the rest
+- reminder that all twelve pitches are still equally important
+- many more scales: minor, Phrygian, chromatic (contains every pitch)
+- building a scale needs just its code and a starting pitch
+- piano white keys starting from Re give a changed code; starting on mi, fa, sol, la, si gives other codes again; these are modes of the major scale
+- modes named: Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian (minor), Locrian
+- table of codes for common scales on screen, to try on your own instrument
+- closing aside: creator finds it neat that any ordered list of numbers totalling twelve is a scale code; whether it sounds good is a matter of taste

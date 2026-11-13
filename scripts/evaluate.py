@@ -43,7 +43,7 @@ import aimeter  # noqa: E402
 
 
 # checks that combine others, or that only a reader can settle: not counted as found items
-COMBINED = {"C1", "C2", "T1", "V1", "V2"}
+COMBINED = {"C1", "C2", "T1", "V1", "V2", "S7", "SE8"}  # S7, SE8: script checks together
 
 
 def texts(directory):
@@ -71,7 +71,10 @@ def auc(ai, human, push):
 
 
 def tokens(path):
-    return re.findall(r"[a-z']+", aimeter.prose(open(path, encoding="utf-8").read()).lower())
+    raw = open(path, encoding="utf-8").read()
+    if aimeter.SPOKEN:  # a spoken register: stage directions and labels are not words said
+        raw = aimeter.spoken(raw)
+    return re.findall(r"[a-z']+", aimeter.prose(raw).lower())
 
 
 class Judge:

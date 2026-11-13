@@ -33,8 +33,8 @@ python3 scripts/aimeter.py --calibrate DIR   # rebuild bands.json from human tex
 scripts/build-corpus.sh [OUTDIR] [author ...] # fetch pre-2022 dev.to corpus, then calibrate
 python3 scripts/evaluate.py --human DIR [--ai-train DIR] NAME=DIR ...  # score the skill
 python3 scripts/factdiff.py SOURCE REWRITE   # facts in the rewrite, not in the source
-QUIRON_BANDS=scripts/bands-fiction.json ...  # other registers: fiction, es
-python3 eval/e2e/harness.py rewrite SNAP REP [--set dev|test|es|fic|fic2]  # needs the claude CLI
+QUIRON_BANDS=scripts/bands-fiction.json ...  # other registers: fiction, es, script[-es]
+python3 eval/e2e/harness.py rewrite SNAP REP [--set dev|test|es|fic|fic2|scr|scr2|scr-es|scr2-es]  # needs the claude CLI
 python3 eval/e2e/report.py OLD NEW [--set ...]  # blind judges, paired per title
 ```
 
@@ -44,4 +44,4 @@ python3 eval/e2e/report.py OLD NEW [--set ...]  # blind judges, paired per title
 - `audit.py` `CHECKS`: one entry per pattern, PASS / FAIL / TELL / READ. FAIL only where ≤~5% of held-out human texts trip it (`evaluate.py` shows the rate).
 - `check.sh`: convergence is two consecutive clean passes with READ items ruled on in both.
 
-`SKILL.md`, `references/patterns.md`, `CHECKS` and `AI_REF` describe the same patterns and numbers; change one, update the others. `references/numbers.md` mirrors `bands.json`. `SKILL.md` stays under 500 lines; detail goes in `references/`, one level deep. Band files (`bands.json`, `-fiction`, `-es`) come from `build-corpus*.sh`. Human corpora are not committed; `eval/ai/` samples are.
+`SKILL.md`, `references/patterns.md`, `CHECKS` and `AI_REF` describe the same patterns and numbers; change one, update the others. `references/numbers.md` mirrors the band files. `SKILL.md` stays under 500 lines; detail goes in `references/`, one level deep. Band files come from `build-corpus*.sh` (the script one needs yt-dlp). Human corpora are not committed; `eval/ai/` samples are.

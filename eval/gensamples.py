@@ -3,7 +3,7 @@
 
   gensamples.py REGISTER TITLES.tsv MODEL OUTDIR [-j N]
 
-REGISTER is blog, es, fiction, pr, commit, readme or email. MODEL is a Claude model id
+REGISTER is blog, es, fiction, pr, commit, readme, email, script or script-es. MODEL is a Claude model id
 (run through `claude -p`) or a GPT one (run through `codex exec`). The prompt is the plain
 request documented in eval/README.md. A ```markdown wrapper and the model's comments
 outside it are dropped, as is dev.to front matter. Titles already written are skipped,
@@ -13,7 +13,7 @@ and every text is logged with its model and date in OUTDIR/../MANIFEST.tsv.
                                                from HUMAN_DIR/titles.tsv, the held-out
                                                quarter of the human texts going to test
 """
-import argparse, datetime, os, re, subprocess, sys, tempfile, threading
+import argparse, datetime, hashlib, os, re, subprocess, sys, tempfile, threading
 from concurrent.futures import ThreadPoolExecutor
 
 PROMPTS = {
@@ -25,9 +25,12 @@ PROMPTS = {
     "commit": "Write the commit message for a commit with the subject %s. Around %d words.",
     "readme": "Write the README for a project called %s. Around %d words.",
     "email": "Write an email with the subject %s. Around %d words.",
+    "script": 'Write the script for a YouTube video titled "%s". Around %d words.',
+    "script-es": 'Escribe el guion de un video de YouTube titulado "%s". Unas %d palabras.',
 }
 WORK = ("pr", "commit", "readme", "email")
-LENGTH = {"pr": (130, 500), "commit": (130, 500), "email": (130, 500), "readme": (300, 1200)}  # else 600-1400
+LENGTH = {"pr": (130, 500), "commit": (130, 500), "email": (130, 500), "readme": (300, 1200),
+          "script": (300, 3000), "script-es": (300, 3000)}  # else 600-1400
 ISO = ["--setting-sources", "project", "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
        "--no-session-persistence"]
 LOCK = threading.Lock()
@@ -37,13 +40,44 @@ WD = tempfile.mkdtemp(prefix="quiron-gen-")  # empty folder: no project instruct
 FENCE = re.compile(r"^(`{3,})(?:markdown|md)[ \t]*$", re.M)
 # a commit message, an email or a PR description comes back in a bare or ```text block
 FENCE_WORK = re.compile(r"^(`{3,})(?:markdown|md|text|txt|plaintext|gitcommit|email)?[ \t]*$", re.M)
+SCRIPT = ("script", "script-es")  # kept as written: stage directions, labels and headings stay
+
+
+# The model talking to the user about the request, not the script. Anchored to the first or
+# last paragraph and to words about the script itself, so a narration that opens "I'm
+# standing in..." or "Here's the thing" stays. Word-count trailers and production notes
+# are kept in the file: aimeter.spoken() does not count them as speech.
+_LEAD = (r"(?:I can(?:'|’)t|I cannot|I(?:'m| am) assuming|I don(?:'|’)t know|Here(?:'|’)s|Here is|Sure|Certainly|"
+         r"Below is|Aqu[ií] (?:tienes|est[aá])|No puedo|Claro|A continuaci[oó]n|Te dejo|Supongo|Asumo)\b")
+_ABOUT = re.compile(r"script|transcript|guion|guión|\byour\b|\btu\b|\btus\b|t[ií]tulo|title|:\s*$", re.I)
+_CLOSE_LEAD = re.compile(r"(?:Note|Notes|Two notes|Nota|Notas|This runs|This script|This is an original|"
+                         r"The spoken script|Este guion|El guion|Approx(?:imately|\.)?|Word count)\b", re.I)
+_TO_USER = re.compile(r"\bI(?:'m|’m|'ve|’ve|'d)?\b|\bmy\b|\byour (?:title|series|channel|script|video|real)\b|"
+                      r"\byou may want\b|\bwant me to\b|\blet me know\b|\bswap in\b|\bte (?:sugiero|recomiendo)\b|"
+                      r"\bsi quieres\b|\bquieres que\b|\bt(?:u|us) (?:t[ií]tulo|serie|canal|guion)\b|\bdime\b|"
+                      r"\bhe (?:dejado|inventado|tratado|supuesto)\b", re.I)
+
+
+def script_notes(text):
+    """Drop an opening paragraph that talks to the user about the request and a closing
+    note to the user (first and last paragraph only), and a rule left at either end."""
+    paras = re.split(r"\n\s*\n", text.strip())
+    plain = lambda p: p.strip().strip("*_ ")
+    if len(paras) > 2 and re.match(_LEAD, plain(paras[0])) and _ABOUT.search(paras[0]):
+        paras = paras[1:]
+    while len(paras) > 2 and (_CLOSE_LEAD.match(plain(paras[-1])) and _TO_USER.search(paras[-1])
+                              or re.fullmatch(r"(?:[-*_]\s*){3,}", paras[-1].strip())):
+        paras = paras[:-1]
+    while len(paras) > 2 and re.fullmatch(r"(?:[-*_]\s*){3,}", paras[0].strip()):
+        paras = paras[1:]
+    return "\n\n".join(paras).strip()
 
 
 def clean(text, register="blog"):
     """The post itself: what is inside a ```markdown wrapper when the model used one
     (its comments to the user outside the wrapper are dropped), without front matter.
     Some models fence only the front matter and write the post after it."""
-    m = (FENCE_WORK if register in ("pr", "commit", "email") else FENCE).search(text)
+    m = (FENCE_WORK if register in ("pr", "commit", "email") + SCRIPT else FENCE).search(text)
     if m and not re.search(r"^#{1,6} ", text[:m.start()], re.M):  # a heading first: the post began
         rest = text[m.end():]
         ends = [e for e in re.finditer(r"^%s[ \t]*$" % re.escape(m.group(1)), rest, re.M)]
@@ -55,6 +89,8 @@ def clean(text, register="blog"):
                 text = inner
     if register == "email":  # the subject goes in its own field, not in the body
         text = re.sub(r"\A\s*\**Subject:.*\n", "", text)
+    if register in SCRIPT:  # a leading --- is a rule, not front matter
+        return script_notes(text.strip())
     return re.sub(r"\A\s*---\n.*?\n---\n", "", text, flags=re.S).strip()
 
 
@@ -93,6 +129,25 @@ def one(a, row):
     return name, "ok"
 
 
+# titles per model (train, test) for the registers that do not take every fourth title
+SIZES = {"script": (12, 9), "script-es": (12, 5)}
+
+
+def spread(pool, want):
+    """want titles spread over channels and lengths, no random choice: channels take turns
+    (the channel is the file name without its 11-character video id), and inside a channel
+    titles come in the order of their sha1, so the same corpus gives the same pick."""
+    by = {}
+    for l in sorted(pool, key=lambda l: hashlib.sha1(l.split("\t")[0].encode()).hexdigest()):
+        by.setdefault(l.split("\t")[0][:-12], []).append(l)
+    picked = []
+    while len(picked) < want and any(by.values()):
+        for ch in sorted(by):
+            if by[ch] and len(picked) < want:
+                picked.append(by[ch].pop(0))
+    return picked
+
+
 def titles(register, human_dir):
     """Title files for a register: every fourth human text (sorted by file name) is held
     out, as in evaluate.py, and its title goes to the test models; the rest to training."""
@@ -104,8 +159,13 @@ def titles(register, human_dir):
     here = os.path.join(os.path.dirname(os.path.abspath(__file__)), "titles")
     for split, pool, per, models in (("train", cal, 8, ("opus", "sonnet", "haiku", "gpt")),
                                      ("test", held, 10, ("opus", "sonnet", "fable", "gpt", "terra"))):
-        want = per * len(models)
-        picked = pool[::max(1, len(pool) // want)][:want]
+        if register in SIZES:
+            per = min(SIZES[register][split == "test"], len(pool) // len(models))
+            picked = spread(pool, per * len(models))
+            picked.sort(key=lambda l: (int(l.split("\t")[1]), l))  # each model gets the whole length range
+        else:
+            want = per * len(models)
+            picked = pool[::max(1, len(pool) // want)][:want]
         for k, m in enumerate(models):
             open(os.path.join(here, f"{register}-{split}-{m}.tsv"), "w", encoding="utf-8",
                  newline="\n").write("\n".join(picked[k::len(models)]) + "\n")

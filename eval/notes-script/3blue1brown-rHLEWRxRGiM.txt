@@ -1,0 +1,9 @@
+- short footnote episode placed between chapters; comes after two earlier videos covering linear transformations and matrices
+- earlier videos only showed maps from 2D vectors to 2D vectors; series mostly stays in 2D since it's simpler to see on screen and picture mentally
+- once core ideas are understood in 2D, they extend almost seamlessly to higher dimensions; still good to step out of "flatland" occasionally
+- record where each of the three lands, one per column, in a 3x3 matrix; nine numbers capture the whole transformation
+- multiplying two 3x3 matrices: picture doing the right one's transformation first, then the left one's
+- 3D matrix multiplication matters in computer graphics and robotics; 3D rotations are tough to describe directly, but easier when split into a chain of simpler individual rotations
+- doing the multiplication with actual numbers works much like the 2D case
+- suggested exercise: reason out what the numeric 3x3 multiplication should look like, based on two transformations applied in succession; a good check of understanding of the previous video
+- next video: begins covering the determinant

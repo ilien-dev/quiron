@@ -1,0 +1,12 @@
+# python3 eval/markup.py script ~/corpus/script eval/results/script-markup.txt   (median per 1,000 spoken words)
+group              n     stage   speaker timestamp   heading
+human-train      144      0.00      0.00      0.00      0.00
+test-fable52       9     12.77      1.21      0.00      2.20
+test-gpt61         9      0.00      0.00      0.00      0.00
+test-opus55        9     15.06      6.90      0.00      2.01
+test-sonnet55      9     18.44      0.00      0.00      6.18
+test-terra         9      9.23      1.85      0.00      1.99
+train-gpt61       12      5.72      0.00      0.00      0.53
+train-haiku55     12     10.86      6.57      0.00      1.26
+train-opus55      12     17.77      7.11      0.00      1.17
+train-sonnet55    12     16.00      7.11      0.00      5.47

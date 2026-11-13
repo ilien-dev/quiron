@@ -1,0 +1,17 @@
+- apertura: conferencia de Lord Kelvin en 1901, año inaugural del siglo XX; el creador la enlaza en la descripción y dice que los físicos la recuerdan en especial
+- tesis de Kelvin: la física clásica se veía despejada y hermosa, salvo por dos nubarrones, es decir, dos enigmas que la visión ortodoxa no resolvía
+- Kelvin no lo sabía, pero cada nubarrón escondía una de las dos grandes revoluciones de la física
+- primer nubarrón: el éter, supuesto medio por el que viajaba la luz; si existía, ¿por qué no se detectaba? Einstein lo resolvió pocos años después; hoy no toca
+- segundo nubarrón: se suele identificar con el cuerpo negro, pero según el creador el acertijo de Kelvin era anterior: cómo se calienta el aire que respiramos
+- contexto: cuando los átomos aún no estaban confirmados, muchos científicos vieron que modelar los gases con moléculas sueltas funcionaba de maravilla
+- caso del gas noble: moléculas como esferitas con solo tres desplazamientos (arriba-abajo, izquierda-derecha, delante-atrás), sin rotar ni deformarse; el calor específico (energía para variar la temperatura) casaba bien con lo medido
+- imagen del creador: el gas como una fiesta de choques entre partículas
+- siguiente reto: nitrógeno y oxígeno como moléculas diatómicas de átomos idénticos; el enlace actúa como un muelle (fuerza restauradora, tamaño fijo según la química); bichos de dos bolas y resorte chocando
+- esas moléculas, además de trasladarse, giran sobre dos ejes y vibran; el cálculo es posible pero sale mal frente a los experimentos
+- intentos fallidos: sustituir el muelle por otra cosa, o sumar movimientos desconocidos, empeoraba todo; los datos sugerían restar movimientos, algo absurdo porque nada en el gas los impide
+- otra salida: que rotación y vibración tomaran menos energía; contradice el Teorema de Equipartición, que reparte igual energía media a cada movimiento (válido para coches, planetas y patitos)
+- el creador subraya que no era falta de precisión ni de detalle: era un misterio que golpeaba la base misma de la mecánica clásica, un malestar del siglo XIX
+- Jeans casi lo logra: al bajar la temperatura ciertos movimientos parecen "congelarse"; el creador bromea con que "rozó el cielo"
+- Planck, partiendo de otro problema, descubre energías discretas, solo valores concretos; analogía de videojuego: nivel 3 o 4, nunca el 3,5
+- rotación y vibración molecular son discretas; la molécula rechaza energía que no alcance el siguiente nivel y la cede a otros movimientos, rompiendo la equipartición y resolviendo el enigma
+- cierre: energía por saltos o cuantos; una revolución inminente en lo pequeño, pero faltaban experimentos más siniestros para la mecánica cuántica (otro vídeo); pide suscribirse y agradece

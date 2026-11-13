@@ -25,10 +25,11 @@ held-out titles (see AI_REF). The directions come from the published studies:
 Usage:
   aimeter.py FILE...               score files against the shipped bands
   aimeter.py --calibrate DIR [--ai AI_DIR[,AI_DIR]] [--out FILE] [--lexicon NAME]
-                               [--lang es] [--plain NAME]
+                               [--lang es] [--plain NAME] [--spoken]
                                    rebuild bands from a corpus of human texts; with
                                    AI texts of the same register, also learn which
-                                   side of each band is the AI side
+                                   side of each band is the AI side; --spoken measures
+                                   only the spoken words and marks the bands "_spoken"
   aimeter.py --json FILE           machine-readable output
   aimeter.py --sample PATH FILE    PATH: the writer's own texts; a rate outside the band
                                    on the same side as theirs is their habit, not a tell
@@ -156,6 +157,7 @@ def band_meta():
 
 
 LANG = band_meta().get("_lang", "en")
+SPOKEN = band_meta().get("_spoken", False)
 
 # The most frequent function words of each language. A text whose words are mostly from
 # another list is being measured against the wrong band file, or against a language no
@@ -187,7 +189,9 @@ def lang_warning(text):
     if guess == LANG:
         return ""
     if guess in BANDED:
-        name = {"es": "bands-es.json", "en": "bands.json"}[guess]
+        names = ({"es": "bands-script-es.json", "en": "bands-script.json"}
+                 if band_meta().get("_register") == "script" else {"es": "bands-es.json", "en": "bands.json"})
+        name = names[guess]
         return (f"WARNING: this text looks {_NAMES[guess]} but {os.path.basename(BANDS_FILE)} "
                 f"is for {_NAMES[LANG]}. Set QUIRON_BANDS={os.path.join(HERE, name)} and run again.")
     return (f"NOTE: this text looks {_NAMES.get(guess, guess)}, and no band file is measured for it. "
@@ -272,7 +276,225 @@ def prose(md):
     return md
 
 
+# What a video script carries besides the words said aloud. A caption file has none of
+# it, so a band file calibrated on captions ("_spoken": true) measures spoken() only.
+_UP = r"A-ZÁÉÍÓÚÑÜ"
+STAGE_LINE = re.compile(r"^\s*[*_]*(?:\[[^\]]*\]|\([^)]*\))[*_]*\s*$")
+STAGE_INLINE = re.compile(r"[*_]*\[[^\]\n]*\](?!\()[*_]*")  # a link, [text](url), is not one
+STAGE_WORD = re.compile(r"^\s*[*_]*\((?:pause|beat|laughs|laughter|sighs|smiles|silence|"
+                        r"pausa|risas|suspira|sonríe|silencio)\)[*_]*\s*", re.I)
+# [00:15], (0:15) or **[0:15]** anywhere before the speech; a bare time needs a dash after
+# it, or "10:30 is when we left." would lose its first words
+_TS = r"\d{1,2}:\d{2}(?::\d{2})?"
+TIMESTAMP = re.compile(rf"^\s*[*_]*(?:[\[(]{_TS}(?:\s*[-–]\s*{_TS})?[\])]\s*[-–:]?"
+                       rf"|{_TS}(?:\s*[-–]\s*{_TS})?(?:\s+[-–—]\s+|\s*$))[*_]*\s*")
+# A label is a known production word (NARRATOR, HOST 2), any capitals word with a (V.O.),
+# or two to four capitals words, then a colon. "Here is the thing:" has lower case, and
+# "AI:", "IMPORTANT:" or "NOTE:" open sentences that are speech, so none of them is one.
+_CAP = rf"[{_UP}][{_UP}0-9.'’-]*"
+_KNOWN = (r"NARRATOR|NARRADORA?|HOST|PRESENTER|PRESENTADORA?|LOCUTORA?|VOICE-?OVER|VO|V\.O\."
+          r"|ANCHOR|SPEAKER|INTERVIEWER|ENTREVISTADORA?|GUEST|INVITADA?|REPORTER|NARRATION")
+SPEAKER = re.compile(rf"^\s*[*_]{{0,2}}(?:(?:{_KNOWN})(?:\s*\d+)?(?:\s*\([^)]*\))?"
+                     rf"|{_CAP}\s*\([^)]*\)|{_CAP}(?:\s+{_CAP}){{1,3}}(?:\s*\([^)]*\))?)"
+                     r"\s*[*_]{0,2}\s*:\s*[*_]{0,2}\s*")
+SCENE = re.compile(r"^\s*(?:#{1,6} .*|(?:INT|EXT|INT\./EXT)\.\s.*)$")
+MUSIC = re.compile(r"[♪♫]+")
+# What the model tacks on after a script is production markup, not speech: a line that is
+# only a word count, a rule (---, ***), and a trailing production-note paragraph.
+RULE = re.compile(r"^\s*(?:[-*_]\s*){3,}$")
+_WRAP = "*_()[]> 	"
+_NUM = r"~?≈?\s*(?:(?:approx(?:imately)?|aprox(?:imadamente)?|about|unas)\.?\s+)?[\d][\d.,]*"
+_WCLABEL = (r"(?:(?:approximate\s+)?word\s+count|words|palabras|recuento(?:\s+aproximado)?(?:\s+de\s+palabras)?"
+            r"|conteo(?:\s+de\s+palabras)?|extensi[oó]n(?:\s+aproximada)?|longitud(?:\s+aproximada)?|length)")
+_WCAPPROX = r"(?:approx(?:imately)?|aprox(?:imadamente)?)\.?"
+WORD_COUNT = re.compile(
+    rf"^(?:{_WCLABEL}\s*:\s*{_NUM}(?:\s*(?:words|palabras))?|(?:{_WCAPPROX}\s+)?{_NUM}\s*(?:words|palabras)"
+    rf"|{_WCAPPROX}\s+word\s+count\s*:?\s*{_NUM})\.?(?:\s*\([^)]*\)|,\s*including[^.]*\.?)?$", re.I)
+# an italic or bold line that begins with a word count and goes on with a note
+WORD_COUNT_LEAD = re.compile(
+    rf"^[*_]+\s*(?:{_WCLABEL}\s*:\s*|{_WCAPPROX}\s+){_NUM}\s*(?:words|palabras)?\.\s+\S", re.I)
+# a header line of runtime / length fields ("Runtime: ~8 minutes | Script: ~1,177 words") and an
+# italic line that only describes the script ("*YouTube script, approx. 2,600 words*")
+_COUNT_UNIT = r"\d[\d.,]*\s*(?:words|palabras|minutes?|min|minutos?)\b"
+META_LINE = re.compile(rf"^(?:[^:\n]{{0,40}}\s·\s)?(?:estimated\s+|target\s+)?(?:runtime|length|script\s+length|duraci[oó]n(?:\s+estimada)?)"
+                       rf"\s*:.*(?:~|{_COUNT_UNIT})", re.I)
+NOTE_LINE = re.compile(r"^[*_]+(?:note|nota)s?\b[^:\n]{0,20}:", re.I)  # an italic or bold "Note: ..." line
+DESCRIPTOR = re.compile(rf"^[*_].*\b(?:script|guion|gui[oó]n)\b.*\b(?:approx\w*|aprox\w*|about|runs|unas|de)\b.*{_COUNT_UNIT}", re.I)
+PROD_NOTE = re.compile(r"^(?:production\s+notes?|notes?\s+for\s+(?:the\s+)?production|notas?\s+(?:para|de)\s+(?:la\s+)?producci[oó]n"
+                       r"|sugerencias\s+de\s+edici[oó]n|editing\s+suggestions)\b", re.I)
+BARE_NOTE = re.compile(r"^(?:note|nota)s?\b", re.I)
+LIST_ITEM = re.compile(r"^\s*(?:[-*+•]|\d+[.)])\s+")
+# A parenthesis that opens a line with a production word and a colon, "(B-roll: a river)", is a
+# direction; "(about 40%)" or "(Yes, really.)" is speech and stays.
+PAREN_DIRECTION = re.compile(
+    r"^\s*[*_]*\((?:b-?roll|visuals?|cut to|on[- ]screen|sfx|sound(?: effects?)?|music|graphics?|footage|animation"
+    r"|text on screen|plano|en pantalla|m[uú]sica|corte a|gr[aá]ficos?|imagen|efectos?|sonido|animaci[oó]n)"
+    r"\s*:[^)\n]*\)[*_]*\s*", re.I)
+# Sources and references: a closing block that starts with "Sources:" or "Fuentes:", and a link
+# whose text opens that way, "[Research reference: Kim et al.](https://...)".
+_SRC = (r"(?:research\s+)?(?:sources?|references?|further reading|referencias?(?:\s+t[eé]cnicas?)?"
+        r"|fuentes?(?:\s+[a-záéíóúñ]+){0,3}|bibliograf[ií]a)")
+SOURCE_HEAD = re.compile(rf"^[*_\-•\s]*{_SRC}\s*[*_]*\s*:", re.I)
+SOURCE_LINK = re.compile(rf"\s*\[[*_]*{_SRC}\s*:(?:[^\[\]\n]|\[[^\]\n]*\]\([^)\n]*\))*\](?!\()"
+                         rf"|\s*\[[*_]*{_SRC}\s*:[^\]\n]*\]\([^)\n]*\)"
+                         r"(?:\s*[,;]\s*(?:and\s+|y\s+)?\[[^\]\n]*\]\([^)\n]*\))*\.?", re.I)
+URL_LINE = re.compile(r"^\s*[-*•]?\s*(?:<?https?://\S+>?|\[[^\]]*\]\([^)]*\))[.,;]?\s*$")
+
+
+def _trailers(lines, n):
+    """Drop word-count lines, rules and production-note paragraphs (counted as stage)."""
+    paras, cur = [], []
+    for l in lines:
+        if l.strip():
+            cur.append(l)
+        else:
+            if cur:
+                paras.append(cur)
+            cur = []
+            paras.append([l])
+    if cur:
+        paras.append(cur)
+    # a sources block at the end: it and everything after it that is only lists, links or blank
+    for k, p in enumerate(paras):
+        if p[0].strip() and SOURCE_HEAD.match(p[0]) and all(
+                not q[0].strip() or LIST_ITEM.match(q[0]) or SOURCE_HEAD.match(q[0]) or URL_LINE.match(q[0])
+                or RULE.match(q[0]) for q in paras[k + 1:]):
+            n["stage"] += sum(1 for q in paras[k:] if q[0].strip())
+            paras = paras[:k]
+            break
+    out, notes = [], False
+    for i, p in enumerate(paras):
+        first = p[0].strip()
+        core = first.strip(_WRAP)
+        if first and PROD_NOTE.match(core.lstrip("*_ ")):
+            n["stage"] += 1
+            notes = True
+            continue
+        if first and BARE_NOTE.match(core) and first[0] in "*_":
+            n["stage"] += 1
+            continue
+        if notes and first and LIST_ITEM.match(p[0]):
+            n["stage"] += 1
+            continue
+        if first:
+            notes = False
+        for l in p:
+            c = re.sub(r"[*_]", "", LIST_ITEM.sub("", l)).strip().strip(_WRAP).rstrip(".")
+            if c and (WORD_COUNT.match(c) or WORD_COUNT_LEAD.match(l.strip()) or META_LINE.match(c) or NOTE_LINE.match(l.strip())
+                      or DESCRIPTOR.match(l.strip())):
+                n["stage"] += 1
+            elif RULE.match(l):
+                continue
+            else:
+                out.append(l)
+    return out
+
+
+SPEECH_HEAD = re.compile(r"\b(?:audio|narrat|narrac|narrador|v\.?o\b|voice|voz\b|locuci|locutor|script|gui[oó]n|dialog|texto|speech|host)", re.I)
+VISUAL_HEAD = re.compile(r"visual|video|\bshot|image|imagen|plano|scene|escena|b-roll|on screen|en pantalla", re.I)
+TABLE_GUESSED = []  # set when a table header names no column: the meter reports it once on stderr
+
+
+def _table_lines(rows):
+    """The words said in a markdown table. A header that names a speech column (AUDIO, NARRATION,
+    VOICEOVER, LOCUCIÓN, TEXTO...) gives that column; one that only names a visual column
+    (VISUAL, SHOT, IMAGEN, PLANO...) gives the first other column; a header that names neither
+    gives the last column (the picture is conventionally first) and TABLE_GUESSED is set."""
+    cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows]
+    head = len(cells) > 1 and all(re.fullmatch(r":?-{2,}:?", c) for c in cells[1] if c)
+    col = -1
+    if head:
+        vis = [bool(VISUAL_HEAD.search(c)) for c in cells[0]]
+        speech = [i for i, c in enumerate(cells[0]) if SPEECH_HEAD.search(c) and not vis[i]]
+        other = [i for i, v in enumerate(vis) if not v]
+        if speech:
+            col = speech[0]
+        elif any(vis) and other:
+            col = other[0]
+        else:
+            TABLE_GUESSED.append(1)
+        cells = cells[2:]
+    return [r[col] for r in cells if r and (col == -1 or col < len(r)) and r[col]]
+
+
+def _spoken(text):
+    """spoken() and the count of each kind of markup removed."""
+    n = {"stage": 0, "speaker": 0, "timestamp": 0, "heading": 0}
+    lines, table = [], []
+    for l in text.split("\n") + [None]:
+        if l is not None and l.lstrip().startswith("|"):
+            table.append(l)
+            continue
+        if table:
+            lines += _table_lines(table)
+            table = []
+        if l is not None:
+            lines.append(l)
+    lines = _trailers(lines, n)
+    out = []
+    for l in lines:
+        old = l
+        if SCENE.match(l):
+            n["heading"] += 1
+            continue
+        m = TIMESTAMP.match(l)
+        if m:
+            n["timestamp"] += 1
+            l = l[m.end():]
+        if STAGE_LINE.match(l):
+            n["stage"] += 1
+            continue
+        m = STAGE_WORD.match(l)
+        if m:
+            n["stage"] += 1
+            l = l[m.end():]
+        l, k = STAGE_INLINE.subn("", l)  # before the label: "[B-ROLL] HOST: hi"
+        n["stage"] += k
+        l, k = SOURCE_LINK.subn("", l)
+        n["stage"] += k
+        while PAREN_DIRECTION.match(l):
+            n["stage"] += 1
+            l = l[PAREN_DIRECTION.match(l).end():]
+        m = SPEAKER.match(l)
+        if m:
+            n["speaker"] += 1
+            l = l[m.end():]
+            while PAREN_DIRECTION.match(l):  # "HOST: (B-roll: a river) hi"
+                n["stage"] += 1
+                l = l[PAREN_DIRECTION.match(l).end():]
+        l = MUSIC.sub("", l)
+        if l != old:
+            l = re.sub(r"[ \t]{2,}", " ", l).strip()
+            if not l:
+                continue
+        out.append(l)
+    # Where lines were removed their blank neighbours pile up. prose() takes a line after four
+    # or more whitespace characters for indented code and drops it, so every run of blank lines
+    # becomes one and no line keeps its leading whitespace.
+    kept = []
+    for l in out:
+        l = l.lstrip()
+        if l or (kept and kept[-1]):
+            kept.append(l)
+    return "\n".join(kept), n
+
+
+def spoken(text):
+    """Only what is said aloud: stage directions, speaker labels, scene headings and
+    timestamps are removed. A parenthesis inside a sentence is speech and stays."""
+    return _spoken(text)[0]
+
+
+def markup_counts(text):
+    """Each kind of markup per 1,000 spoken words, to see how script-like a text is."""
+    clean, n = _spoken(text)
+    words = len(PROFILES[LANG]["word"].findall(prose(clean)))
+    return {k: round(v / words * 1000, 2) if words else 0.0 for k, v in n.items()}
+
+
 def measure(text):
+    if SPOKEN:  # every rate, headings included, is of the spoken words
+        text = spoken(text)
     t = prose(text)
     P = PROFILES[LANG]
     words = P["word"].findall(t)
@@ -361,13 +583,16 @@ def bands_from(rows, ai_rows=None):
     return bands
 
 
-def measure_dir(directory):
-    """Measured texts of a folder, or of several folders joined with commas."""
+def measure_dir(directory, spoken_only=False):
+    """Measured texts of a folder, or of several folders joined with commas. With
+    spoken_only each text is cut to its spoken words first."""
     rows = []
     for d in directory.split(","):
         for name in sorted(os.listdir(d)):
             if name.endswith((".md", ".txt")):
-                m = measure(open(os.path.join(d, name), encoding="utf-8").read())
+                with open(os.path.join(d, name), encoding="utf-8") as f:
+                    text = f.read()
+                m = measure(spoken(text) if spoken_only else text)
                 if m:
                     rows.append(m)
     return rows
@@ -383,23 +608,28 @@ def apply_skip(bands):
     return bands
 
 
-def calibrate(directory, ai_dir=None, out=None, lexicon=None, lang=None, plain=None):
-    rows = measure_dir(directory)
-    if len(rows) < 8:
-        sys.exit(f"need at least 8 usable texts, got {len(rows)}")
-    ai_rows = measure_dir(ai_dir) if ai_dir else None
-    bands = {"_corpus": os.path.basename(os.path.abspath(directory)),
-             **bands_from(rows, ai_rows)}
+def calibrate(directory, ai_dir=None, out=None, lexicon=None, lang=None, plain=None,
+              spoken_only=False):
     out = out or BANDS_FILE
     try:  # keep the register's own lexicon and thresholds across a recalibration
-        old = json.load(open(out))
-        bands.update({k: old[k] for k in ("_lexicon", "_thresholds", "_lang", "_plain", "_skip")
-                      if k in old})
+        with open(out) as f:
+            old = json.load(f)
     except (OSError, ValueError):
-        pass
+        old = {}
+    spoken_only = spoken_only or bool(old.get("_spoken"))  # a spoken register stays spoken
+    rows = measure_dir(directory, spoken_only)
+    if len(rows) < 8:
+        sys.exit(f"need at least 8 usable texts, got {len(rows)}")
+    ai_rows = measure_dir(ai_dir, spoken_only) if ai_dir else None
+    bands = {"_corpus": os.path.basename(os.path.abspath(directory)),
+             **bands_from(rows, ai_rows)}
+    bands.update({k: old[k] for k in ("_lexicon", "_thresholds", "_lang", "_plain", "_skip", "_register")
+                  if k in old})
     for key, val in (("_lexicon", lexicon), ("_lang", lang), ("_plain", plain)):
         if val:
             bands[key] = val
+    if spoken_only:
+        bands["_spoken"] = True
     apply_skip(bands)
     json.dump(bands, open(out, "w"), indent=1)
     print(f"calibrated on {len(rows)} texts" +
@@ -458,7 +688,10 @@ def habit(key, got, band, sample):
 
 def report(path, as_json=False, sample=None):
     sample = sample or {}
+    del TABLE_GUESSED[:]
     m = measure(open(path, encoding="utf-8").read())
+    if TABLE_GUESSED:
+        print("table columns not recognized: measuring the last column", file=sys.stderr)
     if not m:
         print(f"{os.path.basename(path)}: too short to measure (need ~120 words, 8 sentences)")
         return
@@ -472,6 +705,8 @@ def report(path, as_json=False, sample=None):
     print(f"\n{os.path.basename(path)}  {m['_words']} words, "
           f"{m['_sentences']} sentences, {m['_paragraphs']} paragraphs\n")
     raw = open(path, encoding="utf-8").read()
+    if SPOKEN:
+        raw = spoken(raw)  # the language of what is said, as audit.py reads it
     warn = lang_warning(raw)
     if warn:
         print(warn + "\n")
@@ -522,7 +757,7 @@ if __name__ == "__main__":
         if opt("--plain"):
             HUMAN_LEAN = _load(opt("--plain"))
         calibrate(args[1], ai_dir=opt("--ai"), out=opt("--out"), lexicon=opt("--lexicon"),
-                  lang=opt("--lang"), plain=opt("--plain"))
+                  lang=opt("--lang"), plain=opt("--plain"), spoken_only="--spoken" in args)
     else:
         sample_paths = []
         while "--sample" in args:

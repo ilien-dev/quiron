@@ -1,0 +1,818 @@
+# Blind judges on English video narrations: JUDGE=claude-sonnet-5-5, k=2, prompt JPROMPT_SCR
+# JUDGE=claude-sonnet-5-5 python3 eval/script_reasons.py en -k 2
+# The judge reads the narration only (harness.narration). Human captions are not redistributed:
+# on the human side every quoted span is cut to its first four words, and so is every run of more
+# than four words that stands verbatim in the judged caption.
+
+group                        texts  mean P(AI)  over 50
+human train captions            48         6.1        0
+assistant train scripts         48        83.3       48
+  train-gpt61                   12        86.1       12
+  train-haiku55                 12        84.0       12
+  train-opus55                  12        78.0       12
+  train-sonnet55                12        85.0       12
+
+human texts judged: 3blue1brown-M64HUIJFTZM.md, cgpgrey-BUY6HGqYweQ.md, everyframeapainting-2THVvshvq0Q.md, exurb1a-7MJ2MyDQM_8.md, johnnyharris-HBlZlmXyR5M.md, kurzgesagt-B3QTAgHlwEg.md, lemmino-G2CuMoe3TWU.md, nerdwriter1-55kqNg88JqI.md, oversimplified-ATlila3e9dM.md, pbsspacetime-1Ou1MckZHTA.md, realengineering-2HcqS508lIo.md, teded-3_PYnWVoUzM.md, tomscott--CV-lkyXepA.md, veritasium-72DCj3BztG4.md, vox-4u-7BNRgESI.md, vsauce-ACUuFg9Y9dY.md, wendoverproductions-7C1fPocIFgU.md, 3blue1brown-QJYmyhnaaek.md, cgpgrey-Erp8IAUouus.md, everyframeapainting-5UE3jz_O_EM.md, exurb1a-A4pR--qJTdU.md, johnnyharris-OwqVtZn5df8.md, kurzgesagt-JQVmkDUkZT4.md, lemmino-Ja8JFEypESU.md, nerdwriter1-7oY5WNAgb90.md, oversimplified-Dd1JUTA7Ijc.md, pbsspacetime-1Tstyqz2g7o.md, realengineering-5QZ3eozyQfU.md, teded-8bYRy_wZEJI.md, tomscott-2qT8ZYewYEY.md, veritasium-F69uqDIhr60.md, vox-AFw8MSF7yE4.md, vsauce-Iw8idyw_N6Q.md, wendoverproductions-7cjIWMUgPtY.md, 3blue1brown-ToIXSwZ1pJU.md, cgpgrey-Ex74x_gqTU0.md, everyframeapainting-8q4X2vDRfRk.md, exurb1a-CNQC1DoaWz8.md, johnnyharris-VzAErq53yZk.md, kurzgesagt-KsF_hdjWJjo.md, lemmino-Lbv3eJgmFAg.md, nerdwriter1-DgZPQMyzKiE.md, oversimplified-Mun1dKkc_As.md, pbsspacetime-5l1KxgHH2Ek.md, realengineering-7OpM_zKGE4o.md, teded-BY9VGS2eXas.md, tomscott-GLqJvWlEolk.md, veritasium-K4vyRvMASPU.md
+
+## Reasons on the assistant scripts: 288, grouped (a reason can be in several groups)
+  217  even polish, uniform, tidy    /polish|uniform|\beven\b|evenly|smooth|clean|balanced|tidy|neat|consistent|measured|organi[sz]ed|error-free|no errors/
+  144  signposting and explainer scaffolding    /signpost|scaffold|template|formula|textbook|listicle|structure|segment|section|numbered|countdown/
+  114  tidy ending: recap, moral, callback, button    /recap|summar|wrap|moral|closing|closer|conclusion|ending|ends? (?:on|with)|callback|bookend|aphoris|lesson|takeaway|button/
+  104  no personal voice, generic, no specifics    /personal|voice|idiosyncra|generic|quirk|no specific|lacks? specific|digression|anecdote|first-hand|lived/
+   80  rhetorical questions answered at once    /rhetorical|question/
+   62  hedged, encyclopedic, even-handed    /hedg|encyclopedic|even-handed|cautious|caveat|disclaimer|neutral|both sides|qualif/
+   62  stock reveals and transitions (here's the twist)    /here's|twist|reveal|setup|set-up|pivot|transition|teaser|cliffhanger/
+   54  engagement closer, call to action    /subscribe|comments?\b|engagement|call to action|call-to-action|\bcta\b|sign-off|signoff|outro|like and|tell us below/
+   45  lists of three, parallelism, repetition    /tricolon|triad|three|parallel|anaphor|repetition|repeated/
+   41  short punchy fragments, staccato rhythm    /fragment|punchy|staccato|short sentences|clipped|one-liner|cadence|rhythm/
+   40  stock phrases and cliches    /stock|clich|canned|boilerplate|trite|familiar phrase/
+   40  hook opening (imagine, cold open)    /\bhook|imagine|opening|opens? with|cold open|\bintro\b/
+   19  engineered jokes and quips    /quip|jok|\bpun\b|\bgag|wry|cute|wink|humou?r/
+   15  contrast frames (not X, but Y)    /\bnot x|antithe|isn't|not just|rather than|negat|reframe/
+   15  leftover markup, citations, notes    /citation|bracket|sources?:|narrator|artifact|end of script|reference:|stage direction/
+    6  in none of these
+
+## Reasons on the human captions: 288, grouped (a reason can be in several groups)
+  103  transcription or caption artifacts    /transcri|caption|typo|capitali[sz]|slip|garbled|misheard|duplicat|stray|amara|subtitle|punctuation/
+   96  personal voice, opinions, anecdotes    /personal|voice|opinion|anecdote|first-person|persona/
+   90  spontaneous speech: asides, self-corrections, filler    /aside|self-correct|interrupt|digress|tangent|spontaneous|false start|filler|disfluen|hesitat|improvis|stumble/
+   77  channel identity: sponsor, Patreon, earlier videos    /sponsor|patreon|skillshare|channel|previous video|earlier video|episode|signature|sign-off|podcast|style/
+   64  humour, swearing, irreverence    /humou?r|jok|\bgag|swear|crude|irreveren|comed|\bwit\b|witty|sarcas|profan/
+   64  uneven or rambling structure    /uneven|run-on|meander|rambl|messy|irregular|loose|unpolished|rough/
+   57  specific names, sources, numbers    /specific|citation|reference|detail|data|statistic/
+   48  cues the judge read as AI    /polish|tidy|formula|could fit ai|hint at|lean ai|ai-like|ai polish/
+    5  in none of these
+
+Longest run of words any human-side reason, as printed, shares with its judged caption: 4 (runs of more than 4 are cut)
+
+## Every reason, assistant scripts
+
+train-gpt61/exurb1a-CNQC1DoaWz8.md  P(AI) 88.0
+  - Polished rhetorical patterns and punchy jokes: "You've gained a very confusing roommate", "won't save you from your morning commute"
+  - Tidy, balanced structure with signposting ("First, we need to separate two very different ideas", "But here's the twist") and a generic engagement closer "Tell us below"
+  - Hedged, encyclopedic precision with no personal voice or idiosyncrasy: "We have no demonstrated method for teleporting a human", "Physics alone doesn't settle that philosophical question"
+  - Polished, formulaic structure with rhetorical setups like "But here's the twist" and "Then comes the question science fiction loves to dodge"
+  - Tidy punchy jokes and fragments ("No middle seat. Just… zap.", "a very confusing roommate", "won't save you from your morning commute") feel generic and engineered
+  - Hedged, even-handed explanatory phrasing and a stock engagement closer ("Would you step into a teleporter? Tell us below.") with no personal voice or idiosyncrasy
+
+train-gpt61/kurzgesagt-rcOFV4y5z8c.md  P(AI) 88.0
+  - Polished explainer structure with rhetorical hooks and series signposting: "Imagine powering an entire city...", "In this first part, we'll follow the energy...", "Let's start small. Really small."
+  - Tidy, evenly paced fragments and repetition: "Which release more neutrons. Which cause more fissions. That's a chain reaction." and the closing summary "split atoms, capture their heat, make steam, spin a turbine."
+  - Encyclopedic, uniformly accurate content with no personal voice or digressions, plus a formulaic cliffhanger: "The basic idea is simple. The engineering required to do it reliably is anything but."
+  - Polished explainer scaffolding: opening hook ('Imagine powering an entire city...'), rhetorical questions, and a closing teaser for 'part two'
+  - Short punchy fragments and tidy tricolon cadence: 'No flames. No burning coal.', 'Let's start small. Really small.', 'Which release more neutrons. Which cause more fissions.'
+  - Uniformly clean, accurate, textbook-style exposition with no personal voice, errors, or digressions, and stock phrases like 'The basic idea is simple. The engineering... is anything but.'
+
+train-gpt61/lemmino-oNuQZPTHALI.md  P(AI) 92.5
+  - Formulaic countdown structure with hedged, balanced qualifiers throughout ("doesn't automatically mean", "That doesn't mean... guarantees", "Its meaning, however, depends heavily on context, culture...")
+  - Polished stock quips and tidy rhythm ("Your heart gets the merchandise. Your brain handles the production.", "stomach feels like it's hosting an insect convention", "sharing your fries")
+  - Generic listicle intro/outro with teaser ("Stick around for number one") and uniformly smooth, safe, textbook-like paragraphs with no personal voice or specific examples
+  - Polished listicle template with hedged, balanced qualifiers throughout ("doesn't automatically mean," "can... but," "depends heavily on context, culture, personal preference")
+  - Formulaic jokes and cadence: "Your heart gets the merchandise. Your brain handles the production." and "stomach feels like it's hosting an insect convention"
+  - Generic structure with teaser intro, "Stick around for number one," and closing comment/subscribe call, plus tidy tripled lists and "It's X. It's Y." patterns
+
+train-gpt61/nerdwriter1-pij5lihbC6k.md  P(AI) 90.0
+  - Polished rhetorical triads and antithesis throughout, e.g. "A good transition gets you from one scene to the next. A great transition tells you why..." and "It needs to make the next moment mean more."
+  - Generic, tidy structure with signposting and a closing editor-advice takeaway ("Ask: 'What should change for the audience here?'"), and hedged abstractions like "We don't need to interpret every cut as a literal representation".
+  - Even, uniform sentence rhythm with stock jokes ("one deeply questionable haircut", "zero evil exes") and no personal anecdotes or idiosyncratic voice.
+  - Highly polished rhetorical patterns: "A good transition gets you from one scene to the next. A great transition tells you why..." and triplet lists ("selectively, impulsively, and usually a few seconds behind everybody else")
+  - Generic, tidy takeaways and a formulaic closing aphorism: "Your next transition doesn't need to look like Edgar Wright's. It needs to make the next moment mean more."
+  - Even-paced, abstract analysis with stock constructions ("That trust matters.", "Think of it like passing a ball", "But there's a trap here") and few specific shot-level details or personal voice
+
+train-gpt61/oversimplified-_uk_6vfqwTA.md  P(AI) 76.0
+  - Polished, evenly paced jokes with repeated rhythm: "Difficult turned out to be different from impossible." and "Unfortunately, guarantees only deter an aggressor who believes you will enforce them."
+  - Highly consistent structure and hedged, encyclopedic accuracy ("roughly thirty thousand", "more than 338,000"), plus a meta aside "Could everyone please stop repeating that?" typical of generated explainer scripts
+  - Formulaic sketch-comedy dialogue tags (SHOPKEEPER, OFFICER, AIDE) with predictable punchlines and a tidy "TO BE CONTINUED" cliffhanger
+  - Polished, evenly witty one-liners throughout ("Difficult turned out to be different from impossible", "Very stubborn potatoes") with a formulaic comedic-beat structure after each factual paragraph
+  - Careful hedged, encyclopedic accuracy and myth-correcting asides ("And no, Polish cavalry did not foolishly charge German tanks with lances") in a balanced, summary-like style
+  - Clean, consistent rhythm with tricolon lists and transitions like "Meanwhile", "Then came", ending with a neat 'TO BE CONTINUED' teaser; no human disfluencies or idiosyncrasies
+
+train-gpt61/pbsspacetime-8ORLN_KwAgs.md  P(AI) 86.5
+  - Highly polished rhetorical scaffolding with repeated triplets and tidy contrasts: "a recorded fact from an inferred history, a local pattern from a joint correlation, and an experimental prediction from an interpretation"
+  - Frequent staccato rhetorical questions and punchy fragments ("One detection, one dot.", "Your eyeballs are optional.", "Before ordering a time machine") with uniform, even-handed hedging typical of LLM prose
+  - Bookends the opening photograph metaphor in the conclusion and includes careful self-corrections like "But be careful with the analogy" and "Notice what I didn't say", consistent with generated, flawlessly structured explanatory scripts
+  - Polished rhetorical scaffolding with short punchy fragments and rhetorical question chains: "Did it wait for instructions from the future? Does the later detector send a message backward..."
+  - Hedged, balanced, textbook-precise phrasing throughout ("The quantum eraser alone does not settle those debates", "Your eyeballs are optional") and tidy callback to the opening photograph with a neat closing line
+  - Very consistent structure with signposting like "Notice what I didn't say" and "This is the detail that dramatic accounts often rush past," lacking spontaneous digressions or personal voice
+
+train-gpt61/realengineering-YzRlga2-Hho.md  P(AI) 89.0
+  - Formulaic hedging and 'perspective' phrasing: "Calling it a 'fatal flaw' captures the danger, but it needs perspective" and "There is an important distinction here"
+  - Clean rhetorical patterns and short punchy contrasts: "The concept was simple. The engineering depended on precision." and "Picture the difference. One pilot simply pushes forward. The other rolls over, then pulls."
+  - Generic polished closing and stray source captions ("RAF Museum", "University of Manchester") pasted mid-text, typical of generated scripts: "remember the vulnerability beneath that magnificent sound"
+  - Stock AI rhetorical patterns and hedging: "Calling it a 'fatal flaw' captures the danger, but it needs perspective"; "There is an important distinction here"; "That detail matters."
+  - Formulaic short declaratives and tidy structure: "The concept was simple. The engineering depended on precision."; "Picture the difference. One pilot simply pushes forward. The other rolls over, then pulls."
+  - Generic polished closing and pasted source-caption artifacts ("RAF Museum", "University of Manchester") amid smooth, balanced prose: "remember the vulnerability beneath that magnificent sound."
+
+train-gpt61/realengineering-n3n0gKLn84k.md  P(AI) 88.0
+  - Heavy hedging and balanced-qualifier phrasing typical of LLM output: "Accounts differ over the precise sequence, but the outcome is clear"; "But there is a danger in turning that reputation into a story of helpless attackers."
+  - Formulaic rhetorical structures and aphoristic closers: "Their story is about how a fortress could survive almost everything thrown at it—and still lose the war"; "The towers survived the battle longer than the power they had been built to defend."
+  - Sourcing references are generic and inserted like citations ("A wartime American ordnance catalogue", "Berliner Unterwelten... describes"), with smooth, even-toned explanatory prose and 'Imagine standing beside...' scene-setting lacking a personal voice or idiosyncrasy.
+  - Heavy hedging and balanced qualifiers typical of LLM prose: "Accounts differ over the precise sequence, but the outcome is clear", "there is a danger in turning that reputation into a story of helpless attackers"
+  - Formulaic rhetorical contrasts and tidy aphoristic closers: "Protecting a gun battery was achievable. Protecting an entire city required far more." and "The towers survived the battle longer than the power they had been built to defend."
+  - Source-citing filler and imagined-scenario scaffolding ("Imagine standing beside an ordinary apartment building...", "A wartime American ordnance catalogue recorded...", "Berliner Unterwelten... describes") with evenly paced, uniformly polished sentences and no personal voice or idiosyncrasy
+
+train-gpt61/teded-I5V2tcg1BvQ.md  P(AI) 89.0
+  - Polished rhetorical hooks and tidy structure: "Welcome home. You live on the Moon." and "Then there's dinner." read like generated scripted explainer prose
+  - Hedged, balanced phrasing throughout ("could help protect", "would be a major engineering challenge", "if suitable locations can be found") with no personal voice or specific anecdotes
+  - Formulaic closing line ("a small, carefully maintained Earth—and keeping it alive, every second, on another world") and a neat 'problem then solution then catch' pattern in every section
+  - Polished rhetorical hooks and staccato fragments typical of LLM scripts: "Welcome home. You live on the Moon. But before you unpack...", "The catch?"
+  - Evenly structured walkthrough of needs (shelter, oxygen, water, food, power, body, dust, loneliness) with hedged qualifiers like "could," "would," "if suitable locations can be found"
+  - Tidy, quotable closing line: "building a small, carefully maintained Earth—and keeping it alive, every second, on another world" and neat transitions like "Then there's dinner."
+
+train-gpt61/veritasium-pe83T9hISoY.md  P(AI) 88.0
+  - Rhetorical Q&A scaffolding and signposting: "How could an entire planet remain hidden...? What evidence...? And what would finally settle the question?"
+  - Tidy, balanced hedging and stock analogies ("pencils onto a table", "red trucks" at a fire station, "chance becomes a powerful impersonator") with polished contrast lines like "It does not mean... It also does not translate into..."
+  - Embedded source captions in the text ("Caltech's original announcement", "The 2024 search, the 2025 search") and an even, formulaic structure ending in a symmetrical conclusion ("Perhaps... Perhaps...")
+  - Rhetorical Q&A scaffolding and signposting ("How could an entire planet remain hidden...? What evidence...? And what would finally settle the question?") plus tidy analogies (pencils on a table, red trucks outside a fire station)
+  - Heavily hedged, balanced phrasing with repeated 'It does not mean... It also does not...' constructions and stock lines like 'chance becomes a powerful impersonator'
+  - Embedded citation-style link labels ('Caltech's original announcement', 'The 2024 search, the 2025 search') left in the text, and an evenly paced, polished structure with a neat summary conclusion
+
+train-gpt61/veritasium-vBX-KulgJ1o.md  P(AI) 69.5
+  - Tidy rhetorical rhythm with many short fragments and rule-of-three lists: "Same coin. Same underlying payoff. Different amount exposed."
+  - Polished, formulaic closing callback and summary questions ("What are the odds? What can I lose? Can I afford that loss?"), plus aphoristic lines like "The spreadsheet reaches the final round. You might not."
+  - Some oddities that lean human: awkward number phrasing like "ten hundred and fifty dollars" and the "Hang on." aside, but the overall structure is very clean and didactic.
+  - Polished rhetorical patterns and tidy signposting: "Same coin. Same underlying payoff. Different amount exposed." and "Keep that in mind." with neat callback ending ("Can we talk about the stakes?")
+  - Even, consistent structure with lists of rhetorical questions and generic transitions like "Here's where this gets strange" and "But there's a catch"; few idiosyncratic or personal touches
+  - Numbers are spelled out in an unnatural way ("ten hundred and fifty dollars", "eleven hundred and two dollars and fifty cents"), typical of text-to-speech-prepared scripts, though the content is accurate and carefully built
+
+train-gpt61/vox-LkWldwFdTPo.md  P(AI) 89.0
+  - Polished rhetorical patterns typical of LLM prose: "But describing this simply as ethnic hatred misses the point", "The practical lesson is stark", "This is a risk pathway, not a prediction"
+  - Balanced, hedged, carefully qualified framing with repeated "That distinction matters" and tidy triads ("stop attacks on civilians, secure humanitarian access, respond quickly...")
+  - Stray source-label fragments inserted mid-text ("UN investigation", "UN background", "Atrocity risk assessment") look like citation tags from a generated script, and the ending is a neat uplifting moral
+  - Polished explainer cadence with balanced hedges and rhetorical framing: "This is a risk pathway, not a prediction that every local conflict will become genocide."
+  - Stock AI-style constructions and tidy triads: "stop attacks on civilians, secure humanitarian access, respond quickly to credible warnings"; "Leaders can stop incitement. Commanders can prevent attacks. Outside governments can demand accountability."
+  - Embedded source labels ("UN investigation", "Atrocity risk assessment", "Associated Press reporting") sit between paragraphs like inserted citations, and the closing line is a neat moralizing summary.
+
+train-haiku55/3blue1brown-M64HUIJFTZM.md  P(AI) 89.0
+  - The proof is hand-wavy and partly wrong. The 'shadowing' and 'confinement' argument is vague, and the claim that an arbitrary start traps the windmill is false, since the real solution works with any start. The narration also says outright that it gives only 'the shape of the argument'.
+  - Formulaic, templated structure: 'Here's the question', 'Let's read the problem carefully, because every word matters here', a numbered 'One. Two. Three.' recap, then 'Here's what I find beautiful'. Short declarative sentences and tidy analogies (corkboard pins, lighthouse, rubber band) fit the pattern.
+  - Generic YouTube sign-off: 'let me know in the comments which step you'd like unpacked', 'Keep spinning those ideas'. It repeats and summarizes in a padded way ('That contrast is the whole lesson', 'I want to emphasize step four').
+  - The argument is hand-wavy and partly wrong: the claim that the supporting-line start 'forbids confinement' is invented. The real IMO solution starts from a generic line and uses a parity or halving-line invariant, so this reads like fluent but shallow generation.
+  - Formulaic structure and stock phrases, such as 'Let me pull the threads together in plain language. One. Two. Three.' and 'Keep spinning those ideas.' It also announces its own honesty with 'I want to be honest with you about its scope.'
+  - Smooth, evenly paced exposition with repeated analogies (corkboard, rubber band, lighthouse) and a tidy recap with a call to action. It lacks the idiosyncratic detail or mistakes a human mathematician would show.
+
+train-haiku55/3blue1brown-XFDM1ip5HdU.md  P(AI) 89.0
+  - Tidy rhetorical scaffolding and formulaic phrasing: "Here's the first thing you should know," "Now here is the part nobody puts in the highlight reels," "That is perhaps the most honest answer to our question."
+  - Smooth, evenly paced survey of famous mathematicians (Fermat, Wiles, Poincaré, Ramanujan, Galois, Cantor, Gödel) with hedged, generic claims like "reportedly" and "Whatever you make of that claim" and no distinctive personal voice or specific detail.
+  - Triplet lists and neat closing summary ("It feels like... It feels like...") followed by a generic call to action asking for comments, typical of generated scripts.
+  - Formulaic rhetorical structure and stock phrases: "Here's the first thing you should know", "Now here is the part nobody puts in the highlight reels", "That detail matters", repeated "It feels like..." triads in the conclusion.
+  - Even, encyclopedic tour of famous figures (Fermat, Wiles, Poincaré, Hardy, Ramanujan, Grothendieck, Galois, Cantor, Gödel) with tidy emotional takeaways after each, and hedged generic claims like "reportedly" and "Whatever you make of that claim".
+  - Polished, templated ending with neat summary, call to action ("Pick up a pencil"), and comment prompt; lacks personal voice, idiosyncratic humor, or specific anecdotes beyond well-known ones.
+
+train-haiku55/everyframeapainting-KjY9kf7TuUU.md  P(AI) 88.0
+  - Formulaic rhetorical structure and aphoristic lines such as "Most films tell you what to feel" and "So why does Ramsay return again and again to small, seemingly insignificant things?" followed by a neat answer
+  - Repeated tidy triads and polished abstractions ("a sound, a glance, or an object", "a cry, a door, a voice", "a smell, a song, a pair of shoes") with generic claims like "These moments are not filler. They are the film's argument."
+  - Generic encyclopedic coverage of each film in order, with stock outro ("Thanks for watching... let us know... in the comments, and subscribe"), and no personal voice or idiosyncratic detail
+  - Rhetorical cadence typical of AI: "Most films tell you what to feel. Lynne Ramsay trusts you to find it yourself" and "They are the film's argument."
+  - Tidy, evenly structured survey of each film with generic summarizing phrases ("Its restraint is part of its moral seriousness", "a story has been discovered rather than delivered") and a templated outro asking for comments and subscribes.
+  - Repetitive thematic motif of small things/fragments and a rhetorical question pivot ("So why does Ramsay return again and again...") with little personal voice or idiosyncratic detail; the small typo "a object" is the only human-like cue.
+
+train-haiku55/exurb1a-N29Qd82Gbdc.md  P(AI) 88.0
+  - Polished rhetorical patterns typical of LLM prose: "Not the big accomplishments. The hours." and "They didn't fail because they tried and fell. They fell short because they never really tried at all."
+  - Generic, tidy structure with signposted sections, a 'gentle permission slip', a three-question exercise, and a neat call to action ('pick one answer and act on it this week')
+  - Smooth, emotionally safe wording with no specific personal anecdotes or named sources beyond vague 'Palliative care nurses have written about this for years'; ends with stock 'Thanks for listening. If this made you think of someone, maybe send them a message today.'
+  - Polished rhetorical patterns typical of LLM prose: "Not the big accomplishments. The hours." and "They didn't fail because they tried and fell. They fell short because they never really tried at all."
+  - Generic, tidy structure with signposted sections and a formulaic close: "consider this a gentle permission slip", three questions, "pick one answer and act on it this week", "Thanks for listening."
+  - Vague appeals to authority and composite quotes ("Palliative care nurses have written about this for years", "Several of them said something close to this") with no specific names or anecdotes.
+
+train-haiku55/kurzgesagt-B3QTAgHlwEg.md  P(AI) 86.5
+  - Formulaic structure and hedged wrap-up: "So, are weaver ants really using their babies as glue guns? Not exactly." followed by a tidy summary and generic sign-off
+  - Generic filler phrasing like "It's a reminder that the ant colony is more than a collection of individuals. It's a system" and "remarkably sophisticated interaction"
+  - Odd inconsistencies and vague claims ("They're green-leaved", "Researchers have observed...", "Workers also regulate who gets used and when") with smooth, even sentence rhythm and no personal voice or specific citations
+  - Formulaic hook and structure: "Not to protect it. Not to feed it. It's using that baby as a tool." followed by a tidy recap like "So, are weaver ants really using their babies as glue guns? Not exactly."
+  - Generic hedged, balanced phrasing and filler: "It's a partnership, even if it doesn't look like one from the outside", "offers a model for how complex work can emerge from simple rules", "It's a reminder that the ant colony is more than a collection of individuals."
+  - Vague, unsourced claims ("Researchers have observed...") and a self-referencing "glue gun comparison" that was never introduced, typical of a generated script that smooths over its own framing.
+
+train-haiku55/kurzgesagt-UuGrBhK2c7U.md  P(AI) 86.5
+  - Polished explainer template: dramatic hook ('a river with no banks, no source, and no mouth'), 'Let's dive in', 'Here's where it gets remarkable', and a closing 'subscribe for more deep dives... let me know in the comments'.
+  - Uniformly even, balanced hedging and tidy structure ('The real story is more nuanced', 'There's still debate about how much...') with short declarative sentences and neat analogies ('the current's own stirring spoon').
+  - Encyclopedic, evenly paced facts with no personal voice, digressions, or idiosyncrasies; ends with a summarizing, poetic moral ('the sea is never still').
+  - Polished explainer template: hook line "no banks, no source, and no mouth", "Let's dive in", "Here's where it gets remarkable", and a closing subscribe/comments call to action.
+  - Even, hedged phrasing and tidy rhetorical questions ("So what keeps this giant river moving?", "The real story is more nuanced") with no personal voice, anecdotes, or verbal quirks.
+  - Uniformly short, balanced sentences and a textbook sequence (origin, speed, drivers, AMOC, Franklin, uncertainty) read like generated summary writing.
+
+train-haiku55/lemmino-rsJH5fxDCA0.md  P(AI) 96.0
+  - The narration opens with a leaked prompt-style header ('Tone: Curious, conversational, with light humor'), a sign of an LLM-generated script.
+  - The structure is formulaic: a Top 10 countdown, a 'three jobs of money' setup, hedged claims ('historians disagree', 'The honest answer is that we're not completely sure'), a full recap and a closing comment/subscribe call to action.
+  - The prose is generic and polished, with stock phrases such as 'Here's where it gets interesting', 'Think about that for a second' and 'It's a good reminder that...', and the thesis ('money works because of trust') is repeated in every segment.
+  - The narration opens with a leaked prompt-style instruction, "Tone: Curious, conversational, with light humor", and the script follows a rigid, templated countdown structure.
+  - It leans on stock AI phrasing and hedged accuracy: "Here's where it gets interesting", "Think about that for a second", "The honest answer is that we're not completely sure", "historians disagree".
+  - It ends with a tidy recap list, a unifying "money works because of trust" thesis, and a generic comment-and-subscribe outro, with uniformly polished, balanced sentences throughout.
+
+train-haiku55/oversimplified-ATlila3e9dM.md  P(AI) 80.0
+  - Tidy, formulaic structure with a recap line: "a failed artist, a failed soldier, a failed putsch, and a jailed author" and the "failed painter... failed soldier..." tripling in the intro
+  - Encyclopedic, evenly paced fact delivery with smooth transitions and no personal voice, tangents, or hesitations; stock phrases like "Keep in mind that" and "Or so it appeared."
+  - Generic YouTuber framing ("Hey everyone, welcome back... let's dig in... Thanks for watching") and the stiff joke "This won't be a laugh-a-minute episode" read as template-like
+  - Tidy, formulaic structure with punchy parallel summaries: "a failed painter became a failed soldier, then a failed revolutionary, and then a jailed author" and "Neither got what they wanted."
+  - Generic YouTuber framing and sign-off ("welcome back," "let's dig in," "Part 1... In Part 2, we'll look at...") with even, encyclopedic pacing and no personal voice or digressions
+  - Smoothed explanatory asides typical of LLM output ("Keep in mind that he was a teenager...", "It was a blueprint, not a secret.") and a chronology slip: mother's death in Dec 1907 placed after the 1907 Vienna move and 1903 father's death, narrated without any hesitation
+
+train-haiku55/oversimplified-Mun1dKkc_As.md  P(AI) 62.0
+  - Polished, formulaic YouTuber structure with a cold-open scene, 'Welcome back', recap, and sign-off ('you deserve a nap, and maybe a cup of tea').
+  - Stock rhetorical flourishes and tidy beats: 'Here's the twist.', 'to put it kindly, optimistic', 'Nobody had won. Everybody had lost.', 'honestly, terrifying in its simplicity'.
+  - Self-corrections and typos ('early 2016, excuse me, 1916', 'Millines') suggest a human script or transcript, which keeps this from being a higher estimate.
+  - Polished, formulaic YouTube-explainer structure with stock phrases: "Picture a man in 1916...", "Here's the twist.", "Remember that number. It's going to keep showing up."
+  - Even, tidy pacing and hedged humor ("to put it kindly, optimistic", "shall we say", "honestly, terrifying in its simplicity") typical of LLM-written scripts, plus a neat closing joke about a nap and tea.
+  - Contains spoken-style errors like "early 2016, excuse me, 1916" and "Millines", which suggest human narration or transcription, partially offsetting the AI signals.
+
+train-haiku55/teded-8bYRy_wZEJI.md  P(AI) 83.5
+  - Formulaic hook and structure: 'Imagine spending your whole life...' followed by 'Stay with me, because her story is about power, memory, and...' and a neat moral summary ('So what does her story tell us?').
+  - Polished triads and balanced antitheses typical of LLM prose: 'not a conquest but an expedition', 'Power can be taken away, and names can be scratched off stone, but memory has a way of pushing back.'
+  - Generic encyclopedic coverage with no personal voice, tangents or idiosyncrasies, ending in a stock call to action: 'subscribe, and tell me in the comments which forgotten ruler you want to hear about next.'
+  - Formulaic structure and rhetorical flourishes like "Stay with me, because her story is about power, memory, and the stubborn habit of the past refusing to stay buried" and the tidy moral "So what does her story tell us?"
+  - Smooth, even encyclopedic summary with triplets ("power, memory, and...", "myrrh trees, incense, gold") and 'not X but Y' constructions ("not a conquest but an expedition"), with no personal voice or idiosyncrasy
+  - Generic YouTube-style closer ("subscribe, and tell me in the comments which forgotten ruler you want to hear about next") and repeated aphoristic lines like "The past, it turns out, is hard to erase entirely"
+
+train-haiku55/veritasium-OxGsU8oIWjY.md  P(AI) 83.5
+  - Formulaic hook and wrap-up: "Stick around, because this hotel has a bigger problem than a full lobby" and "If this made your head spin a little, good. That's the point of infinity."
+  - Very uniform short, declarative sentences with repetitive parallel structure ("The guest in Room 1 moves to Room 2. The guest in Room 2 moves to Room 3.") and tidy rhetorical Q&A ("So, how did an infinite hotel run out of room? Not by running out of rooms.")
+  - Smooth, generic explanatory tone with no personal voice or idiosyncrasy; the mixed framing (Cantor's uncountability presented as the hotel 'running out of room') and loose phrasing like "Any list of rooms... has gaps you can't close" read like polished LLM summarization
+  - Formulaic hook and structure: "Stick around, because this hotel has a bigger problem than a full lobby," followed by a tidy callback ending "So, how did an infinite hotel run out of room?"
+  - Short, uniformly declarative sentences and stock phrasing ("This is where the manager has to get clever," "Fine. But what happens when...") with no personal voice or digressions
+  - Conflates Hilbert's Hotel with Cantor's uncountability argument and repeats a generic outro ("If this made your head spin a little, good... subscribe"), typical of templated generated scripts
+
+train-haiku55/vsauce-nid0tHZxBA0.md  P(AI) 76.0
+  - Generic listicle structure with stock phrases: "Welcome back, gamers!", "Let us know your favorite... in the comments, and don't forget to subscribe"
+  - Vague, filler descriptions and factual looseness: Superman 64 "a timer that's hard to beat", "Let's just say it's one of the most infamous games"; Duke Nukem Forever "about fourteen years" (really ~15) repeated for emphasis
+  - Short, evenly paced declarative sentences ("You play a goat. You headbutt things. You cause chaos.") and a tidy rhetorical hook opening, typical of LLM-generated scripts
+  - Generic listicle template with stock phrases: "Welcome back, gamers!", "Let us know your favorite weird game moment in the comments"
+  - Vague, hedged filler like "Let's just say it's one of the most infamous games ever released" and "a timer that's hard to beat" instead of concrete details
+  - Short, evenly paced declarative sentences ("You play a goat. You headbutt things. You cause chaos.") and repeated "Fourteen years!" read as formulaic
+
+train-opus55/3blue1brown-rHLEWRxRGiM.md  P(AI) 62.0
+  - Smooth, tidy structure with signposting like "In this short chapter, we'll make that jump" and a closing "I'd encourage you to try this yourself" that reads as templated
+  - Generic filler claims such as "Computer graphics, robotics, physics simulations, and 3D modeling software all describe orientation and motion this way" and "Every time a game character turns their head..."
+  - Closely mirrors 3Blue1Brown's style, with rule-of-three lists and clean explanatory phrasing like "It isn't an arbitrary rule. It's the bookkeeping for...", but it lacks the idiosyncratic voice of a human presenter
+  - Tidy, uniformly structured explanation with signposting like "Here's the key idea" and "Let's start with the space itself" and a closing teaser, typical of generated scripts
+  - Generic filler claims such as "Computer graphics, robotics, physics simulations, and 3D modeling software all describe orientation and motion this way" and "a game character turns their head"
+  - Mimics 3Blue1Brown phrasing closely, yet lacks personal voice or idiosyncrasy; a very smooth, evenly paced flow with the "I'd encourage you to try this yourself" closer
+
+train-opus55/cgpgrey-kcc_KAhwpa0.md  P(AI) 76.0
+  - Tidy rhetorical structure with punchy fragments and aphorisms: "The calendar didn't run out. The stone did."
+  - Stock explanatory analogy and signposting: "Think of it like a car's odometer," "And here's the part the doomsday crowd always skipped"
+  - Evenly paced, fact-dense and polished with no personal voice or digressions; the list-of-causes and "So what went wrong? Nothing." hook are typical of generated scripts
+  - Formulaic hook-and-pivot structure: "And then... Saturday happens. So what went wrong? Nothing."
+  - Tidy rhetorical phrasing and neat closers like "The calendar didn't run out. The stone did." and "Think of it like a car's odometer."
+  - Smooth, encyclopedic fact density with even pacing and no personal voice or digressions, though the accurate specific details (Toniná 909 CE, Tortuguero Monument 6) could come from a careful human scriptwriter
+
+train-opus55/everyframeapainting-2THVvshvq0Q.md  P(AI) 85.0
+  - Heavy rhetorical formulas: "Not explosions. Scale.", "The goal isn't clarity. It's sensation.", "When everything is a climax, nothing is."
+  - Tidy signposted structure with enumerated parallel lists ("The low angle makes people bigger. The layered movement makes speed bigger...") and a neat summarizing close
+  - Balanced, hedged both-sides tone ("Maybe that's the wrong question", "Love it or hate it") with generic polished phrasing and little personal voice or idiosyncratic detail
+  - Heavy rhetorical formulas: "Not explosions. Scale.", "The goal isn't clarity. It's sensation.", "When everything is a climax, nothing is."
+  - Tidy signposting and tricolon lists ("Let's start with...", "Next:", "And finally,", "low angles, layered motion, golden light, and relentless cutting") with a polished, even structure and a summarizing 'real lesson' conclusion
+  - Generic, balanced hedging and fluent but impersonal tone ("Maybe that's the wrong question", "Love it or hate it"), with no personal anecdotes or idiosyncratic voice
+
+train-opus55/exurb1a-p7293jJxUhg.md  P(AI) 86.5
+  - Polished rhetorical staging with short punchy fragments and triplets: "It feels real. It feels solid. But what if it isn't?" and "Maybe we'll find a glitch someday. Maybe we never will."
+  - Balanced, formulaic structure: sets out claims, then "But here's the honest part," critics, rebuttals, and a neat philosophical close, with "Let's look at a few, honestly" and "The honest answer is" being typical AI-style hedging.
+  - Generic YouTube scaffolding with a tidy twist sign-off: "hit like, subscribe, and tell me in the comments... Assuming there is one." The content is clean, textbook-level, and lacks personal voice or idiosyncrasy.
+  - Polished rhetorical structure with dramatic fragments and rule-of-three lists: "It feels real. It feels solid. But what if it isn't?" and "Thousands. Millions."
+  - Balanced "honest part" hedging and tidy counterarguments: "But here's the honest part. None of these are proof." followed by critics, defenders, and a neat philosophical resolution.
+  - Formulaic YouTube close with a reflective callback ("Look at your hand again"), a generic comment-bait question, and a quippy sign-off: "Assuming there is one."
+
+train-opus55/johnnyharris-g52A2CPEi4A.md  P(AI) 86.5
+  - Polished explainer structure with rhetorical question sequences and signposting: "Is it geography? Luck? Empire?" ... "The answer is all of the above."
+  - Formulaic tropes and tidy triads/summary recaps: "But here's the thing", "here's a fun twist", "None of these things alone would have done it. Together, they made..."
+  - Balanced, hedged moral caveat and generic outro ("Let us know in the comments"), with evenly smooth, encyclopedic tone and few idiosyncratic details or personal voice
+  - Polished explainer scaffolding: opening rhetorical questions ('Is it geography? Luck? Empire?'), 'The answer is all of the above', and 'But here's the thing' / 'Here's the honest answer' transitions typical of LLM prose
+  - Evenly balanced hedged caveats and tidy tricolons ('water, weather, and a navy'; 'Shipping lines, coaling stations, legal systems...') with a neat summarizing conclusion that recaps each factor
+  - Generic YouTube outro ('Let us know in the comments... like and subscribe') and the 'Okay, but surely that's just convention' / 'Remember Greenwich?' conversational stitching read as generated
+
+train-opus55/lemmino-Lbv3eJgmFAg.md  P(AI) 83.5
+  - Formulaic listicle structure with tidy numbered sections, each opening with a punchy rhetorical header like "Why Is Everyone Yellow?" and "The answer is surprisingly practical."
+  - Smooth, uniformly polished prose with generic filler phrases ("an icon was born", "Not bad for a stage direction", "the family that changed television forever") and a stock outro ("hit that like button, subscribe, and ring the bell").
+  - Facts are blended with confident inaccuracies and hedges typical of generated text, such as "According to show lore" for the Elizabeth Taylor line and the odd tacked-on trivia about Homer's middle name inside the #1 entry.
+  - Formulaic listicle structure with tidy, uniformly polished facts and transitions: "Grab a donut. Let's go." and "So there you have it: ten facts about the family that changed television forever."
+  - Generic, evenly paced sentences with filler hedges like "According to show lore" and "The answer is surprisingly practical," lacking personal voice or idiosyncratic humor
+  - Boilerplate outro ("hit that like button, subscribe, and ring the bell") and a #1 entry that awkwardly tacks on unrelated trivia (Homer's middle name), typical of generated text
+
+train-opus55/nerdwriter1-55kqNg88JqI.md  P(AI) 67.0
+  - Tidy rhetorical scaffolding and stock phrasing: "That's the first trick.", "That's a core Dickinson move.", "Not 'if it's correct.' Not 'if it rhymes.'"
+  - Rhythmic triads and neat parallel summary ("The hymn meter lulls you. The slant rhyme unsettles you. The dash interrupts you.") plus a formulaic closing challenge and "Thanks for watching."
+  - Polished, even-toned explainer structure with no personal voice or digressions; every section ends in a tidy takeaway ("The form makes you relax. The content won't let you.")
+  - Polished explainer structure with rhetorical signposting: "So how did she actually do it?", "Let's take one apart", and a tidy closing "challenge" and recap of each technique serving the goal.
+  - Rhythmic triads and antithesis common in LLM prose: "A period ends a thought. A comma organizes it. A dash interrupts it." and "The form makes you relax. The content won't let you."
+  - Some human-like specifics (chocolate wrappers, fascicle crosses, Higginson quote) and stripped-out quoted poem text suggest a real script, which tempers confidence.
+
+train-opus55/nerdwriter1-e7BkmF8CJpQ.md  P(AI) 85.0
+  - Polished rhetorical patterns like "It doesn't just accompany the story. In many ways, it tells it." and "Great film music doesn't just tell you how to feel. It remembers for you."
+  - Formulaic structure: dramatic hook, tidy thematic sections, summary moral, then generic comment/like-and-subscribe call to action
+  - Smooth, uniformly generic phrasing ("staggering scale," "sonic fingerprint," "second script") with no personal voice, digressions, or idiosyncrasies
+  - Polished, formulaic structure with a hook opener ("You know exactly where you are") and a tidy moral closer: "Great film music doesn't just tell you how to feel. It remembers for you."
+  - Frequent rhetorical triads and neat contrast patterns: "It doesn't just accompany the story. In many ways, it tells it."; "Small hints, a few notes here and there."
+  - Generic YouTube-template ending ("What's your favorite theme... like and subscribe") and an even, encyclopedic tone with little personal voice or idiosyncrasy
+
+train-opus55/pbsspacetime-5l1KxgHH2Ek.md  P(AI) 88.0
+  - Highly polished explainer structure with signposting and a "Myth:" list ("Myth: Time crystals are perpetual motion machines. They aren't."), plus a "First, Second, Third" wrap-up typical of generated scripts
+  - Rhetorical patterns common in AI prose: "Not a perpetual motion machine. Not a time machine. Something more subtle, and in its own way more wonderful." and "Here's the trick." / "Here's the important part."
+  - Uniformly clean, encyclopedic detail with no personal voice, digressions or errors, and a generic engagement outro ("let me know in the comments: what phase of matter do you think we'll discover next?")
+  - Polished, formulaic structure: hook, "This is the story of...", explicit "Myth:" debunking list, "First... Second... Third..." wrap-up, and a tidy moral closing line.
+  - Rhetorical patterns typical of LLM prose: "Not a perpetual motion machine. Not a time machine. Something more subtle, and in its own way more wonderful." and "Here's the trick." / "Here's the important part."
+  - Uniformly clean, encyclopedic exposition with no personal voice, digressions or errors, plus a generic engagement outro ("let me know in the comments: what phase of matter do you think we'll discover next?").
+
+train-opus55/vox-AFw8MSF7yE4.md  P(AI) 65.0
+  - Polished short-form structure with a hook opener ("one meme went viral without a single share button") and a tidy circular closing line tying back to memes.
+  - Stock phrasing like "Here's the twist" and "The funny part is that nobody quite agrees" plus balanced, hedged summaries ("There's no evidence for most of these, but they show how big the joke became").
+  - Generic engagement CTA at the end ("subscribe, and leave a comment to show you were here") and very even, concise sentence rhythm with accurate but encyclopedic facts.
+  - Polished short-form hook structure: "Long before the internet, one meme went viral without a single share button." and tidy closer "remember that the original viral joke was chalk on steel."
+  - Stock transitional phrases like "Here's the twist" and "The funny part is that nobody quite agrees" with evenly paced, encyclopedic facts and no personal voice or idiosyncrasy
+  - Formulaic call to action tied to the theme: "subscribe, and leave a comment to show you were here"
+
+train-opus55/wendoverproductions-7C1fPocIFgU.md  P(AI) 67.0
+  - Polished rhetorical scaffolding and triplets: "Worse than nothing", "Thrown away.", "None of these are laws of physics. They're choices. And choices can be changed."
+  - Heavily balanced, hedged framing ("The case for is straightforward... The case against is also serious") and tidy signposting like "Which leads to the paradox" and "So here's the uncomfortable first point"
+  - Dense, well-sourced statistics and even-handed caveats ("the number is old and hard to verify") with a neat circular closing callback to seventeen deaths, typical of generated explainer scripts
+  - Polished explainer scaffolding and rhetorical devices: "That story is mostly wrong." "So here's the uncomfortable first point" "None of these are laws of physics. They're choices."
+  - Heavily balanced, hedged phrasing ("though the number is old and hard to verify", "Whether these reforms work is still an open question") and tidy tricolon lists with a neat circular ending repeating the opening statistic
+  - Dense, evenly paced facts with no personal voice, tangents, or idiosyncratic errors; smooth transitions like "Which leads to the paradox" and "Then there's..." read as templated
+
+train-opus55/wendoverproductions-8LqqVfPduTs.md  P(AI) 85.0
+  - Highly polished, templated structure: hook, 'Let's look at the biggest tricks in the playbook', numbered list of five tips, balanced 'Not all marketing is evil' conclusion
+  - Rhythmic AI-style phrasing: 'Scarcity doesn't make something better. It makes it feel better.' and 'Same meat. Different story.' with many short punchy fragments
+  - Generic textbook examples (Kahneman, Ariely decoy, 80% lean beef, cookie jar) with no personal anecdotes, plus stock outro 'hit like, subscribe... what's the sneakiest marketing trick'
+  - Tidy listicle structure with a formulaic hook ("You've seen this before...") and rule-of-three fragments like "Same meat. Different story."
+  - Textbook examples (Kahneman, cookie jar study, Ariely decoy, 80% lean beef) summarized smoothly with no personal anecdotes or idiosyncratic voice
+  - Generic YouTube outro and numbered "One: ... Two: ..." takeaways, with polished balanced conclusion ("Not all marketing is evil... the line is thin")
+
+train-sonnet55/cgpgrey-BUY6HGqYweQ.md  P(AI) 76.0
+  - Hook-driven structure with signposting: "Here's a strange fact about the British crown", "Now here's the part that surprises people", "That's the quiet irony in all of it."
+  - Polished rhetorical patterns and fragments typical of LLM scripts: "Not a young heir. A practical one: Protestant, royal blood, and available."
+  - Generic formulaic outro ("If you enjoyed this, subscribe for more stories about the strange rules behind famous institutions... Thanks for watching") and uniformly tidy, fact-dense exposition with no personal voice.
+  - Formulaic hook and structure: "Here's a strange fact about the British crown" followed by tidy setup, "Now here's the part that surprises people," and a neat moral wrap-up ("That's the quiet irony in all of it").
+  - Rhythmic AI-style phrasing and fragments: "Not a young heir. A practical one: Protestant, royal blood, and available." and "Parliament didn't just inherit a monarchy. It picked one."
+  - Generic engagement outro ("subscribe for more stories about the strange rules behind famous institutions... let me know in the comments") and polished, error-free factual sweep with smooth transitions throughout.
+
+train-sonnet55/cgpgrey-Erp8IAUouus.md  P(AI) 88.0
+  - Formulaic rhetorical structure: "Here's the strange part.", "But here's the uncomfortable twist.", "So here's the pattern." with tidy triplets ("narrow, limited, and boring"; "Same function. Different label.")
+  - Balanced, even-handed hedging typical of generated text: "Now, let's be fair. The skepticism isn't irrational, and it isn't a left or right thing." and neat aphoristic closer "a system you refuse to name is a system you can't regulate"
+  - Generic engagement outro and polished, evenly paced exposition with no personal voice or idiosyncrasy: "hit subscribe. And tell me in the comments..."
+  - Formulaic rhetorical devices: "Here's the strange part.", "But here's the uncomfortable twist.", "So here's the pattern." and triplets like "narrow, limited, and boring"
+  - Tidy balanced structure with neat summary lines ("The tech doesn't decide. The rules do.", "a system you refuse to name is a system you can't regulate") and "Let's be fair" both-sides hedging
+  - Generic YouTube outro and comment prompt, with polished, evenly paced short sentences and no personal voice or idiosyncrasy
+
+train-sonnet55/everyframeapainting-5UE3jz_O_EM.md  P(AI) 80.0
+  - Polished rhetorical structure with repeated motif and tidy triads: "Shot. Reverse shot. Two brothers. One conversation. End of script."
+  - Formulaic contrast constructions: "The comedy isn't an escape from the darkness. It's how the darkness gets in." and "Not heroes. Not villains."
+  - Inconsistencies and filler: stray "NARRATOR (V.O.:)" mid-text, dangling "It's a small line, delivered gently" referencing nothing, and a vague, dubious claim about the Academy honoring siblings.
+  - Formulaic rhetorical rhythm and tidy refrain: "Shot. Reverse shot. Two brothers. One conversation. End of script." with a neat motif tying everything together
+  - Stock AI-style constructions: "The comedy isn't an escape from the darkness. It's how the darkness gets in." and "They believe in... They believe in..." triplets
+  - Factual sloppiness and dangling text: stray "NARRATOR (V.O.:)" and "It's a small line, delivered gently" referencing no line, plus dubious claims like Academy never honoring siblings and Ethan 'finishing sentences'
+
+train-sonnet55/johnnyharris-YeAxxMZf1O4.md  P(AI) 96.0
+  - Production notes appended at the end ("Sources to verify before recording", "B-roll suggestions", "Tone: measured and slightly wry. Let Part Seven land...") are typical of an AI-generated script, including a reference to sections that aren't labeled in the text.
+  - Formulaic rhetorical patterns: "It was not a gift. It was a bargain", "Notice what this was", "a good script has to be honest", "Let's pull the threads together", followed by a tidy enumerated 'First... Second... Sixth' recap.
+  - Very even, balanced, hedged tone with neat aphoristic closers ("Neutrality without an army is just a request", "it was working, constantly, to stay out of them") and a generic like/subscribe/comment outro.
+  - Production-note tail: "Sources to verify before recording... B-roll suggestions... Let Part Seven land without dramatic music" is a leftover AI script scaffold, referencing sections that don't exist in the text.
+  - Formulaic rhetorical structure and filler: "Notice what this was. It was not a gift.", "Think about what that meant.", "a good script has to be honest", plus a tidy enumerated recap (First... Sixth) and stock outro.
+  - Polished, balanced, uniformly paced prose with antithesis patterns ("It is not a trait. It is a strategy", "armed, lucky, and useful") and no personal voice or idiosyncrasy.
+
+train-sonnet55/johnnyharris-aBppb2quqkE.md  P(AI) 94.5
+  - Production-notes tail ('Fact-check flags before publishing', 'B-roll ideas', 'Graphics priority', 'Format: Narration with cues for the editor') is typical of an AI assistant's scripted output, and it has leftover artifacts like 'Part 7' and 'Part 3'.
+  - Formulaic structure and rhetorical patterns: 'By the end of this video, you'll understand...', 'Not a "bad Friday," not a...', 'Here's the thing', 'That's the key idea, so let me say it plainly', and a neat recap beginning 'So, let's put it all together.'
+  - Internal inconsistencies and glitches of generated text: stray double periods ('forward one day..'), garbled claims (Kiribati 'open on the same date' for four days, Samoa 'celebrated Fourth of July twice', 'I'm told a lot of people'), and a confused Diomede 'Tomorrow/Yesterday' explanation.
+  - Production-note tail: 'Fact-check flags before publishing', 'B-roll ideas', 'Graphics priority' and the 'Format: Narration with cues' header are typical of an AI assistant's scripted output.
+  - Formulaic rhetorical patterns: 'Not a "bad Friday," not a "Friday that got canceled."', 'By the end of this video, you'll understand...', 'Now here's the thing', 'Let's put it all together' recap.
+  - Stray artifacts and internal inconsistencies, such as 'jump forward one day..' double periods and muddled facts (Kiribati, Alaska, Samoa 1892), in an otherwise polished, evenly paced script.
+
+train-sonnet55/pbsspacetime-blSTTFS8Uco.md  P(AI) 88.0
+  - Highly polished, formulaic structure: hook, "Let's start with what we mean by flat," balanced recap, and a generic outro ("consider subscribing, and let me know in the comments which cosmic mystery...").
+  - Stock rhetorical patterns and analogies: "Not flat like a pancake. Flat in a deeper...", "pencil balanced on its tip", "Two problems. One solution.", "Take a moment with that."
+  - Even-handed hedging and tidy enumeration ("First... Second... Third...", "the fair summary is this") with no personal voice, anecdotes, or idiosyncrasies; a stray slip like "In terms of our earlier graph" when no graph was described suggests unreviewed generated text.
+  - Polished, formulaic structure with signposting: "Today we're going to see why...", "Let's bring it home," and a generic subscribe/comments outro.
+  - Rhythmic, punchy stock phrases and analogies: "Not flat like a pancake. Flat in a deeper, geometric sense," "Take a moment with that," "One solution," "blink of nothing."
+  - Balanced, hedged 'honesty matters here' section with a neat first/second/third list and a tidy summary, and a slip like "In terms of our earlier graph" when no graph was shown.
+
+train-sonnet55/realengineering-RNPIRfxUTQ4.md  P(AI) 80.0
+  - Formulaic hook and rhetorical structure: "Not two. Not five. Three. Is that a coincidence? Not even close."
+  - Tidy listicle-style summary and stock phrases: "sweet spot: Smooth and balanced. Quiet enough for neighbors. Efficient. Affordable." and "Looks matter more than you'd think."
+  - Generic engagement outro and uniformly smooth, explanatory flow with some muddled details (yawing explanation), typical of generated scripts: "hit subscribe, and tell me in the comments what engineering mystery you want solved next."
+  - Formulaic hook and rhetorical structure: "Not two. Not five. Three. Is that a coincidence? Not even close."
+  - Tidy, generic explainer pattern with staccato summary list ("Smooth and balanced. Quiet enough for neighbors. Efficient. Affordable.") and a rule-of-three style wrap-up
+  - Stock phrasing and a templated outro: "sweet spot", "law of diminishing returns", "Looks matter more than you'd think", "hit subscribe... See you in the next one"
+
+train-sonnet55/teded-Qytj-DbXMKQ.md  P(AI) 85.0
+  - Formulaic hook and structure: "It began with a prank, a reckless bet, and a very bad haircut" and tidy moral wrap-up "chaos and creation are never far apart"
+  - Smooth, even pacing with rule-of-three lists and polished transitions ("Any other god would be satisfied. But Loki has never been able to leave well enough alone.")
+  - Generic stock call-to-action ending "like and subscribe for more myths from around the world" and sanitized, textbook retelling with no personal voice
+  - Formulaic hook and structure: "But the most powerful weapon in the nine worlds wasn't born in a moment of glory. It began with a prank, a reckless bet, and a very bad haircut."
+  - Tidy rule-of-three phrasing and a neat moral wrap-up: "In Norse myth, chaos and creation are never far apart," with a generic like-and-subscribe closer
+  - Smooth, evenly paced summary with stock phrases like "always quick on his feet" and "ever the trickster", and no personal voice or idiosyncrasy
+
+train-sonnet55/tomscott--CV-lkyXepA.md  P(AI) 93.0
+  - Tidy rhetorical patterns and aphorisms: "a graph is an argument wearing a lab coat", "Be the score, not the sampler", "It has no login. It has no subscription tier."
+  - Neat, over-explained structure: four unrelated topics, then a summary "Put together: be honest, be invisible..." with a contrived twist reveal about tea consumption
+  - Generic YouTube outro with a comment-bait question ("hit like, subscribe... which of these four ideas has aged best?") and narrator framing like "Let's see how he joins them up"
+  - Tidy rhetorical patterns and aphorisms: "a graph is an argument wearing a lab coat", "Be the score, not the sampler", "Nobody has told you... Nobody has told you..."
+  - Neat summarizing structure with a twist ending and a recap of all four topics: "be honest, be invisible, expect people to behave like people, and don't overcomplicate it"
+  - Generic YouTube outro, "hit like, subscribe... tell us in the comments: which of these four ideas has aged best?", plus a scripted-feeling narrator framing with 'TOM:' interjections that read as invented dialogue
+
+train-sonnet55/tomscott-IFe9wiDfb0E.md  P(AI) 72.0
+  - Polished, formulaic joke structure with rule-of-three lists and punchy one-liners ("Fusion power? Delayed pending an environmental review. Immortality? Tied up in a patent dispute...")
+  - Stock AI-comedy phrasing and tidy twist/moral setup: "Here's the twist. The machines never turned on us. They didn't need to."
+  - Neat closing callback with escalating gag ("It's four hundred pages. There will be a quiz.") and the 'intelligence scales, permission slips scale by committee' aphorism feel generated
+  - Polished comedic structure with tidy rule-of-three jokes and punchy fragments ("Fusion power? Delayed pending an environmental review.")
+  - Formulaic "Here's the twist." pivot and neat closing callback ("There will be a quiz.") typical of generated scripts
+  - Generic satire of bureaucracy with no personal voice or specific detail; evenly paced one-liners
+
+train-sonnet55/tomscott-KK3FQXObWEs.md  P(AI) 88.0
+  - Formulaic explainer structure with stock phrases: "Here's where it gets interesting," "And that's the point," "Maybe that's how every place becomes real. Not by being old, but by being used."
+  - Very short declarative fragments and tidy triplets ("Cobbled streets. Tudor-style pubs. A red telephone box"; "Part experiment, part cautionary tale, part film set") with hedged, generic claims and no personal voice or specific anecdotes
+  - Generic closing call-to-action and rhetorical questions ("would you live in a town like this?") plus smooth, evenly balanced pacing typical of LLM-written scripts
+  - Formulaic explainer structure with staccato fragments and rhetorical setups: "Cobbled streets. Tudor-style pubs. A red telephone box on the corner." and "Then the town found an unexpected purpose."
+  - Generic AI-style phrases and tidy moralizing: "Here's where it gets interesting.", "A 'ghost town' isn't always a failure. Sometimes it's just early.", "Not by being old, but by being used."
+  - Hedged, balanced, vague claims and templated outro ("Part experiment, part cautionary tale, part film set", "subscribe... let me know in the comments") with little specific sourcing or personal voice.
+
+train-sonnet55/vsauce-evQsOFQju08.md  P(AI) 80.0
+  - Polished, formulaic structure with signposting: "So let's get practical. What does science say?" and "Let's pull it together... Here's the honest breakdown."
+  - Stock AI rhetorical patterns: "Not the same tomato. The same experience.", "Not because we've solved it, but because...", and a neat "oddly comforting" uplifting conclusion
+  - Smooth survey-style coverage (Locke, cones, tetrachromats, the dress, Russian blues, Himba, Mary's room) with hedged, balanced "researchers still argue" phrasing and generic outro teasing the next video
+  - Polished explainer structure with signposting like "Let's pull it together" and "Here's the honest breakdown", plus a tidy, balanced wrap-up
+  - Frequent rhetorical staging and tricolons: "Not the same tomato. The same experience.", "Red feels warm, intense, urgent.", "I can't climb inside your head. I can't borrow your eyes"
+  - Generic, formulaic YouTube framing: opens with a "2 a.m. on a dorm room floor" hook, closes with a sentimental "private universe" line and a teaser for the next video, with no personal anecdotes or idiosyncrasies
+
+## Every reason, human captions (quotes cut)
+
+3blue1brown-M64HUIJFTZM.md  P(AI) 4.0
+  - Distinct personal voice and anecdotes: "I was discussing this …", plus the playful prime-number joke "I know what you …"
+  - Spoken-style asides and self-corrections like "the way I introduced …" and "mind you it …", typical of a scripted human explainer (3Blue1Brown style)
+  - Specific, idiosyncratic details and pacing (IMO 2011 statistics, Terence Tao quote, Aesop analogy) with natural, uneven structure rather than formulaic AI patterns
+  - Distinct personal voice and anecdotes, e.g. "I was discussing this …"
+  - Natural spoken-style humor and asides like "I know what you …"
+  - Conversational digressions and self-correction, e.g. "the way I introduced …", plus on-screen references that fit a human-made video
+
+cgpgrey-BUY6HGqYweQ.md  P(AI) 4.0
+  - Typos and slips like "Frist", "the rules when along", "much convert", and inconsistent capitalization/punctuation are typical of human transcription and unpolished writing
+  - Idiosyncratic, witty voice ("Naturally Dead", "Catholicism is transitive", "matching 23 Chromosomes", "a race for the …") and casual asides like "BTW" and "(whatever)"
+  - Run-on, meandering sentence structure with dashes and colons used loosely, unlike the tidy, uniform prose of AI-generated scripts
+  - Typos and slips like "Frist", "rules when along", "much convert", and inconsistent capitalization of "Monarch" and "Third spouses don't …" are typical of a human script and unlike AI output
+  - Distinctive, idiosyncratic humor and voice ("Catholicism is transitive", "matching 23 Chromosomes", "a race for the …", "BTW") with a CGP Grey–style cadence
+  - Loose, irregular punctuation ("--"dashes, colons mid-sentence,"Male Primogeniture (whatever)") and quirky structure are not polished the way AI text usually is
+
+everyframeapainting-2THVvshvq0Q.md  P(AI) 3.0
+  - Distinctive human voice and wit: "just the past with …", "Also, lamp-posts. Lots …"
+  - Includes film clips, quoted dialogue, and typos typical of subtitle transcripts ("techinique", "charachter", "etxreme", "Wernor"), plus the Amara.org subtitle credit
+  - Personal, opinionated analysis with specific references (Howard Hawks, Glen Keane, NYT interview) and a signature intro ("My name is Tony …")
+  - Distinctive human voice and wit: "Bayhem", "just the past with …", "He is a slave …"
+  - Typos from subtitle transcription ("techinique", "etxreme", "Wernor", "charachter") and embedded film clips/quotes are characteristic of a real video transcript
+  - Idiosyncratic argument structure with personal opinions and references (Howard Hawks, West Side Story NYT interview, Glen Keane) that read as a real critic's essay (Every Frame a Painting)
+
+exurb1a-7MJ2MyDQM_8.md  P(AI) 4.0
+  - Disfluent, speech-like transcription artifacts: "Alright, Chill, Winston", "Okay, okay? I will …", "hang back. take it …" and odd capitalization from auto-captions.
+  - Distinctly British, idiosyncratic humor and tangents: milk argument sketch, "ministry of silly Walks", "Usain Bolt in a …", "Bloody Einstein", swearing, "Dave" as Prime Minister.
+  - Mis-transcriptions like "wire tortoise", "one hole open", "tax cattle", and "Catalan will be there …" indicate real speech-to-text of a human presenter, not generated prose.
+  - Raw speech-transcript artifacts and mistranscriptions: "wire tortoise could be …", "one hole open", "tax cattle thing", "Catalan will be there …" (garbled ASR)
+  - Distinctly British, improvised comedic voice with rambling asides, swearing and running gags (milk dialogue, Dave the PM, "Bloody Einstein", Panama holiday)
+  - Messy, uneven syntax and spoken filler ("Yeah, why not", "er", "hang back. take it …") unlike polished AI prose
+
+johnnyharris-HBlZlmXyR5M.md  P(AI) 3.0
+  - Highly conversational, spontaneous human voice with self-interruptions: "I ripped the page", "No, no, wait, no …"
+  - Transcription artifacts like "(speaks foreign language)", "(men …)", "(indistinct)", and typos such as "Mongo guys", "Chechnyan" and "erotic" for 'erratic' indicate a real spoken transcript
+  - Personal asides, opinionated humor and sponsor read with first-person anecdotes ("I was using Skillshare …") are characteristic of a human creator
+  - Highly conversational, improvised voice with self-interruptions: "No, no, wait, no …"
+  - Transcription artifacts like "(speaks foreign language)", "(indistinct)", and misheard words ("something erotic taking place", "Mongo guys") indicate auto-captioned human speech
+  - Personal asides and sponsor read with authentic personal anecdotes ("I was using Skillshare …", Navalny video worry) and loose, ungrammatical phrasing
+
+kurzgesagt-B3QTAgHlwEg.md  P(AI) 12.0
+  - Distinctive human voice with quirky humor: "tiny, cute glue guns", "sort of the high …", "Fortunately... VIPs"
+  - Transcript artifacts like the stray "'Oecophylla Weaver Ants'" title card and the trailing "quack" sign-off point to a human creator's script
+  - Slightly uneven phrasing and small grammar slips ("weaver ants evolve to …", "the backup... arrive", "Apart from one special …" fragment) unlike polished AI text
+  - Distinctive human voice and humor: "tiny, cute glue guns", "sort of the high …", "pretty good at killing. …"
+  - Slight imperfections typical of human scripts: stray title text ('Oecophylla Weaver Ants'), inconsistent grammar ("weaver ants evolve to …"), and a trailing "quack" sign-off
+  - Consistent creative metaphor (kingdoms, VIPs, cattle) with specific facts and an uneven, conversational rhythm rather than polished AI uniformity
+
+lemmino-G2CuMoe3TWU.md  P(AI) 3.5
+  - Casual human voice with inline reactions like "(Wait what the f?)", "(hehe china)" and "My fingers feel like …"
+  - Messy transcription-style punctuation, random capitalization ("Repeatedly", "Then proceeded") and run-on sentences, unlike polished AI text
+  - Quirky factual errors and tangents ("fish AI system", "Nyo duh! Guns are …") reflect a real YouTuber's personality
+  - Casual, inconsistent human voice with inline reactions like "(Wait what the f?)", "(Nyo duh! Guns are …" and the closing "My fingers feel like …"
+  - Erratic capitalization, missing punctuation, run-on sentences and typos ("their broken", "Repeatedly killed", "Then proceeded to name …") typical of a human transcript of a spoken video
+  - Specific gaming-community jokes and tangents ("WTF 007 GE??", "hehe china", "Dead Rising nope not …") and uneven fact-listing, unlike polished AI prose
+
+nerdwriter1-55kqNg88JqI.md  P(AI) 4.0
+  - Spontaneous self-interruption and mid-script persona: "Hey everybody, thank you …"
+  - Personal, idiosyncratic voice and opinions ("It strikes me as …", "sticks out like a …") plus a real Skillshare sponsor read with anecdote about learning Photoshop
+  - Specific scholarly citations (Ashby Crowder, Gary Lee Stonum) and a transcript artifact of a duplicated sentence, typical of human spoken narration
+  - Spontaneous self-interruption: "Hey everybody, thank you …" is a human performative device with disfluency
+  - Accurate, specific scholarly citations (Ashby Crowder, Gary Lee Stonum) and personal voice ("It strikes me as …", "when I learned Photoshop, …") reflect a real creator
+  - Transcript artifacts like the repeated sentence "And finally, in lines …" and a genuine Skillshare sponsor read with personal anecdote point to a human-narrated video
+
+oversimplified-ATlila3e9dM.md  P(AI) 4.0
+  - Irreverent comedic voice with crude asides like "big balls public official", "old-ass man", "wiping his ass with …" and "(You rockstar.)" is typical of a human YouTuber.
+  - Messy transcript artifacts: "alarm sounds", missing punctuation, run-on sentences, garbled phrases like "defines of Habsburg Austria" and "he returns to the …" indicate human speech auto-transcribed.
+  - Repeated comedic refrain "enraged his father, who …" and spoken-style delivery with factual slips ("Hitler's had two …") are unlike polished AI output.
+  - Irreverent comedic voice with crude asides like "big balls public official", "old-ass man", "wiping his ass with …", and "(You rockstar.)" that AI rarely writes unprompted
+  - Messy speech-to-text artifacts: "alarm sounds" sound cue, random capitalization ("Repeat a grade", "Grief"), run-on sentences, garbled passages like "defines of Habsburg Austria"
+  - Recurring gag "which enraged his father, …" and the sarcastic "you know, the usual" show human comedic timing and structure
+
+pbsspacetime-1Ou1MckZHTA.md  P(AI) 8.0
+  - Distinct host voice with personal asides: "I bet you've …", "the amazing power of …", "An indestructium craft"
+  - Callbacks to prior episodes and imperfect, speech-like errors ("If you're quite …", "The density is here …", "then anything on Earth") that point to a human-written script/transcript
+  - Informal, humorous analogies and uneven structure ("gridlocked traffic", "Welcome to the pasta", "nuclear lasagna") rather than polished AI-style uniformity
+  - Distinct host voice (PBS Space Time style) with personal asides: "I bet you've …", "the amazing power of …", "indestructium craft"
+  - Spoken-word imperfections and typos typical of a human transcript: "If you're quite …", "The density is here …", "then anything on Earth"
+  - Idiosyncratic humor and callbacks to previous episodes ("Welcome to the pasta", "nuclear lasagna", "as we saw in …") rather than generic AI structure
+
+realengineering-2HcqS508lIo.md  P(AI) 12.0
+  - Idiosyncratic human errors and quirks: 'USS John Burke' kamikaze story, 'Durability' randomly capitalized, 'the same force... Lorentz …' with loose physics, typical of a YouTuber's script
+  - Personal channel-specific content: sponsor read in first person ('What I love is...'), Patreon thanks, mention of Sam from Wendover and the Showmakers podcast
+  - Conversational, uneven flow with run-on sentences and semicolon-laden list ('with the guns growing …') rather than polished, uniform AI prose
+  - Distinctive personal channel voice: "One of my goals …" and sponsor/Patreon/podcast plugs referencing Sam from Wendover.
+  - Imperfect, human errors and awkward phrasing: "the Lorentz Force is …", "USS John Burke", "Durability" capitalized mid-sentence, run-on sentences with semicolon lists.
+  - Content has specific factual quirks and casual asides ("We spoke recently of …") typical of a human-scripted YouTube episode, not polished AI prose.
+
+teded-3_PYnWVoUzM.md  P(AI) 30.0
+  - Polished explainer structure typical of TED-Ed style scripts: rhetorical questions ('So what causes a …', 'And how do you …') and a tidy closing line ('keeps on beating')
+  - Specific, accurate medical detail and human quirks such as 'chunky, hardened, or enflamed' and 'lots of laughter' suggest a human script writer
+  - Generic, list-like advice and smooth transitions ('And of course', 'And the good news …') could fit AI, but the pacing and idiom feel like human educational narration
+  - Polished explainer structure with rhetorical questions ('So what causes a …', 'And how do you …') matches TED-Ed style scripts written by humans
+  - Specific details and idiosyncrasies ('chunky, hardened, or enflamed', 'crushing or vice-like', 'movies' aside) feel human-written rather than generic
+  - Somewhat tidy closing line and list-like advice ('lots of laughter... keeps …') hint at possible AI polish
+
+tomscott--CV-lkyXepA.md  P(AI) 2.0
+  - Transcript of a live comedy talk with audience interaction, e.g. "(INAUDIBLE FROM AUDIENCE)" and "Yes - b'doom, tssh. …"
+  - Highly specific personal jokes and references (Henry Kelly, Going for Gold, Eurovision, Hans Rosling, friend Richard and the tea cosy) with spontaneous asides like "(Sorry, what's that?)"
+  - Messy, speech-like structure with false starts and stage business ("if I can grab …"), which is typical of unscripted spoken delivery rather than generated text
+  - Clearly a live human stage talk with audience interaction: "(INAUDIBLE FROM AUDIENCE)", "Sorry, what's that?", music cues and a joke setup relying on timing
+  - Idiosyncratic British humor, self-corrections and specific personal references (Henry Kelly, Katrina and the Waves, Matt, Richard) that are not typical of generated text
+  - Transcript artifacts like stumbles ("This, er --"), sound cues, and uneven punctuation consistent with auto-captioning of spoken performance
+
+veritasium-72DCj3BztG4.md  P(AI) 3.5
+  - Spontaneous, conversational speech with false starts and hesitations like "It, uhh, it doesn …" and "I'll wait. Just …"
+  - Specific, personal details: re-shooting after "15,000 comments," Simon Pampena, George Hart's video, and live demos with honey and ping pong ….
+  - Natural spoken-word structure with self-corrections and in-the-moment reactions ("Woah! The bike did …"), not polished AI prose.
+  - Natural spoken-style hedges and self-corrections: "It, uhh, it doesn …"
+  - References to specific real people and events (Simon Pampena, George Hart's video, 15,000 comments, re-shooting with viewer responses) and live on-camera demonstration ("I'm going to …")
+  - Conversational, uneven structure with run-on sentences and tangents, typical of a human presenter's unscripted physics explainer rather than polished AI prose
+
+vox-4u-7BNRgESI.md  P(AI) 12.0
+  - Mixed-in interview soundbites ('When something's quiet …') have a spontaneous spoken quality and a rambling structure that AI would not produce
+  - Transcription-style flaws: 'You can still hear …' capitalized mid-sentence, 'quiet environment seem to', 'harmful to the human'
+  - Sponsored-documentary tone with quirky asides ('Even if it can …', 'Among mice, at least') is typical of human-written branded video scripts
+  - Mixed interview soundbites with narrator voice-over ("When you're doing …"), typical of a human-produced documentary segment with sponsor 3M.
+  - Natural imperfections: stray capital "You can still hear …" "quiet environment seem," "harmful to the human," and transcribed audio cues like "it sounds like this:" suggest a real transcript.
+  - Casual, specific humor and details ("Even if it can …" "Among mice, at least," built in '64, St. Paul) rather than generic AI-style phrasing.
+
+vsauce-ACUuFg9Y9dY.md  P(AI) 4.0
+  - Distinctive Vsauce voice with spontaneous asides and jokes ("Earth has two Suns... …"), typical of Michael Stevens' human scripting
+  - Transcription-style errors and slips such as "accelarating", "a overflowing sink", "light would come out …", "with always conspire" that an AI writer wouldn't produce
+  - References to his own earlier video ("As I mentioned in …"), the sign-off "thanks for watching", and specific quirky sources (Baggini, Gribbin) fit a human-authored original
+  - Spoken, conversational Vsauce style with Michael's signature phrasing: "Hey, Vsauce. Michael here." and the closing "thanks for watching."
+  - Human transcription errors and disfluencies: "accelarating", "a overflowing sink", "light would come out …", "with always conspire", "what I just say"
+  - Idiosyncratic humor and cultural references, such as the Earth with two Suns joke and the Baggini/Gribbin citations, plus "thank you irrational numbers, …"
+
+wendoverproductions-7C1fPocIFgU.md  P(AI) 4.0
+  - Typical Wendover Productions script with a real Skillshare sponsor read and a specific promo link (skl.sh/wendover0820).
+  - Imperfect human touches such as typos ('to to', 'Kidney's', 'brain function have ceased') and conversational asides ('Now,' 'Interestingly,').
+  - Concrete, idiosyncratic details (Steve Jobs in Memphis, Iran's $4,500 fee, region 3 vs region 9 stats) and an argumentative flow that fit a human researcher.
+  - Typical Wendover Productions style: specific data (region 3 vs 9, EPTS scores, Steve Jobs in Memphis) and a real Skillshare sponsor read with the custom link 'skl.sh/wendover0820'
+  - Human-like imperfections: typos and grammar slips such as 'to to increase supply', 'Kidney's', 'brain function have ceased', 'less of it than …'
+  - Conversational, essayistic pacing with hedges like 'Now,' 'Interestingly,' 'at least in theory' and an extended pineapple analogy, rather than the uniform polish of AI text
+
+3blue1brown-QJYmyhnaaek.md  P(AI) 4.0
+  - This is the 3Blue1Brown video on Pythagorean triples, and the narration is a human-written script. It has natural spoken asides like "which I encourage you …" and "isn't exactly something …", plus a reference to the creator's own earlier videos.
+  - It includes transcription artifacts that AI-generated text would not have, such as a duplicated sentence with a stray timestamp ("00:14:00,420 …") and a slip where the second square is again described as having side a plus b.
+  - The pacing and rhetorical questions ("right?", "do they?") fit a spoken explanation in a personal voice, and the content is original and idiosyncratic, including the "favorite proof" and the lattice-point visualization.
+  - This is 3Blue1Brown's 'Pythagorean triples and complex …' narration, with personal asides like 'my favorite proof' and 'which I encourage you …'
+  - Natural spoken-word flow and transcript artifacts, such as the duplicated sentence with the timestamp '00:14:00,420 …' and the slip 'a over c squared …'
+  - References to the creator's other videos ('the zeta function video', 'pi hiding in prime …') and some small errors, such as repeating 'a plus b' for both squares, which point to a human script
+
+cgpgrey-Erp8IAUouus.md  P(AI) 4.0
+  - Distinctive human comedic voice: dramatized dialogue ('"Yoink!"'), 'Oh hello, asterisk, my …', and the recurring 'long, long ago' callback
+  - Idiosyncratic phrasing and wry asides like 'Which seems fair' and 'kills dead your …', plus 'nay, begging', which a model would rarely produce
+  - Spoken-style ellipsis fragmentation, self-correcting asides, and a tightly crafted closing recap match a human-scripted explainer
+  - Distinctive human comedic voice: dramatized dialogue ('Yoink!'), 'Oh hello, asterisk, my …', 'nay, begging people to …'
+  - Recurring idiosyncratic refrain 'in the long, long …' and the ellipsis-chained transcript breaks typical of a CGP Grey–style spoken script
+  - Specific quirky details (Chicago teachers, Amish religion exemption, phantom children) with a callback ending ('universal, except when it …') that feel authored rather than generated
+
+everyframeapainting-5UE3jz_O_EM.md  P(AI) 3.0
+  - Transcript artifacts like the duplicated line "Nearly everything you watch …" and embedded film clip dialogue, with "Subtitles by the Amara …", indicate a human-made video with captions.
+  - Conversational, idiosyncratic phrasing ("Hi my name is …", "It just feels 'off.'") and specific, expert film analysis reflect a human creator's voice.
+  - Unpolished, uneven structure with interleaved interview quotes and film dialogue is unlike typical AI-generated narration.
+  - Opens with a personal intro, "Hi my name is …", which is a human creator's signature channel opening
+  - Transcript artifacts such as the repeated "Nearly everything you watch …", interleaved film-clip dialogue, and "Subtitles by the Amara …" show it was captured from a real video
+  - Conversational, opinionated voice with idiosyncratic phrasing like "kind of uncomfortable… and …" and "It just feels 'off.'", rather than polished generic AI prose
+
+exurb1a-A4pR--qJTdU.md  P(AI) 8.0
+  - Irregular numbering (skips 9, 19, 48) and typos like "clothes that fits", "nob-ends" read as human sloppiness
+  - Idiosyncratic, personal humor: "~fukh~", "Not even Stephen Fry", "Factorio™", jokes about meta-narrators and Twin Peaks
+  - Inconsistent punctuation and spacing, plus the recursive "floss" joke ending, look like a human-written, edited-over-time list rather than polished LLM output
+  - Irregular numbering (skips 9, 19, 48) and typos like "clothes that fits", "nob-ends", "respects" are typical of human-written, copied text
+  - Idiosyncratic in-jokes and tangents: "~fukh~", "Factorio™", "Do not dig down", "Ignore all of the …", Twin Peaks, Stephen Fry
+  - Distinct personal voice with crude humor and meta-commentary ("gravity is also a …", "disembodied smart-ass narrators") rather than polished, uniform AI prose
+
+johnnyharris-OwqVtZn5df8.md  P(AI) 3.0
+  - Highly spontaneous spoken style with fillers and self-interruptions: "I don't even …", "Hold on a second, …"
+  - Specific personal anecdotes and humor (the owl animation, $2,000 cash on the hotel bed in Miami, Vox boss Joe) plus transcript artifacts like "(car speeding)" and "(inaudible)"
+  - Unscripted sponsor read and sound-effect cues, with errors like "pear out" and "borders to edit" typical of auto-transcribed human speech
+  - Transcript artifacts of a real spoken video: '(car speeding)', '(owl hooting)', '(inaudible)', 'Hey, there Iz. We …' and auto-caption errors like 'pear out'
+  - Highly personal, specific anecdotes (State Department email, owl animation, Cuba trip with $2,000 cash, Vox boss Joe) with natural digressions and self-deprecating humor
+  - Disfluent conversational rhythm ('like', 'I mean', 'Okay. Cool.'), mid-thought restarts and an unscripted sign-off about 'editing borders'
+
+kurzgesagt-JQVmkDUkZT4.md  P(AI) 4.0
+  - Typos and non-native slips like "enviroment", "make of up to", "contantly", "Everytime you cells set …" are unlikely in AI output
+  - Personal channel-specific outro: "Click here to go …" and trailing "while still in the …" cutoff
+  - Conversational, uneven rhythm with rhetorical questions and inconsistent punctuation (missing period before "An average cell"), typical of a human scriptwriter
+  - Typos and non-native errors like "enviroment", "make of up", "contantly", "Everytime you cells set …" are typical of a human writer, not an AI
+  - Casual, personal voice with a channel plug: "Click here to go …"
+  - Uneven punctuation and run-on structure (missing period before "An average cell has …", "an other entity") suggest unedited human drafting
+
+lemmino-Ja8JFEypESU.md  P(AI) 6.0
+  - Casual, personal voice with jokes: "You thought I would …" and "Uh, giant fucking robots."
+  - Human errors and typos: "intellegence", "featues", "people use the word" tense slip, "a lot of stuff …", "anime and manga originates"
+  - Meandering structure with odd digressions and loose facts (toilet paper claim, Sazae-san episode counts) that read like a human-compiled script, not polished AI prose
+  - Casual, personal voice with jokes: "You thought I would …" and "Uh, giant fucking robots."
+  - Human errors and awkward grammar: "intellegence", "featues", "people use the word", "a lot of stuff …", inconsistent facts and tense
+  - Rambling, loosely organized structure with tangents and abrupt transitions, unlike polished AI summaries
+
+nerdwriter1-7oY5WNAgb90.md  P(AI) 4.0
+  - Transcript artifacts like interview clips with stumbles ("I often feel if …"), mid-sentence fragments and "You know," fillers typical of spoken human narration
+  - Personal voice and opinion: "At least it is …" "it's a reminder …, …"
+  - Genuine Squarespace sponsor read with "squarespace.com/nerdwriter" and casual sign-off, characteristic of a human creator's video
+  - Transcript artifacts like interview clips mixed in and disfluencies ('You know, facing her …', 'Okay. So what's …') show natural spoken delivery by a human narrator
+  - Personal, idiosyncratic voice: 'it's a reminder …, …' and 'At least it is …'
+  - Sponsor read for Squarespace with 'squarespace.com/nerdwriter' is a genuine Nerdwriter episode; typos like 'this column' and 'Christine' reflect raw human transcription
+
+oversimplified-Dd1JUTA7Ijc.md  P(AI) 10.0
+  - Transcription artifacts like "Gun Shots", "only one about 2%", "it's former glory" and "dare to pose Hitler" suggest a human-narrated video transcribed by speech-to-text
+  - Casual, jokey voice: "the French were pissed", "thought he was a …", "angry little puppet. What …" As it turned out …."
+  - Inconsistent tense and sloppy phrasing ("the party needs a …", "very delightful 'Gymnastic and …") are typical of human scriptwriting, not polished AI prose
+  - Transcription artifacts like "Gun Shots" inserted mid-text, "only one about 2%", "it's former glory", and "pose Hitler" are typical of auto-captioned human speech, not AI output
+  - Casual, opinionated humor: "The French were pissed", "thought he was a …", "angry little puppet. What …" As it turned out ….
+  - Uneven, conversational structure with tangents and a sarcastic aside ("when I said prison, …") and minor factual slips, unlike polished AI prose
+
+pbsspacetime-1Tstyqz2g7o.md  P(AI) 3.0
+  - Distinctive human host voice with personal asides and humor: "I'm still mad …" and "this dude is also …"
+  - Spoken-transcript artifacts and quirks like "g-m waves", "obits", "Check out this playlist", and conversational jokes about telling "a boyfriend, their mother, …"
+  - Episode-specific references to viewer comments by username, rumors, and show-specific callbacks that a generated script would not naturally contain
+  - Spoken-word transcript artifacts like 'g-m waves', 'obits' typos and auto-caption hyphenation ('in-spiralling', 'Space Time' episode references) typical of a real PBS Space Time video
+  - Personal humor and asides: 'I'm still mad …', 'Thanks, dude', 'sorry, just a drill' and reading viewer comments by username
+  - Time-specific, conversational references ('advanced LIGO only started …', 'A little birdie told …') and episode callbacks that a generic AI text would not produce
+
+realengineering-5QZ3eozyQfU.md  P(AI) 3.5
+  - Typos and rough errors ('runways we often', 'alined', 'Inspect at any airport', 'It's location', 'runnings') are typical of human transcription of a spoken script
+  - Idiosyncratic personality and humor: 'Heathrow airport is a …', 'Hmmm nope, no, nope, …'
+  - Authentic sponsor read with specific quirks ('first 73 people', Patreon, instagram/twitter/subreddit/discord) and uneven, conversational flow typical of a Real Engineering episode
+  - Typos and rough transcription errors ('runways we often nothing …', 'alined', 'It's location', 'runnings') that polished AI text wouldn't produce
+  - Distinct personal voice and humor: 'Heathrow airport is a …', 'Hmmm nope, no, nope, …'
+  - Typical human sponsor read with specific quirks ('first 73 people'), Patreon/social outro, and inconsistent capitalization like 'AND' for emphasis
+
+teded-8bYRy_wZEJI.md  P(AI) 13.5
+  - Typo "thrown" for "throne" and slightly clumsy hedging ("perhaps someone erased...") suggest human transcription/writing rather than polished AI output
+  - Classic TED-Ed style: rhetorical hook ("Who was this pharaoh, …"), "Here's the key:" and conversational asides like "pretty good"
+  - Natural narrative structure with a skeptical caveat ("most of the evidence …") and an upbeat close ("Happily, the ancient censors …"), typical of human educational scripts
+  - Typo "thrown" for "throne" and loose hedging ("perhaps someone erased...") suggest a human-written transcript, not polished AI output
+  - Classic TED-Ed style: dramatic hook, rhetorical questions ("Who was this pharaoh...?"), "Here's the key:", and a "Happily," closing
+  - Natural conversational asides like "pretty good" and "a little boy" and uneven structure, unlike the uniform phrasing typical of AI narration
+
+tomscott-2qT8ZYewYEY.md  P(AI) 4.0
+  - Distinctive personal British voice and humor: "like a doctor prescribes …", "bollocks", "can absolutely go and …"
+  - Natural spoken-word glitches and self-interruption: "cleary--- Irony! Can we …" and typo "To which I way"
+  - Specific opinionated asides and series callbacks ("this week's video", "Next time") that feel like a human creator's script
+  - Distinct personal voice with British slang and humor: "bollocks", "can absolutely go and …", the suppository joke
+  - Natural spoken-word flaws: the self-interrupting "cleary--- Irony! Can we …" and typos like "To which I way"
+  - Specific opinionated asides and a channel-style sign-off ("Next time: we'll …") rather than generic, balanced AI phrasing
+
+veritasium-F69uqDIhr60.md  P(AI) 12.0
+  - Spoken-style asides and references to the scene: "Oh man!", "roughly the size of …", "most of the sharks …"
+  - Conversational disfluency and grammar slips typical of transcribed speech: "they're diet consists …", "a couple misconceptions", "so that's a …"
+  - Uneven, rambling structure and repeated phrasing ("they get cancer just …") rather than polished AI-style organization
+  - Conversational spoken asides like "Oh man!" and "roughly the size of …" show a real on-location presenter
+  - Natural speech disfluencies and grammar slips ("they're diet consists", "a couple misconceptions", "Now they're called …") are typical of transcribed speech, not AI text
+  - Rambling, repetitive phrasing ("get cancer just like …") and uneven structure lack the polish of generated narration
+
+vox-AFw8MSF7yE4.md  P(AI) 12.0
+  - Idiosyncratic human voice and asides: "but - eh - …", "a fountain you can …"
+  - Slight slips and unpolished phrasing like "in Sicily he cheered …" and "The legend's that", unlike typical clean AI output
+  - Specific personal observational ending and quoted novelty song lyrics with "Ha, I'm Kilroy!" suggest a human-written, scripted creator style
+  - Idiosyncratic human voice and dry humor: "but - eh - …" and "a fountain you can …"
+  - Slight clumsy slips like "in Sicily he cheered …" and the abrupt "At some point, that …" read as spoken, scripted human narration rather than polished AI prose
+  - Specific quirky details (Mr. Chad complaining about skimpy rations, the novelty song quoting Edgar Hoover, a personal visit to the memorial) and an ending that ties back to a real-world observation
+
+vsauce-Iw8idyw_N6Q.md  P(AI) 4.0
+  - Distinctive Vsauce voice and signature opener/closer ("Hey, Vsauce. Michael here", "And as always, thanks …") with personal asides like "My favorite are Disney …"
+  - Transcription-style errors ("allusion" for illusion, "elicit" for illicit, "effects" for affects, "a typical ways") indicate auto-captioned human speech, not generated text
+  - Quirky, tangential structure and wordplay ("this myelinated machine is …", "It's kind of …") with specific, idiosyncratic anecdotes (Soviet bombers, Titanic mirage, dentists, London traders) typical of a human scriptwriter
+  - Distinctive Vsauce voice with personal asides ("It's neat", "My favorite are Disney …", "It's kind of …") and the signature sign-off "And as always, thanks …"
+  - Transcription-style errors ("allusion" for illusion, "elicit love", "effects its index", "in a typical ways") and stray "ship(?)" are typical of human speech captions, not generated text
+  - Rambling, uneven structure with idiosyncratic jokes ("this myelinated machine is …") and a self-correcting "they can also be …" slip, unlike polished AI prose
+
+wendoverproductions-7cjIWMUgPtY.md  P(AI) 7.0
+  - Typos and disfluencies like "it's most basic …, …" and "that's still that …" are typical of human transcription or writing, not AI output
+  - Idiosyncratic, run-on conversational flow with sponsor read and specific data (MetLife figures, Chicago Heights teachers, 8,000 tennis matches) matches Wendover Productions' known human-written style
+  - Uneven grammar like "privately runs lotteries" and "an 100% chance" and repetitive 'But here's the …' phrasing reflect natural spoken scripting rather than polished AI prose
+  - Typos and slips like "it's most basic …", "loosing to avoid loss", "that's still that …", "privately runs lotteries" are typical of human-written scripts, not AI output
+  - Idiosyncratic Wendover Productions style: sponsor read at start and end, long run-on sentences chained with "but", conversational asides like "Just look:" and "Feel free to think …"
+  - Specific data points (MetLife $37.2B vs $36.35B, Chicago Heights teachers, 8,000 tennis matches) woven in unevenly with some imperfect math framing, unlike polished AI prose
+
+3blue1brown-ToIXSwZ1pJU.md  P(AI) 4.0
+  - This is the 3Blue1Brown heat equation video (Part 2 of the differential equations series); the narration has Grant Sanderson's voice, including 'Where there's curvature …' and 'your mind should burn …'
+  - Spoken, human tangents and asides, such as 'oh, if it was …' and 'nature is not so …'
+  - Hand-wavy admissions like 'That's somewhat hand …' and pointers to the video description, which fit a human presenter more than generated text
+  - Recognizable 3Blue1Brown 'Differential equations' heat equation script with signature voice: "Where there's curvature …"
+  - Conversational asides and imperfect phrasing typical of spoken human narration: "your mind should burn …", "we're off the …"
+  - Specific personal pedagogy and transcript artifacts ("0T and at LT", "Here, go ahead and …") indicate a human-spoken transcript, not generated text
+
+cgpgrey-Ex74x_gqTU0.md  P(AI) 3.5
+  - Idiosyncratic personal voice with running self-deprecating asides and stage directions like "(Grey, whispering loudly)" and "Ignore my emails? I …"
+  - Messy, specific research trail (1913 NYT, Clute, Disosway, missing Gazette volumes, locked museum) with real-time emotional reactions that an AI would not fabricate this naturally
+  - Playful wordplay and punchline escalation ("hearsay" -> "hear story" -> "isn't history"), plus typos and colloquial quirks like "rekt" and "a'tall"
+  - Highly idiosyncratic personal voice with stage directions and asides like "(Grey, whispering loudly)", "thunk", and a librarian saying "Shhhh!!" that reflect a real filmed trip and a specific creator's persona
+  - Messy, authentic research narrative: dead ends, emails ignored by the museum, closed building, frustration ("I couldn't let …", "You've got to …"), with specific source details and dates that an AI would not invent so organically
+  - Playful, uneven wordplay and humor ("Ye Old Meme", "hear story", "commodiousest", "embiggened") plus typos like "trial" for "trail" and "as far and …" that signal human writing
+
+everyframeapainting-8q4X2vDRfRk.md  P(AI) 3.0
+  - Distinct personal voice with profanity and crude humor ("full of shit", "raging hard-ons", "Fuck that, he's …!"), unlike typical AI narration
+  - Transcript artifacts from interleaved film clip dialogue ("Hold that, please.", "Seems I've found …") and "Subtitles by the Amara …" indicate a real human-made video transcript
+  - Self-aware, opinionated asides and loose structure ("So maybe I'm …") reflect a human essayist's style
+  - Distinctive personal voice with profanity and crude humor ("full of shit", "raging hard-ons", "Good shit") typical of the human creator Tony Zhou
+  - Spontaneous, opinionated asides and self-doubt ("So maybe I'm …") plus embedded film-clip dialogue and subtitle artifacts ("Subtitles by the Amara …")
+  - Transcript quirks like inline movie quotes and conversational fragments ("Yours is 3 minutes? …") reflect a real recorded video, not generated prose
+
+exurb1a-CNQC1DoaWz8.md  P(AI) 4.0
+  - Spontaneous, ranting comedic voice with profanity and ad-libbed stumbles ("Oh yeah, yeah, yeah, …") typical of a human comedian's delivery
+  - Culturally specific, offbeat jokes ("most British and orderly …", "Did it touch your …") and the Star Trek bit with in-character dialogue feel human-written
+  - Messy, conversational structure with self-interruptions and dashes ("Well, how about- No, …"), lacking the polished tidy phrasing of AI output
+  - Raw comedic voice with profanity and a stumbled, spoken rhythm ("Oh yeah, yeah, yeah, …") and false starts that read as live performance, not generated text
+  - Specific, quirky British humor ("cuing for flu shots", "Did it touch your …") and in-scene dialogue with interruptions like "No, no, just death"
+  - Uneven, escalating riffs with emphatic caps ("A FUCKING DEATH MACHINE … a Star Trek parody structure typical of a human comedian's script
+
+johnnyharris-VzAErq53yZk.md  P(AI) 4.0
+  - Transcript-style artifacts like "- I see. -" and disfluencies ("I don't really …") show spoken, unscripted delivery
+  - Highly specific personal anecdotes (Afghan rug warehouse owner's kebab lunch, asbestos tile scare, walnut butcher block from Illinois) feel lived, not generated
+  - Casual, uneven phrasing and transcription errors ("Wahaca", "Iz"/"Izzy", "the seamless's") typical of auto-captioned human speech
+  - Spontaneous, personal anecdotes: rug warehouse owner from Afghanistan, kebab lunch, "Wait, is that asbestos …"
+  - Transcript artifacts like "- I see. -", "Iz"/"Izzy", misspelled "Wahaca", and "I don't really …" show a real spoken, auto-transcribed vlog
+  - Specific sponsor disclosures (Fully, Article, Frame Bridge, Fellow) and casual disfluent phrasing like "this sucker" and "so, so, so grateful" read as human
+
+kurzgesagt-KsF_hdjWJjo.md  P(AI) 13.5
+  - Reads like a translated human-made educational video (German-style phrasing: "one 25th and one …", "Calling it massive does …"), with the Amara.org subtitle credit indicating human-made subtitles
+  - Quirky, concrete touches like "If you had a …" and uneven, fragmentary openers ("The eight planets. Divided …")
+  - Minor awkwardness and slightly inconsistent facts ("trillions of asteroids", "Earth has one moon" repeated pattern) fit a scripted documentary rather than polished LLM prose
+  - Subtitles by Amara.org community indicates a human-translated educational video (likely a translated documentary-style script)
+  - Idiosyncratic phrasing like 'If you had a …' and 'one 25th and one …' reads as translated human narration
+  - Short choppy opening fragments ('The Solar system. Our …') and uneven factual detail (moon counts, specific figures) are typical of an older human-scripted explainer rather than polished AI prose
+
+lemmino-Lbv3eJgmFAg.md  P(AI) 4.0
+  - Typos and transcription errors like "Crusty", "coincident", "Bart show no respect", and "she suck" are typical of human spoken narration auto-transcribed, not AI output
+  - Personal, profane asides: "Being the perfectionist I …" and "No wonder everyone has …"
+  - Rambling, uneven structure with casual jokes ("Pretty interesting, right? - …") and a personal Google/map counting anecdote, which is idiosyncratic and unlike polished AI prose
+  - Typos and transcription slips like "Crusty", "not sheer coincident", "Bart show no respect", "she suck" are typical of a human speaker transcribed from speech, not polished AI text
+  - Personal asides and profanity such as "Being the perfectionist I …" and "No wonder everyone has …"
+  - Rambling, uneven structure with abrupt topic jumps, missing punctuation and spoken-word fillers ("Pretty interesting, right? - …") that reflect a casual YouTuber's script
+
+nerdwriter1-DgZPQMyzKiE.md  P(AI) 4.0
+  - Typos and slips like "San Fransisco" and "Ron Stryker" (should be Roy), plus a stray capitalized "For" mid-sentence, are typical of human transcription and speech, not AI output
+  - Personal voice and a genuine sponsor read: "Hey everybody, welcome to …" "I've had a …" "Nord VPN is definitely …"
+  - Conversational, opinionated phrasing such as "Lange thought she could …" and "Next time you have …" reflects a distinct human essayist style
+  - Typos and slips like "San Fransisco", "Ron Stryker" (for Roy), and a stray capitalized "For the last fifteen …" are characteristic of a human-made transcript/script.
+  - Personal voice and context: "Hey everybody, welcome to …", "I've had a …", and a sponsor read for Nord VPN with the "nerdwriter" code are typical of the Nerdwriter channel.
+  - Idiosyncratic, conversational asides and opinions ("Lange thought she could …", "a third dimension", "Next time you have …") reflect a distinct human narrator rather than generic AI prose.
+
+oversimplified-Mun1dKkc_As.md  P(AI) 4.0
+  - Typos and transcription slips like "Somne", "Ottomen where divided", "germans", "There is no clear …" (tense shifts) and a pasted lenny-face "( ͡° ͜ʖ ͡°)" point to a human-written script.
+  - Casual, jokey humor with a distinct voice: "Basically: Don't be …. …" and "the spies got bored, …".
+  - Closing line "never had such an …" is a dark-humor punchline, and the structure is rambling and uneven, unlike polished AI text.
+  - Typos and transcription errors like "Somne", "The Ottomen where divided", "germans", and an inline emoticon "( ͡° ͜ʖ ͡°)" are typical of a human-made script, not AI output
+  - Irreverent, jokey voice with a human comedic rhythm: "The Germans held a …", "Whoops, looks like we …", "spies got bored, brewed …"
+  - Inconsistent tense and punctuation ("There are mutinies... it …", missing periods) plus a spoken-word, off-the-cuff structure suggest a human writer, not a polished AI draft
+
+pbsspacetime-5l1KxgHH2Ek.md  P(AI) 4.0
+  - Distinctly human host voice with jokes and ad-libs: "a wormhole forms and …"
+  - Transcription artifacts like "Discreet Time Crystals" and "thegreatcoursesp lus.com", plus a sponsor read and viewer comment replies, typical of a real spoken PBS Space Time episode
+  - Conversational asides and personal reactions ("Damn science, you scary. …", "Big deal.") and topical timing references ("as of the filming …")
+  - Distinctly human, idiosyncratic humor and asides: "a wormhole forms and …" and "Damn science, you scary. …"
+  - Conversational show-specific structure with sponsor read, viewer comment responses by username (WarriorofCathar, Solano Felicio), and "as of the filming …".
+  - Transcription artifacts like "Discreet Time Crystals" and "thegreatcoursesp lus.com" plus uneven spoken rhythm indicate a real auto-captioned human narration.
+
+realengineering-7OpM_zKGE4o.md  P(AI) 4.0
+  - Leftover production note in the script: "(this bit needed to …" and typos like "parsal", "Eutopia", "The potential... is undeniably."
+  - Idiosyncratic human voice and errors (comma splices, "obscenely cheap", "new age burning man …", "I recently started the …") with sponsor read and channel-specific outro (Real Engineering style).
+  - Detailed, specific figures and an uneven, opinionated argument structure with on-the-fly graph narration ("it would look something …") typical of a human-written explainer.
+  - Leftover production note in the text: "(this bit needed to …"
+  - Human typos and slips: "Eutopia", "solar parsal", "transit root", "undeniably" with no noun, "It's proximity" for "Its proximity"
+  - Real Engineering sponsor read (Brilliant), idiosyncratic phrasing like "burning man art installation", and spliced-in news clip quote, which fit a human-scripted video
+
+teded-BY9VGS2eXas.md  P(AI) 12.0
+  - Starts with a TED-Ed style transcriber/reviewer credit line ("Transcriber: Tom Carter Reviewer: …"), indicating a human-transcribed subtitle file
+  - Typos like "ballons" and slightly clumsy phrasing ("As the number of …") look like human-written, not AI-polished, text
+  - Conversational educational tone with concrete everyday examples (squeezing a bottle, hot-air balloon, party balloon) and a loose recap ending typical of a human-written classroom video script
+  - Begins with a TED-Ed style transcriber/reviewer credit line ("Transcriber: Tom Carter Reviewer: …"), indicating a human-subtitled video.
+  - Typos and quirks like "ballons" and slightly awkward phrasing ("the size of the …", "Laws are everywhere, even …") fit a human-written educational script.
+  - Conversational, hands-on examples (squeezing a bottle, hot-air balloon, party balloon) and a repetitive recap ending are typical of a human educational narration, though the tidy structure leaves some AI possibility.
+
+tomscott-GLqJvWlEolk.md  P(AI) 2.0
+  - Natural spoken-word disfluencies and overlapping speakers: "Did you just say …"
+  - Transcript of a live game show with crosstalk, stammering, and in-the-moment reactions ("Er, Blair.", "Damn! 9, 18, 27!")
+  - Specific personal banter and British colloquialisms ("pleb", "'cos", "frickin' planets") that no AI narration would produce
+  - Spontaneous speech artifacts: self-corrections, crosstalk, mispronounced 'studipidity', fragmentary reactions like 'Oh! Damn!'
+  - Live game-show transcript with gameplay counting, interruptions, and in-the-moment banter that AI narration wouldn't produce
+  - Distinct multi-speaker voices and inside jokes (Pluto debate, ABBA, 'pleb') typical of real human conversation
+
+veritasium-K4vyRvMASPU.md  P(AI) 7.0
+  - Spoken-style quirks and typos like "Press the space key …", "i'm", "sychronized", and spaces before question marks ("how did they do …") suggest a human transcript
+  - Personal, on-camera references ("I'll clap", "Here I am bouncing …", "let me play the …") and mixed British/American spellings ("reorganised", "favour", "monolog")
+  - Inconsistent phrasing and a conversational interview snippet ("You didn't press …") that AI scripts rarely produce
+  - Idiosyncratic human errors and quirks: missing punctuation ("live on TV But"), stray spaces before question marks, "sychronized", "Press the space key …" left in from the demo
+  - Conversational, improvised on-camera asides like "I'll clap to …" and "That last one came …" with interview-style back-and-forth
+  - Mixed British/American spellings and uneven phrasing ("reorganised", "synchronized", "audio-syncing-capabilities", "we created this computer …") typical of a human script, not polished AI prose

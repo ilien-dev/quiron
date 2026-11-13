@@ -1,0 +1,19 @@
+- tema: electrostática de selectividad (física de bachillerato); arranca saludando a los "pequeños físicos"
+- problema de partida: tres cargas de distinto valor fijadas en tres posiciones; se abandona una cuarta en el punto central
+- cuestiones de examen: rumbo del movimiento, aceleración y energía ganada al recorrer unos metros
+- opinión del creador: quienes preparan selectividad tienen una noción floja de qué son Campo y Potencial y cómo se relacionan
+- punto de partida: si algo te empuja, hay una fuerza eléctrica; más carga la intensifica, más distancia la debilita
+- procedimiento: sumar los tirones de las tres cargas; en sentidos opuestos se compensan, en el mismo sentido se refuerzan
+- segunda ley de Newton da la aceleración, pero al moverse la carga cambian distancias y ángulos y hay que rehacer el cálculo en cada paso; el trayecto no se intuye
+- salida que idearon los físicos: el Campo; metáfora de un grupo de gente paciente que pone una carga diminuta en cada punto, suma fuerzas y las apunta; queda un "mapa de flechas" = campo eléctrico
+- ventaja uno: conocer al instante la fuerza en cualquier lugar, solo reescalando; ejemplo de 3 culombios, triplicar el valor; el campo expresa fuerza dividida entre la carga
+- ventaja dos: la trayectoria queda evidente; el campo contiene casi toda la información, las cargas originales casi sobran
+- los físicos lo toman como algo real: un medio extendido por todo el espacio que media entre cargas; además por él viajan ondas
+- otra forma de verlo, el Potencial: paralelo con la energía potencial gravitatoria del vídeo de gravedad; insiste en verlo, dice que es importante
+- mismo escollo energético: al desplazarse cambian las distancias y hay que sumar mucho; el mismo equipo anota la energía potencial de una carga unitaria en cada punto; mapa de números = Potencial Eléctrico
+- campo y potencial pertenecen a las cargas originales y no dependen de la cuarta; en cambio la fuerza recibida y la energía potencial ganada son de la cuarta
+- el valor suelto del potencial no informa; valen las diferencias, que dan energía cinética por carga y aceleración
+- si el potencial sube en tu sentido, la fuerza va en contra; si baja, juega a tu favor
+- vínculo matemático: el campo señala hacia donde el potencial desciende, es el gradiente cambiado de signo (derivada espacial); vale con cargas en reposo
+- consecuencia: de A a B el cambio de energía no depende del camino, solo de inicio y final
+- cierre coloquial con "chavales", petición de suscripción y gracias

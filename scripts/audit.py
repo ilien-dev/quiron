@@ -35,7 +35,7 @@ import json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from aimeter import prose, lexicon_name, lang_guess, lang_warning, BANDED, LAYOUT, BANDS_FILE, LANG  # noqa: E402
+from aimeter import prose, lexicon_name, lang_guess, lang_warning, BANDED, LAYOUT, BANDS_FILE, LANG, SPOKEN, spoken, band_meta  # noqa: E402
 
 # Thresholds for the combined checks. Chosen from a grid over held-out human posts and
 # 2026 assistant posts: the setting that kept human texts failing the whole checklist
@@ -61,7 +61,8 @@ globals().update({k: v for k, v in _thresholds().items()
 # kind: "re" FAIL on a regex over prose; "tell" TELL on a regex over prose;
 # "tellmd" TELL on a regex over raw markdown; "judge" and "judgemd" READ with
 # evidence, over prose and raw markdown; "read"
-# needs judgement with no evidence to quote; other kinds are computed in run().
+# needs judgement with no evidence to quote; "moves" fails when three of the listed
+# checks fired; other kinds are computed in run().
 CHECKS = [
     ("A1", "it's not X, it's Y", "tell",
      r"\b(?:it|this|that)(?:'s| is| was) not\b[^.!?]{1,80}[.;,:]\s*(?:it|this|that)(?:'s| is| was)\b"
@@ -203,6 +204,81 @@ if LANG == "es":
                                             "A30", "A31", "B1")] + CHECKS_ES + [
         c for c in CHECKS if c[0] in ("C1", "C2", "T1", "V1", "V2")]
 
+# Video scripts, used when the band file says "_register": "script". Measured on the spoken
+# words of pre-2022 YouTube captions (English: 144 train, 49 held out; Spanish: 80 and 27)
+# and of scripts written on the same titles in November 2026 by five models; the rates are
+# of held-out humans and of the 45 (English) or 25 (Spanish) assistant test scripts pooled
+# (eval/results/script-candidates.txt, script-es-candidates.txt). A sentence starts at the
+# start of the text, after a blank line, or after . ! ? and a space or line break; a single
+# line break inside a sentence, as in a hard-wrapped script, is not a sentence start.
+_S = r"(?:\A\s*|(?<=\n\n)|(?<=[.!?]\s))"
+_SE = r"(?:\A\s*|(?<=\n\n)|(?<=[.!?…]\s)|(?<=[¿¡]))"
+CHECKS_SCRIPT = [
+    ("S1", "opening a sentence with Imagine", "tell",
+     _S + r"(?:now,? |so,? )?(?:imagine|picture this)\b",
+     "2% of held-out human scripts (6% of train), 31% of assistant scripts"),
+    ("S2", "staged reveals: here's the twist", "tell",
+     r"\bhere's (?:the (?:thing|twist|catch|kicker|problem|best part|honest part|strange part|weird part|"
+     r"surprising part|part|real|key|deal|interesting)|where (?:it|things) gets?|why|how|what)\b"
+     + "|" + _S + r"(?:and )?then (?:there's|comes)\b"
+     r"|\bthe (?:honest|short|real|simple) answer\b"
+     r"|\bsounds (?:simple|easy|logical|straightforward|reasonable|obvious|crazy|impossible|absurd|ridiculous)\b",
+     "12% of held-out human scripts (16% of train), 49% of assistant scripts"),
+    ("S3", "asking for comments", "tell",
+     r"\b(?:tell|let) (?:me|us) (?:know )?(?:in the comments|below)\b|\bleave a comment\b|\bcomment below\b",
+     "a request, not a mention: no held-out human script (3% of train), 24% of assistant scripts; a TELL, not "
+     "a FAIL, because a human channel asking for comments is its own call (5 of 144 train captions)"),
+    ("S4", "next time you ...", "tell", r"\bnext time you\b",
+     "4% of held-out human scripts (1% of train), 16% of assistant scripts"),
+    ("S5", "a bare noun-phrase question: The catch?", "tell",
+     _S + r"(?:the|its|their|his|her|our|your|my|that|this) \w+(?: \w+)?\?",
+     "2% of held-out human scripts (1% of train), 9% of assistant scripts"),
+    ("S6", "two sentences on the same opener: No X. No Y.", "tell",
+     _S + r"no \w+(?: \w+){0,2}[.!]\s+no \w+(?: \w+){0,2}[.!]"
+     + "|" + _S + r"maybe\b[^.!?]*[.!?]\s+maybe\b|" + _S + r"which\b[^.!?]*[.!?]\s+which\b",
+     "none of the held-out human scripts (3% of train), 11% of assistant scripts"),
+    ("S7", "three of S1-S6 in one script", "moves", ("S1", "S2", "S3", "S4", "S5", "S6"),
+     "no human script, train or held out; 33% of Opus 5.5 and Sonnet 5.5 scripts, 18% of all assistant ones"),
+]
+CHECKS_SCRIPT_ES = [
+    ("SE1", "quédate hasta el final", "re",
+     r"\bqu[eé]da(?:te|os) hasta el final\b",
+     "no human script, train or held out; 40% of Opus 5.5 and 80% of Sonnet 5.5 scripts"),
+    ("SE2", "la promesa: hoy te cuento, hoy vamos a", "tell",
+     r"\bhoy (?:te (?:cuento|explico|voy a)|vamos a|veremos|descubriremos|os (?:cuento|explico|voy a)|repasamos"
+     r"|conoceremos|hablamos)\b",
+     "11% of held-out human scripts (10% of train), 36% of assistant scripts"),
+    ("SE3", "abrir una frase con imagina", "tell",
+     _SE + r"(?:ahora )?imagin(?:a|e|emos|aos|en)\b",
+     "7% of held-out human scripts (5% of train), 44% of assistant scripts"),
+    ("SE4", "y aquí viene, lo curioso es que", "tell",
+     r"\by aqu[ií] (?:est[aá]|viene|aparece|entra)\b|\baqu[ií] (?:est[aá] la clave|viene lo (?:bueno|interesante|curioso)"
+     r"|est[aá] el truco)|\bahora viene\b|\blo (?:fascinante|curioso|interesante|sorprendente|incre[ií]ble) es que\b"
+     r"|\bdato curioso\b|\bun detalle (?:fascinante|curioso)\b",
+     "4% of held-out human scripts (5% of train), 32% of assistant scripts"),
+    ("SE5", "abrir una frase con entonces, ¿", "tell", _SE + r"entonces, ¿",
+     "7% of held-out human scripts (6% of train), 36% of assistant scripts"),
+    ("SE6", "pedir comentarios", "tell",
+     r"\b(?:cu[eé]nta(?:me|nos)|d[eé]ja(?:me|nos|lo)|d[eé]jamelo|escr[ií]be(?:me|nos)|dinos|d[ií]me)\b"
+     r"[^.!?]{0,30}\ben (?:los|la secci[oó]n de) comentarios\b",
+     "a request, not a mention: 4% of held-out human scripts (5% of train), 52% of assistant scripts"),
+    ("SE7", "la próxima vez que ...", "tell", r"\bla pr[oó]xima vez que\b",
+     "no held-out human script (1% of train), 4% of assistant scripts"),
+    ("SE8", "tres de SE1-SE7 en un guion", "moves", ("SE1", "SE2", "SE3", "SE4", "SE5", "SE6", "SE7"),
+     "no human script, train or held out; 20% to 60% of each model's scripts, 40% of all"),
+]
+# Checks from other registers that do not separate here: on held-out human scripts they fire
+# at least half as often as on the assistant test scripts, so a rewriter would be sent after
+# what people write too. B1 keeps its FAIL; only its TELL (one to three words) goes.
+SCRIPT_OFF = {"en": {"A1", "A1b", "A2b", "A3", "A4", "A8", "A9", "A14b", "A15", "A26", "A32"},
+              "es": {"A2b"}}
+SCRIPT_B1_TELL_OFF = {"en"}
+REGISTER = band_meta().get("_register")
+if REGISTER == "script":
+    _new = CHECKS_SCRIPT_ES if LANG == "es" else CHECKS_SCRIPT
+    _at = next(i for i, c in enumerate(CHECKS) if c[0] == "C1")
+    CHECKS = [c for c in CHECKS[:_at] if c[0] not in SCRIPT_OFF.get(LANG, ())] + _new + CHECKS[_at:]
+
 SENT = re.compile(r"(?<=[.!?])\s+")
 
 # Review items: patterns a reader notices that the rewrite loop must not act on alone.
@@ -221,12 +297,18 @@ NEGSET_WHY = [
 ]
 
 
+def read_text(path):
+    """The file as the checks see it: for a "_spoken" register, only the spoken words."""
+    raw = open(path, encoding="utf-8").read()
+    return spoken(raw) if SPOKEN else raw
+
+
 def review(path):
     """Negated setups, with the reasons a reader may take them for AI. Blog bands only."""
     if lexicon_name() != "ai-lean.txt":
         return []
     items = []
-    for n, para in enumerate(re.split(r"\n\s*\n", prose(open(path, encoding="utf-8").read()))):
+    for n, para in enumerate(re.split(r"\n\s*\n", prose(read_text(path)))):
         ss = [s_.strip() for s_ in SENT.split(para.replace("\n", " ")) if s_.strip()]
         for i, s_ in enumerate(ss):
             nxt = ss[i + 1] if i + 1 < len(ss) else ""
@@ -251,7 +333,7 @@ def run(path, samples=()):
     texts is the writer's habit, not a tell: it is reported and not counted."""
     habits = {r[0] for p in samples for r in run(p) if r[2] == "TELL"}
     # the patterns are written with a straight apostrophe; GPT writes it’s and let’s
-    raw = open(path, encoding="utf-8").read().replace("’", "'").replace("‘", "'")
+    raw = read_text(path).replace("’", "'").replace("‘", "'")
     body = re.sub(r"```.*?```", "", raw, flags=re.S)
     text = prose(raw)
     sample_args = [x for p in samples for x in ("--sample", p)]
@@ -293,7 +375,7 @@ def run(path, samples=()):
                     bad.append(m.group(1)[:40])
             if bad:
                 state, detail = "READ", "restates its heading? " + "; ".join(bad[:4])
-        elif kind == "para":
+        elif kind == "para" and not SPOKEN:  # captions have no paragraphs to close
             paras = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
             bad = []
             for prev, p in zip(paras, paras[1:]):
@@ -340,6 +422,8 @@ def run(path, samples=()):
             if found:
                 state = "FAIL" if len(found) >= LEXICON_MIN else "TELL"
                 detail = ", ".join(found[:10])
+                if state == "TELL" and REGISTER == "script" and LANG in SCRIPT_B1_TELL_OFF:
+                    state, detail = "PASS", f"under {LEXICON_MIN}, as in human scripts: " + detail
         elif kind in ("aiside", "overshot"):
             if meter:
                 tag, cap = ("AI side", AI_SIDE_MAX) if kind == "aiside" else ("overshot", OVERSHOT_MAX)
@@ -349,6 +433,11 @@ def run(path, samples=()):
                     f"{k} {meter['metrics'][k]}" for k in bad[:6]) if bad else "none"
                 if len(bad) >= cap:
                     state = "FAIL"
+        elif kind == "moves":  # a script register's own checks, several in one text
+            moved = [r[0] for r in results if r[0] in arg and r[2] in ("TELL", "FAIL")]
+            detail = f"{len(moved)} (fails at 3): {', '.join(moved)}" if moved else "none"
+            if len(moved) >= 3:
+                state = "FAIL"
         elif kind == "tells":
             tells = [r[0] for r in results if r[2] == "TELL"]
             detail = f"{len(tells)} (fails at {TELLS_MAX}): {', '.join(tells)}" if tells else "none"
@@ -416,7 +505,7 @@ def main():
                                         for r in res]}, indent=1))
             continue
         print(f"\n{os.path.basename(path)}")
-        warn = lang_warning(open(path, encoding="utf-8").read())
+        warn = lang_warning(read_text(path))
         if warn:
             print(warn)
         print(f"{'':4}{'check':40}{'state':7}detail")
