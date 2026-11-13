@@ -242,7 +242,7 @@ main            20    20   71.6    95%   82.0                0.30   2.65
 bands2          20    40   73.1    90%   82.2                0.25   1.50   Opus  +1.5 (worse 9/20, p=0.396)  GPT  +0.2 (p=0.796)  over -0.05 (higher 2, lower 2, p=0.465)
 
 ## The November 2026 rewrite round: notes, samples, edit only (ce0d109 and the commit after it)
-# Three untried ways of rewriting a English script, decided by rules fixed in the brief before any number existed. Every number below
+# Three untried ways of rewriting an English script, decided by rules fixed in the brief before any number existed. Every number below
 # is printed by the command above it; each report was run twice with identical output (every snapshot at files=40, so no judge answer was dropped).
 # Rewriter REWRITER=claude-sonnet-5-5, judges JUDGE=claude-sonnet-5-5 (column "Opus") and GPT_MODEL=gpt-6.1-terra (column "GPT"), --k 2 --g 1, 2 reps per snapshot.
 # Baseline ship2 (fc7ef7c7), not ship (df3f6914): what the rewriter reads changed after 455a6cc (SKILL.md's register entry, the script-check
@@ -330,12 +330,13 @@ ship2      scrh     texts= 10 facts_not_in_sources=0.00/text kept_identical=42.9
 
 ## Confirmation of the notes result on held-out titles, 13 November 2026 (run after the development section above)
 # AMENDMENT OF THE OVERSHOT CLAUSE, 13 November 2026. Rule 1 of the brief fixed the overshot clause before any development number as
-# "overshot features per text not higher than the baseline's" (b-original). After the development numbers the controller amended it,
+# "overshot features per text not higher than the baseline's" (b-original); under it the notes failed in both languages and the Spanish samples failed. After the development numbers
+# the agent running the evaluation, with the maintainer informed, amended it during the run,
 # because ship2 sits below the human level (0.25 here, 0.60 in Spanish; held-out human scripts average 1.00 in English, script.txt line 279,
 # and 1.15 in Spanish, script-es.txt line 241, column overshot_mean): (b-amended) overshot per text not higher than the held-out human mean of
 # the language. The confirmation was run under the amended clause. Both readings are reported for every arm; an arm is "confirmed on the judges"
 # if (a) P(AI) lower than the baseline by more than the rep noise holds on the held-out set, and "confirmed without overshoot" only if (b-amended) also holds there.
-# Controller ruling fixed before any confirmation number: run ship2 on scr2 and scr2-es, notes on scr2n and scr2n-es, samples on scr2s-es only (English samples moved
+# Runs fixed by the agent running the evaluation, with the maintainer informed, before any confirmation number: run ship2 on scr2 and scr2-es, notes on scr2n and scr2n-es, samples on scr2s-es only (English samples moved
 #   inside the noise on development and were not run), 2 reps each, nothing tuned afterwards.
 # Rewrites: REWRITER=claude-sonnet-5-5 python3 eval/e2e/harness.py rewrite SNAP REP --set SET -j 6 (ship2 on scr2 and scr2-es, notes on scr2n and scr2n-es, samp on scr2s-es).
 $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py ship2 notes --set scr2 --k 2 --g 1 --noise

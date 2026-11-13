@@ -44,11 +44,15 @@ Paths are relative to the repo.
   NAME...`; `NOTES_MODEL` overrides the model) and checks each note against its caption:
   a note that shares a run of five or more words is asked again, and a bullet that still does is
   dropped. `scannotes.py` repeats the scan over the committed notes where the corpus is.
-  The rewriter's prompt says they are the creator's notes (`PROMPT_SCR_NOTES`).
+  The rewriter's prompt says they are the creator's notes (`PROMPT_SCR_NOTES`). They are
+  outlines of the finished human script (most have 15 to 19 bullets), not rough notes.
 - `scrs`, `scr2s`, `scrs-es` and `scr2s-es` have a fifth column with two train captions of
   the row's channel, as `~/corpus` paths (never the row's own video, never a held-out file;
   a channel with fewer than two gets what it has). They are local, like `scrh`. The harness
   copies them into a `samples/` folder and the prompt asks for `check.sh --sample`.
+- `scrns-es` has the notes of `scrn-es` and the samples of `scrs-es` together, for the one
+  combination the brief's third rule called for (Spanish, development only). Its snapshot,
+  `combo-ns`, is another copy of the `ship2` tree.
 
 `mksets.py` writes the script sets, and its docstring gives the rule that picks the
 rows. A script set gets a rewriter prompt with the title in the set's language, and the

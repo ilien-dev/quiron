@@ -69,29 +69,19 @@ sentences than human ones, while assistant fiction has choppier ones (both run s
   for those the patterns apply by eye.
 - `scripts/bands-script.json` (English), `scripts/bands-script-es.json` (Spanish): the
   narration of a YouTube video script. Only the spoken words are measured: scene headings,
-  stage directions, speaker labels, timestamps and source lists are dropped before the
-  meter and the checklist read the text. Rewrite only what is said and keep those where
-  they are; whoever records the video needs them. These files score 17 and 19 of the 23
-  features and carry checks and thresholds of their own (`references/patterns.md`). They
-  were validated on held-out scripts: they measure a draft. End to end they did not move
-  blind judges beyond what the default rules already did, and no rewrite rule for scripts
-  held. A rewrite shortens and evens sentences, which the bands do not ask of narration. A
-  script a person wrote is measured, not rewritten: rewriting human narration made judges
-  rate it more AI. For a script, as for a post, what moved blind judges was a rewrite built
-  from the creator's own notes: P(AI) 73.8 to 29.2 on development titles and 71.0 to 24.7 on
-  held-out ones in English, 71.4 to 21.5 and 71.0 to 20.3 in Spanish. Without notes a rewrite
-  gains 4.5 to 10.5 points over the draft and no more. The notes rewrites put features past
-  the human band: 0.65 and 1.02 per text in English, 1.50 and 1.35 in Spanish, against 1.00
-  and 1.15 for held-out human scripts. English stayed under the human level on development
-  titles and was 0.02 over it on held-out ones; Spanish was over on both. Words come out
-  shorter and plainer than people use them. With notes, still run `check.sh --source` with
-  the draft and the notes: in Spanish the rewrites carried 1.07 figures or links per text
-  that neither had on held-out titles (0.30 on development), mostly units and formats
-  rewritten, and also a word-count trailer and timings nobody gave. Two earlier scripts by
-  the creator, passed with `--sample`, helped in Spanish (71.4 to 64.2, 71.0 to 65.6, overshot
-  under the human level) and not in English (-0.3). Editing only the flagged sentences read
-  more AI than the shipped rewrite (82.5 against 73.8 in English, 77.2 against 71.4 in
-  Spanish). The numbers are in `references/numbers.md`.
+  stage directions, speaker labels, timestamps and source lists are dropped. Rewrite only
+  what is said and keep those where they are; whoever records the video needs them. A script
+  a person wrote is measured, not rewritten: rewriting human narration made judges rate it
+  more AI. For a draft an assistant wrote, first ask the creator for their notes about that
+  video (what it covers, names, numbers, their opinions and asides), build the script from
+  them as the notes-first rules above say, and run `check.sh --source` with the draft and the
+  notes. In testing that was the only thing that moved blind judges: on held-out titles the
+  Claude judge went from 71.0 for a rewrite without notes to 24.7 in English and to 20.3 in
+  Spanish, while a GPT judge saw about 15 points and still rated those rewrites around 65.
+  The test notes were outlines written from the finished human script of the same video, so
+  a creator's rough notes may do less. Without notes a rewrite gains 5 to 10 points and still
+  reads as AI: tell the user so. No script-specific rewrite rule held; the numbers and what
+  was tried are in `references/numbers.md`.
 
 Select a file by putting `QUIRON_BANDS=<skill-dir>/scripts/bands-fiction.json` (or
 another of these files) in front of every command, including `check.sh`. The scripts print a

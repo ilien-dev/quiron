@@ -190,12 +190,12 @@ For the narration of a YouTube video script, set `QUIRON_BANDS=scripts/bands-scr
 or `scripts/bands-script-es.json` in Spanish. The meter reads only the spoken words and
 leaves the stage directions alone. It measures a script and checks it for patterns that
 assistant scripts share. It has not been shown to make a rewritten script read as
-human-written: without the creator's notes, a rewrite gained 4.5 to 10.5 points of judged
-P(AI) over the draft and most were still rated AI. Built from the creator's own notes it fell
-to 24.7 in English and 20.3 in Spanish on held-out titles, with more features past the human
-band than people have in Spanish. Blind judges also rated a script a person wrote as more AI
-after a rewrite. For your own
-script, measure it and change what you choose to change.
+human-written. Rewritten from notes that were outlines of the finished human script of the
+same video, the Claude judge's P(AI) fell on held-out titles from 71.0 to 24.7 in English and
+to 20.3 in Spanish, while a GPT judge saw about 15 points and still rated them around 65.
+Without notes a rewrite gained 4.5 to 10.5 points and about nine in ten were still rated AI,
+and judges rated a script a person wrote as more AI after a rewrite. For your own script,
+measure it and change what you choose to change.
 
 Other languages get the same checklist as a best effort. There is no human baseline for
 them yet. The meter says so and shows only the numbers that don't depend on the words,
