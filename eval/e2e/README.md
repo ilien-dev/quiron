@@ -38,6 +38,16 @@ Paths are relative to the repo.
 `mksets.py` writes the six script sets, and its docstring gives the rule that picks the
 rows. A script set gets a rewriter prompt with the title in the set's language, and the
 judges read only the narration (`harness.narration`), with a prompt of their own.
+`scriptstats.py SET SNAP ...` prints what the rewrites did to the text: a few meter
+features, the script patterns, fillers and ellipses, leftover markup, and how much of the
+narration the meter's text filter drops.
+
+That filter has a known gap. Where `spoken()` removes stacked stage directions it leaves
+four or more blank lines, and `aimeter.prose()` then takes the next paragraph for indented
+code and drops it. An assistant script loses 5% to 10% of its narration this way, and a
+human caption loses nothing. `QUIRON_FULL_NARRATION=1` makes `harness.narration` close those
+runs before the judges read the text. The default is unchanged, so the committed numbers
+reproduce. The script results give both readings.
 
 A row with no notes gets a prompt that says so and tells the rewriter not to stop and
 ask. Sonnet 5.5 otherwise refuses to write `final.md` until it has the notes.
