@@ -13,6 +13,21 @@
 # _corpus was set by hand again. Keys that moved: triads_1k ai 6.185 -> 6.33; nominalizations_1k auc 0.606 -> 0.607;
 # questions_1k auc 0.563 -> 0.564; semicolons_1k auc 0.445 -> 0.441. No human band (p10, p50, p90, min, max), no
 # push, and no meta key (_register, _spoken, _skip, _thresholds, _corpus) moved; the channel rule gives the same _skip.
+# Rebuilt in task 6b with the same command, train only, after spoken() stopped leaving the blank-line runs that
+# prose() read as indented code (assistant train scripts regained their narration; no human caption changed);
+# _corpus was set by hand again. Keys that moved: cv_sentence_len ai 0.53 -> 0.531; cv_sentence_len auc 0.359 ->
+# 0.364; mean_sentence_len auc 0.072 -> 0.069; long_words_1k ai 215.545 -> 216.08; long_words_1k auc 0.661 -> 0.657;
+# mean_word_len ai 4.7 -> 4.71; mean_word_len auc 0.718 -> 0.713; nominalizations_1k ai 18.01 -> 17.99;
+# nominalizations_1k auc 0.607 -> 0.61; ly_adverbs_1k auc 0.383 -> 0.385; passive_1k ai 5.125 -> 4.99; passive_1k
+# auc 0.416 -> 0.412; mattr50 ai 0.833 -> 0.832; mattr50 auc 0.802 -> 0.807; first_person_1k ai 4.765 -> 4.865;
+# first_person_1k auc 0.274 -> 0.277; contractions_1k ai 23.82 -> 24.07; contractions_1k auc 0.505 -> 0.51;
+# questions_1k ai 3.265 -> 3.39; questions_1k auc 0.564 -> 0.587; repeated_openers ai 5.35 -> 5.2; repeated_openers
+# auc 0.629 -> 0.637; connective_openers ai 12.0 -> 12.05; connective_openers auc 0.298 -> 0.296; commas_1k ai
+# 64.525 -> 61.96; commas_1k auc 0.606 -> 0.603; ai_lexicon_1k ai 1.43 -> 1.73; ai_lexicon_1k auc 0.687 -> 0.705;
+# triads_1k ai 6.33 -> 6.21; triads_1k auc 0.799 -> 0.808; participles_1k ai 1.085 -> 1.035; participles_1k auc
+# 0.498 -> 0.496; plain_words_1k ai 62.185 -> 62.505; plain_words_1k auc 0.327 -> 0.335; parens_1k auc 0.384 ->
+# 0.385; para_words ai 30.7 -> 28.95. No human band (p10, p50, p90, min, max) and no meta key moved; no push moved.
+# The channel rule (eval/results/script-channels.txt, rerun) gives the same _skip.
 # The sections between here and the task-5 block are the state at commit cafd8ed, kept as the before.
 
 ## Held-out evaluation with the shipped thresholds
@@ -200,6 +215,9 @@ terra                9                     4           3.78      3 of 9 (33%)
   wendoverproductions-aQSxPzafO_k.md: 2 out (ai_lexicon_1k, triads_1k); checklist FAIL
 
 ## Shape patterns (task 5): the script checks, switch-offs and T1, before and after on the same texts
+# Task 6b: the T1 grid and every 'after' table below were rerun with the same commands on whole narrations (spoken() fixed,
+# bands rebuilt). Humans clean are unchanged (46 of 49 held out, 0.91 of train); no check changed state and _thresholds stay
+# (script-candidates.txt, the task 6b notes and the last block). The 'before' column is still cafd8ed.
 # Optimistic, like the thresholds above: the verdicts, the switch-offs, the union size and T1 were chosen looking at the held-out humans and the test folders, so the after column is partly in-sample; the realengineering-7vLPefHYWpY caption that is clean now was cleared by switch-offs chosen on that same held-out set.
 # New checks in audit.py, only under "_register": "script": S1-S6 (TELL; S3 is a request for comments) and S7 (FAIL, three of S1-S6);
 # switched off here: A1, A1b, A2b, A3, A4, A8, A9, A14b, A15, A26, A32 and the TELL state of B1.
@@ -210,25 +228,25 @@ terra                9                     4           3.78      3 of 9 (33%)
 # V=$(mktemp); python3 -c "import json,sys;d=json.load(open('scripts/bands-script.json'));d['_thresholds'].update(json.loads(sys.argv[1]));json.dump(d,open(sys.argv[2],'w'))" '<variant>' $V
 # QUIRON_BANDS=$V python3 scripts/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 human-train=$TRAIN opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra --json   (rows from the JSON: groups.*.audit_clean_share and checks.*.T1)
 TELLS_MAX    human-heldout   human-train        opus55      sonnet55       fable52         gpt61         terra
-3 clean               0.94          0.89          0.22          0.56          0.78          0.22          0.22
-3 T1 FAIL                0          0.02          0.44          0.11             0          0.44          0.33
-4 clean               0.94           0.9          0.33          0.56          0.78          0.33          0.44
-4 T1 FAIL                0          0.01          0.22          0.11             0          0.11          0.11
-5 clean               0.94          0.91          0.33          0.56          0.78          0.33          0.44
+3 clean               0.94          0.89          0.22          0.33          0.78          0.22          0.22
+3 T1 FAIL                0          0.02          0.44          0.33             0          0.44          0.33
+4 clean               0.94           0.9          0.22          0.33          0.78          0.33          0.44
+4 T1 FAIL                0          0.01          0.22          0.22             0          0.11          0.11
+5 clean               0.94          0.91          0.22          0.33          0.78          0.33          0.44
 5 T1 FAIL                0             0             0             0             0             0             0
-6 clean               0.94          0.91          0.33          0.56          0.78          0.33          0.44
+6 clean               0.94          0.91          0.22          0.33          0.78          0.33          0.44
 6 T1 FAIL                0             0             0             0             0             0             0
 
 # before: the held-out evaluation above (commit cafd8ed, same command); after: QUIRON_BANDS=scripts/bands-script.json python3 scripts/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
                                 before     after
 checklist AUC, opus55             0.54     0.745
-checklist AUC, sonnet55          0.472     0.859
-checklist AUC, fable52           0.559     0.815
+checklist AUC, sonnet55          0.472     0.887
+checklist AUC, fable52           0.559     0.836
 checklist AUC, gpt61               0.7     0.963
 checklist AUC, terra             0.763     0.963
 held-out humans clean         45 of 49  46 of 49
-share failing, opus55             0.44      0.67
-share failing, sonnet55           0.44      0.44
+share failing, opus55             0.44      0.78
+share failing, sonnet55           0.44      0.67
 share failing, fable52            0.33      0.22
 share failing, gpt61              0.67      0.67
 share failing, terra              0.67      0.56
@@ -236,17 +254,17 @@ share failing, terra              0.67      0.56
 # after, the FAIL rate per check:
 FAIL rate per check   human-heldout          opus55        sonnet55         fable52           gpt61           terra
 A21                              0               0            0.11               0               0               0
-B1                            0.02               0               0            0.11            0.11            0.22
+B1                            0.02            0.11               0            0.11            0.11            0.22
 C1                            0.02            0.44            0.33            0.11            0.67            0.56
 C2                            0.02               0               0               0               0               0
-S7                               0            0.33            0.11               0            0.11            0.11
+S7                               0            0.33            0.33               0            0.11            0.11
 
 # after: QUIRON_BANDS=scripts/bands-script.json python3 eval/band_compare.py human-heldout=~/corpus/script@heldout opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
 bands: scripts/bands-script.json  (17 scored features)
 group                n   out of band, median  AI side, mean   clean checklist
 human-heldout       49                     2           0.78    46 of 49 (94%)
-opus55               9                     3           2.89      3 of 9 (33%)
-sonnet55             9                     4           2.44      5 of 9 (56%)
-fable52              9                     3           2.33      7 of 9 (78%)
+opus55               9                     3           2.78      2 of 9 (22%)
+sonnet55             9                     4           2.67      3 of 9 (33%)
+fable52              9                     3           2.44      7 of 9 (78%)
 gpt61                9                     5           4.67      3 of 9 (33%)
 terra                9                     4           3.78      4 of 9 (44%)

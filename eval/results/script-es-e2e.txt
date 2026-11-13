@@ -9,73 +9,73 @@
 # measured on the spoken words against scripts/bands-script-es.json. Rewrites: harness.py rewrite SNAP REP --set SET -j 6.
 # Decision rule (written before any number): rules ship if they beat bands on scr-es by more than the larger rep-to-rep set-mean difference, with no more overshot, and the same holds on scr2-es.
 # Result: neither rules nor rules-nolen beat bands on scr-es, so no rule was run on scr2-es and references/script.md was removed after 37a1cff.
+# Task 6b: every number below is on whole narrations. Until 4b6530e spoken() left blank-line runs where it removed stacked
+# directions and aimeter.prose() read each run plus the next line as indented code, so assistant scripts lost 5% to 10% of
+# their narration in the meter and in the judges' text (human captions lost nothing). spoken() now closes those runs, the
+# script band files were recalibrated, and the same rewrites were judged again (no rewrite was redone). 'over' / 'aiside'
+# use the rebuilt band file. The verdict above holds: rules and rules-nolen are not below bands.
 
 ## Untouched drafts, main and bands on scr-es
 $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft main bands --set scr-es --k 2 --g 1
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
-draft           20    20   78.0    90%   83.7                0.40   2.85
-main            20    20   68.5    85%   78.0                0.90   2.50   Opus  -9.5 (worse 2/20, p=0.002)  GPT  -5.7 (p=0.000)  over +0.50 (higher 8, lower 2, p=0.047)
-bands           20    40   66.8    80%   79.8                0.82   2.15   Opus -11.3 (worse 0/20, p=0.000)  GPT  -3.9 (p=0.001)  over +0.42 (higher 6, lower 0, p=0.028)
+draft           20    20   79.4    90%   84.3                0.40   2.85
+main            20    20   69.5    80%   79.2                0.85   2.50   Opus  -9.9 (worse 2/20, p=0.000)  GPT  -5.2 (p=0.001)  over +0.45 (higher 8, lower 2, p=0.059)
+bands           20    40   69.0    90%   79.4                0.80   2.12   Opus -10.4 (worse 1/20, p=0.000)  GPT  -5.0 (p=0.000)  over +0.40 (higher 7, lower 0, p=0.018)
 
 ## main against bands, paired per title
 $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py main bands --set scr-es --k 2 --g 1
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
-main            20    20   68.5    85%   78.0                0.90   2.50
-bands           20    40   66.8    80%   79.8                0.82   2.15   Opus  -1.7 (worse 7/20, p=0.287)  GPT  +1.8 (p=0.039)  over -0.07 (higher 4, lower 5, p=0.594)
+main            20    20   69.5    80%   79.2                0.85   2.50
+bands           20    40   69.0    90%   79.4                0.80   2.12   Opus  -0.5 (worse 6/20, p=0.295)  GPT  +0.2 (p=0.845)  over -0.05 (higher 3, lower 6, p=0.859)
 
 ## bands against the rules, and the one variant
 $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py bands rules rules-nolen --set scr-es --k 2 --g 1 --noise --reasons
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs bands
-bands           20    40   66.8    80%   79.8                0.82   2.15
-rules           20    40   71.0    85%   81.2                0.32   1.76   Opus  +4.3 (worse 15/20, p=0.070)  GPT  +1.4 (p=0.006)  over -0.39 (higher 1, lower 7, p=0.021)
-rules-nolen     20    20   70.4    90%   80.3                0.60   2.35   Opus  +3.7 (worse 12/20, p=0.145)  GPT  +0.6 (p=0.679)  over -0.23 (higher 2, lower 5, p=0.176)
+bands           20    40   69.0    90%   79.4                0.80   2.12
+rules           20    40   74.2    92%   82.7                0.45   1.77   Opus  +5.2 (worse 17/20, p=0.018)  GPT  +3.3 (p=0.000)  over -0.35 (higher 1, lower 8, p=0.021)
+rules-nolen     20    20   71.1    90%   80.7                0.55   2.20   Opus  +2.0 (worse 12/20, p=0.205)  GPT  +1.2 (p=0.187)  over -0.25 (higher 1, lower 6, p=0.128)
 
-bands          noise: judge-judge sd  6.2   r0-r1: set mean  +3.1, per-title sd 10.1
-rules          noise: judge-judge sd  4.4   r0-r1: set mean  -1.3, per-title sd 11.2
-rules-nolen    noise: judge-judge sd  6.8
+bands          noise: judge-judge sd  6.9   r0-r1: set mean  -2.1, per-title sd  9.4
+rules          noise: judge-judge sd  5.4   r0-r1: set mean  -0.5, per-title sd 11.2
+rules-nolen    noise: judge-judge sd  6.1
 
 bands top reasons (judged AI):
-   11 estructura muy pulida y didáctica
+   10 estructura muy pulida y didáctica
     5 estructura de guion muy pulida y formulaica
-    3 estructura muy pulida de explainer
+    3 estructura muy pulida y repetitiva
+    3 estructura muy pulida y formulaica
+    3 estructura de guion muy pulida y predecible
+    3 estructura muy pulida y didáctica con transiciones tipo guio
     3 algunos giros coloquiales
     2 estructura muy pulcra y de manual
-    2 estructura muy pulida y didáctica con transiciones tipo guio
-    2 hay giros coloquiales naturales
+    2 estructura muy pulida y de manual
     2 estructura muy ordenada y exhaustiva
-    2 hay saltos y huecos extraños
     2 la estructura es muy uniforme
+    2 estructura muy pulida y didáctica con transiciones formulaic
+    2 patrones retóricos típicos de ia
+    2 estructura muy pulida de explainer
     2 estructura muy pulida de guion explicativo
-    2 estructura de guion muy pulida y predecible
-    2 estructura de guion muy pulida
-    2 citas de fuentes insertadas como fragmentos sueltos
-    2 la estructura es muy regular
 
 rules top reasons (judged AI):
-   10 estructura muy pulida y didáctica
-    4 la estructura es muy uniforme
+    9 estructura muy pulida y didáctica
+    7 la estructura es muy uniforme
+    5 estructura muy pulida y enciclopédica
+    3 estructura muy ordenada y didáctica
     3 citas de fuentes insertadas como fragmentos sueltos
     2 estructura de ensayo muy pulida y simétrica
-    2 estructura muy regular y formulaica
+    2 la estructura es muy sistemática
     2 estructura muy pulida y didáctica con hedging constante y ca
-    2 cierre genérico de youtube
+    2 estructura muy pulcra y didáctica
     2 estructura de explainer muy pulida
     2 apertura con pregunta retórica de tres elementos y promesa d
     2 algunas explicaciones suenan seguras pese a simplificar en e
     2 estructura muy pulida y didáctica con transiciones formulaic
-    2 quedan marcadores de plantilla sin rellenar como "
     1 estructura muy pulida y equilibrada, con cobertura sistemáti
     1 frases de cierre y transición genéricas y simétricas
-    1 tono cauteloso y uniforme de consejo sanitario
 
 rules-nolen top reasons (judged AI):
     5 estructura muy pulida y didáctica
     2 estructura muy ordenada y didáctica
-    2 la estructura es muy uniforme
-    2 estructura muy regular y formulaica
-    2 rasgos humanos
-    2 estructura muy limpia y didáctica
-    2 frases de transición y cierre formulaicas
     2 la narración sigue una estructura muy uniforme
     2 estructura de guion de divulgación muy pulida
     2 citas de fuentes insertadas como fragmentos sueltos
@@ -84,55 +84,39 @@ rules-nolen top reasons (judged AI):
     1 tono cuidadosamente equilibrado y con salvaguardas típicas d
     1 casi no hay marcas personales ni digresiones o errores de ha
     1 la narración sigue una estructura muy ordenada que recorre t
+    1 repite formulaciones equilibradas y cautelosas, como «ningun
+    1 cierra retomando la metáfora de las cadenas con una moraleja
+    1 frases cortas y aseveraciones tipo plantilla
+    1 cierre convencional con moraleja y llamada a la acción
+    1 frases de cierre y transición típicas de guion generado
 
 ## Held-out titles: drafts and bands on scr2-es (no rules: none passed scr-es)
 $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft bands --set scr2-es --k 2 --g 1
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
-draft           20    20   79.9    95%   83.5                0.40   3.65
-bands           20    40   70.3    95%   78.2                0.85   2.35   Opus  -9.6 (worse 2/20, p=0.002)  GPT  -5.3 (p=0.000)  over +0.45 (higher 7, lower 5, p=0.126)
+draft           20    20   81.5    95%   83.8                0.30   3.55
+bands           20    40   70.4    98%   78.5                0.90   2.30   Opus -11.1 (worse 1/20, p=0.001)  GPT  -5.2 (p=0.000)  over +0.60 (higher 10, lower 4, p=0.035)
 $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py bands --set scr2-es --k 2 --g 1 --noise
-bands          noise: judge-judge sd  6.1   r0-r1: set mean  +0.2, per-title sd 11.3
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs bands
+bands           20    40   70.4    98%   78.5                0.90   2.30
+
+bands          noise: judge-judge sd  6.5   r0-r1: set mean  +2.0, per-title sd 10.2
 
 ## Held-out human captions (scrh-es, local), before and after one rewrite with final
 $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft final --set scrh-es --k 2 --g 1
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
-draft           10    10    8.1     0%   11.6                1.70   1.90
-final           10    10   19.2     0%   27.0                1.60   1.90   Opus +11.2 (worse 10/10, p=0.005)  GPT +15.4 (p=0.008)  over -0.10 (higher 1, lower 2, p=0.593)
+draft           10    10    8.1     0%   11.6                1.60   1.90
+final           10    10   19.2     0%   27.0                1.50   1.90   Opus +11.2 (worse 10/10, p=0.005)  GPT +15.4 (p=0.008)  over -0.10 (higher 1, lower 2, p=0.593)
 
-## Full narration: the same rewrites judged again with the whole of spoken()
-# aimeter.prose() line 263 (^\s{4,}\S.*$, re.M) reads the blank-line runs that spoken() leaves where it removed stacked
-# directions as indented code and drops the paragraph after them. The judges above read narrations missing 5% to 10% of their
-# words (see the lost= column below; no human caption is touched). QUIRON_FULL_NARRATION=1 closes those runs first. The meter
-# columns (over, aiside) still use aimeter as it is. The verdict is the same: rules and rules-nolen are not below bands.
-$ QUIRON_FULL_NARRATION=1 JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft main bands --set scr-es --k 2 --g 1
-snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
-draft           20    20   79.4    90%   84.3                0.40   2.85
-main            20    20   69.5    80%   79.2                0.90   2.50   Opus  -9.9 (worse 2/20, p=0.000)  GPT  -5.2 (p=0.001)  over +0.50 (higher 8, lower 2, p=0.047)
-bands           20    40   69.0    90%   79.4                0.82   2.15   Opus -10.4 (worse 1/20, p=0.000)  GPT  -5.0 (p=0.000)  over +0.42 (higher 6, lower 0, p=0.028)
-$ QUIRON_FULL_NARRATION=1 JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py bands rules rules-nolen --set scr-es --k 2 --g 1 --noise
-snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs bands
-bands           20    40   69.0    90%   79.4                0.82   2.15
-rules           20    40   74.2    92%   82.7                0.32   1.76   Opus  +5.2 (worse 17/20, p=0.018)  GPT  +3.3 (p=0.000)  over -0.39 (higher 1, lower 7, p=0.021)
-rules-nolen     20    20   71.1    90%   80.7                0.60   2.35   Opus  +2.0 (worse 12/20, p=0.205)  GPT  +1.2 (p=0.187)  over -0.23 (higher 2, lower 5, p=0.176)
-
-bands          noise: judge-judge sd  6.9   r0-r1: set mean  -2.1, per-title sd  9.4
-rules          noise: judge-judge sd  5.4   r0-r1: set mean  -0.5, per-title sd 11.2
-rules-nolen    noise: judge-judge sd  6.1
-$ QUIRON_FULL_NARRATION=1 JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py main bands --set scr-es --k 2 --g 1
-snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
-main            20    20   69.5    80%   79.2                0.90   2.50
-bands           20    40   69.0    90%   79.4                0.82   2.15   Opus  -0.5 (worse 6/20, p=0.295)  GPT  +0.2 (p=0.845)  over -0.07 (higher 4, lower 5, p=0.594)
-
-## What the rewrites did to the text, per snapshot (rates per 1,000 spoken words; lost = narration prose() drops)
+## What the rewrites did to the text per snapshot (rates per 1,000 spoken words; lost = narration prose() drops, 0 since the fix)
 $ python3 eval/e2e/scriptstats.py scr-es draft main bands rules rules-nolen
-draft        files= 20 measured= 20 mean_sentence_len=14.3 cv_sentence_len=0.495 first_person_1k=3.8 triads_1k=5.67 mattr50=0.825 imagine=0.32 reveals=0.18 comments=0.40 fillers=1.43 ellipses=1.11 leaks=2/20 lost=6.7% (>10%: 6, max 35%)
-main         files= 20 measured= 20 mean_sentence_len=14.4 cv_sentence_len=0.507 first_person_1k=4.09 triads_1k=5.31 mattr50=0.814 imagine=0.17 reveals=0.04 comments=0.49 fillers=1.19 ellipses=0.26 leaks=2/20 lost=6.7% (>10%: 6, max 39%)
-bands        files= 40 measured= 40 mean_sentence_len=14.7 cv_sentence_len=0.513 first_person_1k=4.06 triads_1k=5.01 mattr50=0.812 imagine=0.15 reveals=0.38 comments=0.54 fillers=1.20 ellipses=0.37 leaks=4/40 lost=6.8% (>10%: 12, max 35%)
-rules        files= 40 measured= 38 mean_sentence_len=18.3 cv_sentence_len=0.522 first_person_1k=3.98 triads_1k=4.02 mattr50=0.816 imagine=0.00 reveals=0.00 comments=0.06 fillers=1.41 ellipses=0.43 leaks=4/40 lost=9.5% (>10%: 12, max 81%)
-rules-nolen  files= 20 measured= 20 mean_sentence_len=14.5 cv_sentence_len=0.481 first_person_1k=4.28 triads_1k=4.51 mattr50=0.813 imagine=0.00 reveals=0.00 comments=0.05 fillers=1.55 ellipses=0.46 leaks=2/20 lost=6.6% (>10%: 6, max 34%)
+draft        files= 20 measured= 20 mean_sentence_len=14.1 cv_sentence_len=0.503 first_person_1k=3.88 triads_1k=5.67 mattr50=0.825 imagine=0.56 reveals=0.18 comments=0.40 fillers=1.43 ellipses=1.11 leaks=2/20 lost=0.0% (>10%: 0, max 0%)
+main         files= 20 measured= 20 mean_sentence_len=14.4 cv_sentence_len=0.519 first_person_1k=3.96 triads_1k=5.4 mattr50=0.814 imagine=0.24 reveals=0.04 comments=0.49 fillers=1.19 ellipses=0.26 leaks=2/20 lost=0.0% (>10%: 0, max 0%)
+bands        files= 40 measured= 40 mean_sentence_len=14.6 cv_sentence_len=0.516 first_person_1k=4 triads_1k=4.94 mattr50=0.812 imagine=0.23 reveals=0.38 comments=0.54 fillers=1.20 ellipses=0.37 leaks=4/40 lost=0.0% (>10%: 0, max 0%)
+rules        files= 40 measured= 40 mean_sentence_len=18.3 cv_sentence_len=0.523 first_person_1k=3.98 triads_1k=4.04 mattr50=0.814 imagine=0.00 reveals=0.00 comments=0.06 fillers=1.41 ellipses=0.43 leaks=4/40 lost=0.0% (>10%: 0, max 0%)
+rules-nolen  files= 20 measured= 20 mean_sentence_len=14.4 cv_sentence_len=0.492 first_person_1k=4.23 triads_1k=4.24 mattr50=0.812 imagine=0.00 reveals=0.00 comments=0.05 fillers=1.55 ellipses=0.46 leaks=2/20 lost=0.0% (>10%: 0, max 0%)
 $ python3 eval/e2e/scriptstats.py scr2-es draft bands
-draft        files= 20 measured= 20 mean_sentence_len=13.5 cv_sentence_len=0.489 first_person_1k=5.07 triads_1k=5.87 mattr50=0.832 imagine=0.39 reveals=0.08 comments=0.44 fillers=2.17 ellipses=0.66 leaks=1/20 lost=4.7% (>10%: 3, max 31%)
-bands        files= 40 measured= 40 mean_sentence_len=14.1 cv_sentence_len=0.504 first_person_1k=4.34 triads_1k=4.74 mattr50=0.816 imagine=0.36 reveals=0.11 comments=0.46 fillers=1.74 ellipses=0.46 leaks=2/40 lost=4.9% (>10%: 8, max 30%)
+draft        files= 20 measured= 20 mean_sentence_len=13.6 cv_sentence_len=0.484 first_person_1k=5.1 triads_1k=5.76 mattr50=0.831 imagine=0.58 reveals=0.08 comments=0.44 fillers=2.17 ellipses=0.66 leaks=1/20 lost=0.0% (>10%: 0, max 0%)
+bands        files= 40 measured= 40 mean_sentence_len=14.2 cv_sentence_len=0.504 first_person_1k=4.46 triads_1k=4.61 mattr50=0.815 imagine=0.57 reveals=0.11 comments=0.46 fillers=1.74 ellipses=0.46 leaks=2/40 lost=0.0% (>10%: 0, max 0%)
 $ python3 eval/e2e/scriptstats.py scrh-es draft final
 draft        files= 10 measured= 10 mean_sentence_len=19.9 cv_sentence_len=0.634 first_person_1k=5.83 triads_1k=4.07 mattr50=0.786 imagine=0.00 reveals=0.00 comments=0.00 fillers=4.62 ellipses=4.62 leaks=0/10 lost=0.0% (>10%: 0, max 0%)
 final        files= 10 measured= 10 mean_sentence_len=15.7 cv_sentence_len=0.544 first_person_1k=5.49 triads_1k=4.62 mattr50=0.791 imagine=0.00 reveals=0.00 comments=0.34 fillers=3.87 ellipses=1.76 leaks=0/10 lost=0.0% (>10%: 0, max 0%)

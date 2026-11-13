@@ -6,29 +6,29 @@
 
 group                        texts  mean P(AI)  over 50
 human train captions            48         5.2        0
-assistant train scripts         48        79.9       45
+assistant train scripts         48        81.8       46
   train-gpt61                   12        87.4       12
-  train-haiku55                 12        83.0       12
-  train-opus55                  12        73.0       11
-  train-sonnet55                12        76.3       10
+  train-haiku55                 12        86.2       12
+  train-opus55                  12        75.7       11
+  train-sonnet55                12        77.8       11
 
 human texts judged: academiaplay-3Wg10E4Ung0.md, cdeciencia-CR6UoZYIu14.md, curiosamente-6oG92Fl4AhI.md, dateunvlog-1GgFAYX5Y3I.md, derivando-teqFwLG2-6s.md, elrobotdeplaton-Can7RK004jg.md, jaimealtozano-9rLc_brC8DY.md, lahiperactina-FB9C4uqzJSc.md, memoriasdepez-L4ik3OsQ_Kc.md, peroesoesotrahistoria-13iZOT8-_GU.md, quantumfracture-0H6b6NKsv0Q.md, unmundoinmenso-1MSFgiDqHsc.md, visualpolitik-4Q_z-vwCAhk.md, academiaplay-hYajgwcWb1k.md, cdeciencia-EgxiXbBwAqQ.md, curiosamente-Aet-p4VdM2g.md, dateunvlog-UnFDTO_DcXM.md, derivando-yDyMSliKsxI.md, elrobotdeplaton-RSXDomuQe2g.md, jaimealtozano-BRBTCIK_9_g.md, lahiperactina-Hb6YaR1BWPM.md, memoriasdepez-OZirgERQ2qc.md, peroesoesotrahistoria-AmTG9QbVfRQ.md, quantumfracture-IEP5IM4N7GE.md, unmundoinmenso-7c_KT7VsPxw.md, visualpolitik-53WRNKbFJBg.md, cdeciencia-FCx8Cf4H18w.md, curiosamente-DgFdq5kT95M.md, dateunvlog-ap09Xw_xpEg.md, elrobotdeplaton-Ui4M0cYFZWI.md, jaimealtozano-OdYIS8KXdFI.md, lahiperactina-HfS7sTzuz1c.md, peroesoesotrahistoria-FjZjoSVeTg4.md, quantumfracture-J7FofwcNCpk.md, unmundoinmenso-9XqnDSqhfww.md, visualpolitik-LP6yMu9wdr8.md, cdeciencia-GCH_6lrHgaA.md, curiosamente-KyjjFYM8aUg.md, dateunvlog-qc6qvdwII5E.md, elrobotdeplaton-W9PCt9ptVZw.md, jaimealtozano-VEVIAF_2tUM.md, lahiperactina-TFl3nffdELI.md, peroesoesotrahistoria-Khj_5W2yafc.md, quantumfracture-JBZx03342eM.md, unmundoinmenso-YyZIRGRQ_1w.md, visualpolitik-MX6gxOVL7KY.md, cdeciencia-K0lqbaOr5dk.md, curiosamente-T55OzE-X6u0.md
 
 ## Reasons on the assistant scripts: 288, grouped (a reason can be in several groups)
-  180  pulido uniforme, tono parejo    /pulid|uniform|limpi|impecable|equilibr|homog|pulcr|ordenad|cuidad|parej|regular/
-  170  estructura de plantilla, señales de orden    /estructura|plantilla|f[oó]rmula|formul|manual|esquem|secci[oó]n|enumera|primer[oa]\b|bloques|did[aá]ctic/
+  190  pulido uniforme, tono parejo    /pulid|uniform|limpi|impecable|equilibr|homog|pulcr|ordenad|cuidad|parej|regular/
+  167  estructura de plantilla, señales de orden    /estructura|plantilla|f[oó]rmula|formul|manual|esquem|secci[oó]n|enumera|primer[oa]\b|bloques|did[aá]ctic/
   144  cierre redondo: resumen, moraleja, eco    /resum|cierre|conclusi|moralej|lecci[oó]n|redond|remate|aforism|eco\b|recapitul/
-  111  sin voz personal, genérico    /personal|voz|idiosincr|gen[eé]ric|an[eé]cdota|digresi|propio|muletilla|titube/
-   76  preguntas retóricas que se responden    /ret[oó]ric|pregunta/
-   70  gancho de apertura    /gancho|imagina|apertura|arranque|abre con|empieza con/
-   66  cierre de canal, llamada a la acción    /suscr[ií]b|coment|llamada a la acci|\bcta\b|like|despedida|me gusta|campanita/
-   66  matices y cautelas constantes, tono enciclopédico    /matiz|cautel|prudent|neutr|enciclop|equilibrado y caut/
-   57  listas de tres, paralelismo    /tres|tr[ií]ada|tricolon|paralel|an[aá]fora|repetici/
-   56  transiciones de fórmula (pero ojo, aquí viene)    /transici|pero ojo|aqu[ií] viene|aqu[ií] est[aá]|vamos al|hablemos|pasemos/
-   44  frases cortas, fragmentos, efecto    /fragment|frases cortas|cortas|ritmo|cadencia|efectis|contundent|golpe|punch/
-   43  restos de marcas, fuentes o notas    /referencia|fuente|metatexto|etiqueta|marcador|sugerencia de|instrucci|encabezado|guion original/
-   39  contrastes de fórmula (no es X, es Y)    /no es [^,]*\. es|no es x|contraste|ant[ií]tesis|no solo|sino/
-   24  promesa: quédate hasta el final, hoy vamos a    /qu[eé]date|hoy vamos|hoy te|promesa/
+  120  sin voz personal, genérico    /personal|voz|idiosincr|gen[eé]ric|an[eé]cdota|digresi|propio|muletilla|titube/
+   87  preguntas retóricas que se responden    /ret[oó]ric|pregunta/
+   72  cierre de canal, llamada a la acción    /suscr[ií]b|coment|llamada a la acci|\bcta\b|like|despedida|me gusta|campanita/
+   71  matices y cautelas constantes, tono enciclopédico    /matiz|cautel|prudent|neutr|enciclop|equilibrado y caut/
+   69  gancho de apertura    /gancho|imagina|apertura|arranque|abre con|empieza con/
+   55  listas de tres, paralelismo    /tres|tr[ií]ada|tricolon|paralel|an[aá]fora|repetici/
+   48  transiciones de fórmula (pero ojo, aquí viene)    /transici|pero ojo|aqu[ií] viene|aqu[ií] est[aá]|vamos al|hablemos|pasemos/
+   45  frases cortas, fragmentos, efecto    /fragment|frases cortas|cortas|ritmo|cadencia|efectis|contundent|golpe|punch/
+   42  contrastes de fórmula (no es X, es Y)    /no es [^,]*\. es|no es x|contraste|ant[ií]tesis|no solo|sino/
+   36  restos de marcas, fuentes o notas    /referencia|fuente|metatexto|etiqueta|marcador|sugerencia de|instrucci|encabezado|guion original/
+   27  promesa: quédate hasta el final, hoy vamos a    /qu[eé]date|hoy vamos|hoy te|promesa/
     4  in none of these
 
 ## Reasons on the human captions: 288, grouped (a reason can be in several groups)
@@ -54,21 +54,21 @@ train-gpt61/academiaplay-hYajgwcWb1k.md  P(AI) 88.0
   - Matización constante y equilibrada tipo asistente: "no apareció de golpe", "Esto no significa que...", "Es una simplificación", "La palabra clave es «pretende»", con frases cortas y uniformes y poca voz personal o anécdota.
   - Cobertura enciclopédica ordenada (Francia, España, Inglaterra, Reforma, Westfalia) con transiciones formulaicas ("Además", "Sin embargo", "Por tanto") y párrafos de longitud y ritmo muy regulares, sin digresiones ni errores humanos.
 
-train-gpt61/curiosamente-su7KrrYVkSo.md  P(AI) 88.0
-  - Estructura muy pulida y equilibrada: gancho con pregunta retórica, analogía (dominós, humo), recomendaciones en orden lógico y cierre con resumen en lista de cuatro ('conocimiento, prevención, atención oportuna y solidaridad').
-  - Lenguaje cauteloso y de salud pública genérico, con matices típicos de IA ('Ninguna medida funciona como un escudo perfecto', 'según tu situación', 'cuando sea posible') y frases de cierre sentenciosas ('No hace falta ser invencibles para ayudar').
-  - Cubre todo de forma exhaustiva y sin tono personal ni digresiones: desmiente mitos, vacunas, salud emocional, verificación de noticias y cita fuentes de la OMS al final, como un texto sintetizado y no una voz con experiencia propia.
-  - Estructura muy pulida y equilibrada: gancho con pregunta retórica, analogía (dominós, humo), recomendaciones en lista implícita y cierre con resumen tripartito ("conocimiento, prevención, atención oportuna y solidaridad").
-  - Tono cauteloso y matizado típico de asistente: "Ninguna medida funciona como un escudo perfecto", "según tu situación", "cuando sea posible", sin voz personal, humor ni anécdotas.
-  - Frases de eslogan con contraste ("No hace falta ser invencibles para ayudar. Hace falta entender..."), y el texto empieza con "Guion original." y termina citando fuentes de la OMS como un entregable generado.
+train-gpt61/curiosamente-su7KrrYVkSo.md  P(AI) 89.0
+  - Estructura muy pulida y equilibrada con muletillas retóricas típicas de IA: pregunta inicial, "Ninguna medida funciona como un escudo perfecto. La protección aumenta cuando combinamos varias."
+  - Tono cauteloso y de salud pública genérico, con matices y salvedades constantes ("según tu situación", "cuando sea posible", "que correspondan a tu edad, condición de salud y lugar de residencia") y cierre moralizante con tríada: "conocimiento, prevención, atención oportuna y solidaridad".
+  - Frases cortas y simétricas, analogías de manual (dominós, humo) y falta de detalles personales o digresiones propias de un guionista humano; "Guion original." al inicio parece un artefacto de generación.
+  - Estructura muy pulida y equilibrada: gancho con pregunta retórica, analogía (fichas de dominó), lista de consejos y cierre en tricolon ('Con conocimiento, prevención, atención oportuna y solidaridad').
+  - Tono cauteloso y genérico de salud pública, con coberturas constantes ('según tu situación', 'cuando sea posible', 'que correspondan a tu edad, condición de salud y lugar de residencia') y sin voz personal ni detalles concretos.
+  - Frases con contraste típico de IA ('No hace falta ser invencibles para ayudar. Hace falta entender que...'), y la inclusión de 'Guion original.' al inicio suena a artefacto de generación.
 
-train-gpt61/dateunvlog-1GgFAYX5Y3I.md  P(AI) 88.0
-  - Estructura muy pulida y didáctica: gancho con preguntas retóricas en cascada, analogías (cable y hormiga, cuerda de guitarra, mapa) y cierre con "Quizá... Quizá..." y llamada a suscribirse con moraleja.
-  - Cautelas y matizaciones constantes y simétricas ("La analogía no reproduce toda la geometría...", "resulta demasiado absoluta", "no intercambiables sin explicar el contexto"), típicas de un asistente que evita afirmaciones tajantes.
-  - Frases cortas de efecto y tono uniforme ("Y esa cuenta tiene que cerrar.", "Diez."), con la inserción artificial "Referencia técnica: David Tong, Universidad de Cambridge" y sin rasgos personales ni digresiones propias de un autor humano.
-  - Estructura pedagógica muy pulida y simétrica: abre con preguntas retóricas escalonadas, define términos y cierra con una recapitulación rítmica ("Empezamos con una cuerda. Seguimos su movimiento... Diez.").
-  - Exceso de cautelas y matices con fórmulas típicas de asistente: "La analogía no reproduce toda la geometría...", "Son resultados de marcos relacionados, pero no intercambiables sin explicar el contexto", "resulta demasiado absoluta".
-  - Frases de transición y cierre genéricas ("Pero atención:", "Ese es el corazón de la respuesta", "suscríbete. Porque entender el universo también consiste en...") y ausencia de voz personal, humor o digresiones propias de un autor humano.
+train-gpt61/dateunvlog-1GgFAYX5Y3I.md  P(AI) 86.5
+  - Estructura muy pulida de guion explicativo: preguntas retóricas iniciales, 'Hoy vamos a seguir el camino...', y cierre con 'Si quieres seguir explorándola, suscríbete' con frase final grandilocuente.
+  - Cautelas y matices sistemáticos y simétricos ('Es una analogía útil, aunque...', 'La afirmación precisa se refiere a...', 'no intercambiables sin explicar el contexto'), típicos de un asistente que evita afirmaciones absolutas.
+  - Frases cortas y paralelismos retóricos ('Empezamos con una cuerda. Seguimos su movimiento. Exigimos... Diez.'), analogías de manual (cable/hormiga, guitarra, mapa) y ausencia total de voz personal, anécdotas o digresiones.
+  - Estructura muy pulida y didáctica con preguntas retóricas en cascada al inicio y cierre con 'Quizá... Quizá...' más llamada a suscribirse, típico de guion generado.
+  - Cautelas y matizaciones constantes y simétricas ('La analogía no reproduce toda la geometría...', 'resulta demasiado absoluta', 'no intercambiables sin explicar el contexto'), con frases cortas y paralelas muy regulares.
+  - Tono uniforme sin digresiones, humor ni rasgos personales; analogías de manual (guitarra, mapa, cable con hormiga) y fórmulas como 'Ese es el corazón de la respuesta' y 'Y esa cuenta tiene que cerrar'.
 
 train-gpt61/dateunvlog-ap09Xw_xpEg.md  P(AI) 88.0
   - Estructura muy pulida de ensayo: gancho con analogía (llaves), pregunta retórica en cadena, "Vamos paso a paso", y cierre con pregunta "fascinante" sobre intuiciones cotidianas, típico de texto generado.
@@ -118,13 +118,13 @@ train-gpt61/lahiperactina-FB9C4uqzJSc.md  P(AI) 82.5
   - Frases cortas de matiz y cautela repetidas con patrón "no significa X… significa Y" / "no lo neutraliza", "no borra todos los mecanismos implicados", típicas de redacción de asistente, junto a un chiste de cierre prefabricado (teléfono 'hasta el doce por ciento').
   - Cierre y aviso de seguridad equilibrados y genéricos ("Si te ha gustado este viaje, comparte el video"; "una sustancia que forma parte de nuestras celebraciones…"), con tono uniforme y sin rasgos personales ni digresiones.
 
-train-gpt61/lahiperactina-wuDcndAWRR0.md  P(AI) 89.0
-  - Estructura muy pulida y simétrica, con muletillas retóricas típicas de IA: "Pequeñas no significa irrelevantes", "Tener un interés comercial no vuelve falsa una afirmación, pero ayuda a entender...", "Ambas posiciones caben en una conversación basada en evidencia".
-  - Tono uniformemente equilibrado y cauteloso, con citas de fuentes insertadas al final de cada bloque ("Fuente: NCCIH", "Fuente: CDC") y cero anécdotas, humor o digresiones personales; todo suena a guion de divulgación genérico.
-  - Frases de cierre y ganchos formulaicos: "Una planta. Miles de opiniones.", "Imagina a alguien que dice...", regla de cuatro preguntas más una quinta, y cierre con llamada a comentarios y compartir.
-  - Estructura muy pulida y didáctica con muletillas retóricas típicas de IA: "Pequeñas no significa irrelevantes", "Aquí conviene bajar la velocidad", "Esa precisión importa", y frases contrastivas repetidas ("X no significa Y").
-  - Citas de fuentes insertadas en bloque tras cada sección ("Fuente: NCCIH", "Fuentes: CDC, Health Canada") y cierre equilibrado con la lista de cuatro preguntas más una quinta, muy ordenado y sin voz personal ni errores ni digresiones.
-  - Tono uniformemente neutral y cauteloso, con descargos repetidos ("necesitas una valoración individual"), analogías genéricas (etiqueta "contiene alcohol") y ausencia de anécdotas o humor propios de un creador humano.
+train-gpt61/lahiperactina-wuDcndAWRR0.md  P(AI) 90.0
+  - Estructura muy pulida y simétrica, con tríadas y contrastes constantes ("Pequeñas no significa irrelevantes... Pero tampoco significa que funcione para todos"; "Cambiar la forma de consumo modifica los peligros; no los elimina").
+  - Equilibrio y cautela excesivos y sistemáticos, con muletillas de asistente: aclaración inicial de que es información general, "Aquí conviene bajar la velocidad", "Comunicar bien consiste en...", cierre con cuatro preguntas más una quinta.
+  - Falta de voz personal, anécdotas concretas o errores propios; ejemplos genéricos ("Piensa en una etiqueta que solo dijera 'contiene alcohol'") y cierre estándar de YouTube con llamada a comentarios y fuentes en la descripción.
+  - Estructura muy pulida y simétrica, con tríadas y contrastes constantes: "Pequeñas no significa irrelevantes", "Cambiar la forma de consumo modifica los peligros; no los elimina automáticamente", "Tener un interés comercial no vuelve falsa una afirmación, pero ayuda a entender...".
+  - Tono excesivamente equilibrado y cauteloso, con descargos repetidos y marcos didácticos genéricos ("haz cuatro preguntas... y añade una quinta", "Hablemos de salud mental, porque aquí abundan tanto las exageraciones como la minimización") sin voz personal, anécdotas concretas ni datos específicos.
+  - Cierre y apertura de plantilla: gancho en frases cortas ("Una planta. Miles de opiniones."), aclaración médica, resumen moralizante ("El cannabis merece algo mejor que una promesa milagrosa...") y llamada a comentar/compartir, todo con registro uniforme y sin imperfecciones orales.
 
 train-gpt61/quantumfracture-QBTgzYmkC_I.md  P(AI) 88.0
   - Gancho de apertura típico de IA con humor ligero ('pareces haber discutido con un enchufe') y cierre pulido ('El primer punto puede estar escondido en una flecha bien puesta').
@@ -142,13 +142,13 @@ train-gpt61/visualpolitik-sWFEyTNWNTM.md  P(AI) 88.0
   - Frases de contraste y paralelismo repetitivas y sentenciosas («No se discutían únicamente cargos... Se negociaba quién tendría autoridad...», «Una etiqueta sirve de poco si sustituye al análisis»), con cautelas sistemáticas y simétricas sobre cada afirmación, típicas de un asistente.
   - Citas de fuentes insertadas como etiquetas sueltas («Informe del CRS.», «Comunicado de la Corte.», «Información sobre sus reacciones.») y la propia cabecera «Guion original de divulgación geopolítica. Marco temporal...», que delatan una generación estructurada con referencias, no una voz personal.
 
-train-haiku55/academiaplay-3Wg10E4Ung0.md  P(AI) 83.5
-  - Estructura de plantilla muy limpia: gancho, 'Empecemos', transiciones explícitas ('Aquí aparece algo importante', 'Y es importante aclarar algo') y cierre con like/suscripción y pregunta a los comentarios.
-  - Cautelas constantes y equilibradas típicas de IA: 'Las cifras varían según las fuentes', 'Las estimaciones varían', 'algunas son probablemente exageradas', más una moraleja tipo 'lección sencilla: ... hacer mucho con poco'.
-  - Frases genéricas y de relleno con paralelismos retóricos ('Cada herida fue una cicatriz más y una lección más', 'murió como había vivido: en el servicio'), sin detalles concretos ni voz personal; párrafo incoherente sobre 'una curiosidad histórica' sin referente previo.
-  - Estructura muy pulida y genérica de YouTube: gancho dramático, "quédate hasta el final", cierre con like/suscríbete y dos preguntas para comentarios.
-  - Abundantes coberturas y muletillas de IA: "Las cifras varían según las fuentes", "Las estimaciones varían", "los historiadores nos recuerdan", "Y es importante aclarar algo", más una lección moralizante final sobre estrategia y voluntad.
-  - Frases de transición formulaicas y vagas ("Aquí aparece algo importante", "Cada herida fue una cicatriz más y una lección más") y cifras imprecisas ("unos pocos miles de defensores"), con párrafos uniformes y poco detalle concreto o voz personal.
+train-haiku55/academiaplay-3Wg10E4Ung0.md  P(AI) 85.0
+  - Estructura de plantilla de YouTube muy pulida: gancho, promesa ('quédate hasta el final'), contexto, clímax, moraleja ('una lección sencilla...') y cierre con like/suscripción y pregunta a los comentarios.
+  - Frases de balance y cautela muy típicas de IA: 'Las cifras varían según las fuentes', 'Las estimaciones varían', 'los historiadores nos recuerdan que...', 'Es una curiosidad histórica, pero también muestra...'; además vaguedad ('unos pocos miles de defensores') y una inconsistencia (más de cien navíos al inicio, luego ciento ochenta).
+  - Ritmo y retórica genéricos: contrastes en tríada y paralelismos ('estrategia, carácter y disciplina', 'ni hombres, ni munición, ni tiempo'), conectores expositivos ('Aquí aparece algo importante', 'Es importante aclarar algo') y ausencia de voz personal o datos concretos distintivos.
+  - Estructura de plantilla muy pulida: gancho, promesa de «quédate hasta el final», contexto, clímax, aclaración de mitos y cierre moral («Si algo nos deja su historia es una lección sencilla...»), con llamada a la acción genérica.
+  - Frases hedge y de relleno recurrentes típicas de IA: «Las cifras varían según las fuentes», «Las estimaciones varían», «los historiadores nos recuerdan», «Y es importante aclarar algo», con vaguedad en datos (ciento ochenta navíos tras decir «más de cien», «unos pocos miles»).
+  - Ritmo uniforme de frases cortas y paralelismos retóricos («Se equivocó.», «Lezo había ganado.», «murió como había vivido: en el servicio»), sin digresiones, humor ni voz personal; incluso hay incoherencias como el garfio/pierna de madera presentados y luego matizados.
 
 train-haiku55/cdeciencia-K0lqbaOr5dk.md  P(AI) 89.0
   - Estructura muy pulida y didáctica: introducción con gancho, 'Veámoslos uno por uno', 'El primero... El segundo... El tercero... Y el cuarto', y cierre con resumen y llamada a la acción, típico de guion generado.
@@ -166,53 +166,53 @@ train-haiku55/curiosamente-DgFdq5kT95M.md  P(AI) 88.0
   - Abundancia de tríadas y paralelismos ("Quizá tengas una respuesta lista. Quizá no sepas...", "Puedes criticar... Puedes defender...") y fórmulas de contraste tipo "no es un fallo del mapa. Es un reflejo de...".
   - Tono equilibrado y neutral, sin anécdotas personales, humor ni errores de oralidad; llamada a comentarios genérica ("Nos encantará leerte") y contenido enciclopédico sin voz propia.
 
-train-haiku55/curiosamente-KyjjFYM8aUg.md  P(AI) 90.0
-  - Estructura de plantilla: gancho con pregunta retórica, lista de ejemplos temáticos (cámara, satélites, epidemias, imagen médica, finanzas, música, arte) y cierre con resumen y llamada a la acción estándar.
-  - Frases genéricas y de relleno típicas de IA: "la respuesta te va a sorprender", "Dato curioso", "Es decir, las matemáticas nos mantienen en el mapa", "Están por todas partes, aunque no las veas".
-  - Tono uniforme y enciclopédico sin anécdotas personales ni rasgos de voz propios; los ejemplos están yuxtapuestos con transiciones mecánicas ("También están en...", "Y en el arte...") y la lista final tipo "tu teléfono, tu mapa, tu medicina, tu banco" es muy característica.
-  - Estructura de lista genérica y encadenada (satélites, epidemias, imagen médica, finanzas, música, arte) con transiciones formulaicas como "Es decir, las matemáticas nos mantienen en el mapa" y "Dato curioso:".
-  - Apertura y cierre de plantilla: "¿Alguna vez te has preguntado...?", "la respuesta te va a sorprender", cierre con lista triple ("tu teléfono, tu mapa, tu medicina, tu banco...") y llamada a like/suscripción/comentarios.
-  - Tono uniformemente pulido y enciclopédico, sin anécdotas personales, titubeos ni humor propio; hay incoherencias leves como "Incluso la cámara..." sin contexto previo y "Y eso sirve en todas partes" tras hablar de arte.
+train-haiku55/curiosamente-KyjjFYM8aUg.md  P(AI) 88.0
+  - Estructura de lista temática muy ordenada (teléfono, GPS, salud, dinero, puentes, música) con transiciones formulaicas como "Pasemos a la salud" y "Dato curioso:" y un cierre de resumen enumerado ("tu teléfono, tu mapa, tu medicina, tu banco y el puente").
+  - Tono genérico y enciclopédico, sin anécdotas personales ni voz propia; frases de manual como "Es decir, las matemáticas nos mantienen en el mapa" y "Quizá la respuesta más honesta sea esta".
+  - Gancho y llamada a la acción de plantilla ("¿Alguna vez te has preguntado...?", "deja un like, suscríbete y cuéntame en los comentarios") junto con tricolones constantes y datos técnicos correctos pero superficiales.
+  - Estructura de lista muy ordenada y simétrica (teléfono, GPS, salud, dinero, puentes, arte) con transiciones formulaicas como "Pasemos a la salud" y "¿Y el dinero?", típica de un texto generado.
+  - Tono genérico y enciclopédico, con ejemplos de manual (transformada discreta del coseno, relatividad en el GPS, teoría de grafos) sin anécdotas personales ni voz propia, y con frases de cierre sentenciosas como "Es decir, las matemáticas nos mantienen en el mapa".
+  - Gancho y cierre estándar: "la respuesta te va a sorprender", "Quizá la respuesta más honesta sea esta", más el llamado a like, suscripción y comentarios, con una conclusión redonda que retoma todos los puntos.
 
-train-haiku55/elrobotdeplaton-Can7RK004jg.md  P(AI) 56.0
-  - Estructura de guion de YouTube muy pulida: gancho, promesa de 'si te quedas hasta el final', explicación en lista y cierre con like/suscripción y pregunta a los comentarios, algo habitual tanto en humanos como en IA.
-  - Frases cortas y paralelas con tríadas ('el movimiento, la expresión, el contexto y la forma de la cara'; 'el peso, el pelo, la piel, la forma de vestir…') y tono tranquilizador ('no te preocupes. Es una señal de que tu percepción funciona exactamente como debería'), típicos de texto generado.
-  - Fallos de coherencia que sugieren recorte o edición humana: empieza con 'Hoy vamos a hablar de eso' sin antecedente, 'Y para hacerlo, se apoya en...' sin sujeto claro, y 'En una foto, en cambio, solo tienes un instante' sin contraste previo con el espejo, lo que apunta a un fragmento de un guion más largo.
-  - Estructura de guion de YouTube muy pulida y genérica: gancho, "Si te quedas hasta el final...", explicación en lista de factores (luz, ángulo, lente, distancia) y cierre con like/suscripción y pregunta en comentarios.
-  - Frases explicativas limpias y simétricas, con conectores muy regulares ("Además", "Por eso", "Así que") y tríos/listas ('el peso, el pelo, la piel, la forma de vestir'), típico de texto generado.
-  - Incoherencias de flujo y contenido: 'Y para hacerlo, se apoya en expectativas...' sin sujeto claro, y afirma que el cerebro ve la cara 'invertida' en el espejo; esto sugiere recorte o edición, lo cual también es compatible con guion humano.
+train-haiku55/elrobotdeplaton-Can7RK004jg.md  P(AI) 83.5
+  - Estructura de plantilla muy pulida: gancho con pregunta, promesa de 'si te quedas hasta el final', secciones ordenadas con conectores como 'Lo primero', 'Ahora', 'Además', 'Y no olvidemos', y cierre con resumen en tres cláusulas paralelas ('el cerebro interpreta, la cámara distorsiona y tu memoria va por detrás').
+  - Explicación genérica y sin anécdotas personales ni voz propia; frases tipo 'Aquí viene un dato curioso' y 'Es una señal de que tu percepción funciona exactamente como debería' suenan a divulgación prefabricada.
+  - Contrastes repetitivos del tipo 'no funciona como una cámara... El cerebro, en cambio...' y 'En una foto, en cambio...', además de un error de contenido típico (el espejo muestra la cara 'invertida', pero la explicación queda algo confusa) y llamada a la acción estándar al final.
+  - Estructura de plantilla muy pulida: gancho con pregunta retórica, promesa 'Si te quedas hasta el final', secciones ordenadas con conectores ('Lo primero', 'Ahora', 'Además', 'Y no olvidemos') y resumen final tipo 'Entonces, ¿por qué...? Porque X, Y y Z'.
+  - Frases de manual y tripletas constantes ('el peso, el pelo, la piel, la forma de vestir', 'buscando coherencia, aunque a veces se equivoque'), con tono genérico y sin anécdotas personales ni voz propia.
+  - Error conceptual típico de generación automática: dice que en el espejo 'ves tu cara invertida' y 'Eso ya basta para sentirte un poco extraño', y 'Aquí viene un dato curioso' sin fuentes; el cierre con like/suscripción y pregunta a comentarios es formulaico.
 
-train-haiku55/elrobotdeplaton-Ui4M0cYFZWI.md  P(AI) 83.5
-  - Estructura muy pulcra de «tres reglas» (letalidad, alcance, velocidad) y recorrido por candidatos con cierres formulaicos como «Pero tiene un problema: no es constante» y «Mata a todo, pero no mata todo el tiempo».
-  - Frases de efecto y contrastes retóricos repetidos: «Es mortal por multiplicación», «la indiferencia puede ser más aterradora que la malicia», «no es un enemigo externo, sino una elección repetida».
-  - Cierre genérico y redundante («Pero todavía falta algo. Pero hay algo que aparece en todas las respuestas»), moraleja reflexiva sobre el tiempo y llamada a comentarios con broma final sobre los mosquitos, típico de guion generado.
-  - Estructura de enumeración muy ordenada y didáctica ("Primero: letalidad... Segundo: alcance... Tercero: velocidad") seguida de candidatos uno por uno, típica de guion generado.
-  - Frases de transición y cierre formulaicas y aforísticas: "Es mortal por multiplicación", "la indiferencia puede ser más aterradora que la malicia", "Mata a todo, pero no mata todo el tiempo", junto con cobertura equilibrada y cautelosa ("el número exacto varía según el año y el método de cálculo").
-  - Meta-comentario pulido y tics de redacción: "te lo digo con honestidad", repetición torpe "Pero todavía falta algo. Pero hay algo que aparece...", y final con llamada a comentarios y giro moralizante sobre el tiempo.
+train-haiku55/elrobotdeplaton-Ui4M0cYFZWI.md  P(AI) 88.0
+  - Estructura de manual muy pulcra y predecible: define tres criterios (letalidad, alcance, velocidad), repasa candidatos en orden creciente de escala y cierra con una 'elección' que mezcla todo, típico de un guion generado.
+  - Frases de cadencia retórica repetida y fórmulas de IA: 'Parece inofensiva. Tranquila.', 'Pero tiene un problema:', 'te lo digo con honestidad', 'la indiferencia puede ser más aterradora que la malicia', además de cierre circular con la gota de agua y una reflexión moralizante sobre el tiempo.
+  - Cifras hedgeadas y equilibradas ('las estimaciones varían', 'según la OMS') sin anécdotas personales ni voz propia; datos genéricos con algún desliz de coherencia (la gota de agua con 'criatura' que nunca se aclara, 'ocho millones... según la OMS') y llamada a comentarios estándar.
+  - Estructura de ensayo muy pulida y predecible: apertura con gancho (gota de agua), definición de tres criterios (letalidad, alcance, velocidad), repaso ordenado de candidatos y cierre circular que retoma la gota.
+  - Frases y giros típicos de IA: "Pero tiene un problema", "Aquí aparece algo que no encaja", "la indiferencia puede ser más aterradora que la malicia", "te lo digo con honestidad", muchas oraciones cortas de efecto y tríadas retóricas.
+  - Tono uniforme y enciclopédico con cifras matizadas ("aunque el número exacto varía según el año y el método de cálculo"), sin anécdotas personales ni idiosincrasias; el cierre con llamada a comentarios y broma final sobre los mosquitos resulta genérico.
 
-train-haiku55/lahiperactina-fp9-616Yfik.md  P(AI) 83.5
-  - Estructura muy pulida de guion de divulgación: gancho con "Imagina que...", promesa de contenido ("misterio, tragedia, vacas, caníbales") y cierre con lección en tres puntos ("Y, por último, nos recuerdan..."), típico de texto generado.
-  - Metáforas didácticas y transiciones formulaicas ("Aquí hay un matiz importante", "Ahí estaba la clave", "Esta es la parte menos alentadora del guion") y uso de "guion" como autorreferencia; tono uniforme sin digresiones ni errores personales.
-  - Detalles incoherentes con una redacción cuidadosa humana: salto abrupto al kuru sin presentar a los fore ni la zona, y frases como "Hasta el año 2000 se contabilizaron centenares de muertes" (impreciso), propios de un texto ensamblado por secciones.
-  - Estructura muy pulida y predecible: gancho con 'Imagina que...', promesa de la lista 'misterio, tragedia, vacas, caníbales', analogías didácticas (origami, pila de hojas) y cierre con 'lección importante' en tres puntos.
-  - Frases de transición y contraste muy formulaicas ('Ahí estaba la clave', 'Aquí hay un matiz importante', 'Esta es la parte menos alentadora del guion'), sin digresiones, muletillas ni errores propios del habla improvisada.
-  - Pequeñas incoherencias factuales típicas de generación automática (kuru presentado sin introducir a los fore, 'conversión templada', 'casos excepcionales por periodos de incubación de décadas') y cierre genérico de suscripción y comentarios con pregunta enumerada.
+train-haiku55/lahiperactina-fp9-616Yfik.md  P(AI) 86.5
+  - Estructura muy pulida y didáctica: gancho inicial con 'Imagina que...', analogías prolijas (origami, pila de hojas arrugadas), transiciones mecánicas como 'Ahora vamos a viajar a...' y 'Aquí hay un matiz importante'.
+  - Cierre de manual con lista de lecciones y llamada a la acción genérica ('suscríbete', 'Te leo en los comentarios'), tono uniforme sin digresiones, muletillas ni errores propios del habla espontánea.
+  - Imprecisiones y frases de relleno típicas de generación automática: 'Esta es la parte menos alentadora del guion', 'Se investigó mucho para encontrar la causa', y datos mezclados (p. ej. 'Hasta el año 2000 se contabilizaron centenares de muertes', kuru como 'temblar de miedo').
+  - Estructura muy pulida y didáctica con gancho inicial ('Imagina que alguien te da un vaso de agua... ¿verdad? Pues es real'), analogías tipo manual (origami, hojas arrugadas) y cierre con moraleja ('nos enseñan algo sobre la ciencia... Las ideas que más resistencia despiertan...').
+  - Frases de transición y meta-comentarios típicos de guion generado ('Esta es la parte menos alentadora del guion, pero también necesaria', 'Aquí hay un matiz importante', 'Ya hemos visto que...'), con tono uniforme y sin digresiones personales ni errores de habla.
+  - Algunas imprecisiones y rarezas de redacción propias de un modelo: 'Algunas animales', 'kuru... risa incontrolable' repetido, 'Hasta el año 2000 se contabilizaron centenares de muertes' (exagerado), y llamadas a la acción genéricas ('suscríbete y activa la campanita', 'Te leo en los comentarios').
 
-train-haiku55/peroesoesotrahistoria-yHwfY4uvOxs.md  P(AI) 85.0
-  - Estructura de guion genérico y pulido: introducción con promesa ("Abróchense el cinturón"), enumeración de épocas con fechas y cierre con llamada a la acción y pregunta retórica triple ("¿El caballo del alba? ¿Las ballenas que caminaban?...").
-  - Frases de moraleja y cadencia típica de IA: "Es un recordatorio de algo importante: el clima siempre ha cambiado, y la vida siempre ha tenido que adaptarse", "Cada extinción abre espacio para nuevas formas de vida", con matices cautelosos repetidos ("los científicos siguen debatiendo", "probablemente").
-  - Errores y saltos de coherencia propios de texto generado: "Hyaenodon" llamado hiénido primitivo (no lo es), "Este movimiento tuvo consecuencias enormes" y "Este evento se debió a..." sin antecedente claro, y repeticiones como "restos de un contenido estomacal" tras "contenido de su estómago preservado".
-  - Estructura de guion genérica y pulida: introducción con gancho, "Abróchense el cinturón, porque empezamos", cierre con llamada a like/suscripción y preguntas retóricas en cadena ("¿El caballo del alba? ¿Las ballenas que caminaban?").
-  - Frases-resumen y moralejas típicas de IA: "Es un recordatorio de algo importante: el clima siempre ha cambiado...", "Cada extinción abre espacio para nuevas formas de vida", "Es un ejemplo clásico de... aunque los científicos saben hoy que la historia fue más compleja".
-  - Tono equilibrado y cauteloso con matizaciones constantes ("probablemente", "los científicos siguen debatiendo"), listas ordenadas de fechas y ejemplos, y algún error factual típico ("hiénidos primitivos, como Hyaenodon"), con transiciones abruptas que sugieren secciones generadas por separado.
+train-haiku55/peroesoesotrahistoria-yHwfY4uvOxs.md  P(AI) 88.0
+  - Estructura muy pulida y didáctica: listas de épocas con fechas, "Abróchense el cinturón", cierre con preguntas retóricas y llamada a comentar ("¿El caballo del alba? ¿Las ballenas que caminaban?").
+  - Frases de síntesis genéricas y tono de moraleja típicas de IA: "Es un recordatorio de algo importante: el clima siempre ha cambiado", "Cada extinción abre espacio para nuevas formas de vida".
+  - Errores y torpezas propias de generación: "hiénidos primitivos, como Hyaenodon" (no son hiénidos), "un tonelada", "restos de un contenido estomacal" redundante, y la línea de formato inicial pegada al texto.
+  - Estructura muy pulida y didáctica con marcadores típicos de IA: "Abróchense el cinturón", "Es un recordatorio de algo importante", "Cada extinción abre espacio para nuevas formas de vida", frases de cierre aforísticas al final de los párrafos.
+  - Matices y cautelas enciclopédicas repetidas ("los científicos siguen debatiendo", "la historia fue más compleja que la imagen lineal"), tono uniforme y párrafos de longitud pareja, sin digresiones ni voz personal.
+  - Errores de coherencia propios de generación automática: "un tonelada", "Hyaenodon" llamado "hiénido", frase redundante sobre Messel ("contenido de su estómago" y luego "restos de un contenido estomacal"), y apertura con el formato/indicaciones de producción pegadas al texto.
 
-train-haiku55/quantumfracture-JBZx03342eM.md  P(AI) 88.0
-  - Encabezado de plantilla pegado al inicio ("Tono: Cercano, didáctico, con humor ligero") y cierre "Fin del guion.", típicos de salida de un asistente
-  - Estructura muy pulida y didáctica: "Primero... Segundo... Tercero... y cuarto", enumeraciones en lista, muletillas de transición como "Vamos a verlo paso a paso" y "Aquí conviene ser prudentes"
-  - Aunque hay saltos abruptos ("No es un artículo de divulgación" sin antecedente), el texto es genérico, equilibrado y sin anécdotas personales, con frases de cierre sentenciosas como "nada de esto es magia. Es estadística a gran escala"
-  - Encabezado de plantilla "Tono: Cercano, didáctico, con humor ligero" y cierre "Fin del guion." delatan salida de un asistente a partir de un prompt.
-  - Estructura muy pulida y enumerativa ("Primero... Segundo... Tercero... y cuarto"), frases de equilibrio como "Aquí conviene ser prudentes" y "No hay mala intención en eso, pero...", típicas de IA.
-  - Explicaciones didácticas genéricas y limpias (embeddings, dos etapas), sin anécdotas personales; hay saltos de transición abruptos ("No es un artículo de divulgación" sin antecedente) propios de secciones ensambladas.
+train-haiku55/quantumfracture-JBZx03342eM.md  P(AI) 89.0
+  - Encabezado residual "Tono: Cercano, didáctico, con humor ligero" al inicio y cierre "Fin del guion.", típicos de salida de un asistente a partir de un prompt
+  - Estructura muy pulcra y predecible: gancho con pregunta retórica, "Vamos a verlo paso a paso", enumeración "Primero... Segundo... Tercero... y cuarto" y recapitulación final que responde la pregunta del título
+  - Frases de equilibrio y cautela genéricas ("Aquí conviene ser prudentes", "No hay mala intención en eso, pero...", "nada de esto es magia") y explicaciones didácticas uniformes sin anécdotas personales ni imperfecciones, salvo un fallo sintáctico aislado ("y hasta que puede distinguirlos")
+  - Encabezado residual de prompt al inicio ("Tono: Cercano, didáctico, con humor ligero") y cierre "Fin del guion.", típicos de salida generada.
+  - Estructura muy ordenada y didáctica: gancho con pregunta retórica, "Vamos a verlo paso a paso", enumeración "Primero... Segundo... Tercero... y cuarto", y resumen final que retoma la tesis.
+  - Frases de muletilla y equilibrio característicos de IA ("Aquí conviene ser prudentes", "No hay mala intención en eso, pero...", "nada de esto es magia") y fluidez uniforme sin digresiones personales; un error menor ("hasta que puede distinguirlos") no basta para indicar autoría humana.
 
 train-haiku55/quantumfracture-OABUuXQcnJQ.md  P(AI) 88.0
   - Estructura muy pulida y formulaica: gancho con 'Respiras cientos de veces al día sin pensarlo', recorrido temático, resumen 'Hemos recorrido un camino largo...' y cierre con llamada a suscribirse, todo con ritmo uniforme.
@@ -222,53 +222,53 @@ train-haiku55/quantumfracture-OABUuXQcnJQ.md  P(AI) 88.0
   - Frases con patrón retórico típico de IA: 'El aire no es un misterio en el sentido de algo inexplicable. Es un misterio en el sentido de algo que...', 'no es un detalle menor', 'está hablando el lenguaje de los electrones', y cierres grandilocuentes ('Miles de millones de procesos cuánticos sostienen la vida').
   - Tono uniforme y sin rasgos personales ni digresiones, con párrafos de longitud y ritmo muy parejos, cifras redondeadas y la etiqueta 'Formato: Narración en off con cortes de B-roll' pegada al inicio; el cierre genérico de suscripción y comentarios suena a plantilla.
 
-train-haiku55/unmundoinmenso-tDj0KQ4uZZE.md  P(AI) 85.0
-  - Estructura de explainer genérica y pulida: gancho, "La respuesta corta... La respuesta larga es mucho más interesante", resumen final y llamada a comentar, todo muy de plantilla.
-  - Frases de equilibrio y cierre típicas de LLM: "Es un equilibrio curioso", "Es una mezcla de tradición vikinga, medieval y democrática", "no es un país independiente en el sentido habitual, pero tampoco es una simple región británica".
-  - Transiciones incoherentes que sugieren secciones ensambladas ("Pero su historia es mucho más larga que su tamaño", "Lo que tiene es un estatus especial", "Cada año... la isla se llena" sin mencionar el TT), junto con tono neutro, sin anécdotas personales ni errores de habla.
-  - Estructura de explainer muy pulida y simétrica, con frases de manual como "La respuesta corta es... La respuesta larga es mucho más interesante" y cierre con resumen "La respuesta más precisa es..." y "no encajan en las categorías simples".
-  - Transiciones incoherentes que sugieren secciones ensambladas sin hilo: "Pero su historia es mucho más larga que su tamaño" justo tras "Acompáñame", "Lo que tiene es un estatus especial", "Eso significa que... sistema fiscal" sin antecedente claro, y el TT aparece sin haber sido presentado.
-  - Tono enciclopédico equilibrado y cauteloso ("Se suele citar el año 979... aunque la forma actual es mucho más reciente", "aunque en las últimas décadas la isla ha trabajado para cumplir con estándares"), con listas y paralelismos típicos de IA ("gobierno propio, parlamento propio, impuestos propios y moneda propia") y llamada a comentar muy genérica.
+train-haiku55/unmundoinmenso-tDj0KQ4uZZE.md  P(AI) 82.0
+  - Estructura de explainer muy pulida y predecible: gancho, 'La respuesta corta... la respuesta larga es mucho más interesante', 'Aquí empieza la parte clave', 'Volvamos a la pregunta del título' y resumen final redundante.
+  - Tono enciclopédico y equilibrado, con muletillas genéricas ('Es un equilibrio curioso', 'Es una mezcla de tradición vikinga, medieval y democrática') y cierre estándar de comentario/especial; casi sin voz personal ni anécdotas.
+  - Errores y rarezas típicas de generación: 'Cámara de la Casa de la Keys' (duplicación torpe de House of Keys), 'no te puedes ir sin probar' un símbolo (triskelion no se prueba), y contradicciones como decir que no pagan impuestos al Reino Unido junto a una unión aduanera descrita con exceso de detalle.
+  - Estructura de manual muy pulida y predecible: gancho, 'La respuesta corta... La respuesta larga es mucho más interesante', secciones ordenadas y cierre que repite la pregunta del título con un resumen ('La respuesta más precisa es...').
+  - Frases de equilibrio y fórmulas genéricas típicas de IA: 'Es un equilibrio curioso', 'Es una mezcla de tradición vikinga, medieval y democrática', 'muestra cómo la historia puede crear arreglos políticos que no encajan en las categorías simples'; tono enciclopédico sin anécdotas personales ni voz propia.
+  - Errores y rarezas de generación: 'la Cámara de la Casa de la Keys' (duplicación torpe), 'no te puedes ir sin probar un pequeño símbolo' (el triskelion no se prueba), y cautelas constantes ('algo más de', 'se suele citar', 'conviene revisar') junto a un cierre de llamada a comentar muy estándar.
 
-train-haiku55/visualpolitik-4Q_z-vwCAhk.md  P(AI) 76.0
-  - Estructura muy pulida y didáctica con anuncios recurrentes y fórmulas de transición genéricas: "Dicho de otro modo", "Este matiz importa", "Es una solución potente, pero no gratuita", "Lo que hizo Israel no fue descubrir el agua. Fue cambiar la forma de aplicarla".
-  - Equilibrio sistemático y cuidadoso de posturas ("Israel sostiene... Los críticos responden..."), con tríadas y lecciones enumeradas ("tres cosas", "la primera... la segunda... la tercera") típicas de texto generado.
-  - Fragmentos inconexos o con orden roto ("La primera es económica" sin introducción, "El proceso es, en esencia, sencillo" sin antecedente) sugieren un guion ensamblado por secciones, y el cierre es un llamado genérico a suscribirse con muletilla de marca.
-  - Estructura muy pulcra y equilibrada, con tres lecciones/tensiones enumeradas ("La primera es económica... La segunda es alimentaria... La tercera es la más delicada") y cierre moralizante tipo "Un modelo puede ser eficiente y, al mismo tiempo, profundamente desigual".
-  - Muletillas y fórmulas típicas de LLM: "Dicho de otro modo", "Este matiz importa", "Es una solución potente, pero no gratuita", "Lo que hizo Israel no fue descubrir el agua. Fue cambiar la forma de aplicarla", y la tesis repetida de "preguntas incómodas".
-  - Tono muy neutral y de ambos lados ("Israel sostiene... Los críticos responden..."), con datos genéricos y sin anécdotas personales; las transiciones abruptas entre secciones (sin encabezados) sugieren un guion recortado, aunque la despedida de canal es plausiblemente humana.
+train-haiku55/visualpolitik-4Q_z-vwCAhk.md  P(AI) 80.0
+  - Estructura muy pulida y formulaica: preguntas retóricas seguidas de respuesta ("La respuesta corta sería 'tecnología'. Pero la respuesta completa es mucho más interesante"), muletillas como "Dicho de otro modo" y "conviene matizar".
+  - Equilibrio sistemático de perspectivas y cierre con lecciones numeradas ("primera… segunda… tercera"), con tono enciclopédico y cifras genéricas ("85 o 90 por ciento", "en torno al 1 o 2 por ciento") sin voz personal ni anécdotas propias.
+  - Llamada a la acción final genérica y pregunta de comentarios muy plantilla, con frases tipo eslogan ("Un modelo puede ser eficiente y, al mismo tiempo, profundamente desigual"); aun así, el formato de canal real (VisualPolitik) deja algo de incertidumbre.
+  - Estructura muy pulida y formulaica: preguntas retóricas seguidas de respuesta ("La respuesta corta sería 'tecnología'. Pero la respuesta completa es mucho más interesante"), tríadas constantes y cierre con 'lecciones' numeradas (primera, segunda, tercera).
+  - Tono enciclopédico y equilibrado en exceso, con cifras redondeadas y salvedades simétricas ('Israel sostiene... Los críticos responden...'), 'conviene matizar', 'conviene desmontar un mito', típico de texto generado.
+  - Frases de efecto repetidas ('Lo que hizo Israel no fue descubrir el agua. Fue cambiar la forma de aplicarla', 'Es una solución potente, pero no gratuita') y cierre genérico con llamada a comentar/suscribirse, aunque menciona VisualPolitik, que podría ser guion humano editado.
 
-train-opus55/cdeciencia-EgxiXbBwAqQ.md  P(AI) 83.5
-  - Estructura muy pulcra y enumerada ("Uno… Dos… Tres… Cuatro…") con listas de consejos de cierre y paralelismos retóricos tipo "No es pereza. Es eficiencia" y "No es pensar más. Es dejar de poder pensar".
-  - Metáforas de manual (ciudad de noche, piano, orquesta) y frases de transición prefabricadas como "Pero aquí viene lo interesante" y "Y con esto llegamos, por fin, a la pregunta del video", con tono equilibrado y sin tropiezos ni digresiones personales.
-  - Incoherencias de guion que sugieren ensamblado automático: "Porque es una gran historia" aparece sin antecedente claro y la apertura "responder a la pregunta de verdad" es torpe; aun así el contenido es exacto y exhaustivo, típico de un modelo.
-  - Estructura muy pulida y formulaica: enumeración "Uno… Dos… Tres… Cuatro…", metáforas de manual (ciudad de noche, piano, orquesta) y cierre con "la sinfonía que eres tú".
-  - Frases de contraste características de IA: "No es pereza. Es eficiencia.", "Activar todo el cerebro no es pensar más. Es dejar de poder pensar.", "no es X, sino Y" repetido.
-  - Tono didáctico uniforme, sin dudas, digresiones ni rasgos personales; transiciones forzadas ("Porque es una gran historia." sin antecedente claro) y llamada a la acción genérica al final.
+train-opus55/cdeciencia-EgxiXbBwAqQ.md  P(AI) 89.0
+  - Estructura muy pulida y formulaica: gancho ("Seguro que lo has escuchado"), enumeración "Uno… Dos… Tres… Cuatro…", recapitulación y cierre con llamada a like/suscripción, todo con transiciones limpias como "Vamos al grano" y "Pero aquí viene lo interesante".
+  - Frases de contraste y aforismos típicos de generación automática: "Activar todo el cerebro no es pensar más. Es dejar de poder pensar.", "No es pereza. Es eficiencia.", "Es una orquesta de unos 86.000 millones de neuronas tocando… la sinfonía que eres tú".
+  - Contenido exhaustivo, equilibrado y sin tropiezos, sin digresiones, humor personal ni errores de oralidad; las analogías (ciudad de noche, piano) están colocadas de forma ordenada y previsible.
+  - Estructura muy pulida y formulaica: gancho, "Vamos al grano", enumeración "Uno/Dos/Tres/Cuatro", recapitulación y cierre con llamada a la acción, todo con ritmo perfectamente balanceado.
+  - Frases de contraste características de IA: "No es pereza. Es eficiencia.", "Activar todo el cerebro no es pensar más. Es dejar de poder pensar.", "no sale de pulsar todas las teclas… Consigues ruido".
+  - Metáforas ordenadas y de manual (ciudad de noche, piano, orquesta de 86.000 millones de neuronas), sin digresiones, errores ni voz personal idiosincrática; tono didáctico uniforme y datos exactos bien dosificados.
 
-train-opus55/cdeciencia-GCH_6lrHgaA.md  P(AI) 81.0
-  - Estructura muy pulida de guion explicativo: gancho con prueba interactiva, pregunta retórica en cadena ("¿Por qué no estamos repartidos mitad y mitad?") y promesa de resolver el misterio, seguido de bloques temáticos ordenados y con transiciones limpias ("Aquí viene lo interesante", "Y aquí va un dato fascinante").
-  - Tono equilibrado y cauteloso típico de IA: "No es una explicación cerrada, pero sí una pieza importante del rompecabezas", "Es un dato discutido, pero encaja con la idea", "Algunas" como respuesta a "¿Hay pruebas?"; datos con cifras redondas y sin fuentes ni anécdotas personales.
-  - Cierre genérico de llamada a la acción con pregunta al público y despedida estándar ("dale like, suscríbete"), y apenas voz personal salvo el "Yo apuesto por las tijeras"; el texto es limpio, sin muletillas ni digresiones propias del habla humana.
-  - Estructura muy pulida y predecible: gancho con prueba interactiva, pregunta retórica ('Pero ¿por qué?'), promesa ('Hoy vamos a resolver este misterio') y cierre con llamada a la acción genérica.
-  - Frases de transición típicas de IA ('Aquí viene lo interesante', 'Aquí va un dato fascinante', 'una pieza importante del rompecabezas', 'Piénsalo') y cifras redondas y matizadas ('cerca del 95 %', 'alrededor del 70 %', 'en torno a una cuarta parte').
-  - Tono expositivo uniforme, sin digresiones ni errores ni voz personal; las secciones se encadenan de forma ordenada, con cautelas equilibradas ('No es una explicación cerrada', 'Es un dato discutido, pero encaja con la idea').
+train-opus55/cdeciencia-GCH_6lrHgaA.md  P(AI) 83.5
+  - Estructura muy pulida de guion explicativo: gancho con pregunta retórica, 'Hoy vamos a resolver este misterio', 'Empecemos por los datos', 'Aquí viene lo interesante', y cierre resumido con 'Entonces, ¿por qué hay más diestros que zurdos?'.
+  - Párrafos equilibrados y tono didáctico uniforme, con datos redondeados y cautelosos ('Es un dato discutido, pero encaja', 'No es una explicación cerrada, pero sí una pieza importante del rompecabezas'), típicos de un asistente.
+  - Muletillas de generación: 'Spoiler: no existe', 'Y aquí va un dato fascinante', listas de lugares/deportes en tríos y cierre estándar de comentarios, like y suscripción con un toque personal genérico ('Yo apuesto por las tijeras').
+  - Estructura muy pulida y formulaica: gancho con prueba interactiva, promesa «Quédate, porque la respuesta tiene que ver con…», transiciones como «Aquí viene lo interesante», «Y aquí va un dato fascinante», «Así que tenemos dos fuerzas en equilibrio», y resumen final con «Entonces, ¿por qué hay más diestros que zurdos? Porque…».
+  - Abundancia de preguntas retóricas encadenadas y tríadas/listas equilibradas («En Europa, en Asia, en África, en América»; «con tu cerebro, con tus genes, con peleas prehistóricas…») y cifras precisas y matizadas con cautela («No es una explicación cerrada», «Es un dato discutido, pero encaja»), típico de texto generado.
+  - Cierre genérico de YouTube con llamada a comentarios y un toque de humor prefabricado («Spoiler: no existe», «Yo apuesto por las tijeras»); no hay anécdotas personales ni irregularidades de estilo oral, todo es muy limpio y didáctico.
 
 train-opus55/cdeciencia-fus7NyqEz4w.md  P(AI) 72.0
-  - Estructura muy pulida y didáctica: anuncio de contenido, transiciones como "Vamos con la noticia de la semana", listas paralelas (Durante/Antes/Después) y cierre con resumen y llamada a la acción, típico de texto generado.
-  - Frases de equilibrio y moraleja muy características de IA: "La mejor respuesta a estas noticias no es el miedo, sino la preparación", "La naturaleza no avisa con fechas, pero sí deja pistas"; analogías estándar (cremallera, uñas).
-  - Hay un guion humano de noticiero (fecha "lunes 24 de octubre de 2016", "vuestras experiencias" junto a "Cuídense") y mezcla de registros, lo que resta algo de certeza, pero la prosa es demasiado uniforme y exhaustiva.
-  - Estructura muy pulida y enumerativa: introducción que anuncia el guion ("veremos qué descubrieron, por qué es importante, qué zonas..."), listas con encabezados "Durante/Antes/Después del terremoto" y cierre con resumen y preguntas al público.
-  - Tono didáctico y equilibrado, con frases de manual como "La respuesta honesta es que nadie puede predecir...", analogías típicas (cremallera, uñas) y moraleja final ("no es el miedo, sino la preparación"), sin rastro de digresiones o rasgos personales.
-  - Datos con apariencia de rigor pero inconsistencias internas: dice que el estudio es de "la semana pasada" y un pronóstico UCERF3 "del año pasado", mezcla 'vuestras' con 'Cuídense', y cuadra los cálculos (1868+148=2016) de forma demasiado limpia.
+  - Estructura muy pulcra y exhaustiva: introducción con hoja de ruta ("veremos qué descubrieron..., por qué es importante..."), secciones temáticas, listas de antes/durante/después y cierre con resumen, típico de texto generado.
+  - Frases de transición y fórmulas retóricas genéricas: "¿Y eso por qué importa tanto? Vamos a verlo.", "La mejor respuesta... no es el miedo, sino la preparación", "Pongamos todo esto en contexto humano".
+  - Tono equilibrado y didáctico sin rasgos personales ni digresiones propias; analogías estándar (cremallera, uñas) y llamadas a la acción de YouTube muy formulaicas, aunque los datos concretos y fechas son coherentes con un guion humano de noticiero.
+  - Estructura muy pulcra y enumerativa ("Durante el terremoto / Antes / Después", listas con viñetas implícitas), cobertura exhaustiva y equilibrada típica de un texto generado.
+  - Frases de transición y fórmulas didácticas genéricas: "¿Y eso por qué importa tanto? Vamos a verlo.", "Pongamos todo esto en contexto humano", "Vamos cerrando", con analogías estándar como la cremallera y las uñas.
+  - Cierre con moraleja pulida y llamada a la acción convencional ("La mejor respuesta... no es el miedo, sino la preparación"), sin voz personal, errores ni digresiones propias de un presentador humano.
 
-train-opus55/derivando-teqFwLG2-6s.md  P(AI) 67.0
-  - Estructura muy formulaica y repetitiva: cada libro cierra con "Ideal si: ..." y hay transiciones tipo "Cambiamos de registro", "Ahora, una novela", "Damos un salto en profundidad".
-  - Retórica de manual de IA: "No es un libro para leer de un tirón. Es un libro para leer con lápiz y papel", "Si te fijas, el recorrido va de...", cierre aforístico y pulido con tríadas y contrastes.
-  - Hay rasgos humanos de YouTuber ("like, suscríbete y activa la campanita", "que siempre los leo", comentario personal) y el texto omite títulos/autores en la transcripción, lo que da algo de incertidumbre.
-  - Estructura muy formulaica y repetitiva: cada libro cierra con "Ideal si: ..." y se presenta con un resumen pulido y equilibrado, típico de generación por IA.
-  - Retórica de manual: "Cambiamos de registro", "Damos un salto en profundidad", "Y te deja con una pregunta incómoda..." y tríos/antítesis como "pasar de espectador a protagonista", "no es un libro para leer de un tirón. Es un libro para leer con lápiz y papel".
-  - Falta de voz personal o anécdotas propias; los datos son correctos y genéricos, y el cierre con llamada a la acción ("like, suscríbete y activa la campanita") es estándar, aunque el tono cercano de YouTuber deja cierta duda.
+train-opus55/derivando-teqFwLG2-6s.md  P(AI) 76.0
+  - Estructura muy pulida y repetitiva: cada libro cierra con la fórmula "Ideal si: ...", y transiciones tipo "Cambiamos de registro", "Ahora, una novela", "Damos un salto en profundidad".
+  - Apertura y cierre genéricos de manual: "¿Alguna vez has sentido que las matemáticas eran un club privado...?", "las matemáticas no son para unos pocos. Son para cualquiera que se atreva a preguntar '¿y por qué?'", con tríadas y frases de efecto.
+  - Casi no hay voz personal ni anécdota propia del autor (ninguna experiencia concreta con los libros); descripciones enciclopédicas y equilibradas, aunque el pedido de comentarios y el 'like, suscríbete' son típicos de un youtuber humano.
+  - Estructura muy pulida y repetitiva: cada libro cierra con la fórmula "Ideal si: ...", y las transiciones son del tipo "Cambiamos de registro", "Ahora, una novela", "Damos un salto en profundidad".
+  - Gancho y cierre de manual: "¿Alguna vez has sentido que las matemáticas eran un club privado...?", frases de contraste tipo "no es X, es Y" y cierre aforístico ("las matemáticas no son para unos pocos..."), con tono uniformemente entusiasta y sin digresiones personales ni anécdotas propias.
+  - Los libros nunca se nombran por título ni autor en varios casos (la narración parece limpia de títulos), con datos exactos y genéricos y sin opiniones idiosincráticas ni errores o titubeos de habla natural; el CTA (like, suscríbete, campanita) es plantilla estándar.
 
 train-opus55/elrobotdeplaton-W9PCt9ptVZw.md  P(AI) 82.5
   - Estructura de guion muy pulida y formulaica: gancho con preguntas retóricas ("¿Por qué no es verde, morado o simplemente blanco?"), "Y aquí está la clave de todo", "Pero espera… Buena pregunta", cierre con resumen y llamada a suscribirse.
@@ -287,36 +287,36 @@ train-opus55/jaimealtozano-OdYIS8KXdFI.md  P(AI) 50.0
   - Fórmulas de contraste frecuentes en texto generado ('No solo... sino', 'Lo importante no son las notas, sino...', 'Mismas piezas, otro orden') y un error leve ('Es imposible que suene mal'), con tono entre guion humano cuidado y IA.
 
 train-opus55/lahiperactina-Hb6YaR1BWPM.md  P(AI) 96.0
-  - Quedan marcadores de plantilla sin rellenar ("En , las últimas cifras indican .", "la variante predominante en es .") y una nota final al creador: "Rellena todos los con datos de esta semana", típico de un texto generado por IA.
-  - Estructura muy pulida y didáctica: enumeraciones "Uno/Dos/Tres", frases tipo "ni en el pánico ni en el 'aquí no pasa nada'", aclaraciones de descargo ("no soy médico") y cierre con llamada a comentarios, todo con un tono uniforme de asistente.
-  - Comienza con acotaciones de formato ("Presentador a cámara + gráficos de apoyo (B-roll)") y termina con fuentes sugeridas y recomendaciones de verificación, propio de un guion generado por encargo.
-  - Quedan marcadores de plantilla sin rellenar ("En , las últimas cifras indican .", "la variante predominante en es .") y una nota final al creador: "Rellena todos los con datos de esta semana", típico de un borrador generado por IA.
-  - Estructura muy pulida y formulaica: "Uno/Dos/Tres", listas de grupos, aclaraciones de descargo ("no soy médico"), tono equilibrado "ni pánico ni aquí no pasa nada", y cierre con llamada a comentarios y suscripción.
-  - Encabezado de guion "Formato: Presentador a cámara + gráficos de apoyo (B-roll)" y fuentes sugeridas al final, propio de un asistente que entrega un guion listo para producción.
+  - Marcadores de plantilla sin rellenar ("En , las últimas cifras indican .", "Rellena todos los con datos de esta semana") y notas finales de producción "Antes de grabar", típicas de un guion generado por IA.
+  - Estructura muy pulida y genérica: enumeraciones numeradas ("Uno… Seis"), listas de grupos, equilibrio constante "ni pánico ni aquí no pasa nada", cierre con llamada a comentarios/like y descargo "no soy médico".
+  - Tono uniformemente didáctico y sin anécdotas personales ni imperfecciones; frases de transición formulaicas como "Ahora bien", "Y aquí va un dato curioso", "Vamos allá" y un resumen final redundante.
+  - Marcadores de plantilla sin rellenar y nota final 'Antes de grabar: Rellena todos los con datos de esta semana', típico de un guion generado por asistente con huecos tipo [REGIÓN]/[VARIANTE] (ej. 'En , las últimas cifras indican .')
+  - Estructura excesivamente pulcra y genérica: enumeraciones 'Uno… Dos… Tres…', listas de síntomas y grupos, equilibrio constante 'ni pánico ni aquí no pasa nada', cierre con resumen y llamada a comentarios/suscripción
+  - Cabecera 'Formato: Presentador a cámara + gráficos de apoyo (B-roll)' y tono de divulgación neutro con descargos repetidos ('no soy médico', 'habla con tu médico'), muy propio de salida de IA
 
-train-opus55/memoriasdepez-OZirgERQ2qc.md  P(AI) 60.5
-  - Estructura muy pulcra y de manual: apertura dramática con escena, promesa de 'diez minutos', secciones con etiquetas cortas ('Reforma militar.', 'Reforma educativa.', 'Reforma agraria.') y cierre equilibrado ('Sus defensores... Sus críticos... Probablemente, ambas cosas son ciertas').
-  - Frases típicas de generación: 'Lo que nadie discute es que, para bien y para mal...', 'Para muchos republicanos... Para millones de católicos...', y el paralelismo repetido 'Para la derecha... Para la izquierda...'.
-  - Hay saltos y huecos que sugieren texto humano recortado o ensamblado (empieza hablando de Primo de Rivera sin presentarlo, '¿Qué decía?' sin referente claro, el estraperlo y el Frente Popular sin transición), y los cierres de YouTube son muy genéricos, lo que deja la duda.
-  - Estructura de guion muy pulida y didáctica: gancho dramático inicial ("se respira algo que muchos españoles no habían sentido nunca"), promesa de 'diez minutos', 'Quédate hasta el final' y cierre con llamada a comentarios/suscripción, muy de plantilla.
-  - Prosa equilibrada y enciclopédica con fórmulas simétricas: "Para la derecha, demostró... Para la izquierda, la represión confirmó...", "Sus defensores destacan... Sus críticos...", "Probablemente, ambas cosas son ciertas".
-  - Saltos abruptos y fallos de cohesión (pasa de Primo de Rivera sin presentarlo, 'Reforma militar.' como etiquetas sueltas, '¿Qué decía?' sin referente), que sugieren texto recortado o ensamblado de un guion más largo, lo que resta algo de peso a la hipótesis IA pura.
+train-opus55/memoriasdepez-OZirgERQ2qc.md  P(AI) 62.0
+  - Estructura muy pulcra y enciclopédica: apertura dramática con escena, promesa de 'en diez minutos', recorrido cronológico sin tropiezos ni digresiones personales, y cierre balanceado ('Sus defensores destacan... Sus críticos... Probablemente, ambas cosas son ciertas').
+  - Recursos retóricos típicos de IA: preguntas retóricas guiadas ('¿Qué decía?', '¿Qué fue entonces la Segunda República?'), listas con etiquetas ('Reforma militar. Reforma educativa...') y frases de síntesis como 'para bien y para mal, su legado sigue presente'.
+  - Contrarresta: datos muy concretos y precisos (Casas Viejas, estraperlo, Del Castillo/Calvo Sotelo) y un cierre de YouTube con CTA ('activa la campanita') que también encaja con guiones humanos de divulgación.
+  - Estructura muy pulcra y enumerativa: apertura dramática con escena, promesa de contenido ('Hoy te contamos, en diez minutos...'), 'Reformas fueron, sobre todo, cuatro' con encabezados secos tipo 'Reforma militar.', 'Reforma educativa.'
+  - Cierre de síntesis equilibrada y tópica ('Sus defensores destacan... Sus críticos... Probablemente, ambas cosas son ciertas') y llamada a la acción estándar de YouTube con adelanto del siguiente capítulo
+  - Tono enciclopédico uniforme, sin tropiezos ni digresiones personales, con datos densos y correctos; aunque algunos giros ('un tal Francisco Franco', 'dictablanda') suenan a guionista humano
 
 train-opus55/peroesoesotrahistoria-13iZOT8-_GU.md  P(AI) 62.0
-  - Estructura muy pulida y enciclopédica con transiciones formulaicas ('Pero ojo:', 'Así que vamos al principio de todo', 'Y no olvidemos...') y listas ordenadas de datos (Kojiki 712, Nihon Shoki 720, 660 a.C., 1946) sin digresiones personales ni errores de oralidad.
-  - Apertura retórica con paralelismos ('no en un cielo lejano, sino en las montañas...') y cierre estándar de YouTube con preguntas al público ('¿Qué historia te ha gustado más?...'), típico de guiones generados.
-  - Hay saltos abruptos que sugieren edición humana o montaje de texto (p. ej. 'Allí encontró a una pareja de ancianos...' sin presentar el viaje a Izumo; 'Están los kitsune...' sin introducción), lo que resta algo de certeza a la hipótesis de IA.
-  - Estructura muy pulida y enciclopédica con transiciones formulaicas ('Pero ojo:', 'Así que vamos al principio de todo', 'Y no olvidemos...') y cierre típico de CTA genérico (like, suscríbete, comentarios)
-  - Datos exactos y bien ordenados (Kojiki 712, Nihon Shoki 720, 660 a.C., 1946 Hirohito, 'ocho millones de kami') con glosas entre comillas sistemáticas de cada término, como un resumen de Wikipedia
-  - Algunos fallos de continuidad (salto abrupto a 'Allí encontró a una pareja de ancianos' sin presentar el viaje de Susanoo a Izumo; 'Estos son los Tres Tesoros' sin introducirlos) sugieren un guion humano editado o fragmentado, lo que impide mayor certeza
+  - Estructura muy pulida y didáctica con transiciones de manual y énfasis retóricos: "Pero ojo: traducir 'kami' simplemente como 'dioses' se queda corto", "Así que vamos al principio de todo".
+  - Abundan los tricolones y listas equilibradas, y los datos enciclopédicos están perfectamente ordenados (Kojiki 712, Nihon Shoki 720, Hirohito 1946) sin errores ni digresiones personales.
+  - El cierre y la introducción son plantillas típicas de YouTube ("suscríbete y activa la campanita", pregunta a los comentarios), y el gancho inicial "Hay un lugar donde... Ese lugar es Japón" es muy fórmula, aunque esto también lo hacen guionistas humanos.
+  - Estructura muy pulida y didáctica con transiciones formulaicas: "Pero ojo: traducir 'kami' simplemente como 'dioses' se queda corto", "Así que vamos al principio de todo", y listas de tríadas ordenadas (kitsune, tanuki, kappa, tengu, oni).
+  - Enciclopédico y sin errores ni digresiones personales: datos exactos (Kojiki 712, Nihon Shoki 720, Hirohito 1946) y cierre con llamada a la acción genérica y repetitiva (suscríbete/like/comentarios dos veces), sin voz anecdótica propia.
+  - Recursos retóricos típicos de IA: gancho inicial con "Hay un lugar donde...", pausas dramáticas con puntos suspensivos ("esperó… y esperó", "Y el mundo… se quedó a oscuras") y frases de cierre elegantes como "los kami nunca se fueron".
 
-train-opus55/peroesoesotrahistoria-AmTG9QbVfRQ.md  P(AI) 62.0
-  - Estructura muy pulida y enciclopédica: datos densos (fechas, nombres de reyes y dinastías) en frases cortas y regulares, con cierres pulidos como "Fueron seis siglos sin un gran imperio, pero no fueron siglos oscuros" y la apertura "fragmentación. Y es una palabra engañosa".
-  - Muletillas típicas de guion generado o de narración con voz de presentador: "Recuerden ese nombre", "Por cierto", "una de las maravillas del mundo", y un cierre estándar de YouTube con petición de me gusta y comentarios sobre "qué dinastía te parece la más fascinante".
-  - Hay saltos y frases truncadas ("En el año 606 su hermano mayor fue asesinado" sin presentar a Harsha; "Era una dinastía tamil antigua" sin nombrar a los Cholas; "Destacaban cuatro:"), que sugieren secciones recortadas o unidas a partir de un guion largo, algo más propio de edición humana que de una generación continua.
-  - Estructura muy pulida y enciclopédica, con glosas sistemáticas entre comillas y comas ("el conquistador de Vatapi", "la ley de los peces", "el río de los reyes") y fechas y nombres densos y uniformes, típico de un texto generado o resumido por IA.
-  - Cierre y transiciones de guion estándar ("Bienvenidos a la tercera parte...", "Recuerden ese nombre...", "dale a 'me gusta'... cuéntanos en los comentarios") y frases de síntesis como "no fueron siglos oscuros", propias de plantillas de divulgación.
-  - Hay saltos y cortes abruptos ("En el año 606 su hermano mayor fue asesinado" sin presentar a Harsha; "Era una dinastía tamil antigua" sin nombrar a los Cholas), que parecen fragmentos de guion unidos o recortados más que errores típicos de un texto humano fluido.
+train-opus55/peroesoesotrahistoria-AmTG9QbVfRQ.md  P(AI) 85.0
+  - Estructura muy pulida y enciclopédica: recapitulación del episodio anterior, hilo narrativo ordenado por bloques temáticos, cierre con resumen y adelanto del próximo capítulo, sin titubeos ni digresiones personales.
+  - Frases de efecto y construcciones retóricas típicas de IA: "Y es una palabra engañosa", "una palabra que lo dice todo", "no fueron siglos oscuros", "Pero el poder de Harsha tenía un límite claro, y ese límite era un río".
+  - Densidad uniforme de datos precisos (fechas, nombres, matices historiográficos como Sharma y el Prithviraj Raso) con tono neutro y sin errores ni muletillas orales; el cierre genérico de "dale a me gusta" y la lista de cuatro clanes con formato casi de viñetas refuerzan la sensación de generación.
+  - Estructura muy pulida y enciclopédica: recapitulación, preguntas retóricas implícitas, lista enumerada de cuatro clanes y cierre con adelanto del siguiente capítulo, todo con transiciones limpias ("Sin embargo", "Por cierto", "Así termina...").
+  - Frases de efecto y contrastes típicos de generación automática: "no fueron siglos oscuros", "Es una palabra engañosa", "un nombre que lo dice todo", con exactitud factual uniforme y sin dudas ni digresiones personales.
+  - Tono homogéneo y sin marcas orales idiosincrásicas; la llamada a la acción final ("dale a me gusta, suscríbete...") es genérica y la aclaración de matices historiográficos (Prithviraj Raso, feudalismo indio) aparece de forma equilibrada y sistemática.
 
 train-opus55/unmundoinmenso-7c_KT7VsPxw.md  P(AI) 83.5
   - Estructura de guion de plantilla: gancho con tríada anafórica ('Un país que... Un país que...'), 'Quédate hasta el final', datos enumerados con transiciones genéricas ('Empecemos por la más famosa', 'Este dato pocos lo conocen', 'Esta es menos pintoresca').
@@ -326,21 +326,21 @@ train-opus55/unmundoinmenso-7c_KT7VsPxw.md  P(AI) 83.5
   - Tono enciclopédico y muy ordenado: datos precisos (120 000 km², 400 km de costa, fallo 12 a 3) en frases cortas y paralelas, con transiciones de manual como "Primero, un poco de historia" y "Empecemos por la más famosa".
   - Fórmulas típicas de IA: "Este dato pocos lo conocen", "Esta es menos pintoresca, pero afecta a millones" (restos de encabezados de lista convertidos en prosa) y moraleja final tipo resumen "Bolivia demuestra que perder el mar no es solo perder costa".
 
-train-opus55/unmundoinmenso-9XqnDSqhfww.md  P(AI) 76.0
-  - Estructura muy pulcra y didáctica: pregunta gancho, "Vamos a repasarlos", enumeración de modelos paralelos y cierre de resumen ("siete, seis, seis otra vez, cinco y cuatro") típicos de guion generado.
-  - Frases de transición formulaicas como "Y aquí la cosa se pone interesante", "La respuesta honesta es: depende" y "no están mal; cada uno responde a una forma distinta de mirar el mundo", con tono equilibrado y conclusión moralizante propia de IA.
-  - Cierre estándar de YouTube ("dale a me gusta, suscríbete y activa la campanita") con teaser del siguiente video, y datos precisos y bien ordenados (Waldseemüller 1507, Zelandia 2017) sin voz personal ni digresiones propias de un humano.
-  - Estructura muy pulida y didáctica con enumeraciones tipo lista ('El modelo de seis continentes, versión América unida', 'versión Eurasia') y resumen final 'Si cuentas... Si sigues... Si sigues...' de manera simétrica
-  - Muletillas retóricas típicas de IA: 'Y aquí está la clave de todo este video', 'Y aquí la cosa se pone interesante', 'La respuesta honesta es: depende de qué criterio uses', 'Ninguno de estos modelos está "mal"'
-  - Cierre genérico de YouTube y gancho al siguiente video, además de frases con tono neutro y sin voz personal ni errores o digresiones humanas; incluso restos de encabezados fusionados en el texto ('Es el más común en el mundo anglosajón')
+train-opus55/unmundoinmenso-9XqnDSqhfww.md  P(AI) 67.0
+  - Estructura muy pulida y didáctica: gancho con pregunta, 'Empecemos por lo básico', repaso por 'modelos' con encabezados casi idénticos ('El modelo de X continentes'), y cierre con resumen 'La respuesta honesta es: depende...'.
+  - Frases de transición y síntesis típicas de IA: 'Y aquí está la clave de todo este video', 'Y quizá eso es lo más interesante', 'Ninguno de estos modelos está "mal"', además de enumeraciones en tríadas y cobertura exhaustiva y equilibrada sin voz personal ni anécdotas.
+  - Cierre de YouTube genérico (like, suscríbete, campanita, adelanto de '¿cuántos océanos hay?') y algún rastro de corrección en vivo ('Bueno, en realidad esto abre otra pregunta') que da algo de naturalidad humana, lo que evita una probabilidad más alta.
+  - Estructura muy pulida y didáctica: enumera los modelos con encabezados parejos ("El modelo de siete continentes.", "El modelo de cuatro continentes.") y cierra con un resumen en lista de criterios, típico de texto generado.
+  - Frases retóricas de plantilla: "Y aquí está la clave de todo este video", "la respuesta más honesta puede sorprenderte", "Y quizá eso es lo más interesante", además de un cierre con llamada a comentarios y suscripción muy genérico.
+  - Tono impecable y sin titubeos, ni digresiones personales ni imprecisiones de habla oral; aun así, el "Bueno, en realidad..." y algún detalle (Libia, Waldseemüller) sugieren posible guion humano bien documentado.
 
 train-sonnet55/cdeciencia-CR6UoZYIu14.md  P(AI) 96.0
-  - Estructura de plantilla muy pulida: gancho, promesa de "Quédate hasta el final", pasos numerados, "Mito uno/dos/tres", cierre con llamada a comentarios y suscripción.
-  - Tono equilibrado y enciclopédico, con frases de manual como "Hay que decirlo con claridad", "tiene más matices de los que sugieren los titulares" y "sin alarmismos pero también sin ingenuidad".
-  - Incluye metainstrucciones de producción al final ("Sugerencia de descripción del vídeo... Tono: divulgativo, cercano y riguroso") y una nota de formato al inicio, típico de salida de asistente.
-  - Estructura típica de LLM: gancho inicial, preguntas retóricas, "Paso uno… Paso cinco", "Mito uno/dos/tres", cierre con llamada a comentarios y suscripción, todo muy pulido y simétrico.
-  - Frases de plantilla como "Hay que decirlo con claridad", "Aquí hay un matiz", "Más adelante te explico por qué esto importa mucho" y "sin alarmismos pero también sin ingenuidad", con tono equilibrado y neutro de asistente.
-  - Metatexto de generación al final: "Sugerencia de descripción del vídeo… Tono: divulgativo, cercano y riguroso. Evitar titulares sensacionalistas", además del encabezado "Formato: vídeo de noticias con locución", propios de una respuesta a un encargo.
+  - Estructura muy pulida y formulaica: preguntas retóricas, 'Paso uno… Paso cinco', 'Mito uno/dos/tres', resumen final ('Resumamos lo esencial'), todo con ritmo uniforme y sin digresiones personales.
+  - Contiene metadatos de generación dentro del texto: 'Formato: vídeo de noticias con locución…', 'Fuentes a mostrar en pantalla', 'Sugerencia de descripción del vídeo', 'Tono: divulgativo, cercano y riguroso. Evitar titulares sensacionalistas', restos típicos de un prompt/respuesta de asistente.
+  - Frases de cierre y equilibrio típicas de IA: 'sin alarmismos pero también sin ingenuidad', 'La ciencia avanza deprisa, y a menudo mucho más rápido que nuestra capacidad para decidir…', más llamada a la acción genérica ('dale a me gusta, suscríbete y activa la campanita').
+  - Estructura mecánica y didáctica: "Paso uno. Paso dos...", "Mito uno/dos/tres", resumen final "Resumamos lo esencial", con frases equilibradas del tipo "sin alarmismos pero también sin ingenuidad".
+  - Restos de instrucciones de generación incrustados en el texto: "Formato: vídeo de noticias con locución...", "Fuentes a mostrar en pantalla", "Sugerencia de descripción del vídeo", "Tono: divulgativo, cercano y riguroso. Evitar titulares sensacionalistas".
+  - Plantilla de YouTuber genérica y pulida: preguntas retóricas iniciales, "Quédate hasta el final, porque la historia tiene más matices", cierre con "dale a me gusta, suscríbete y activa la campanita", datos ordenados sin ningún rasgo personal ni error.
 
 train-sonnet55/curiosamente-Y25yXtxH6qY.md  P(AI) 81.0
   - Estructura de guion formulaica: gancho dramático, "la respuesta no es tan sencilla como parece", resumen final repitiendo la pregunta y respuestas en tres frases paralelas.
@@ -358,29 +358,29 @@ train-sonnet55/curiosamente-YFryL8XWqZY.md  P(AI) 72.0
   - Frases de transición típicas de guion generado: 'Aquí el conflicto se complica, porque...', 'Ninguna causa, por sí sola, lo explica', 'la historia no es tan simple como parece'; tono enciclopédico uniforme, sin digresiones, humor ni opiniones personales.
   - Datos densos y equilibrados, listados en series ('suníes, alauíes, chiíes, cristianos, drusos y kurdos'), con llamada a la acción genérica al final ('dale like, suscríbete y cuéntame en los comentarios'); aunque un youtuber humano podría escribir así, la limpieza y simetría sugieren IA.
 
-train-sonnet55/dateunvlog-UnFDTO_DcXM.md  P(AI) 50.0
-  - Estructura muy pulida y didáctica de guion de divulgación (gancho, 'Guarda esa idea, porque será clave en un rato', cierre con llamada a suscribirse), típica tanto de YouTubers como de IA.
-  - Hay incoherencias de fluidez que parecen humanas o de transcripción: 'millón y medio de... perdón, en uno coma cinco días', 'mucho hierro menos de lo esperado', y el arranque sobre 'Su misión era vigilar estrellas' sin antecedente claro.
-  - Errores factuales y saltos lógicos (la estrella 'poco mayor que Júpiter', 'billones de años', afirmar que Venus y Marte están en la zona habitable) mezclados con frases de ritmo muy limpio y tríadas retóricas ('Es un trabajo lento...', 'no significa estar habitado, ni siquiera ser habitable') que sugieren posible generación por IA con edición humana.
-  - Estructura muy pulida de guion de divulgación: gancho, hitos, 'Pero seamos rigurosos', cierre con llamada a suscribirse; plantilla típica de IA pero también de YouTubers reales.
-  - Incoherencias raras: abre diciendo que la misión era vigilar estrellas sin antecedente claro, y errores como 'tamaño poco mayor que el de Júpiter' o 'millón y medio de... perdón, en uno coma cinco días' (autocorrección insertada, típica de humano o de imitación de humano).
-  - Frases como 'mucho hierro menos de lo esperado' y 'Venus y Marte... ya sabes cómo son' suenan a habla natural y a fallos de edición humanos, mientras que el tono equilibrado y la cautela constante ('los resultados deben tomarse con cautela') sugieren generación automática.
+train-sonnet55/dateunvlog-UnFDTO_DcXM.md  P(AI) 45.0
+  - Estructura muy pulida de guion de divulgación: gancho inicial, 'Quédate hasta el final', 'Pero seamos rigurosos', cierre con llamada a comentarios, me gusta y campanita; es típico tanto de YouTubers humanos como de texto generado.
+  - Hay un tropiezo oral muy humano ('un millón y medio de... perdón, en uno coma cinco días') y un guiño personal ('Sí, como la cerveza'), pero también errores factuales raros ('mucho hierro menos de lo esperado', 'tamaño poco mayor que Júpiter') y frases de relleno como 'cambia bastante la película' que suenan a plantilla.
+  - Ritmo uniformemente didáctico, frases cortas equilibradas, enumeraciones y fórmulas como 'Lo importante es esto' y 'la pregunta del millón' que apuntan a generación por IA, aunque el 'perdón' parece insertado a propósito para sonar natural.
+  - Estructura de guion de divulgación muy pulida y convencional: gancho inicial, 'Quédate hasta el final', secciones ordenadas y cierre con llamada a comentarios/suscripción, típico tanto de YouTubers como de IA.
+  - Hay rasgos humanos: autocorrección hablada 'en solo millón y medio de... perdón, en uno coma cinco días', giros coloquiales ('cambia bastante la película', 'la pregunta del millón') y frases confusas como 'mucho hierro menos de lo esperado'.
+  - Algunas fórmulas de IA ('Pero seamos rigurosos', 'Lo importante es esto', 'Guarda esa idea, porque será clave en un rato') y datos correctos y bien equilibrados, aunque el error 'tamaño poco mayor que el de Júpiter' y la autocorrección parecen detalles de guion humano o instrucciones de estilo.
 
-train-sonnet55/elrobotdeplaton-suJyEJquz7g.md  P(AI) 87.5
-  - Estructura de listicle muy pulida con gancho inicial en tres frases paralelas ("Hay una cúpula... Hay un rascacielos... Y hay una catedral...") y cierre genérico de CTA ("dale a me gusta, suscríbete... campanita")
-  - Fórmulas retóricas típicas de IA: "Lo que ves es la parte pequeña del iceberg", "Fíjate en la lección", "Una conversación entre dos épocas", "Lo que une todas estas obras es una idea", preguntas retóricas seguidas de respuesta ("¿Cómo no se vino abajo? Los romanos fueron muy listos")
-  - Tono expositivo uniforme, datos aproximados y ordenados ("unos cuarenta y tres metros", "unos ocho metros"), frases cortas y fragmentos tipo "Sin varillas. Sin nada. Solo hormigón." sin digresiones ni rasgos personales
-  - Estructura de lista pulida y formulaica: gancho inicial con tres datos, 'quédate hasta el final', cierre con llamada a comentarios, 'me gusta' y campanita, típico de guion generado.
-  - Tics retóricos de IA: 'Y aquí viene lo sorprendente', 'Fíjate en la lección', 'Una conversación entre dos épocas', 'Lo que une todas estas obras es una idea...', preguntas retóricas seguidas de respuesta, frases cortas como 'Sin varillas. Sin nada.'
-  - Tono uniformemente didáctico y datos precisos sin voz personal ni titubeos; transiciones suaves entre secciones y moraleja final que resume el tema, con cierre limpio sin rastro de improvisación humana.
+train-sonnet55/elrobotdeplaton-suJyEJquz7g.md  P(AI) 86.5
+  - Estructura de plantilla muy pulida: gancho ("Mira a tu alrededor"), promesa de "quédate hasta el final", cinco secciones paralelas, recapitulación en lista y cierre con llamada a comentarios/suscripción.
+  - Frases retóricas y fórmulas típicas de LLM: "Fíjate en la lección", "Es decir, no se trataba de resistir... sino de moverse con él", "Lo que une todas estas obras es una idea", "Una conversación entre dos épocas".
+  - Tono uniformemente enciclopédico y sin voz personal ni digresiones; datos correctos y bien dosificados, con contrastes constantes ("no es X, sino Y") y preguntas retóricas repetidas ("¿Cómo no se vino abajo?").
+  - Estructura de plantilla muy pulida: gancho ("Mira a tu alrededor"), promesa de "quédate hasta el final", cinco secciones con transiciones tipo "Viajamos ahora a…", "Saltamos a la actualidad", y resumen en forma de lista antes del cierre.
+  - Patrones retóricos típicos de IA: fragmentos en serie ("Sin armar significa sin refuerzo de acero. Sin varillas. Sin nada."), "Y siguió. Y sigue.", "Lo que une todas estas obras es una idea…", y moraleja generalizadora ("no luchan contra las fuerzas de la naturaleza, las entienden").
+  - Tono uniformemente didáctico y datos enciclopédicos bien ordenados, con preguntas retóricas frecuentes ("¿Cómo no se vino abajo?") y cierre genérico de llamada a la acción ("dale a me gusta, suscríbete… activa la campanita") sin voz personal ni digresiones propias.
 
-train-sonnet55/jaimealtozano-9rLc_brC8DY.md  P(AI) 81.0
-  - Estructura muy pulida y retórica de manual: gancho, 'Por tres razones. Primera... Segunda... Tercera', cierre con resumen 'Una... Dos... Y tres...' y llamada a comentarios, todo muy simétrico.
-  - Frases aforísticas y contrastes recurrentes tipo plantilla: 'no tiene que ver con una melodía genial, sino con lo que no suena', 'El silencio no es la ausencia de música, es lo que le da valor', 'Lo discreto ganó por goleada', 'esa canción no los llevó a un lugar nuevo, los llevó a su lugar'.
-  - Contenido genérico y con transiciones forzadas e incoherentes ('Entonces aparece Daniel Rosenfeld', 'En Minecraft pasa algo muy distinto' tras ya decirlo), con pocas anécdotas concretas y afirmaciones vagas como 'Para muchos fue como abrir una caja' o 'Otros compositores se han sumado'.
-  - Estructura muy pulcra y didáctica: "Por tres razones. Primera... Segunda... Tercera, y para mí la más bonita", seguida de un cierre con "Una:... Dos:... Y tres:..." típico de guion generado.
-  - Fórmulas retóricas y aforismos recurrentes: "no tiene que ver con una melodía genial, sino con lo que no suena", "Lo discreto ganó por goleada", "cuando quitas elementos, lo que queda pesa más", con analogías tópicas (la vela, la habitación a oscuras).
-  - Tono genérico y sin datos concretos o anécdotas propias verificables, con transiciones de relleno ("Y aquí empieza lo interesante", "Fíjate en lo interesante que resulta") y un llamado final a comentar muy estándar; además hay incoherencias como "Entonces aparece Daniel Rosenfeld" fuera de contexto.
+train-sonnet55/jaimealtozano-9rLc_brC8DY.md  P(AI) 83.5
+  - Estructura de guion muy pulida y formulaica: gancho en segunda persona, 'Vamos con el corazón del vídeo', 'Por tres razones. Primera... Segunda... Tercera', y cierre con resumen 'Una: ... Dos: ... Y tres: ...'.
+  - Frases de efecto y contrastes retóricos recurrentes: 'no tiene que ver con una melodía genial, sino con lo que no suena', 'El silencio no es la ausencia de música, es lo que le da valor', 'Lo discreto ganó por goleada', más metáforas pulidas (la vela, 'como si la música respirara').
+  - Tono genérico y sin detalles personales concretos; moraleja ampliada a 'cualquier creador' y llamada a comentar muy estándar ('Gracias por quedarte hasta el final'), con un registro uniforme y sin tropiezos ni digresiones propias de un autor humano.
+  - Estructura de guion muy pulida y formulaica: apertura con escena en segunda persona, 'Vamos con el corazón del vídeo', 'Por tres razones. Primera... Segunda... Tercera', y cierre con resumen 'Una... Dos... Y tres'.
+  - Frases y aforismos típicos de IA: 'El silencio no es la ausencia de música, es lo que le da valor', 'no tiene que ver con una melodía genial, sino con lo que no suena', 'Lo discreto ganó por goleada', 'eso, en diseño, es oro'; contrastes 'no X, sino Y' constantes.
+  - Falta de detalles específicos y personales o con errores humanos; tono genérico y equilibrado, con CTA y moraleja universal ('¿qué puedo quitar para que lo importante se note?') y ritmo uniformemente limpio sin digresiones.
 
 train-sonnet55/memoriasdepez-L4ik3OsQ_Kc.md  P(AI) 67.0
   - Estructura de guion de plantilla: gancho dramático, «Quédate hasta el final», «Bienvenidos a un nuevo vídeo», «Empezamos» y cierre estándar con like/suscripción, todo muy pulido y sin tropiezos.
@@ -390,29 +390,29 @@ train-sonnet55/memoriasdepez-L4ik3OsQ_Kc.md  P(AI) 67.0
   - Ritmo uniforme de frases cortas y paralelismos limpios («Cojo, tuerto y manco», «Seis barcos habían derrotado a casi doscientos»), con datos ordenados cronológicamente y sin digresiones, titubeos ni voz personal.
   - Tono enciclopédico con coletillas hedge típicas («Se dice que», «Cuentan que») y cierre sentencioso («perdió una pierna, un ojo y un brazo, pero nunca la determinación»), aunque el guion de canal divulgativo humano también usa estas fórmulas.
 
-train-sonnet55/peroesoesotrahistoria-cv_UWJXIK-c.md  P(AI) 85.0
-  - Estructura de guion pulida y genérica: apertura con lista retórica ('Fueron cazadores, agricultores, herreros...'), 'Soy tu guía en este documental' y cierre con llamada a suscribirse y 'FIN DEL CAPÍTULO 1'.
-  - Tono enciclopédico y equilibrado con cautelas típicas de IA ('aunque conviene ser prudentes', 'Es una hipótesis sugerente, aunque no puede demostrarse con certeza', 'la magnitud exacta sigue en debate').
-  - Frases cortas y paralelas, transiciones dramáticas ('Y entonces llegó una crisis que nadie esperaba') y saltos abruptos de contexto (el futhark aparece sin presentar las runas, la crisis sin nombrar su causa), señales de ensamblaje de secciones generadas.
-  - Estructura muy pulida y didáctica con tríadas y cierres retóricos ("Fueron cazadores, agricultores, herreros, navegantes y reyes"; "el norte se preparó, sin saberlo, para cambiar el mundo"), y cautelas típicas de IA ("conviene ser prudentes", "Es una hipótesis sugerente, aunque no puede demostrarse con certeza").
-  - Frases de transición genéricas y de guion de documental ("Y entonces llegó una crisis que nadie esperaba", "Y con las élites debilitadas...algo nuevo comenzó a surgir") y llamadas a suscribirse/"FIN DEL CAPÍTULO 1" propias de un guion generado en serie.
-  - Saltos y referencias sin antecedente ("En 1881... excavar allí", "en ellos se incineró", "Este primer sistema se conoce como el futhark") sugieren secciones omitidas o ensambladas, aunque el contenido factual es denso, ordenado y sin errores personales o digresiones humanas.
+train-sonnet55/peroesoesotrahistoria-cv_UWJXIK-c.md  P(AI) 82.0
+  - Estructura muy pulida y didáctica, con transiciones tipo guion de documental ("Y entonces llegó una crisis que nadie esperaba", "Así llegamos a la Era de Vendel") y listas equilibradas de tres elementos ("cazadores, agricultores, herreros, navegantes y reyes").
+  - Cautelas y matizaciones constantes y uniformes ("aunque conviene ser prudentes", "es una hipótesis sugerente, aunque no puede demostrarse con certeza", "la magnitud exacta sigue en debate"), típicas de texto generado por IA.
+  - Datos enciclopédicos densos y sin errores, sin voz personal ni digresiones, con frases cortas de efecto ("Una lanza que dice 'yo soy la lanza'") y cierre estándar de suscripción y 'FIN DEL CAPÍTULO 1'.
+  - Estructura muy pulida y didáctica con transiciones formulaicas ('Y entonces llegó una crisis que nadie esperaba', 'Así llegamos a la Era de Vendel') y cierre con resumen en tríadas ('en la piedra, en el hierro, en el oro').
+  - Cautelas y matices sistemáticos típicos de un asistente ('aunque conviene ser prudentes', 'Es una hipótesis sugerente, aunque no puede demostrarse con certeza', 'la magnitud exacta sigue en debate'), junto a preguntas retóricas y frases cortas de efecto ('¿Cómo? Comerciando.').
+  - Intro y outro de YouTube genéricos (suscríbete, campanita, 'FIN DEL CAPÍTULO 1') con densidad enciclopédica uniforme y sin voz personal ni digresiones o errores propios de un guionista humano.
 
-train-sonnet55/quantumfracture-wqH9J_o46hE.md  P(AI) 50.0
-  - Estructura muy pulida y didáctica, con transiciones tipo guion y cierre típico de YouTube ('suscríbete... Nos vemos en el próximo'), compatible con humano o IA.
-  - Frases de contraste y ritmo muy marcados ('El cerebro no mide el espacio, lo infiere'; 'El espacio no se perdió en los ojos. Se perdió en la representación interna.') y listas de tres elementos, rasgos frecuentes en texto generado.
-  - Hay saltos y fragmentos pegados ('Con pistas. Muchísimas...', 'Tiene tres canales semicirculares...', 'Algunas neuronas disparaban...') con sujetos omitidos, como si faltaran secciones del guion, lo que sugiere edición humana o extracción de un guion real.
-  - Estructura muy pulida y didáctica: cada bloque abre con una analogía (reloj con manecillas, gota de aceite, papel milimetrado) y cierra con una frase redonda, algo típico de guiones generados por IA.
-  - Hay fragmentos cortados o desconectados, como 'Con pistas. Muchísimas…' y 'Tiene tres canales semicirculares…', que sugieren un texto pegado por partes desde una fuente humana, y también indican posible edición posterior.
-  - Tono cercano y con humor ('amigos', 'un amigo que siempre se pierde', 'Quizá le toque entrenar el hipocampo como un taxista de Londres'), y precisión en datos (Maguire, DF, Constantinescu, 1,4), lo que puede ser de un divulgador humano documentado o de un modelo.
+train-sonnet55/quantumfracture-wqH9J_o46hE.md  P(AI) 76.0
+  - Estructura muy pulida y didáctica con recursos retóricos típicos de LLM: "Y aquí viene lo raro", "Vamos por partes", "Piensa en lo que significa esto", cierre circular que retoma el ejercicio de cerrar los ojos.
+  - Densidad enciclopédica muy pareja y sin errores ni digresiones personales: fechas, nombres y cifras (Ungerleider y Mishkin, DF, Maguire 25.000 calles, razón 1,4, Constantinescu 2016) encadenados con equilibrio, y frases de contraste del tipo "No X, sino Y" y listas en tríadas.
+  - Poca voz personal o humor espontáneo; las analogías (reloj, gota de aceite, papel milimetrado) y el cierre con llamada a suscribirse suenan formulaicos, aunque el tono cercano y la anécdota del amigo que se pierde podrían ser humanos.
+  - Estructura muy pulida y didáctica: gancho de 'cierra los ojos', recapitulación final que retoma el inicio y cierre con llamada a suscribirse, típico de guion generado.
+  - Frases de ritmo retórico recurrente: 'Y aquí viene lo raro', 'Piensa en lo que significa esto', 'Fíjate en algo importante', más contrastes del tipo 'no X, sino Y' y listas en tríadas.
+  - Exposición enciclopédica, uniforme y sin digresiones, ni anécdotas personales o errores; datos y nombres encadenados con precisión (Ungerleider, DF, Maguire, Constantinescu, 1,4) y salvedad final 'hay que ser honestos' muy de asistente.
 
-train-sonnet55/unmundoinmenso-c715wbpMhco.md  P(AI) 90.0
-  - Marcadores de guion de plantilla sin rellenar: ": Saludo y una frase sobre por qué le obsesiona la Antártida" y ": Opinión sobre por qué la península era tan codiciada" son instrucciones de un esquema generado, no habla del presentador.
-  - Estructura muy pulida y típica de IA: apertura con gancho, "Primero, situémonos", "Entonces, ¿por qué...?", listas de ideas con dos puntos, y cierre con resumen en tríada ("Técnicamente... Políticamente... Científicamente...").
-  - Frases de efecto y matizaciones enciclopédicas muy equilibradas ("Diplomacia de nevera", "Lo cierto es que el protocolo no caduca ese año", "conviene no ignorarlo") y datos densos y correctos sin tono personal.
-  - Marcadores de guion sin rellenar como ": Saludo y una frase sobre por qué le obsesiona la Antártida" y ": Opinión sobre por qué la península era tan codiciada" delatan una plantilla generada para un colaborador (TKM).
-  - Estructura muy pulida y didáctica, con listas y frases de efecto tipo "Diplomacia de nevera" y "Sus ideas básicas son pocas y potentes", además de cierres con triples paralelos ("Técnicamente, de nadie. Políticamente... Científicamente... Moralmente...").
-  - Datos enciclopédicos precisos y matizados (el Protocolo de Madrid no caduca en 2048, Marie Byrd sin reclamar) con tono neutro de resumen, y un cierre genérico de llamada a la acción.
+train-sonnet55/unmundoinmenso-c715wbpMhco.md  P(AI) 88.0
+  - Estructura de guion con marcadores de relleno tipo plantilla (": Saludo y una frase sobre por qué le obsesiona la Antártida.", ": Opinión sobre...") propios de un esquema generado por IA para un invitado.
+  - Tono pulido y retórico con patrones típicos de LLM: "Imagina un continente... Sin gobierno. Sin ciudadanos.", "Diplomacia de nevera", "Nadie renunció a nada, pero nadie puede avanzar", y la lista de tres "Técnicamente... Políticamente... Científicamente... Y moralmente".
+  - Datos precisos y equilibrados, con matices de verificación ("Lo cierto es que el protocolo no caduca ese año"), listas con viñetas aplanadas y cierre genérico de llamada a comentarios, muy característicos de texto generado.
+  - Estructura de guion plantilla con marcadores de huésped como ": Saludo y una frase sobre por qué le obsesiona la Antártida" y "TKM", típico de un borrador generado con huecos para rellenar.
+  - Retórica de IA muy pulida: apertura con fragmentos "Sin gobierno. Sin ciudadanos.", "Diplomacia de nevera", "Y el truco maestro", tríadas y cierre con pregunta al público.
+  - Tono enciclopédico equilibrado y sin errores: datos ordenados (14 millones km², 98 %, 1959, Protocolo de Madrid, 2048 matizado) y listas con dos puntos, sin digresiones ni voz personal.
 
 train-sonnet55/visualpolitik-yWzhJjUprc0.md  P(AI) 67.0
   - Estructura muy ordenada y enumerativa ("Segunda pieza", "Sexta pieza", "Primero... Segundo... Tercero... Y por último") con cierre de resumen tipo lista: "No hay una única razón. Es la suma de varias".

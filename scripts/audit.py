@@ -216,20 +216,20 @@ _SE = r"(?:\A\s*|(?<=\n\n)|(?<=[.!?…]\s)|(?<=[¿¡]))"
 CHECKS_SCRIPT = [
     ("S1", "opening a sentence with Imagine", "tell",
      _S + r"(?:now,? |so,? )?(?:imagine|picture this)\b",
-     "2% of held-out human scripts (6% of train), 29% of assistant scripts"),
+     "2% of held-out human scripts (6% of train), 31% of assistant scripts"),
     ("S2", "staged reveals: here's the twist", "tell",
      r"\bhere's (?:the (?:thing|twist|catch|kicker|problem|best part|honest part|strange part|weird part|"
      r"surprising part|part|real|key|deal|interesting)|where (?:it|things) gets?|why|how|what)\b"
      + "|" + _S + r"(?:and )?then (?:there's|comes)\b"
      r"|\bthe (?:honest|short|real|simple) answer\b"
      r"|\bsounds (?:simple|easy|logical|straightforward|reasonable|obvious|crazy|impossible|absurd|ridiculous)\b",
-     "12% of held-out human scripts (16% of train), 47% of assistant scripts"),
+     "12% of held-out human scripts (16% of train), 49% of assistant scripts"),
     ("S3", "asking for comments", "tell",
      r"\b(?:tell|let) (?:me|us) (?:know )?(?:in the comments|below)\b|\bleave a comment\b|\bcomment below\b",
      "a request, not a mention: no held-out human script (3% of train), 24% of assistant scripts; a TELL, not "
      "a FAIL, because a human channel asking for comments is its own call (5 of 144 train captions)"),
     ("S4", "next time you ...", "tell", r"\bnext time you\b",
-     "4% of held-out human scripts (1% of train), 11% of assistant scripts"),
+     "4% of held-out human scripts (1% of train), 16% of assistant scripts"),
     ("S5", "a bare noun-phrase question: The catch?", "tell",
      _S + r"(?:the|its|their|his|her|our|your|my|that|this) \w+(?: \w+)?\?",
      "2% of held-out human scripts (1% of train), 9% of assistant scripts"),
@@ -238,7 +238,7 @@ CHECKS_SCRIPT = [
      + "|" + _S + r"maybe\b[^.!?]*[.!?]\s+maybe\b|" + _S + r"which\b[^.!?]*[.!?]\s+which\b",
      "none of the held-out human scripts (3% of train), 11% of assistant scripts"),
     ("S7", "three of S1-S6 in one script", "moves", ("S1", "S2", "S3", "S4", "S5", "S6"),
-     "no human script, train or held out; 33% of Opus 5.5 scripts, 13% of all assistant ones"),
+     "no human script, train or held out; 33% of Opus 5.5 and Sonnet 5.5 scripts, 18% of all assistant ones"),
 ]
 CHECKS_SCRIPT_ES = [
     ("SE1", "quédate hasta el final", "re",
@@ -250,12 +250,12 @@ CHECKS_SCRIPT_ES = [
      "11% of held-out human scripts (10% of train), 36% of assistant scripts"),
     ("SE3", "abrir una frase con imagina", "tell",
      _SE + r"(?:ahora )?imagin(?:a|e|emos|aos|en)\b",
-     "7% of held-out human scripts (5% of train), 40% of assistant scripts"),
+     "7% of held-out human scripts (5% of train), 44% of assistant scripts"),
     ("SE4", "y aquí viene, lo curioso es que", "tell",
      r"\by aqu[ií] (?:est[aá]|viene|aparece|entra)\b|\baqu[ií] (?:est[aá] la clave|viene lo (?:bueno|interesante|curioso)"
      r"|est[aá] el truco)|\bahora viene\b|\blo (?:fascinante|curioso|interesante|sorprendente|incre[ií]ble) es que\b"
      r"|\bdato curioso\b|\bun detalle (?:fascinante|curioso)\b",
-     "4% of held-out human scripts (5% of train), 24% of assistant scripts"),
+     "4% of held-out human scripts (5% of train), 32% of assistant scripts"),
     ("SE5", "cerrar con entonces, ¿...?", "tell", _SE + r"entonces, ¿",
      "7% of held-out human scripts (6% of train), 36% of assistant scripts"),
     ("SE6", "pedir comentarios", "tell",
@@ -265,7 +265,7 @@ CHECKS_SCRIPT_ES = [
     ("SE7", "la próxima vez que ...", "tell", r"\bla pr[oó]xima vez que\b",
      "no held-out human script (1% of train), 4% of assistant scripts"),
     ("SE8", "tres de SE1-SE7 en un guion", "moves", ("SE1", "SE2", "SE3", "SE4", "SE5", "SE6", "SE7"),
-     "no human script, train or held out; 20% to 60% of each model's scripts, 36% of all"),
+     "no human script, train or held out; 20% to 60% of each model's scripts, 40% of all"),
 ]
 # Checks from other registers that do not separate here: on held-out human scripts they fire
 # at least half as often as on the assistant test scripts, so a rewriter would be sent after
