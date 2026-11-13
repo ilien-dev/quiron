@@ -327,3 +327,44 @@ ship2      scrh     texts= 10 facts_not_in_sources=0.00/text kept_identical=42.9
 #   - Si el medidor dice que las frases son cortas, une dos frases seguidas que expresan una sola idea en vez de reescribirlas.
 #   - Al terminar, la longitud media de frase y el CV de la longitud de frase no pueden ser menores que los del borrador. Si alguno lo es, deshaz ediciones hasta que no lo sea.
 #   - Deja las acotaciones, los encabezados y las etiquetas donde están. No añadas muletillas, erratas ni puntos suspensivos.
+
+## Confirmation of the notes result on held-out titles, 13 November 2026 (run after the development section above)
+# AMENDMENT OF THE OVERSHOT CLAUSE, 13 November 2026. Rule 1 of the brief fixed the overshot clause before any development number as
+# "overshot features per text not higher than the baseline's" (b-original). After the development numbers the controller amended it,
+# because ship2 sits below the human level (0.25 here, 0.60 in Spanish; held-out human scripts average 1.00 in English, script.txt line 279,
+# and 1.15 in Spanish, script-es.txt line 241, column overshot_mean): (b-amended) overshot per text not higher than the held-out human mean of
+# the language. The confirmation was run under the amended clause. Both readings are reported for every arm; an arm is "confirmed on the judges"
+# if (a) P(AI) lower than the baseline by more than the rep noise holds on the held-out set, and "confirmed without overshoot" only if (b-amended) also holds there.
+# Controller ruling fixed before any confirmation number: run ship2 on scr2 and scr2-es, notes on scr2n and scr2n-es, samples on scr2s-es only (English samples moved
+#   inside the noise on development and were not run), 2 reps each, nothing tuned afterwards.
+# Rewrites: REWRITER=claude-sonnet-5-5 python3 eval/e2e/harness.py rewrite SNAP REP --set SET -j 6 (ship2 on scr2 and scr2-es, notes on scr2n and scr2n-es, samp on scr2s-es).
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py ship2 notes --set scr2 --k 2 --g 1 --noise
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs ship2
+ship2           20    40   71.0    88%   80.3                0.38   1.68
+notes           20    40   24.7     5%   64.7                1.02   1.68   Opus -46.3 (worse 0/20, p=0.000)  GPT -15.7 (p=0.000)  over +0.65 (higher 9, lower 2, p=0.075)
+
+ship2          noise: judge-judge sd  6.0   r0-r1: set mean  -3.6, per-title sd  8.2
+notes          noise: judge-judge sd  4.9   r0-r1: set mean  +5.2, per-title sd 16.7
+$ python3 eval/e2e/overstats.py scr2 ship2 notes
+ship2    scr2: 40 texts, overshot 0.38 per text: mean_word_len 4, mattr50 3, plain_words_1k 3, first_person_1k 2, nominalizations_1k 2, long_words_1k 1
+         scr2: AI side 1.68 per text: ly_adverbs_1k 23, mean_sentence_len 15, mattr50 11, triads_1k 5, repeated_openers 4, first_person_1k 4, cv_sentence_len 2, mean_word_len 1, connective_openers 1, nominalizations_1k 1
+notes    scr2: 40 texts, overshot 1.02 per text: mean_word_len 12, long_words_1k 10, nominalizations_1k 7, first_person_1k 5, plain_words_1k 5, mattr50 2
+         scr2: AI side 1.68 per text: mean_sentence_len 29, ly_adverbs_1k 22, triads_1k 7, mattr50 4, repeated_openers 2, connective_openers 2, first_person_1k 1
+$ python3 eval/e2e/armstats.py scr2 draft ship2; python3 eval/e2e/armstats.py scr2n draft notes
+draft      scr2     texts= 20 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 11.6 -> 11.6 cv 0.537 -> 0.537 not_lower_on_both=20/20
+ship2      scr2     texts= 40 facts_not_in_sources=0.03/text kept_identical=16.3% mean_sentence_len 11.6 -> 12.9 cv 0.537 -> 0.530 not_lower_on_both=20/40
+draft      scr2n    texts= 20 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 11.6 -> 11.6 cv 0.537 -> 0.537 not_lower_on_both=20/20
+notes      scr2n    texts= 40 facts_not_in_sources=0.03/text kept_identical=0.9% mean_sentence_len 11.6 -> 11.8 cv 0.537 -> 0.548 not_lower_on_both=13/40
+# English, held-out scr2 (baseline ship2: P(AI) 71.0, overshot 0.38; drafts 75.5):
+#   N notes: 24.7, -46.3 (worse on 0 of 20, p=0.000; GPT -15.7), rep noise 5.2 (notes +5.2, ship2 -3.6): (a) holds, so CONFIRMED ON THE JUDGES.
+#     Overshot 1.02 per text: (b-original) fails (1.02 against 0.38); (b-amended) fails by 0.02 (1.02 against the human 1.00; on development 0.65 held it).
+#     So not confirmed without overshoot.
+#     Which side of the band (overshoot.py output above, texts of 40, notes against ship2): below the band, mean word length 12 (4), long words 10 (1), nominalizations 7 (2), MATTR 2 (3);
+#     above the band, plain words 5 (3), first person 5 (2). The notes rewrites use shorter, plainer words than people do, and the narrator says "I" more than they do.
+#     Figures and links in neither draft nor notes: 0.03 per text (dev 0.00; ship2 without notes 0.03).
+# Without notes a rewrite gains 4.5 points over the held-out drafts (75.5 to 71.0) and 8.5 on development (82.3 to 73.8).
+# Verdict, English: with the creator's notes the judges' P(AI) fell by 46 points on held-out titles, and the rewrites sat 0.02 features per text above the human mean.
+# Development readings under both overshot clauses (English; baseline ship2 0.25; human mean 1.00), from the development section above:
+#   N notes:   (a) holds (-44.6, noise 2.6); (b-original) fails (0.65 against 0.25); (b-amended) holds (0.65 against 1.00).
+#   S samples: (a) fails (-0.3, noise 1.9); overshot 0.20 holds both clauses. E edit: (a) fails (+8.7); overshot 0.03.
+# Held-out readings: N (a) holds, (b-original) fails, (b-amended) fails by 0.02 (1.02 against 1.00). S and E were not run on scr2.

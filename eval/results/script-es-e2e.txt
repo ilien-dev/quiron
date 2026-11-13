@@ -326,3 +326,113 @@ ship2      scrh-es  texts= 10 facts_not_in_sources=0.30/text kept_identical=22.9
 #   - Si el medidor dice que las frases son cortas, une dos frases seguidas que expresan una sola idea en vez de reescribirlas.
 #   - Al terminar, la longitud media de frase y el CV de la longitud de frase no pueden ser menores que los del borrador. Si alguno lo es, deshaz ediciones hasta que no lo sea.
 #   - Deja las acotaciones, los encabezados y las etiquetas donde están. No añadas muletillas, erratas ni puntos suspensivos.
+
+## Confirmation of the notes result on held-out titles, 13 November 2026 (run after the development section above)
+# AMENDMENT OF THE OVERSHOT CLAUSE, 13 November 2026. Rule 1 of the brief fixed the overshot clause before any development number as
+# "overshot features per text not higher than the baseline's" (b-original). After the development numbers the controller amended it,
+# because ship2 sits below the human level (0.25 here, 0.60 in Spanish; held-out human scripts average 1.00 in English, script.txt line 279,
+# and 1.15 in Spanish, script-es.txt line 241, column overshot_mean): (b-amended) overshot per text not higher than the held-out human mean of
+# the language. The confirmation was run under the amended clause. Both readings are reported for every arm; an arm is "confirmed on the judges"
+# if (a) P(AI) lower than the baseline by more than the rep noise holds on the held-out set, and "confirmed without overshoot" only if (b-amended) also holds there.
+# Controller ruling fixed before any confirmation number: run ship2 on scr2 and scr2-es, notes on scr2n and scr2n-es, samples on scr2s-es only (English samples moved
+#   inside the noise on development and were not run), 2 reps each, nothing tuned afterwards.
+# Rewrites: REWRITER=claude-sonnet-5-5 python3 eval/e2e/harness.py rewrite SNAP REP --set SET -j 6 (ship2 on scr2 and scr2-es, notes on scr2n and scr2n-es, samp on scr2s-es).
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py ship2 notes samp --set scr2-es --k 2 --g 1 --noise
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs ship2
+ship2           20    40   71.0    95%   78.3                0.88   2.05
+notes           20    40   20.3     0%   64.7                1.35   2.67   Opus -50.7 (worse 0/20, p=0.000)  GPT -13.7 (p=0.000)  over +0.47 (higher 8, lower 4, p=0.092)
+samp            20    40   65.6    85%   78.8                1.00   2.35   Opus  -5.4 (worse 5/20, p=0.008)  GPT  +0.5 (p=0.481)  over +0.12 (higher 3, lower 2, p=0.345)
+
+ship2          noise: judge-judge sd  4.6   r0-r1: set mean  -4.3, per-title sd  8.7
+notes          noise: judge-judge sd  3.3   r0-r1: set mean  +0.1, per-title sd  4.9
+samp           noise: judge-judge sd  5.5   r0-r1: set mean  +0.3, per-title sd 10.4
+$ python3 eval/e2e/overstats.py scr2-es ship2 notes samp
+ship2    scr2-es: 40 texts, overshot 0.88 per text: plain_words_1k 12, mean_word_len 10, long_words_1k 8, nominalizations_1k 4, first_person_1k 1
+         scr2-es: AI side 2.05 per text: ly_adverbs_1k 25, triads_1k 16, mattr50 11, mean_sentence_len 9, cv_sentence_len 7, mean_word_len 4, first_person_1k 4, long_words_1k 2, nominalizations_1k 2, commas_1k 2
+notes    scr2-es: 40 texts, overshot 1.35 per text: mean_word_len 18, long_words_1k 17, plain_words_1k 12, nominalizations_1k 4, first_person_1k 3
+         scr2-es: AI side 2.67 per text: ly_adverbs_1k 32, mean_sentence_len 28, triads_1k 20, commas_1k 9, cv_sentence_len 6, mattr50 6, first_person_1k 4, nominalizations_1k 2
+samp     scr2-es: 40 texts, overshot 1.00 per text: plain_words_1k 13, long_words_1k 10, mean_word_len 10, nominalizations_1k 4, first_person_1k 3
+         scr2-es: AI side 2.35 per text: ly_adverbs_1k 29, triads_1k 15, mean_sentence_len 14, cv_sentence_len 9, mattr50 9, first_person_1k 4, long_words_1k 4, mean_word_len 4, plain_words_1k 2, nominalizations_1k 2, commas_1k 2
+$ python3 eval/e2e/overstats.py scr2n-es notes --facts   (the figures and links in neither draft nor notes, with their texts)
+notes    scr2n-es: 40 texts, overshot 1.35 per text: mean_word_len 18, long_words_1k 17, plain_words_1k 12, nominalizations_1k 4, first_person_1k 3
+         scr2n-es: AI side 2.67 per text: ly_adverbs_1k 32, mean_sentence_len 28, triads_1k 20, commas_1k 9, cv_sentence_len 6, mattr50 6, first_person_1k 4, nominalizations_1k 2
+         scr2n-es: 43 figures or links in neither draft nor notes
+    unmundoinmenso-axsgxSRmYZc r1: number 1885
+    elrobotdeplaton-WErl53LY0dU r0: number 300.000
+    elrobotdeplaton-WErl53LY0dU r1: number 300.000
+    elrobotdeplaton-WErl53LY0dU r1: number 3:00
+    elrobotdeplaton-WErl53LY0dU r1: number 450
+    elrobotdeplaton-WErl53LY0dU r1: number 6:00
+    visualpolitik-y7RvbMo6hIA r0: number 1.175
+    visualpolitik-y7RvbMo6hIA r0: number 1.600
+    visualpolitik-y7RvbMo6hIA r0: number 100.000
+    visualpolitik-y7RvbMo6hIA r0: number 101.000
+    visualpolitik-y7RvbMo6hIA r0: number 144.000
+    visualpolitik-y7RvbMo6hIA r0: number 15.000
+    visualpolitik-y7RvbMo6hIA r0: number 17.700
+    visualpolitik-y7RvbMo6hIA r0: number 2009
+    visualpolitik-y7RvbMo6hIA r0: number 209.000
+    visualpolitik-y7RvbMo6hIA r0: number 222.000
+    visualpolitik-y7RvbMo6hIA r0: number 3.165
+    visualpolitik-y7RvbMo6hIA r0: number 3.800
+    visualpolitik-y7RvbMo6hIA r0: number 32.000
+    visualpolitik-y7RvbMo6hIA r0: number 5.000
+    visualpolitik-y7RvbMo6hIA r0: number 500.000
+    visualpolitik-y7RvbMo6hIA r0: number 55.000
+    visualpolitik-y7RvbMo6hIA r0: number 690.000
+    visualpolitik-y7RvbMo6hIA r0: number 70.000
+    visualpolitik-y7RvbMo6hIA r0: number 700.000
+    visualpolitik-y7RvbMo6hIA r1: number 1.175
+    visualpolitik-y7RvbMo6hIA r1: number 1.600
+    visualpolitik-y7RvbMo6hIA r1: number 100.000
+    visualpolitik-y7RvbMo6hIA r1: number 101.000
+    visualpolitik-y7RvbMo6hIA r1: number 144.000
+    visualpolitik-y7RvbMo6hIA r1: number 15.000
+    visualpolitik-y7RvbMo6hIA r1: number 17.700
+    visualpolitik-y7RvbMo6hIA r1: number 2009
+    visualpolitik-y7RvbMo6hIA r1: number 209.000
+    visualpolitik-y7RvbMo6hIA r1: number 222.000
+    visualpolitik-y7RvbMo6hIA r1: number 3.165
+    visualpolitik-y7RvbMo6hIA r1: number 3.800
+    visualpolitik-y7RvbMo6hIA r1: number 32.000
+    visualpolitik-y7RvbMo6hIA r1: number 5.000
+    visualpolitik-y7RvbMo6hIA r1: number 500.000
+    visualpolitik-y7RvbMo6hIA r1: number 55.000
+    visualpolitik-y7RvbMo6hIA r1: number 70.000
+    visualpolitik-y7RvbMo6hIA r1: number 700.000
+$ python3 eval/e2e/overstats.py scr-es ship2 notes samp   (development, for the same counts)
+ship2    scr-es: 40 texts, overshot 0.60 per text: plain_words_1k 9, mean_word_len 8, long_words_1k 4, nominalizations_1k 2, first_person_1k 1
+         scr-es: AI side 2.02 per text: ly_adverbs_1k 30, triads_1k 18, mean_sentence_len 8, mattr50 7, first_person_1k 5, cv_sentence_len 4, commas_1k 3, long_words_1k 2, mean_word_len 2, nominalizations_1k 2
+notes    scr-es: 40 texts, overshot 1.50 per text: mean_word_len 20, long_words_1k 17, plain_words_1k 15, nominalizations_1k 4, first_person_1k 4
+         scr-es: AI side 2.60 per text: ly_adverbs_1k 35, mean_sentence_len 28, triads_1k 14, cv_sentence_len 8, commas_1k 7, first_person_1k 6, mattr50 4, nominalizations_1k 1, plain_words_1k 1
+samp     scr-es: 40 texts, overshot 0.68 per text: plain_words_1k 11, mean_word_len 9, long_words_1k 5, nominalizations_1k 2
+         scr-es: AI side 2.12 per text: ly_adverbs_1k 28, triads_1k 19, mean_sentence_len 10, mattr50 6, cv_sentence_len 5, first_person_1k 4, commas_1k 4, long_words_1k 3, mean_word_len 3, nominalizations_1k 3
+$ python3 eval/e2e/armstats.py scr2-es draft ship2; python3 eval/e2e/armstats.py scr2n-es draft notes; python3 eval/e2e/armstats.py scr2s-es draft samp
+draft      scr2-es  texts= 20 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 13.6 -> 13.6 cv 0.484 -> 0.484 not_lower_on_both=20/20
+ship2      scr2-es  texts= 40 facts_not_in_sources=0.00/text kept_identical=13.7% mean_sentence_len 13.6 -> 14.8 cv 0.484 -> 0.500 not_lower_on_both=16/40
+draft      scr2n-es texts= 20 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 13.6 -> 13.6 cv 0.484 -> 0.484 not_lower_on_both=20/20
+notes      scr2n-es texts= 40 facts_not_in_sources=1.07/text kept_identical=0.5% mean_sentence_len 13.6 -> 13.3 cv 0.484 -> 0.503 not_lower_on_both=9/40
+draft      scr2s-es texts= 20 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 13.6 -> 13.6 cv 0.484 -> 0.484 not_lower_on_both=20/20
+samp       scr2s-es texts= 40 facts_not_in_sources=0.00/text kept_identical=11.6% mean_sentence_len 13.6 -> 14.9 cv 0.484 -> 0.500 not_lower_on_both=20/40
+# Spanish, held-out scr2-es (baseline ship2: P(AI) 71.0, overshot 0.88; drafts 81.5). Human mean overshot 1.15 (script-es.txt line 241):
+#   N notes: 20.3, -50.7 (worse on 0 of 20, p=0.000; GPT -13.7), rep noise 4.3 (ship2 -4.3, notes +0.1): (a) holds, so CONFIRMED ON THE JUDGES.
+#     Overshot 1.35 per text: (b-original) fails (1.35 against 0.88); (b-amended) fails (1.35 against 1.15; on development 1.50 failed too). Not confirmed without overshoot.
+#     Which side of the band (texts of 40, notes against ship2): below the band, mean word length 18 (10), long words 17 (8), nominalizations 4 (4); above the band, plain words 12 (12), first person 3 (1).
+#     Development: mean word length 20 (8), long words 17 (4), plain words 15 (9).
+#     Figures and links in neither draft nor notes: 1.07 per text (43 in 40 texts; dev 0.30; ship2 without notes 0.00). What the rewriter put in:
+#       elrobotdeplaton-WErl53LY0dU r1 ends with "*(Extensión aproximada: 450 palabras)*" and has the section marks "[CONCLUSIÓN – 6:00]" and "3:00" (draft and notes have neither): a word count and timings the writer never gave;
+#       visualpolitik-y7RvbMo6hIA, about 20 figures such as 209.000 and 690.000, where the notes say "209 billion" and "690k": the same facts in another unit or format, but the check reads them as new.
+#     "1885" in unmundoinmenso-axsgxSRmYZc (notes: "1884-85") is an abbreviated range written out. The check cannot tell these kinds apart; the first kind is the one to look for with --source.
+#     Five of the 40 Spanish notes came out in English (curiosamente-Y25yXtxH6qY, elrobotdeplaton-WErl53LY0dU, jaimealtozano-OdYIS8KXdFI, memoriasdepez-L4ik3OsQ_Kc, visualpolitik-y7RvbMo6hIA),
+#     though the prompt asks for the language of the script. They were not regenerated after this was seen, so as not to change inputs after the development numbers.
+#   S samples: 65.6, -5.4 (worse on 5 of 20, p=0.008; GPT +0.5), rep noise 4.3 (ship2 -4.3, samp +0.3): (a) holds, so CONFIRMED ON THE JUDGES.
+#     Overshot 1.00 per text: (b-original) fails (1.00 against 0.88); (b-amended) holds (1.00 against 1.15; development 0.68 held too). CONFIRMED WITHOUT OVERSHOOT.
+#     Figures and links in neither draft nor samples-and-draft: 0.00 per text.
+# Without notes a rewrite gains 10.5 points over the held-out drafts (81.5 to 71.0) and 8.0 on development (79.4 to 71.4).
+# Rule 3 (a combination when two arms are confirmed) was not run: the controller's ruling listed the runs and the combination was not among them.
+# Verdict, Spanish: notes took P(AI) from 71.0 to 20.3 on held-out titles with overshoot 1.35 against a human 1.15; two earlier scripts by the creator took it from 71.0 to 65.6 with overshoot 1.00.
+# Development readings under both overshot clauses (Spanish; baseline ship2 0.60; human mean 1.15), from the development section above:
+#   N notes:   (a) holds (-50.0, noise 2.5); (b-original) fails (1.50 against 0.60); (b-amended) fails (1.50 against 1.15).
+#   S samples: (a) holds (-7.2, noise 0.7); (b-original) fails (0.68 against 0.60); (b-amended) holds (0.68 against 1.15).
+#   E edit:    (a) fails (+5.8, noise 0.2); overshot 0.30 holds both clauses.
+# Held-out readings: N (a) holds, (b-original) fails, (b-amended) fails (1.35 against 1.15). S (a) holds, (b-original) fails, (b-amended) holds (1.00 against 1.15). E was not run on scr2-es.

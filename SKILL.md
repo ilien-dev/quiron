@@ -77,14 +77,21 @@ sentences than human ones, while assistant fiction has choppier ones (both run s
   blind judges beyond what the default rules already did, and no rewrite rule for scripts
   held. A rewrite shortens and evens sentences, which the bands do not ask of narration. A
   script a person wrote is measured, not rewritten: rewriting human narration made judges
-  rate it more AI. Three more ways of rewriting were tried on development sets and none was
-  confirmed. Editing only the flagged sentences read more AI than the shipped rewrite (P(AI)
-  82.5 against 73.8 in English, 77.2 against 71.4 in Spanish). Two earlier scripts by the
-  creator passed with `--sample` changed nothing in English (-0.3) and 7.2 points in
-  Spanish, with a little more overshoot. The creator's notes cut P(AI) to 29.2 and 21.5 but
-  put more features past the human band (0.65 against 0.25 per text, 1.50 against 0.60),
-  which the test's rule counted against them. No held-out run followed. The numbers are in
-  `references/numbers.md`.
+  rate it more AI. For a script, as for a post, what moved blind judges was a rewrite built
+  from the creator's own notes: P(AI) 73.8 to 29.2 on development titles and 71.0 to 24.7 on
+  held-out ones in English, 71.4 to 21.5 and 71.0 to 20.3 in Spanish. Without notes a rewrite
+  gains 4.5 to 10.5 points over the draft and no more. The notes rewrites put features past
+  the human band: 0.65 and 1.02 per text in English, 1.50 and 1.35 in Spanish, against 1.00
+  and 1.15 for held-out human scripts. English stayed under the human level on development
+  titles and was 0.02 over it on held-out ones; Spanish was over on both. Words come out
+  shorter and plainer than people use them. With notes, still run `check.sh --source` with
+  the draft and the notes: in Spanish the rewrites carried 1.07 figures or links per text
+  that neither had on held-out titles (0.30 on development), mostly units and formats
+  rewritten, and also a word-count trailer and timings nobody gave. Two earlier scripts by
+  the creator, passed with `--sample`, helped in Spanish (71.4 to 64.2, 71.0 to 65.6, overshot
+  under the human level) and not in English (-0.3). Editing only the flagged sentences read
+  more AI than the shipped rewrite (82.5 against 73.8 in English, 77.2 against 71.4 in
+  Spanish). The numbers are in `references/numbers.md`.
 
 Select a file by putting `QUIRON_BANDS=<skill-dir>/scripts/bands-fiction.json` (or
 another of these files) in front of every command, including `check.sh`. The scripts print a

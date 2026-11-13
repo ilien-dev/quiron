@@ -202,8 +202,12 @@ Para la narración de un guion de video de YouTube se pone `QUIRON_BANDS=scripts
 `QUIRON_BANDS=scripts/bands-script.json` si el guion está en inglés. El medidor lee solo las palabras
 que se dicen y deja quietas las acotaciones. Mide el guion y busca los patrones que
 comparten los guiones de los asistentes. No se ha visto que un guion reescrito suene más a
-persona: jueces ciegos puntuaron las reescrituras casi igual de IA que las hechas sin este
-registro, y puntuaron como más IA un guion escrito por una persona después de reescribirlo.
+persona: sin las notas del creador, una reescritura ganó entre 4,5 y 10,5 puntos de P(IA)
+sobre el borrador y casi todas se siguieron puntuando como IA. Hecha a partir de las notas del
+propio creador bajó a 24,7 en inglés y a 20,3 en español con títulos que no se usaron para
+elegir nada, con más rasgos fuera de la banda humana que los que tienen las personas en
+español. Los jueces ciegos también puntuaron como más IA un guion escrito por una persona
+después de reescribirlo.
 Si el guion es tuyo, mídelo y cambia lo que tú decidas cambiar.
 
 Otros idiomas reciben la misma lista como mejor esfuerzo, porque todavía no tienen una base
