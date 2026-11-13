@@ -193,22 +193,43 @@ class ScriptSets(unittest.TestCase):
         self.assertIs(self.h.script_prompt("scrh"), self.h.JPROMPT_SCR)
         self.assertIs(self.h.script_prompt("scrh-es"), self.h.JPROMPT_SCR_ES)
 
-    def test_bands_snapshot_drops_the_rules_and_the_checks(self):
+    def snap_from(self, files):
+        d = tempfile.mkdtemp()
+        for rel, text in files.items():
+            os.makedirs(os.path.dirname(os.path.join(d, rel)), exist_ok=True)
+            with open(os.path.join(d, rel), "w", encoding="utf-8") as out:
+                out.write(text)
+        return d
+
+    def check_stripped(self, dst):
+        self.assertFalse(os.path.exists(os.path.join(dst, "references", "script.md")))
+        skill = open(os.path.join(dst, "SKILL.md"), encoding="utf-8").read()
+        self.assertNotIn("script.md", skill)
+        self.assertIn("bands-script.json", skill)
+        self.assertIn("_new = []", open(os.path.join(dst, "scripts", "audit.py"), encoding="utf-8").read())
+
+    def test_bands_snapshot_of_the_tested_rules(self):
+        """At 37a1cff, where the rules were tested, the snapshot drops them and the checks."""
         repo = os.path.abspath(os.path.join(HERE, ".."))
-        with tempfile.TemporaryDirectory() as d:
-            dst = os.path.join(d, "snap")
-            os.makedirs(os.path.join(dst, "references"))
-            os.makedirs(os.path.join(dst, "scripts"))
-            for rel in ("SKILL.md", os.path.join("references", "script.md"), os.path.join("scripts", "audit.py")):
-                with open(os.path.join(repo, rel), encoding="utf-8") as src, \
-                        open(os.path.join(dst, rel), "w", encoding="utf-8") as out:
-                    out.write(src.read())
-            self.h.strip_script_rules(dst)
-            self.assertFalse(os.path.exists(os.path.join(dst, "references", "script.md")))
-            skill = open(os.path.join(dst, "SKILL.md"), encoding="utf-8").read()
-            self.assertNotIn("script.md", skill)
-            self.assertIn("bands-script.json", skill)
-            self.assertIn("_new = []", open(os.path.join(dst, "scripts", "audit.py"), encoding="utf-8").read())
+        files = {}
+        for rel in ("SKILL.md", "references/script.md", "scripts/audit.py"):
+            r = subprocess.run(["git", "show", f"37a1cff:{rel}"], cwd=repo, capture_output=True,
+                               text=True, encoding="utf-8")
+            if r.returncode:
+                self.skipTest("commit 37a1cff is not in this clone")
+            files[rel] = r.stdout
+        dst = self.snap_from(files)
+        self.h.strip_script_rules(dst)
+        self.check_stripped(dst)
+
+    def test_bands_snapshot_of_this_tree(self):
+        """With no references/script.md, only the script checks go."""
+        repo = os.path.abspath(os.path.join(HERE, ".."))
+        files = {rel: open(os.path.join(repo, rel), encoding="utf-8").read()
+                 for rel in ("SKILL.md", "scripts/audit.py")}
+        dst = self.snap_from(files)
+        self.h.strip_script_rules(dst)
+        self.check_stripped(dst)
 
 
 class LanguageWarning(unittest.TestCase):

@@ -52,16 +52,23 @@ def snapshot(name, src, no_script_rules=False):
 # The "bands" snapshot of the video-script register: the band files and the register's entry
 # in SKILL.md, without references/script.md, the line that sends the rewriter to it, or the
 # script checks S1-S7 and SE1-SE8. Every edit must apply, or the snapshot is not what it says.
+# The rules were tested at commit 37a1cff and did not ship; from a later tree with no
+# references/script.md only the checks are turned off.
 SCRIPT_RULE_EDITS = [
     ("SKILL.md", "- [references/script.md](references/script.md): the rewrite rules for video scripts.\n", ""),
     ("SKILL.md", " **Read [references/script.md](references/script.md) before rewriting a\n  script.**", ""),
-    (os.path.join("scripts", "audit.py"), '_new = CHECKS_SCRIPT_ES if LANG == "es" else CHECKS_SCRIPT', "_new = []"),
 ]
+SCRIPT_CHECK_EDIT = (os.path.join("scripts", "audit.py"), '_new = CHECKS_SCRIPT_ES if LANG == "es" else CHECKS_SCRIPT',
+                     "_new = []")
 
 
 def strip_script_rules(dst):
-    os.remove(os.path.join(dst, "references", "script.md"))
-    for rel, old, new in SCRIPT_RULE_EDITS:
+    rules = os.path.join(dst, "references", "script.md")
+    edits = [SCRIPT_CHECK_EDIT]
+    if os.path.exists(rules):
+        os.remove(rules)
+        edits += SCRIPT_RULE_EDITS
+    for rel, old, new in edits:
         p = os.path.join(dst, rel)
         text = open(p, encoding="utf-8").read()
         if text.count(old) != 1:

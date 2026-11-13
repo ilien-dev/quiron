@@ -1,0 +1,100 @@
+# Video scripts end to end (en), November 2026 protocol (eval/e2e/README.md).
+# Rewriter REWRITER=claude-sonnet-5-5; judges two Claude Sonnet 5.5 (column "Opus", the Claude judge) and one GPT-6.1 Terra (column "GPT"), --k 2 --g 1.
+# Snapshots: main = git archive origin/main (39b39c1); bands = 37a1cff with --no-script-rules; rules = 37a1cff;
+# rules-nolen = rules with the sentence-length bullets removed from references/script.md (English: "Longer sentences"; Spanish: "Frases más largas", "Vary the length");
+# rules-nolen was made with: harness.py snapshot rules-nolen <checkout of 37a1cff>, then in snaps/rules-nolen/references/script.md each bullet
+#   starting '- **Longer sentences, joined the way people talk.**', '- **Frases más largas.**' and '- **Vary the length.**' deleted up to the next '- **'.
+# final = the tree after this task (no references/script.md, script checks on), used only for the human captions.
+# Reps: main 1, bands 2, rules 2, rules-nolen 1 on scr; bands 2 on scr2; final 1 on scrh. 'over' / 'aiside' = mean features per text overshot / on the AI side,
+# measured on the spoken words against scripts/bands-script.json. Rewrites: harness.py rewrite SNAP REP --set SET -j 6.
+# Decision rule (written before any number): rules ship if they beat bands on scr by more than the larger rep-to-rep set-mean difference, with no more overshot, and the same holds on scr2.
+# Result: neither rules nor rules-nolen beat bands on scr, so no rule was run on scr2 and references/script.md was removed after 37a1cff.
+
+## Untouched drafts, main and bands on scr
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft main bands --set scr --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
+draft           20    20   82.2   100%   87.0                0.00   3.10
+main            20    20   69.5    85%   82.2                0.25   2.65   Opus -12.6 (worse 1/20, p=0.000)  GPT  -4.8 (p=0.000)  over +0.25 (higher 4, lower 0, p=0.068)
+bands           20    40   71.3    90%   82.2                0.28   1.30   Opus -10.8 (worse 0/20, p=0.000)  GPT  -4.8 (p=0.000)  over +0.28 (higher 7, lower 0, p=0.018)
+
+## main against bands, paired per title
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py main bands --set scr --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
+main            20    20   69.5    85%   82.2                0.25   2.65
+bands           20    40   71.3    90%   82.2                0.28   1.30   Opus  +1.8 (worse 11/20, p=0.193)  GPT  +0.1 (p=0.931)  over +0.03 (higher 3, lower 2, p=0.787)
+
+## bands against the rules, and the one variant
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py bands rules rules-nolen --set scr --k 2 --g 1 --noise --reasons
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs bands
+bands           20    40   71.3    90%   82.2                0.28   1.30
+rules           20    40   75.0   100%   83.8                0.20   1.02   Opus  +3.6 (worse 13/20, p=0.032)  GPT  +1.6 (p=0.005)  over -0.07 (higher 2, lower 4, p=0.345)
+rules-nolen     20    20   73.7   100%   83.4                0.10   1.40   Opus  +2.4 (worse 13/20, p=0.165)  GPT  +1.2 (p=0.039)  over -0.17 (higher 0, lower 5, p=0.043)
+
+bands          noise: judge-judge sd  5.0   r0-r1: set mean  -0.7, per-title sd  9.4
+rules          noise: judge-judge sd  4.7   r0-r1: set mean  -2.0, per-title sd  7.3
+rules-nolen    noise: judge-judge sd  6.0
+
+bands top reasons (judged AI):
+    4 tidy, formulaic structure
+    2 highly structured teaching sequence
+    2 polished rhetorical patterns typical of ai essays
+    2 hedged, balanced qualifiers throughout
+    2 stock youtube outro
+    2 highly symmetrical framing
+    2 generic youtube outro
+    2 repeated polished contrasts
+    2 stray source-label fragments inserted mid-text
+    1 tidy explainer scaffolding with rhetorical questions and sig
+    1 short, punchy, evenly paced sentences with generic phrasing
+    1 comprehensive, textbook-clean coverage with no personal voic
+    1 polished explainer structure with rhetorical question hooks 
+    1 uniformly short, clean, declarative sentences with tidy cont
+    1 comprehensive, textbook-accurate coverage with anticipatory 
+
+rules top reasons (judged AI):
+    4 tidy, formulaic structure
+    3 some human-like touches
+    3 generic youtube outro
+    2 polished rhetorical patterns and tidy triads
+    2 some human-sounding touches
+    2 highly structured progression
+    2 tidy aphorisms and rule-of-three constructions
+    2 repeated polished contrasts
+    1 highly structured explainer with signposting and a tidy reca
+    1 polished, even-handed phrasing and rhetorical setups like "l
+    1 textbook-clean progression with no personal voice, hesitatio
+    1 highly polished, evenly paced explainer structure with signp
+    1 tidy rhetorical patterns typical of llm output
+    1 uniformly clean, textbook-like exposition with no personal v
+    1 highly structured progression signposted by phrases such as 
+
+rules-nolen top reasons (judged AI):
+    2 repeated polished contrasts
+    2 some human-like touches
+    1 highly polished, even structure with rhetorical hooks and si
+    1 uniform short, explanatory sentences and textbook-style defi
+    1 formulaic closing teaser and cliffhanger question
+    1 highly polished explainer structure with rhetorical question
+    1 uniformly short, clean declarative sentences and tidy parall
+    1 textbook-complete, evenly paced coverage with hedged accurac
+    1 the explanation follows a very even, textbook-like sequence,
+    1 repeated signposting such as “so what's going on inside a re
+    1 the closing contrast, “the idea is simple. making it work re
+    1 formulaic rhetorical structure
+    1 polished, generic aphoristic phrasing throughout
+    1 stock youtube outro and engagement prompt
+    1 formulaic structure and stock phrases
+
+## Held-out titles: drafts and bands on scr2 (no rules: none passed scr)
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft bands --set scr2 --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
+draft           20    20   74.4    85%   86.2                0.10   2.85
+bands           20    40   65.4    75%   80.4                0.30   1.52   Opus  -9.0 (worse 3/20, p=0.003)  GPT  -5.8 (p=0.000)  over +0.20 (higher 4, lower 1, p=0.080)
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py bands --set scr2 --k 2 --g 1 --noise
+bands          noise: judge-judge sd  5.0   r0-r1: set mean  +2.0, per-title sd 10.8
+
+## Held-out human captions (scrh, local), before and after one rewrite with final
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft final --set scrh --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
+draft           10    10    7.8     0%    8.1                1.30   1.20
+final           10    10   13.7     0%   27.1                1.30   0.90   Opus  +5.9 (worse 7/10, p=0.042)  GPT +19.0 (p=0.017)  over +0.00 (higher 2, lower 2, p=1.000)

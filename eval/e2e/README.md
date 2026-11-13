@@ -60,18 +60,21 @@ python3 $H/report.py old new --set test --reps "rt*"
 
 The video-script rounds compared three snapshots. `main` is the skill before the script
 register, taken from `git archive origin/main` unpacked into a scratch folder and passed as
-SRC. `rules` is the branch as it is. `bands` is the same branch with
-`--no-script-rules`, which deletes `references/script.md`, takes out the two lines of
-`SKILL.md` that point to it and turns off the script checks (S1 to S7, SE1 to SE8) in the
-snapshot's `audit.py`. The band files and the register's entry stay. If one of those edits
-no longer matches the files, the command stops instead of making a snapshot that is not
-what its name says.
+SRC. `rules` is commit `37a1cff`, which has the rules in `references/script.md`. `bands`
+is the same commit with `--no-script-rules`, which deletes `references/script.md`, takes
+out the two lines of `SKILL.md` that point to it and turns off the script checks (S1 to S7,
+SE1 to SE8) in the snapshot's `audit.py`. The band files and the register's entry stay. If
+one of those edits no longer matches the files, the command stops instead of making a
+snapshot that is not what its name says. The rules did not beat `bands` and were removed
+after that commit, so on a later tree the flag only turns the checks off. The numbers are
+in `eval/results/script-e2e.txt` and `script-es-e2e.txt`.
 
 ```sh
 git archive origin/main | tar -x -C /tmp/quiron-main
+git archive 37a1cff | tar -x -C /tmp/quiron-rules
 python3 $H/harness.py snapshot main /tmp/quiron-main
-python3 $H/harness.py snapshot bands --no-script-rules
-python3 $H/harness.py snapshot rules
+python3 $H/harness.py snapshot bands /tmp/quiron-rules --no-script-rules
+python3 $H/harness.py snapshot rules /tmp/quiron-rules
 REWRITER=claude-sonnet-5-5 python3 $H/harness.py rewrite rules 0 --set scr -j 6
 JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 $H/report.py bands rules --set scr --k 2 --g 1 --noise
 ```
