@@ -120,3 +120,89 @@ bands        files= 40 measured= 40 mean_sentence_len=13.3 cv_sentence_len=0.545
 $ python3 eval/e2e/scriptstats.py scrh draft final
 draft        files= 10 measured= 10 mean_sentence_len=18.9 cv_sentence_len=0.606 first_person_1k=26.1 triads_1k=2.99 mattr50=0.804 imagine=0.00 reveals=0.19 comments=0.00 fillers=0.84 ellipses=0.95 leaks=0/10 lost=0.0% (>10%: 0, max 0%)
 final        files= 10 measured= 10 mean_sentence_len=15.3 cv_sentence_len=0.549 first_person_1k=25.9 triads_1k=2.56 mattr50=0.807 imagine=0.00 reveals=0.00 comments=0.00 fillers=0.83 ellipses=0.29 leaks=0/10 lost=0.0% (>10%: 0, max 0%)
+
+## Task 6b: what ships, measured end to end (whole narrations, rebuilt bands)
+# Snapshots, from the tree at 3095346 (sha256 over the snapshot's files, CRLF read as LF, first 8 hex):
+#   bands2 (a23be7a4) = harness.py snapshot bands2 --no-script-rules (register entry, band files, script checks off, no references/script.md);
+#   ship   (df3f6914) = harness.py snapshot ship (the tree as it ships: script checks on, no references/script.md); it differs from bands2 only in
+#            audit.py's '_new = ...' line;
+#   join   (e388d4dc) = ship plus references/script.md (below, verbatim) and the two SKILL.md lines of SCRIPT_RULE_EDITS in harness.py.
+# Rewrites: REWRITER=claude-sonnet-5-5 python3 eval/e2e/harness.py rewrite SNAP REP --set SET -j 6; reps r0 and r1 of bands2, ship and join on scr,
+#   of ship and bands2 on scr2; r0 of ship on scrh. bands2 is not byte-identical to the Task 6 bands snapshot (aimeter.py and the band files
+#   changed), so it was rewritten on scr2 too. 210 rewrites in this language, none failed.
+# Decision rules, fixed in the brief before any number: noise = the larger |r0-r1| set mean of the two snapshots compared (--noise, Claude column).
+#   ship worse than bands2 by more than the noise -> the script checks stop running during a rewrite in this language; otherwise they stay on.
+#   join stays only if it beats ship by more than the noise with no more overshot, and then confirms once on scr2; otherwise it is deleted.
+# Result, en: ship - bands2 = -0.8 (worse on 8 of 20, p=0.185), noise 1.5 (ship r0-r1 +1.5; bands2 -0.7): not worse, so the checks stay on while rewriting.
+#   scr2: ship 69.1 against the drafts 75.5 (-6.4, worse on 2 of 20, p=0.005) and against bands2 69.3 (-0.2, p=0.794; noise 3.4).
+#   join - ship = +5.1 (worse on 16 of 20, p=0.004), noise 1.5, overshot -0.12 (p=0.109): worse, so references/script.md was deleted; no scr2 run.
+#   Human captions (scrh), one rewrite with ship: 7.8 -> 14.2 (+6.4, worse on 8 of 10, p=0.012), GPT 8.1 -> 24.6; mean sentence length 18.9 -> 15.3, CV 0.606 -> 0.542.
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py bands2 ship --set scr --k 2 --g 1 --noise
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs bands2
+bands2          20    40   73.1    90%   82.2                0.25   1.50
+ship            20    40   72.3    98%   81.9                0.23   1.52   Opus  -0.8 (worse 8/20, p=0.185)  GPT  -0.3 (p=0.370)  over -0.03 (higher 3, lower 3, p=0.753)
+
+bands2         noise: judge-judge sd  5.2   r0-r1: set mean  -0.7, per-title sd  6.3
+ship           noise: judge-judge sd  5.5   r0-r1: set mean  +1.5, per-title sd  7.2
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft bands2 ship --set scr --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
+draft           20    20   82.3   100%   87.1                0.00   3.15
+bands2          20    40   73.1    90%   82.2                0.25   1.50   Opus  -9.2 (worse 2/20, p=0.001)  GPT  -4.8 (p=0.000)  over +0.25 (higher 5, lower 0, p=0.043)
+ship            20    40   72.3    98%   81.9                0.23   1.52   Opus -10.0 (worse 2/20, p=0.001)  GPT  -5.2 (p=0.000)  over +0.23 (higher 5, lower 0, p=0.043)
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py ship join --set scr --k 2 --g 1 --noise
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs ship
+ship            20    40   72.3    98%   81.9                0.23   1.52
+join            20    40   77.4    98%   84.1                0.10   1.27   Opus  +5.1 (worse 16/20, p=0.004)  GPT  +2.2 (p=0.001)  over -0.12 (higher 0, lower 3, p=0.109)
+
+ship           noise: judge-judge sd  5.5   r0-r1: set mean  +1.5, per-title sd  7.2
+join           noise: judge-judge sd  4.0   r0-r1: set mean  +0.7, per-title sd  8.9
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft ship bands2 --set scr2 --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
+draft           20    20   75.5    85%   86.6                0.10   2.90
+ship            20    40   69.1    88%   80.9                0.28   1.48   Opus  -6.4 (worse 2/20, p=0.005)  GPT  -5.7 (p=0.000)  over +0.17 (higher 5, lower 0, p=0.043)
+bands2          20    40   69.3    92%   80.3                0.30   1.50   Opus  -6.2 (worse 2/20, p=0.012)  GPT  -6.2 (p=0.000)  over +0.20 (higher 3, lower 0, p=0.109)
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py bands2 ship --set scr2 --k 2 --g 1 --noise
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs bands2
+bands2          20    40   69.3    92%   80.3                0.30   1.50
+ship            20    40   69.1    88%   80.9                0.28   1.48   Opus  -0.2 (worse 11/20, p=0.794)  GPT  +0.5 (p=0.520)  over -0.03 (higher 3, lower 2, p=1.000)
+
+bands2         noise: judge-judge sd  6.2   r0-r1: set mean  -3.4, per-title sd  8.9
+ship           noise: judge-judge sd  5.2   r0-r1: set mean  +3.2, per-title sd  7.6
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py draft ship --set scrh --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs draft
+draft           10    10    7.8     0%    8.1                1.30   1.20
+ship            10    10   14.2     0%   24.6                1.40   1.00   Opus  +6.4 (worse 8/10, p=0.012)  GPT +16.5 (p=0.012)  over +0.10 (higher 1, lower 0, p=0.317)
+$ python3 eval/e2e/scriptstats.py scr draft bands2 ship join
+draft        files= 20 measured= 20 mean_sentence_len=11.8 cv_sentence_len=0.56 first_person_1k=8.86 triads_1k=6.68 mattr50=0.836 imagine=0.46 reveals=0.89 comments=0.47 fillers=0.32 ellipses=0.20 leaks=1/20 lost=0.0% (>10%: 0, max 0%)
+bands2       files= 40 measured= 40 mean_sentence_len=13.3 cv_sentence_len=0.534 first_person_1k=7.37 triads_1k=4.02 mattr50=0.825 imagine=0.25 reveals=0.60 comments=0.54 fillers=0.39 ellipses=0.05 leaks=0/40 lost=0.0% (>10%: 0, max 0%)
+ship         files= 40 measured= 40 mean_sentence_len=13.2 cv_sentence_len=0.527 first_person_1k=7.59 triads_1k=3.71 mattr50=0.825 imagine=0.07 reveals=0.15 comments=0.29 fillers=0.41 ellipses=0.02 leaks=0/40 lost=0.0% (>10%: 0, max 0%)
+join         files= 40 measured= 40 mean_sentence_len=18.1 cv_sentence_len=0.555 first_person_1k=8.94 triads_1k=4.8 mattr50=0.829 imagine=0.13 reveals=0.25 comments=0.29 fillers=0.33 ellipses=0.05 leaks=2/40 lost=0.0% (>10%: 0, max 0%)
+$ python3 eval/e2e/scriptstats.py scr2 draft bands2 ship
+draft        files= 20 measured= 20 mean_sentence_len=11.6 cv_sentence_len=0.537 first_person_1k=9.2 triads_1k=5.98 mattr50=0.826 imagine=0.25 reveals=0.85 comments=0.17 fillers=0.75 ellipses=0.12 leaks=0/20 lost=0.0% (>10%: 0, max 0%)
+bands2       files= 40 measured= 40 mean_sentence_len=13 cv_sentence_len=0.544 first_person_1k=8.48 triads_1k=3.62 mattr50=0.817 imagine=0.03 reveals=0.65 comments=0.14 fillers=0.65 ellipses=0.00 leaks=0/40 lost=0.0% (>10%: 0, max 0%)
+ship         files= 40 measured= 40 mean_sentence_len=13.4 cv_sentence_len=0.541 first_person_1k=8.63 triads_1k=4.06 mattr50=0.816 imagine=0.00 reveals=0.15 comments=0.09 fillers=0.66 ellipses=0.00 leaks=0/40 lost=0.0% (>10%: 0, max 0%)
+$ python3 eval/e2e/scriptstats.py scrh draft ship
+draft        files= 10 measured= 10 mean_sentence_len=18.9 cv_sentence_len=0.606 first_person_1k=26.1 triads_1k=2.99 mattr50=0.804 imagine=0.00 reveals=0.19 comments=0.00 fillers=0.84 ellipses=0.95 leaks=0/10 lost=0.0% (>10%: 0, max 0%)
+ship         files= 10 measured= 10 mean_sentence_len=15.3 cv_sentence_len=0.542 first_person_1k=25.9 triads_1k=2.92 mattr50=0.816 imagine=0.00 reveals=0.15 comments=0.00 fillers=0.73 ellipses=0.42 leaks=0/10 lost=0.0% (>10%: 0, max 0%)
+# references/script.md as join tested it (deleted after this run):
+#   # Video scripts: keep the narrator's sentences
+#
+#   When a rewrite goes wrong on a script, it is usually because the rewriter cut long sentences into short ones and made them all the same length. People who write narration do the opposite. Ten human captions rewritten with this skill went from 18.9 to 15.3 words a sentence in English and from 19.9 to 15.7 in Spanish (`eval/results/script-e2e.txt`, `script-es-e2e.txt`).
+#
+#   ## English
+#
+#   The band is `scripts/bands-script.json`. Human narration runs 13.1 to 25.4 words a sentence, median 17.8, and assistant scripts sit at 12.3.
+#
+#   - Keep the draft's sentences whole unless the meter flags them. Never split a sentence to fix something else.
+#   - Short sentences in a row that make one point get joined with "and", "but" or "so" until the mean sentence length is inside the band. Stop at 17.8.
+#   - Keep the narrator's "I" and "we".
+#   - Do not add fillers, typos or ellipses.
+#
+#   ## Spanish
+#
+#   The band is `scripts/bands-script-es.json`. Human narration runs 14.6 to 29.1 words a sentence, median 21.1, and assistant scripts sit at 14.4.
+#
+#   - Keep the draft's sentences whole unless the meter flags them. Never split a sentence to fix something else.
+#   - Short sentences in a row that make one point get joined with "y", "pero" or "así que" until the mean sentence length is inside the band. Stop at 21.1.
+#   - Keep the narrator's "yo" and "nosotros".
+#   - Do not add fillers, typos or ellipses.
