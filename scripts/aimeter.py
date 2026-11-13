@@ -390,18 +390,29 @@ def _trailers(lines, n):
     return out
 
 
-AUDIO_COLUMN = re.compile(r"^[*_]*(?:AUDIO|NARRATION|NARRACI[OÓ]N|VO|V\.O\.|SCRIPT|GUION)[*_]*$", re.I)
+SPEECH_HEAD = re.compile(r"\b(?:audio|narrat|narrac|narrador|v\.?o\b|voice|voz\b|locuci|locutor|script|gui[oó]n|dialog|texto|speech|host)", re.I)
+VISUAL_HEAD = re.compile(r"visual|video|\bshot|image|imagen|plano|scene|escena|b-roll|on screen|en pantalla", re.I)
+TABLE_GUESSED = []  # set when a table header names no column: the meter reports it once on stderr
 
 
 def _table_lines(rows):
-    """The words said in a markdown table: the AUDIO / NARRATION / VO / SCRIPT column when
-    the header names one, else the last column (the picture is conventionally first)."""
+    """The words said in a markdown table. A header that names a speech column (AUDIO, NARRATION,
+    VOICEOVER, LOCUCIÓN, TEXTO...) gives that column; one that only names a visual column
+    (VISUAL, SHOT, IMAGEN, PLANO...) gives the first other column; a header that names neither
+    gives the last column (the picture is conventionally first) and TABLE_GUESSED is set."""
     cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows]
     head = len(cells) > 1 and all(re.fullmatch(r":?-{2,}:?", c) for c in cells[1] if c)
     col = -1
     if head:
-        named = [i for i, c in enumerate(cells[0]) if AUDIO_COLUMN.match(c)]
-        col = named[0] if named else -1
+        vis = [bool(VISUAL_HEAD.search(c)) for c in cells[0]]
+        speech = [i for i, c in enumerate(cells[0]) if SPEECH_HEAD.search(c) and not vis[i]]
+        other = [i for i, v in enumerate(vis) if not v]
+        if speech:
+            col = speech[0]
+        elif any(vis) and other:
+            col = other[0]
+        else:
+            TABLE_GUESSED.append(1)
         cells = cells[2:]
     return [r[col] for r in cells if r and (col == -1 or col < len(r)) and r[col]]
 
@@ -677,7 +688,10 @@ def habit(key, got, band, sample):
 
 def report(path, as_json=False, sample=None):
     sample = sample or {}
+    del TABLE_GUESSED[:]
     m = measure(open(path, encoding="utf-8").read())
+    if TABLE_GUESSED:
+        print("table columns not recognized: measuring the last column", file=sys.stderr)
     if not m:
         print(f"{os.path.basename(path)}: too short to measure (need ~120 words, 8 sentences)")
         return
@@ -691,6 +705,8 @@ def report(path, as_json=False, sample=None):
     print(f"\n{os.path.basename(path)}  {m['_words']} words, "
           f"{m['_sentences']} sentences, {m['_paragraphs']} paragraphs\n")
     raw = open(path, encoding="utf-8").read()
+    if SPOKEN:
+        raw = spoken(raw)  # the language of what is said, as audit.py reads it
     warn = lang_warning(raw)
     if warn:
         print(warn + "\n")

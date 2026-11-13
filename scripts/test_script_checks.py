@@ -301,5 +301,42 @@ class LanguageWarning(unittest.TestCase):
         self.assertEqual(self.suggested(self.ES_TEXT, BLOG), "bands-es.json")
         self.assertEqual(self.suggested(self.EN_TEXT, BLOG_ES), "bands.json")
 
+class CandidatesAgree(unittest.TestCase):
+    """eval/script_candidates.py counts the same regexes audit.py ships as S1-S6 and SE1-SE7."""
+
+    def candidates(self, lang):
+        import importlib.util
+        path = os.path.join(HERE, "..", "eval", "script_candidates.py")
+        saved_argv, saved_env = sys.argv[:], dict(os.environ)
+        sys.argv = [path, lang]
+        sys.path.insert(0, HERE)
+        try:
+            spec = importlib.util.spec_from_file_location("script_candidates_" + lang, path)
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+        finally:
+            sys.argv = saved_argv
+            os.environ.clear()
+            os.environ.update(saved_env)
+        return mod
+
+    def shipped(self, table):
+        import audit
+        return {c[0]: c[3] for c in getattr(audit, table)}
+
+    def test_english_regexes_are_the_shipped_ones(self):
+        mod, ship = self.candidates("en"), self.shipped("CHECKS_SCRIPT")
+        for cid, rx in mod.EN_CHECKS.items():
+            self.assertEqual(rx, ship[cid], cid)
+        self.assertEqual(sorted(mod.EN_CHECKS), ["S1", "S2", "S3", "S4", "S5", "S6"])
+
+    def test_spanish_regexes_are_the_shipped_ones(self):
+        mod, ship = self.candidates("es"), self.shipped("CHECKS_SCRIPT_ES")
+        pairs = {"SE1": "quedate", "SE2": "hoy", "SE3": "imagina", "SE4": "clave", "SE5": "entonces",
+                 "SE6": "comentarios", "SE7": "proxima"}
+        for cid, key in pairs.items():
+            self.assertEqual(mod.ES[key], ship[cid], cid)
+
+
 if __name__ == "__main__":
     unittest.main()

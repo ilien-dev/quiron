@@ -45,6 +45,43 @@ class Spoken(unittest.TestCase):
         src = "| Audio | Visual |\n|---|---|\n| Hello there. | Map zooms in |"
         self.assertEqual(aimeter.spoken(src).strip(), "Hello there.")
 
+    def table(self, head, left, right):
+        return f"| {head} |\n|---|---|\n| {left} | {right} |"
+
+    def test_table_header_names_the_speech_column(self):
+        for head in ("Voiceover | Visuals", "Narrator | Shot", "Audio / VO | Visual", "Locución | Imagen",
+                     "Voz en off | Imagen", "Texto | Plano", "Narración | Visual", "Visual | Voiceover",
+                     "Shot | Narrator"):
+            a, b = head.split(" | ")
+            spoken_first = not aimeter.VISUAL_HEAD.search(a)
+            src = self.table(head, "SAID words here.", "a picture") if spoken_first else self.table(head, "a picture", "SAID words here.")
+            aimeter.TABLE_GUESSED[:] = []
+            self.assertEqual(aimeter.spoken(src).strip(), "SAID words here.", head)
+            self.assertEqual(aimeter.TABLE_GUESSED, [], head)
+
+    def test_table_with_only_a_visual_header_takes_the_other_column(self):
+        aimeter.TABLE_GUESSED[:] = []
+        self.assertEqual(aimeter.spoken(self.table("Plano | Cosa", "a picture", "Words.")).strip(), "Words.")
+        self.assertEqual(aimeter.spoken(self.table("Cosa | Plano", "Words.", "a picture")).strip(), "Words.")
+        self.assertEqual(aimeter.TABLE_GUESSED, [])
+
+    def test_table_header_not_recognized_uses_last_column_and_says_so(self):
+        aimeter.TABLE_GUESSED[:] = []
+        self.assertEqual(aimeter.spoken(self.table("Alpha | Beta", "first", "Last words.")).strip(), "Last words.")
+        self.assertTrue(aimeter.TABLE_GUESSED)
+
+    def test_meter_says_so_once_on_stderr_and_not_on_stdout(self):
+        body = "".join(f"Sentence number {i} talks about rivers and why they matter nearby.\n" for i in range(20))
+        with tempfile.TemporaryDirectory() as d:
+            tf = os.path.join(d, "t.md")
+            with open(tf, "w", encoding="utf-8") as f:
+                f.write(body + "\n| Alpha | Beta |\n|---|---|\n| one | two |\n")
+            out = subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "aimeter.py"), tf],
+                                 capture_output=True, text=True, encoding="utf-8",
+                                 env={**os.environ, "QUIRON_BANDS": os.path.join(os.path.dirname(os.path.abspath(__file__)), "bands-script.json")})
+        self.assertEqual(out.stderr.count("table columns not recognized: measuring the last column"), 1)
+        self.assertNotIn("not recognized", out.stdout)
+
     def test_caption_file_unchanged(self):
         t = "You were on your way home, when you died. It was a car accident."
         self.assertEqual(aimeter.spoken(t), t)
@@ -218,6 +255,28 @@ class Spoken(unittest.TestCase):
                 aimeter.calibrate(d, out=out)
             with open(out, encoding="utf-8") as f:
                 self.assertEqual(json.load(f)["_register"], "script")
+
+
+class SpokenLanguageWarning(unittest.TestCase):
+    """The meter judges the language of the spoken words, as audit.py does."""
+    HERE = os.path.dirname(os.path.abspath(__file__))
+    ES = "".join(f"La frase número {i} habla de los ríos y de por qué importan en la región donde vivimos.\n"
+                 for i in range(20))
+    DIRECTIONS = "".join(f"[B-ROLL: the river flows past the old bridge and the city, scene {i}]\n" for i in range(120))
+
+    def run_tool(self, tool, args):
+        bf = os.path.join(self.HERE, "bands-script-es.json")
+        with tempfile.TemporaryDirectory() as d:
+            tf = os.path.join(d, "t.md")
+            with open(tf, "w", encoding="utf-8") as f:
+                f.write(self.DIRECTIONS + self.ES)
+            return subprocess.run([sys.executable, os.path.join(self.HERE, tool)] + args + [tf],
+                                  capture_output=True, text=True, encoding="utf-8",
+                                  env={**os.environ, "QUIRON_BANDS": bf}).stdout
+
+    def test_english_stage_directions_in_a_spanish_script_warn_in_neither_tool(self):
+        self.assertNotIn("WARNING", self.run_tool("aimeter.py", []))
+        self.assertNotIn("WARNING", self.run_tool("audit.py", []))
 
 
 class AuditSpoken(unittest.TestCase):
