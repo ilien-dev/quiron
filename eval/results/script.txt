@@ -201,7 +201,7 @@ terra                9                     4           3.78      3 of 9 (33%)
 
 ## Shape patterns (task 5): the script checks, switch-offs and T1, before and after on the same texts
 # Optimistic, like the thresholds above: the verdicts, the switch-offs, the union size and T1 were chosen looking at the held-out humans and the test folders, so the after column is partly in-sample; the realengineering-7vLPefHYWpY caption that is clean now was cleared by switch-offs chosen on that same held-out set.
-# New checks in audit.py, only under "_register": "script": S3 (FAIL: a request for comments), S1, S2, S4-S6 (TELL) and S7 (FAIL, three of S1-S6);
+# New checks in audit.py, only under "_register": "script": S1-S6 (TELL; S3 is a request for comments) and S7 (FAIL, three of S1-S6);
 # switched off here: A1, A1b, A2b, A3, A4, A8, A9, A14b, A15, A26, A32 and the TELL state of B1.
 # Candidates, rates and every decision: eval/results/script-candidates.txt.
 # T1 (TELLS_MAX) is still 6: 4, 5 and 6 catch the same assistant scripts, and 5 and 6 fail the fewest train humans (0.91 clean). Rule: of the values that keep the train humans as clean as before (0.90)

@@ -27,6 +27,7 @@ Read these when the step you are on needs them. Each is one level deep and self-
   models leave out, and the Claude-specific words.
 - [references/spanish.md](references/spanish.md): bands, checks and word lists for Spanish.
 - [references/fiction.md](references/fiction.md): the story-shape rules for fiction.
+- [references/script.md](references/script.md): the rewrite rules for video scripts.
 - [references/numbers.md](references/numbers.md): every band, what the apparatus does on
   held-out texts, how to calibrate a new register, and what the skill cannot do.
 - [references/sources.md](references/sources.md): the studies behind every number.
@@ -66,6 +67,11 @@ sentences than human ones, while assistant fiction has choppier ones (both run s
   English. They measure a draft; the rewrite rules were not tested end to end in these
   registers. Most commit messages and many emails are under the meter's 120 words, and
   for those the patterns apply by eye.
+- `scripts/bands-script.json`, `bands-script-es.json`: the narration of a YouTube video
+  script, in English and in Spanish. Only the spoken words are measured: scene headings,
+  stage directions, speaker labels and timestamps are dropped first. Rewrite only what is
+  said and keep those where they are; whoever records the video needs them. **Read [references/script.md](references/script.md) before rewriting a
+  script.**
 
 Select a file by putting `QUIRON_BANDS=<skill-dir>/scripts/bands-fiction.json` (or
 another of these files) in front of every command, including `check.sh`. The scripts print a

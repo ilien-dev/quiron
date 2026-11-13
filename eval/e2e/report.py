@@ -3,6 +3,11 @@
 
   report.py [--set dev] [--k 3] [--det] SNAP_A [SNAP_B ...]
 
+The snapshot name "draft" stands for the set's own drafts, untouched (for scrh, the human
+captions). On a video-script set (scr*) every text is also measured against the script band
+file of its language, and the table adds the mean number of features per text that come out
+overshot and on the AI side.
+
 For each snapshot: every work/SNAP/r*/NAME/final.md is judged by K fresh Opus judges
 (cached), measured with aimeter/audit, and (with --det) scored by the local detectors.
 Per title, the judge P(AI) is averaged over reps and judges. The first snapshot is the
@@ -43,7 +48,9 @@ def wilcoxon(diffs):
     return math.erfc(abs(z) / math.sqrt(2))
 
 
-def finals(snap, names, reps="r*"):
+def finals(snap, names, reps="r*", rows=()):
+    if snap == "draft":
+        return {r[0]: [r[1]] for r in rows if r[0] in names}
     out = {}
     for n in names:
         fs = sorted(glob.glob(os.path.join(H, "work", snap, reps, n, "final.md")))
@@ -59,6 +66,26 @@ def meter(f):
         return None
     sc = aimeter.score(m) if hasattr(aimeter, "score") else None
     return m, sc
+
+
+def script_bands(set_name):
+    return os.path.join(REPO, "scripts", "bands-script-es.json" if set_name.endswith("-es") else "bands-script.json")
+
+
+def band_counts(files, bands):
+    """Per file, how many of the meter's features are overshot and how many on the AI side,
+    measured on the spoken words (the script band files say "_spoken")."""
+    env = dict(os.environ, QUIRON_BANDS=bands, PYTHONUTF8="1")
+    out = {}
+    for f in files:
+        r = subprocess.run([sys.executable, os.path.join(REPO, "scripts", "aimeter.py"), "--json", f],
+                           capture_output=True, text=True, encoding="utf-8", env=env)
+        try:
+            v = json.loads(r.stdout)["verdicts"].values()
+        except ValueError:  # too short to measure
+            continue
+        out[f] = (sum(x.endswith("overshot") for x in v), sum(x.endswith("AI side") for x in v))
+    return out
 
 
 def det_scores(files):
@@ -104,15 +131,18 @@ def main():
     ap.add_argument("--reasons", action="store_true")
     ap.add_argument("--noise", action="store_true")
     a = ap.parse_args()
-    names = [r[0] for r in harness.sets()[a.set]]
+    rows_ = harness.sets()[a.set]
+    names = [r[0] for r in rows_]
+    scr = a.set.startswith("scr")
     per = {}
     allrec = {}
     for s in a.snaps:
-        fm = finals(s, names, a.reps)
+        fm = finals(s, names, a.reps, rows_)
         files = [f for fs in fm.values() for f in fs]
         res = harness.judge_files(files, a.k, 10, a.g, harness.JPROMPT_FIC if a.set.startswith("fic") else
                                    harness.script_prompt(a.set) if a.set.startswith("scr") else None)
         dets = det_scores(files) if a.det else {}
+        bc = band_counts(files, script_bands(a.set)) if scr else {}
         per[s] = {}
         allrec[s] = res
         for n, fs in fm.items():
@@ -120,9 +150,12 @@ def main():
             pg = [r["p_ai"] for f in fs for r in res[f] if r["p_ai"] is not None and str(r["k"]).startswith("g")]
             per[s][n] = {"p": st.mean(ps), "g": st.mean(pg) if pg else float("nan"), "files": fs,
                          "bino": st.mean(dets[f][0] for f in fs) if dets else None,
-                         "desk": st.mean(dets[f][1] for f in fs) if dets else None}
+                         "desk": st.mean(dets[f][1] for f in fs) if dets else None,
+                         "over": st.mean(bc[f][0] for f in fs if f in bc) if any(f in bc for f in fs) else None,
+                         "aiside": st.mean(bc[f][1] for f in fs if f in bc) if any(f in bc for f in fs) else None}
     base = a.snaps[0]
-    print(f"{'snap':14} {'n':>3} {'files':>5} {'Opus':>6} {'>50%':>6} {'GPT':>6} {'bino':>6} {'desk':>6}  vs {base}")
+    print(f"{'snap':14} {'n':>3} {'files':>5} {'Opus':>6} {'>50%':>6} {'GPT':>6} {'bino':>6} {'desk':>6}"
+          + (f" {'over':>5} {'aiside':>6}" if scr else "") + f"  vs {base}")
     for s in a.snaps:
         rows = per[s]
         files = [f for v in rows.values() for f in v["files"]]
@@ -130,6 +163,10 @@ def main():
         line = f"{s:14} {len(rows):3} {len(files):5} {st.mean(fp):6.1f} {sum(p > 50 for p in fp) / len(fp):6.0%} {st.mean(v['g'] for v in rows.values()):6.1f}"
         if a.det:
             line += f" {st.mean(v['bino'] for v in rows.values()):6.3f} {st.mean(v['desk'] for v in rows.values()):6.2f}"
+        if scr:
+            ov = [v["over"] for v in rows.values() if v["over"] is not None]
+            ai = [v["aiside"] for v in rows.values() if v["aiside"] is not None]
+            line += (" " * (14 if not a.det else 0)) + f" {st.mean(ov) if ov else float('nan'):5.2f} {st.mean(ai) if ai else float('nan'):6.2f}"
         if s != base:
             common = [n for n in rows if n in per[base]]
             d = [rows[n]["p"] - per[base][n]["p"] for n in common]
@@ -137,6 +174,11 @@ def main():
             dg = [rows[n]["g"] - per[base][n]["g"] for n in common]
             line += (f"   Opus {st.mean(d):+5.1f} (worse {worse}/{len(d)}, p={wilcoxon(d):.3f})"
                      f"  GPT {st.mean(dg):+5.1f} (p={wilcoxon(dg):.3f})")
+            if scr:
+                do = [rows[n]["over"] - per[base][n]["over"] for n in common
+                      if rows[n]["over"] is not None and per[base][n]["over"] is not None]
+                if do:
+                    line += f"  over {st.mean(do):+5.2f} (higher {sum(x > 0 for x in do)}, lower {sum(x < 0 for x in do)}, p={wilcoxon(do):.3f})"
         print(line)
     if a.noise:
         noise(a.snaps, per, allrec)

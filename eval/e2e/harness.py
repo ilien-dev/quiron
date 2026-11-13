@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """End-to-end harness: rewrite drafts with a skill snapshot, then judge blind.
 
-  harness.py snapshot NAME [SRC]          copy SKILL.md, references/, scripts/ from SRC (repo) to snaps/NAME
-  harness.py rewrite SNAP REP [-j N] [--set dev|test] [--names a,b]
+  harness.py snapshot NAME [SRC] [--no-script-rules]
+                                          copy SKILL.md, references/, scripts/ from SRC (repo) to snaps/NAME
+  harness.py rewrite SNAP REP [-j N] [--set dev|test|scr|...] [--names a,b]
   harness.py judge FILES... [-k 3] [-j N]  prints per-file mean P(AI); cached in judge-cache.jsonl
   harness.py report SNAP [SNAP...] [--set dev]
 """
@@ -34,7 +35,7 @@ def sets():
     return out  # rows: name, draft_path, notes_path ("-" for none)[, fiction prompt]
 
 
-def snapshot(name, src):
+def snapshot(name, src, no_script_rules=False):
     dst = os.path.join(H, "snaps", name)
     if os.path.exists(dst):
         shutil.rmtree(dst)
@@ -43,7 +44,29 @@ def snapshot(name, src):
     for d in ("references", "scripts"):
         shutil.copytree(os.path.join(src, d), os.path.join(dst, d),
                         ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "build-*.sh"))
+    if no_script_rules:
+        strip_script_rules(dst)
     print(dst)
+
+
+# The "bands" snapshot of the video-script register: the band files and the register's entry
+# in SKILL.md, without references/script.md, the line that sends the rewriter to it, or the
+# script checks S1-S7 and SE1-SE8. Every edit must apply, or the snapshot is not what it says.
+SCRIPT_RULE_EDITS = [
+    ("SKILL.md", "- [references/script.md](references/script.md): the rewrite rules for video scripts.\n", ""),
+    ("SKILL.md", " **Read [references/script.md](references/script.md) before rewriting a\n  script.**", ""),
+    (os.path.join("scripts", "audit.py"), '_new = CHECKS_SCRIPT_ES if LANG == "es" else CHECKS_SCRIPT', "_new = []"),
+]
+
+
+def strip_script_rules(dst):
+    os.remove(os.path.join(dst, "references", "script.md"))
+    for rel, old, new in SCRIPT_RULE_EDITS:
+        p = os.path.join(dst, rel)
+        text = open(p, encoding="utf-8").read()
+        if text.count(old) != 1:
+            sys.exit(f"--no-script-rules: {rel} does not have exactly one {old!r}")
+        open(p, "w", encoding="utf-8", newline="").write(text.replace(old, new))
 
 
 PROMPT = ("Use the quiron skill. Rewrite this dev.to blog post draft (draft.md) so it reads like I "
@@ -68,6 +91,25 @@ PROMPT_FIC = ("Use the quiron skill. This short story (draft.md) I generated as 
               "The prompt was: %s\nSave the finished story as final.md in this folder.\n")
 
 
+# Video scripts: the fourth column is the video's title; a set named scr*-es gets Spanish.
+PROMPT_SCR = ('Use the quiron skill. This video script (draft.md) I generated for a YouTube video titled "%s". '
+              'Rewrite it so it does not read as AI-written. I have no notes; do not stop to ask. Keep the '
+              'stage directions. Write the result to final.md.')
+PROMPT_SCR_ES = ('Usa la skill quiron. Este guion de video (draft.md) lo generé para un video de YouTube titulado '
+                 '"%s". Reescríbelo para que no se lea como escrito por una IA. No tengo notas; no te detengas a '
+                 'preguntar. Conserva las acotaciones. Escribe el resultado en final.md.')
+SCR = {r[0]: (PROMPT_SCR_ES if s.endswith("-es") else PROMPT_SCR) % r[3]
+       for s, rows in sets().items() if s.startswith("scr") for r in rows}
+
+
+def rewrite_prompt(name, notes):
+    if name in SCR:
+        return SCR[name]
+    if name in FIC:
+        return PROMPT_FIC % FIC[name]
+    return PROMPT_ES if name in ES_NAMES else PROMPT if notes != "-" else PROMPT_NONOTES
+
+
 def rewrite_one(snap, rep, row):
     name, draft, notes = row[:3]
     wd = os.path.join(H, "work", snap, f"r{rep}", name)
@@ -81,7 +123,7 @@ def rewrite_one(snap, rep, row):
     if notes != "-":
         shutil.copy(notes, os.path.join(wd, "notes.txt"))
     cmd = ["claude", "-p", "--model", os.environ.get("REWRITER", MODEL), *ISO, "--permission-mode", "bypassPermissions",
-           "--output-format", "json", PROMPT_FIC % FIC[name] if name in FIC else (PROMPT_ES if name in ES_NAMES else PROMPT if notes != "-" else PROMPT_NONOTES)]
+           "--output-format", "json", rewrite_prompt(name, notes)]
     if os.environ.get("REWRITER") == "codex":  # a non-Claude agent: point it at the skill file
         cmd = ["codex", "exec", "--skip-git-repo-check", "--ephemeral", "--ignore-user-config",
                "-s", "workspace-write", "-m", GPT,
@@ -226,9 +268,10 @@ def main():
     ap.add_argument("-g", type=int, default=0)
     ap.add_argument("--set", default="dev")
     ap.add_argument("--names")
+    ap.add_argument("--no-script-rules", action="store_true")
     a = ap.parse_args()
     if a.cmd == "snapshot":
-        snapshot(a.args[0], a.args[1] if len(a.args) > 1 else REPO)
+        snapshot(a.args[0], a.args[1] if len(a.args) > 1 else REPO, a.no_script_rules)
     elif a.cmd == "rewrite":
         snap, rep = a.args[0], a.args[1]
         rows = sets()[a.set]

@@ -143,6 +143,74 @@ class JudgePrompt(unittest.TestCase):
             self.assertIs(harness.script_prompt(name), harness.JPROMPT_SCR)
 
 
+class ScriptSets(unittest.TestCase):
+    """The e2e script sets: the rewriter's prompt carries the title, in the set's language,
+    and the sets of the other registers keep the prompts they had."""
+
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, os.path.join(HERE, "..", "eval", "e2e"))
+        import harness
+        cls.h = harness
+        cls.sets = harness.sets()
+
+    def test_sets_have_twenty_scripts_spread_over_models(self):
+        for name, per in (("scr", 5), ("scr2", 4), ("scr-es", 5), ("scr2-es", 4)):
+            rows = self.sets[name]
+            self.assertEqual(len(rows), 20, name)
+            models = {}
+            for r in rows:
+                self.assertEqual(r[2], "-")
+                models[os.path.basename(os.path.dirname(r[1]))] = models.get(os.path.basename(os.path.dirname(r[1])), 0) + 1
+            self.assertEqual(set(models.values()), {per}, name)
+        self.assertTrue(all("/train-" in r[1].replace(os.sep, "/") for r in self.sets["scr"]))
+        self.assertTrue(all("/test-" in r[1].replace(os.sep, "/") for r in self.sets["scr2"]))
+
+    def test_script_prompt_has_the_title_in_the_set_language(self):
+        en, es = self.sets["scr"][0], self.sets["scr-es"][0]
+        self.assertEqual(self.h.rewrite_prompt(en[0], "-"), self.h.PROMPT_SCR % en[3])
+        self.assertIn(f'titled "{en[3]}"', self.h.rewrite_prompt(en[0], "-"))
+        self.assertEqual(self.h.rewrite_prompt(es[0], "-"), self.h.PROMPT_SCR_ES % es[3])
+        self.assertIn("Conserva las acotaciones", self.h.rewrite_prompt(es[0], "-"))
+        for r in self.sets["scrh"]:
+            self.assertEqual(self.h.rewrite_prompt(r[0], "-"), self.h.PROMPT_SCR % r[3])
+        for r in self.sets["scrh-es"]:
+            self.assertEqual(self.h.rewrite_prompt(r[0], "-"), self.h.PROMPT_SCR_ES % r[3])
+
+    def test_other_sets_keep_their_prompts(self):
+        h = self.h
+        self.assertEqual(h.rewrite_prompt(self.sets["dev"][0][0], self.sets["dev"][0][2]), h.PROMPT)
+        self.assertEqual(h.rewrite_prompt(self.sets["devnn"][0][0], "-"), h.PROMPT_NONOTES)
+        self.assertEqual(h.rewrite_prompt(self.sets["es"][0][0], self.sets["es"][0][2]), h.PROMPT_ES)
+        fic = self.sets["fic"][0]
+        self.assertEqual(h.rewrite_prompt(fic[0], "-"), h.PROMPT_FIC % fic[3])
+        self.assertEqual(h.rewrite_prompt(self.sets["hum"][0][0], "-"), h.PROMPT_NONOTES)
+        script_names = {r[0] for s, rows in self.sets.items() if s.startswith("scr") for r in rows}
+        other = {r[0] for s, rows in self.sets.items() if not s.startswith("scr") for r in rows}
+        self.assertFalse(script_names & other)
+
+    def test_judge_prompt_follows_the_set_name(self):
+        self.assertIs(self.h.script_prompt("scrh"), self.h.JPROMPT_SCR)
+        self.assertIs(self.h.script_prompt("scrh-es"), self.h.JPROMPT_SCR_ES)
+
+    def test_bands_snapshot_drops_the_rules_and_the_checks(self):
+        repo = os.path.abspath(os.path.join(HERE, ".."))
+        with tempfile.TemporaryDirectory() as d:
+            dst = os.path.join(d, "snap")
+            os.makedirs(os.path.join(dst, "references"))
+            os.makedirs(os.path.join(dst, "scripts"))
+            for rel in ("SKILL.md", os.path.join("references", "script.md"), os.path.join("scripts", "audit.py")):
+                with open(os.path.join(repo, rel), encoding="utf-8") as src, \
+                        open(os.path.join(dst, rel), "w", encoding="utf-8") as out:
+                    out.write(src.read())
+            self.h.strip_script_rules(dst)
+            self.assertFalse(os.path.exists(os.path.join(dst, "references", "script.md")))
+            skill = open(os.path.join(dst, "SKILL.md"), encoding="utf-8").read()
+            self.assertNotIn("script.md", skill)
+            self.assertIn("bands-script.json", skill)
+            self.assertIn("_new = []", open(os.path.join(dst, "scripts", "audit.py"), encoding="utf-8").read())
+
+
 class LanguageWarning(unittest.TestCase):
     """A script band file names the other language's script band file, not the blog one."""
     ES_TEXT = "El cielo es azul porque la luz del sol que llega a la tierra se dispersa en el aire de la mañana."
