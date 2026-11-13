@@ -83,6 +83,11 @@
         },
         {
           "@type": "Question",
+          "name": "Does it work on video scripts?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It measures them. There are bands for the narration of YouTube scripts in English and Spanish, built from the captions of 193 and 107 videos uploaded before 2022, and the meter reads only what is said. A rewrite reads much less like AI only when it is built from your own notes about the video. Without them it gains little." }
+        },
+        {
+          "@type": "Question",
           "name": "Does it make things up to sound human?",
           "acceptedAnswer": { "@type": "Answer", "text": "Its instructions forbid it. A rewrite may use only facts from your text or your notes, and a script lists the numbers and links in the rewrite that the source doesn't have. When the text needs detail it lacks, the skill asks you for it." }
         }
@@ -135,7 +140,7 @@
   <p>The famous marker words from 2023 barely show up anymore. In this project's 2026 run they turned up in 1% of assistant posts or fewer, roughly as often as in human ones. The words that give a 2026 model away are ordinary, and you would never flag them by eye.</p>
 
   <h2 id="meter">A meter, not a self-grade</h2>
-  <p>Most humanizer skills hand the model a list of patterns and trust it to follow the instructions. Quirón has the list too, but it also ships a script that counts 23 rates in the text and compares each one with the range found in 167 dev.to posts written before ChatGPT existed. Fiction and Spanish have their own bands.</p>
+  <p>Most humanizer skills hand the model a list of patterns and trust it to follow the instructions. Quirón has the list too, but it also ships a script that counts 23 rates in the text and compares each one with the range found in 167 dev.to posts written before ChatGPT existed. Fiction, Spanish and video scripts have their own bands.</p>
   <p>The meter catches something a checklist misses. Tell a model to write like a person and it usually overshoots: the sentences get choppier and the words plainer than any person's. The meter flags that as loudly as it flags the AI side, so you know when to stop.</p>
   <p>On an assistant-written Stripe tutorial it finds 13 of 23 rates inside the human band. The rewrite, built from the author's own notes, gets all 23.</p>
   <pre><code>$ python3 scripts/aimeter.py eval/ai/blog/e2e-raw/aspittel-782713.md
@@ -158,6 +163,8 @@ plain words /1k          33.88    43.19 - 95.24   below band, AI side
     <dd>No. Those tools read token probabilities, and Quirón doesn't touch them. It works only on what a human reader actually notices.</dd>
     <dt>Does it work in Spanish?</dt>
     <dd>Yes. It has its own bands, measured on 241 Spanish dev.to posts, and its own word lists. Other languages get the checklist as a best effort.</dd>
+    <dt>Does it work on video scripts?</dt>
+    <dd>It measures them. There are bands for the narration of YouTube scripts in English and Spanish, built from the captions of 193 and 107 videos uploaded before 2022, and the meter reads only what is said. A rewrite reads much less like AI only when it is built from your own notes about the video. Without them it gains little.</dd>
     <dt>Does it make things up to sound human?</dt>
     <dd>Its instructions forbid it. A rewrite may use only facts from your text or your notes, and a script lists the numbers and links in the rewrite that the source doesn't have. When the text needs detail it lacks, the skill asks you for it.</dd>
   </dl>

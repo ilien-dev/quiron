@@ -2,7 +2,7 @@
 
 > An AI humanizer skill for Claude Code, Codex, Cursor and other agents that load skills. It removes AI slop and the signs of AI writing from prose, then measures the rewrite against human writing published before ChatGPT. Open source (GNU AGPL v3), no API key, Python 3 standard library only.
 
-Install with `npx skills add ilien-dev/quiron`, or in Claude Code with `/plugin marketplace add ilien-dev/quiron` and `/plugin install quiron@quiron`. English and Spanish have measured baselines; other languages get the checklist as a best effort. It does not try to beat AI detectors such as GPTZero or Turnitin.
+Install with `npx skills add ilien-dev/quiron`, or in Claude Code with `/plugin marketplace add ilien-dev/quiron` and `/plugin install quiron@quiron`. English and Spanish have measured baselines, also for the narration of video scripts; other languages get the checklist as a best effort. It does not try to beat AI detectors such as GPTZero or Turnitin.
 
 ## Docs
 
