@@ -43,7 +43,7 @@ def snapshot(name, src, no_script_rules=False):
     shutil.copy(os.path.join(src, "SKILL.md"), dst)
     for d in ("references", "scripts"):
         shutil.copytree(os.path.join(src, d), os.path.join(dst, d),
-                        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "build-*.sh"))
+                        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "build-*.sh", ".*.quiron.json"))
     if no_script_rules:
         strip_script_rules(dst)
     print(dst)
@@ -70,10 +70,14 @@ def strip_script_rules(dst):
         edits += SCRIPT_RULE_EDITS
     for rel, old, new in edits:
         p = os.path.join(dst, rel)
-        text = open(p, encoding="utf-8").read()
-        if text.count(old) != 1:
+        with open(p, encoding="utf-8", newline="") as f:
+            text = f.read()
+        nl = "\r\n" if "\r\n" in text else "\n"  # match the file's own line endings
+        o, n = old.replace("\n", nl), new.replace("\n", nl)
+        if text.count(o) != 1:
             sys.exit(f"--no-script-rules: {rel} does not have exactly one {old!r}")
-        open(p, "w", encoding="utf-8", newline="").write(text.replace(old, new))
+        with open(p, "w", encoding="utf-8", newline="") as f:
+            f.write(text.replace(o, n))
 
 
 PROMPT = ("Use the quiron skill. Rewrite this dev.to blog post draft (draft.md) so it reads like I "

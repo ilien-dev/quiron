@@ -239,6 +239,46 @@ class ScriptSets(unittest.TestCase):
         self.h.strip_script_rules(dst)
         self.check_stripped(dst)
 
+    def test_bands_snapshot_keeps_crlf_line_endings(self):
+        """A CRLF checkout still matches the multi-line edits, and the file stays CRLF."""
+        skill = ("# quiron\r\n- [references/script.md](references/script.md): the rewrite rules for video scripts.\r\n"
+                 "- bands-script.json\r\nRead the draft. **Read [references/script.md](references/script.md) before rewriting a\r\n"
+                 "  script.** Then go on.\r\n")
+        audit = 'x = 1\r\n_new = CHECKS_SCRIPT_ES if LANG == "es" else CHECKS_SCRIPT\r\n'
+        d = tempfile.mkdtemp()
+        os.makedirs(os.path.join(d, "references"))
+        os.makedirs(os.path.join(d, "scripts"))
+        for rel, text in (("SKILL.md", skill), ("scripts/audit.py", audit), ("references/script.md", "rules\r\n")):
+            with open(os.path.join(d, rel), "w", encoding="utf-8", newline="") as out:
+                out.write(text)
+        self.h.strip_script_rules(d)
+        with open(os.path.join(d, "SKILL.md"), encoding="utf-8", newline="") as f:
+            got = f.read()
+        self.assertNotIn("script.md", got)
+        self.assertEqual(got.count("\n"), got.count("\r\n"))
+        self.assertIn("\r\n", got)
+        with open(os.path.join(d, "scripts", "audit.py"), encoding="utf-8", newline="") as f:
+            self.assertIn("_new = []\r\n", f.read())
+
+    def test_snapshot_leaves_out_check_state_files(self):
+        """The .*.quiron.json files check.sh writes next to a text are not copied into a snapshot."""
+        src, store = tempfile.mkdtemp(), tempfile.mkdtemp()
+        for rel in ("SKILL.md", "references/a.md", "references/.a.md.quiron.json", "scripts/b.py",
+                    "scripts/.b.quiron.json"):
+            os.makedirs(os.path.dirname(os.path.join(src, rel)), exist_ok=True)
+            with open(os.path.join(src, rel), "w", encoding="utf-8") as out:
+                out.write("x")
+        old = self.h.H
+        self.h.H = store
+        try:
+            self.h.snapshot("t", src)
+        finally:
+            self.h.H = old
+        top = os.path.join(store, "snaps", "t")
+        copied = sorted(os.path.relpath(os.path.join(r, f), top).replace("\\", "/")
+                        for r, _, fs in os.walk(top) for f in fs)
+        self.assertEqual(copied, ["SKILL.md", "references/a.md", "scripts/b.py"])
+
 
 class LanguageWarning(unittest.TestCase):
     """A script band file names the other language's script band file, not the blog one."""
