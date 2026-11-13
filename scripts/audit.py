@@ -256,7 +256,7 @@ CHECKS_SCRIPT_ES = [
      r"|est[aá] el truco)|\bahora viene\b|\blo (?:fascinante|curioso|interesante|sorprendente|incre[ií]ble) es que\b"
      r"|\bdato curioso\b|\bun detalle (?:fascinante|curioso)\b",
      "4% of held-out human scripts (5% of train), 32% of assistant scripts"),
-    ("SE5", "cerrar con entonces, ¿...?", "tell", _SE + r"entonces, ¿",
+    ("SE5", "abrir una frase con entonces, ¿", "tell", _SE + r"entonces, ¿",
      "7% of held-out human scripts (6% of train), 36% of assistant scripts"),
     ("SE6", "pedir comentarios", "tell",
      r"\b(?:cu[eé]nta(?:me|nos)|d[eé]ja(?:me|nos|lo)|d[eé]jamelo|escr[ií]be(?:me|nos)|dinos|d[ií]me)\b"

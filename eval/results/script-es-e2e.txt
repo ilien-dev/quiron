@@ -5,7 +5,7 @@
 # mean (column "Opus", Sonnet 5.5 here), 20 titles per set, two rewrites per snapshot unless a row says one.
 # 1. The register does not move the judges beyond what the skill on main already did.
 #    scr-es: main 69.5, the shipped tree 69.4 (-0.1, worse on 9 of 20, p=0.778; section "Ship against main").
-#    The band files alone against main: -0.5 (p=0.295). The shipped checks against the same tree with them off: -1.1 (p=0.408,
+#    The band files alone against main: +1.1 with the rebuilt snapshot bands2 (p=0.920, section "Ship against main"), -0.5 with the earlier bands snapshot (p=0.295). The shipped checks against the same tree with them off: -1.1 (p=0.408,
 #    noise 2.8); on scr2-es 69.9 against 70.2 (-0.3, p=0.795). Any rewrite does cut an untouched draft, 79.4 to 69.4 on scr-es
 #    and 81.5 to 69.9 on scr2-es, and 88% and 98% of the shipped rewrites are still judged AI (over 50).
 # 2. No rule for the shape of a script held. Two sets were tried against the band files alone, both on whole narrations.
@@ -235,3 +235,8 @@ $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py mai
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
 main            20    20   69.5    80%   79.2                0.85   2.50
 ship            20    40   69.4    88%   79.9                0.70   2.12   Opus  -0.1 (worse 9/20, p=0.778)  GPT  +0.7 (p=0.594)  over -0.15 (higher 4, lower 7, p=0.230)
+# bands2 is the register with its checks off on the rebuilt band files (the snapshot the table in references/numbers.md calls "bands only"); bands is the earlier Task 6 snapshot of the same idea.
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py main bands2 --set scr-es --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
+main            20    20   69.5    80%   79.2                0.85   2.50
+bands2          20    40   70.6    90%   79.6                0.85   2.17   Opus  +1.1 (worse 8/20, p=0.920)  GPT  +0.4 (p=0.868)  over +0.00 (higher 4, lower 3, p=0.866)

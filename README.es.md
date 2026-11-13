@@ -198,8 +198,8 @@ scripts/check.sh ARCHIVO                  # una pasada del ciclo completo
 Para ficción en inglés se usa `scripts/bands-fiction.json`, y sin la variable se mide
 contra posts de blog en inglés. Los textos de menos de unas 120 palabras no se miden.
 
-Para la narración de un guion de video de YouTube se usa `scripts/bands-script-es.json`, o
-`scripts/bands-script.json` si el guion está en inglés. El medidor lee solo las palabras
+Para la narración de un guion de video de YouTube se pone `QUIRON_BANDS=scripts/bands-script-es.json`, o
+`QUIRON_BANDS=scripts/bands-script.json` si el guion está en inglés. El medidor lee solo las palabras
 que se dicen y deja quietas las acotaciones. Mide el guion y busca los patrones que
 comparten los guiones de los asistentes. No se ha visto que un guion reescrito suene más a
 persona: jueces ciegos puntuaron las reescrituras casi igual de IA que las hechas sin este

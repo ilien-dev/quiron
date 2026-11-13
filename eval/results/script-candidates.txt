@@ -87,6 +87,7 @@ union: 3+ of the checks S1-S6                                           0/144   
 union: 3+ of S1-S6 without S3 (comments)                                0/144       0/49       3/12       0/12       2/12       3/12        0/9        1/9        0/9        1/9        0/9     0.04  out
 
 ## Decisions
+# (task 7: the figures in the "Out" paragraph below were corrected to the table above; four assistant rates were stale from before task 6b.)
 # Shipped as FAIL
 #   S7  three of S1-S6 in one script: 0/144 train and 0/49 held-out humans; Opus 5.5 and Sonnet 5.5
 #       3/9, GPT-6.1 and Terra 1/9, Fable 5.2 0/9 (18% pooled; 13% before task 6b). A combined check (evaluate.py COMBINED),
@@ -138,10 +139,10 @@ union: 3+ of S1-S6 without S3 (comments)                                0/144   
 #   sponsor segment is the channel's to keep).
 # Out (the rows marked out above): they fail the rule on held-out humans or on train humans. The
 #   ones worth naming: the promise "in this video / today we" (14% held out, 22% AI); a question
-#   in the first three sentences (14%, 9%); short questions answered at once (53%, 69%); runs of
-#   very short sentences (14%, 24%); Now/Well openers under 1% (33% held out, 43% train, 71% AI:
-#   twice the held-out rate but not twice the train rate); And/But/So openers under 8% (27%, 24%);
-#   em dashes (18%, 24%). Ellipses (51% of held-out humans, 13% of assistants), the tag ", right?"
+#   in the first three sentences (14%, 7%); short questions answered at once (53%, 71%); runs of
+#   very short sentences (14%, 24%); Now/Well openers under 1% (33% held out, 43% train, 64% AI:
+#   under twice either human rate); And/But/So openers under 8% (27%, 20%);
+#   em dashes (18%, 24%). Ellipses (51% of held-out humans, 16% of assistants), the tag ", right?"
 #   (12%, 0%) and you know / kind of / basically (71%, 44%) lean human.
 
 ## The shipped checks as audit.py runs them, train and test folders included

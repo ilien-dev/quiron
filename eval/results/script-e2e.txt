@@ -5,7 +5,7 @@
 # mean (column "Opus", Sonnet 5.5 here), 20 titles per set, two rewrites per snapshot unless a row says one.
 # 1. The register does not move the judges beyond what the skill on main already did.
 #    scr: main 71.6, the shipped tree 72.3 (+0.7, worse on 13 of 20, p=0.433; section "Ship against main").
-#    The band files alone against main: +1.0 (p=0.381). The shipped checks against the same tree with them off: -0.8 (p=0.185,
+#    The band files alone against main: +1.5 with the rebuilt snapshot bands2 (p=0.396, section "Ship against main"), +1.0 with the earlier bands snapshot (p=0.381). The shipped checks against the same tree with them off: -0.8 (p=0.185,
 #    noise 1.5); on scr2 69.1 against 69.3 (-0.2, p=0.794). Any rewrite does cut an untouched draft, 82.3 to 72.3 on scr and
 #    75.5 to 69.1 on scr2, and 98% and 88% of the shipped rewrites are still judged AI (over 50).
 # 2. No rule for the shape of a script held. Two sets were tried against the band files alone, both on whole narrations.
@@ -235,3 +235,8 @@ $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py mai
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
 main            20    20   71.6    95%   82.0                0.30   2.65
 ship            20    40   72.3    98%   81.9                0.23   1.52   Opus  +0.7 (worse 13/20, p=0.433)  GPT  -0.1 (p=0.968)  over -0.07 (higher 1, lower 3, p=0.273)
+# bands2 is the register with its checks off on the rebuilt band files (the snapshot the table in references/numbers.md calls "bands only"); bands is the earlier Task 6 snapshot of the same idea.
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py main bands2 --set scr --k 2 --g 1
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
+main            20    20   71.6    95%   82.0                0.30   2.65
+bands2          20    40   73.1    90%   82.2                0.25   1.50   Opus  +1.5 (worse 9/20, p=0.396)  GPT  +0.2 (p=0.796)  over -0.05 (higher 2, lower 2, p=0.465)

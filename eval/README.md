@@ -104,8 +104,8 @@ python3 eval/script_candidates.py en           # then es, with scripts/bands-scr
 
 `eval/results/blog.txt`, `fiction.txt` and `es.txt` hold the output of the three `evaluate.py`
 runs from 12 November 2026, on corpora rebuilt that month: 159 blog posts, 157 stories and
-237 Spanish posts that measure. The video-script files were written the same day, on 193
-English and 107 Spanish captions from 17 and 13 channels.
+237 Spanish posts that measure. The video-script files were written on 12 November, with later blocks
+added on 13 November, on 193 English and 107 Spanish captions from 17 and 13 channels.
 
 The dev.to API returns an author's newest posts first, so a later rebuild can pick a
 slightly different set if an author deletes a post; the WritingPrompts pages are fixed.
