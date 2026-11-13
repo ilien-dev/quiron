@@ -14,10 +14,17 @@
 #
 # This is the one script that needs more than the standard library: plain urllib gets an
 # empty body from the caption endpoint, so it calls yt-dlp (tested with 2026.10.26, install
-# with: python3 -m pip install --user yt-dlp) and node for its JavaScript challenges.
+# with: python3 -m pip install --user yt-dlp). It stops with an error if yt-dlp is missing.
+# yt-dlp uses node for its JavaScript challenges when node is on PATH; manual subtitles
+# download without it.
 # Every kept text is cleaned and judged by the same function, also the ones saved by an earlier run, so
 # manifest, files and titles.tsv always agree; one that no longer passes loses its row's kept status and its file.
+# The only files it deletes are <channel>-<video id>.md ones whose manifest row is not kept; any other file in
+# OUTDIR is left alone. A kept row whose file is missing is fetched again, and keeps its row until that fetch has
+# been attempted, so a run that fetches nothing leaves the manifest as it was.
 # Resumable: a video already in the manifest is not fetched again (error rows are retried).
+# A channel listing that fails is reported on stderr and is not a manifest row. The exit status is not zero when
+# no channel matches, when every listing failed, or when every fetch failed.
 # Requests are spaced 1 to 2 seconds apart, and a channel stops at 12 kept videos or 60 examined.
 #
 # Usage: build-corpus-script.sh en|es [OUTDIR]     OUTDIR defaults to ~/corpus/script[-es]
@@ -26,12 +33,16 @@
 set -euo pipefail
 LANG_CODE="${1:?language: en or es}"
 case "$LANG_CODE" in en) SUF="" ;; es) SUF="-es" ;; *) echo "language must be en or es" >&2; exit 2 ;; esac
+if ! python3 -m yt_dlp --version >/dev/null 2>&1; then
+  echo "yt-dlp is not installed for python3: python3 -m pip install --user yt-dlp" >&2
+  exit 3
+fi
 OUT="${2:-$HOME/corpus/script$SUF}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 MANIFEST="$HERE/../eval/titles/script$SUF-manifest.tsv"
 mkdir -p "$OUT" "$(dirname "$MANIFEST")"
 PYTHONUTF8=1 python3 - "$LANG_CODE" "$OUT" "$MANIFEST" "$HERE" "${CHANNELS:-}" "${RESERVE:-}" <<'PY'
-import glob, html, json, os, random, re, shutil, subprocess, sys, time
+import html, json, os, random, re, shutil, subprocess, sys, time, unicodedata
 lang, out, manifest, here, only, reserve = sys.argv[1:7]
 if lang == "es":
     os.environ.setdefault("QUIRON_BANDS", os.path.join(here, "bands-es.json"))
@@ -54,14 +65,16 @@ CHANNELS = {
         "Real Engineering": "RealEngineering", "PBS Space Time": "pbsspacetime",
         "exurb1a": "exurb1a", "Oversimplified": "OverSimplified",
     },
+    # Antroporama and Magic Markers were dropped: their handles returned no listing, and the right ones
+    # could not be established without contacting YouTube.
     "es": {
         "QuantumFracture": "QuantumFracture", "Jaime Altozano": "JaimeAltozano",
         "CuriosaMente": "CuriosaMente", "Academia Play": "AcademiaPlay",
-        "Memorias de Pez": "MemoriasdePez", "El Robot de Platon": "ElRobotdePlaton",
-        "Date un Vlog": "DateunVlog", "Magic Markers": "MagicMarkers",
+        "Memorias de Pez": "MemoriasdePez", "El Robot de Platón": "ElRobotdePlaton",
+        "Date un Vlog": "DateunVlog",
         "VisualPolitik": "VisualPolitik", "Derivando": "Derivando",
         "La Hiperactina": "LaHiperactina", "Pero eso es otra historia": "Peroesoesotrahistoria",
-        "Antroporama": "Antroporama", "C de Ciencia": "CdeCiencia", "Un Mundo Inmenso": "UnMundoInmenso",
+        "C de Ciencia": "CdeCiencia", "Un Mundo Inmenso": "UnMundoInmenso",
     },
 }[lang]
 RESERVE = {
@@ -86,7 +99,7 @@ SWITCH_TEXT = re.compile(r"(?:^|\s)(?:--|—)(?=[\w¿¡\"'])")
 GONE = re.compile(r"not available|members|Join this channel|Private video|has been removed|terminated|copyright|"
                   r"age-restricted|confirm your age|Video unavailable", re.I)
 TRANSIENT = re.compile(r"try again|temporar|timed out|HTTP Error 5|429|Unable to download|not a bot|rate.limit", re.I)
-# punctuation floors and ceilings, chosen on the kept texts (see the fix report in task-2-report.md)
+# punctuation floors and ceilings, chosen on the kept texts
 MIN_TERMINATORS = 0.02   # sentence ends per word: 1 in 50 words at most without one
 MIN_CAPITALS = 0.03      # share of capitalised words: below it the caption is lower-case
 MAX_FW_CAPITALS = 0.12   # share of "the/and/los/que..." capitalised mid-sentence: cues each started with a capital
@@ -95,14 +108,15 @@ FUNCTION = set(("the and of to in is that it for with as on this are be but not 
                 "el la los las y de que en un una es son se por con para como pero no lo del al su sus más muy ya si "
                 "cuando donde qué cómo hay fue ha han").split())
 COLS = "id channel upload_date track words status title".split()
-YT = [sys.executable, "-m", "yt_dlp", "--js-runtimes", "node", "--no-warnings", "--ignore-config"]
-node = "C:/Program Files/nodejs"
-if os.path.isdir(node):
-    os.environ["PATH"] += os.pathsep + node
+YT = [sys.executable, "-m", "yt_dlp", "--no-warnings", "--ignore-config"]
+if shutil.which("node"):
+    YT[3:3] = ["--js-runtimes", "node"]
+VIDEO_FILE = re.compile(r"[a-z0-9]+-[A-Za-z0-9_-]{11}\.md")
 
 
 def slug(name):
-    return re.sub(r"[^a-z0-9]+", "", name.lower())
+    plain = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", "", plain.lower())
 
 
 def pause():
@@ -161,7 +175,9 @@ def candidates(channel, handle):
         if len(p) < 4:
             continue
         date, vid, dur, title = p
-        # the listing rounds to "N years ago": keep a margin, the real date is tested later
+        # the listing rounds to "N years ago" (down), so its dates are approximate. Skipping those later than
+        # 20220630 can also skip an eligible video from mid-November to December 2021 (the latest kept upload
+        # is 2021-11-11). Whatever passes is still tested per video against CUTOFF.
         if date not in ("NA", "") and date > "20220630":
             continue
         try:
@@ -279,36 +295,75 @@ def path_of(r):
 
 def rejudge(rows):
     """Clean and judge again every kept text with the current rules, from the saved file: the manifest
-    words come from the file, a text that no longer passes loses its row and its file, and a file whose
-    row is not kept is deleted (calibration reads every .md in the folder)."""
+    words come from the file, a text that no longer passes loses its kept status and its file. A kept row whose
+    file is missing is left as it is (the loop fetches it again). Only a file named <channel>-<video id>.md
+    whose row is not kept is deleted (calibration reads every .md in the folder); nothing else is touched."""
+    before = repr(sorted(rows.items()))
     for r in rows.values():
-        if r["status"] != "kept":
-            continue
-        if not os.path.exists(path_of(r)):
-            r["status"] = "error"  # fetched again by the loop below
+        if r["status"] != "kept" or not os.path.exists(path_of(r)):
             continue
         t = tidy(open(path_of(r), encoding="utf-8").read())
         n, status = judge(t, len(SWITCH_TEXT.findall(t)))
         r["words"], r["status"] = str(n), status
         if status == "kept":
             open(path_of(r), "w", encoding="utf-8", newline="\n").write(t + "\n")
-    keep = {os.path.basename(path_of(r)) for r in rows.values() if r["status"] == "kept"}
-    for f in glob.glob(os.path.join(out, "*.md")):
-        if os.path.basename(f) not in keep:
+    for r in rows.values():
+        f = path_of(r)
+        if r["status"] != "kept" and VIDEO_FILE.fullmatch(os.path.basename(f)) and os.path.isfile(f):
             os.remove(f)
-    save(rows)
+    if repr(sorted(rows.items())) != before:
+        save(rows)
 
 
+def fetch(channel, vid, title, state):
+    """Examine one video and record it. True when the video was kept."""
+    pause()
+    work = os.path.join(out, ".work")
+    state["tried"] += 1
+    try:
+        date, track, n, status, text, title = examine(channel, vid, title, work)
+        state["streak"] = 0
+        state["fetched"] += 1
+    except Exception as e:
+        print(f"  {channel} {vid}: {e}", file=sys.stderr)
+        if GONE.search(str(e)) and not TRANSIENT.search(str(e)):  # members-only, private or removed: a fact about the video, not a refusal
+            record(rows, channel, vid, status="unavailable", title=title)
+            return False
+        record(rows, channel, vid, status="error", title=title)
+        state["streak"] += 1
+        if state["streak"] >= 6:
+            # YouTube answers "sign in to confirm you're not a bot" for a while: wait it out
+            if "not a bot" in str(e) and state["pauses"] < 6:
+                state["pauses"] += 1
+                print(f"  blocked; waiting 20 minutes ({state['pauses']}/6)", file=sys.stderr)
+                time.sleep(1200)
+                state["streak"] = 0
+            else:
+                sys.exit("6 errors in a row: YouTube is refusing requests; run again later (resumable)")
+        return False
+    if status == "kept":
+        open(os.path.join(out, f"{slug(channel)}-{vid}.md"), "w", encoding="utf-8",
+             newline="\n").write(text + "\n")
+    record(rows, channel, vid, date, track, n, status, title)
+    return status == "kept"
+
+
+if not CHANNELS:
+    sys.exit("no channel matches CHANNELS=" + repr(only))
 rows = load()
 rejudge(rows)
-streak = pauses = 0
+state = dict(streak=0, pauses=0, tried=0, fetched=0)
+listed = failed = 0
 for channel, handle in CHANNELS.items():
     mine = lambda: [r for k, r in rows.items() if k[0] == channel and r["id"] != "-"]
+    for r in [r for r in mine() if r["status"] == "kept" and not os.path.exists(path_of(r))]:
+        fetch(channel, r["id"], r["title"], state)  # a kept row without its file: fetch it again
     try:
         todo = candidates(channel, handle)
+        listed += 1
     except Exception as e:
         print(f"{channel}: listing failed ({e})", file=sys.stderr)
-        record(rows, channel, "-", status="error", title="channel listing failed")
+        failed += 1
         continue
     done = {r["id"] for r in mine() if r["status"] != "error"}
     kept = sum(r["status"] == "kept" for r in mine())
@@ -318,34 +373,9 @@ for channel, handle in CHANNELS.items():
             break
         if vid in done:
             continue
-        pause()
-        work = os.path.join(out, ".work")
-        try:
-            date, track, n, status, text, title = examine(channel, vid, title, work)
-            streak = 0
-        except Exception as e:
-            print(f"  {channel} {vid}: {e}", file=sys.stderr)
-            if GONE.search(str(e)) and not TRANSIENT.search(str(e)):  # members-only, private or removed: a fact about the video, not a refusal
-                record(rows, channel, vid, status="unavailable", title=title)
-                continue
-            record(rows, channel, vid, status="error", title=title)
-            streak += 1
-            if streak >= 6:
-                # YouTube answers "sign in to confirm you're not a bot" for a while: wait it out
-                if "not a bot" in str(e) and pauses < 6:
-                    pauses += 1
-                    print(f"  blocked; waiting 20 minutes ({pauses}/6)", file=sys.stderr)
-                    time.sleep(1200)
-                    streak = 0
-                else:
-                    sys.exit("6 errors in a row: YouTube is refusing requests; run again later (resumable)")
-            continue
-        examined += 1
-        if status == "kept":
-            kept += 1
-            open(os.path.join(out, f"{slug(channel)}-{vid}.md"), "w", encoding="utf-8",
-                 newline="\n").write(text + "\n")
-        record(rows, channel, vid, date, track, n, status, title)
+        before = state["fetched"]
+        kept += fetch(channel, vid, title, state)
+        examined += state["fetched"] > before
     shutil.rmtree(os.path.join(out, ".work"), ignore_errors=True)
     print(f"{channel}: {kept} kept, {examined} examined", file=sys.stderr)
 
@@ -353,8 +383,10 @@ rejudge(rows)  # the same cleaning and judging for every text, so manifest, file
 
 with open(os.path.join(out, "titles.tsv"), "w", encoding="utf-8", newline="\n") as idx:
     for r in sorted(rows.values(), key=lambda r: slug(r["channel"]) + "-" + r["id"]):
-        if r["status"] == "kept":
+        if r["status"] == "kept" and os.path.exists(path_of(r)):
             idx.write(f"{slug(r['channel'])}-{r['id']}\t{r['words']}\t{r['title']}\n")
-n = sum(r["status"] == "kept" for r in rows.values())
+n = sum(r["status"] == "kept" and os.path.exists(path_of(r)) for r in rows.values())
 print(f"{lang} script corpus: {n} texts in {out}", file=sys.stderr)
+if listed == 0 or (state["tried"] and not state["fetched"]):
+    sys.exit(f"nothing built: {failed} listing(s) failed, {state['tried']} fetch(es) tried, none succeeded")
 PY
