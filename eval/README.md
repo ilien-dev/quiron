@@ -78,7 +78,7 @@ scripts/build-corpus.sh ~/corpus/blog            # 167 dev.to posts, recalibrate
 scripts/build-corpus-fiction.sh ~/corpus/fiction # 157 WritingPrompts stories
 scripts/build-corpus-es.sh ~/corpus/es           # 241 Spanish dev.to posts
 scripts/build-corpus-work.sh pr ~/corpus/pr      # also commit, readme, email; needs GITHUB_TOKEN
-scripts/build-corpus-script.sh en ~/corpus/script   # also es; needs yt-dlp and node
+scripts/build-corpus-script.sh en ~/corpus/script   # also es; needs yt-dlp, and uses node when it is on PATH
 
 A=eval/ai/blog
 python3 scripts/evaluate.py --human ~/corpus/blog --ai-train $A/train,$A/train-2026-11 \

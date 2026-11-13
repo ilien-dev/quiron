@@ -8,12 +8,12 @@
 # QUIRON_BANDS=scripts/bands-script.json python3 scripts/aimeter.py --calibrate $TRAIN --ai eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 --out scripts/bands-script.json --spoken
 # (the file first held only the meta keys below, minus _corpus, _texts and _ai_texts; _corpus was then set by hand to script-train)
 # meta keys: {"_corpus": "script-train", "_texts": 144, "_ai_texts": 48, "_thresholds": {"AI_SIDE_MAX": 4, "TELLS_MAX": 6, "LEXICON_MIN": 4}, "_skip": ["para_words", "headings_1k", "commas_1k", "em_dashes_1k", "semicolons_1k", "parens_1k"], "_register": "script", "_spoken": true}
-# Rebuilt in task 5 with the same command, train only, after spoken() learned to drop source links, closing source
+# Rebuilt at c2e6f98 with the same command, train only, after spoken() learned to drop source links, closing source
 # lists and leading "(B-roll: ...)" directions (4 AI train scripts now read differently; no human caption does);
 # _corpus was set by hand again. Keys that moved: triads_1k ai 6.185 -> 6.33; nominalizations_1k auc 0.606 -> 0.607;
 # questions_1k auc 0.563 -> 0.564; semicolons_1k auc 0.445 -> 0.441. No human band (p10, p50, p90, min, max), no
 # push, and no meta key (_register, _spoken, _skip, _thresholds, _corpus) moved; the channel rule gives the same _skip.
-# Rebuilt in task 6b with the same command, train only, after spoken() stopped leaving the blank-line runs that
+# Rebuilt at 3095346 with the same command, train only, after spoken() stopped leaving the blank-line runs that
 # prose() read as indented code (assistant train scripts regained their narration; no human caption changed);
 # _corpus was set by hand again. Keys that moved: cv_sentence_len ai 0.53 -> 0.531; cv_sentence_len auc 0.359 ->
 # 0.364; mean_sentence_len auc 0.072 -> 0.069; long_words_1k ai 215.545 -> 216.08; long_words_1k auc 0.661 -> 0.657;
@@ -28,7 +28,7 @@
 # 0.498 -> 0.496; plain_words_1k ai 62.185 -> 62.505; plain_words_1k auc 0.327 -> 0.335; parens_1k auc 0.384 ->
 # 0.385; para_words ai 30.7 -> 28.95. No human band (p10, p50, p90, min, max) and no meta key moved; no push moved.
 # The channel rule (eval/results/script-channels.txt, rerun) gives the same _skip.
-# The sections between here and the task-5 block are the state at commit cafd8ed, kept as the before.
+# The sections between here and the c2e6f98 block are the state at commit cafd8ed, kept as the before.
 
 ## Held-out evaluation with the shipped thresholds
 # QUIRON_BANDS=scripts/bands-script.json python3 scripts/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
@@ -214,10 +214,10 @@ terra                9                     4           3.78      3 of 9 (33%)
   veritasium-vKA4w2O61Xo.md: 10 out (cv_sentence_len, mean_sentence_len, long_words_1k, mean_word_len, passive_1k, mattr50, first_person_1k, contractions_1k, questions_1k, plain_words_1k); checklist FAIL
   wendoverproductions-aQSxPzafO_k.md: 2 out (ai_lexicon_1k, triads_1k); checklist FAIL
 
-## Shape patterns (task 5): the script checks, switch-offs and T1, before and after on the same texts
-# Task 6b: the T1 grid and every 'after' table below were rerun with the same commands on whole narrations (spoken() fixed,
+## Shape patterns (c2e6f98): the script checks, switch-offs and T1, before and after on the same texts
+# 3095346: the T1 grid and every 'after' table below were rerun with the same commands on whole narrations (spoken() fixed,
 # bands rebuilt). Humans clean are unchanged (46 of 49 held out, 0.91 of train); no check changed state and _thresholds stay
-# (script-candidates.txt, the task 6b notes and the last block). The 'before' column is still cafd8ed.
+# (script-candidates.txt, the 3095346 notes and the last block). The 'before' column is still cafd8ed.
 # Optimistic, like the thresholds above: the verdicts, the switch-offs, the union size and T1 were chosen looking at the held-out humans and the test folders, so the after column is partly in-sample; the realengineering-7vLPefHYWpY caption that is clean now was cleared by switch-offs chosen on that same held-out set.
 # New checks in audit.py, only under "_register": "script": S1-S6 (TELL; S3 is a request for comments) and S7 (FAIL, three of S1-S6);
 # switched off here: A1, A1b, A2b, A3, A4, A8, A9, A14b, A15, A26, A32 and the TELL state of B1.
@@ -270,7 +270,7 @@ gpt61                9                     5           4.67      3 of 9 (33%)
 terra                9                     4           3.78      4 of 9 (44%)
 
 ## The shipped state, in full (added with the documentation: the first evaluation above is the state at cafd8ed, before the checks)
-# Same command as the first evaluation, run on the tree as it ships (band file rebuilt in task 6b, script checks on). The per-feature AUC table
+# Same command as the first evaluation, run on the tree as it ships (band file rebuilt at 3095346, script checks on). The per-feature AUC table
 # above is the old one; this is the current one, and the group rows end with the clean share of each group (audit_clean_share).
 # QUIRON_BANDS=scripts/bands-script.json python3 scripts/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
 bands from 144 human texts, 49 held out

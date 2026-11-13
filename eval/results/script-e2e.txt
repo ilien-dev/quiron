@@ -4,12 +4,12 @@
 # What the end-to-end runs showed for English video scripts, in four findings. P(AI) is the Claude judge's
 # mean (column "Opus", Sonnet 5.5 here), 20 titles per set, two rewrites per snapshot unless a row says one.
 # 1. The register does not move the judges beyond what the skill on main already did.
-#    scr: main 71.6, the shipped tree 72.3 (+0.7, worse on 13 of 20, p=0.433; section "Ship against main").
-#    The band files alone against main: +1.5 with the rebuilt snapshot bands2 (p=0.396, section "Ship against main"), +1.0 with the earlier bands snapshot (p=0.381). The shipped checks against the same tree with them off: -0.8 (p=0.185,
+#    scr: main 71.6, the shipped tree (ship) 72.3 (+0.7, worse on 13 of 20, p=0.433; section "Ship against main").
+#    The band files alone against main: +1.5 with the rebuilt snapshot bands2 (p=0.396, section "Ship against main"), +1.0 with the earlier bands snapshot (p=0.381). The shipped checks (ship) against the same tree with them off (bands2): -0.8 (p=0.185,
 #    noise 1.5); on scr2 69.1 against 69.3 (-0.2, p=0.794). Any rewrite does cut an untouched draft, 82.3 to 72.3 on scr and
 #    75.5 to 69.1 on scr2, and 98% and 88% of the shipped rewrites are still judged AI (over 50).
 # 2. No rule for the shape of a script held. Two sets were tried against the band files alone, both on whole narrations.
-#    The pattern rules (one rule per measured pattern): 72.6 to 75.0, +2.5 (worse on 13 of 20, p=0.117; noise 0.6).
+#    The pattern rules (one rule per measured pattern) against bands, the earlier snapshot (not bands2): 72.6 to 75.0, +2.5 (worse on 13 of 20, p=0.117; noise 0.6).
 #    The same rules without the sentence-length bullets: +2.1 (1 rep). The short rule "keep sentences whole, join short ones
 #    up to the band median" (join): +5.1 against the shipped tree (worse on 16 of 20, p=0.004). All three scored higher
 #    (read more AI; the join result is the one with a small p) while they brought overshot down (0.23 to 0.15, 0.23 to 0.10)
@@ -26,12 +26,12 @@
 # rules-nolen = rules with the sentence-length bullets removed from references/script.md (English: "Longer sentences"; Spanish: "Frases más largas", "Vary the length");
 # rules-nolen was made with: harness.py snapshot rules-nolen <checkout of 37a1cff>, then in snaps/rules-nolen/references/script.md each bullet
 #   starting '- **Longer sentences, joined the way people talk.**', '- **Frases más largas.**' and '- **Vary the length.**' deleted up to the next '- **'.
-# final = the tree after this task (no references/script.md, script checks on), used only for the human captions.
+# final = the tree at 4b6530e (no references/script.md, script checks on), used only for the human captions.
 # Reps: main 1, bands 2, rules 2, rules-nolen 1 on scr; bands 2 on scr2; final 1 on scrh. 'over' / 'aiside' = mean features per text overshot / on the AI side,
 # measured on the spoken words against scripts/bands-script.json. Rewrites: harness.py rewrite SNAP REP --set SET -j 6.
 # Decision rule (written before any number): rules ship if they beat bands on scr by more than the larger rep-to-rep set-mean difference, with no more overshot, and the same holds on scr2.
 # Result: neither rules nor rules-nolen beat bands on scr, so no rule was run on scr2 and references/script.md was removed after 37a1cff.
-# Task 6b: every number below is on whole narrations. Until 4b6530e spoken() left blank-line runs where it removed stacked
+# 455a6cc: every number below is on whole narrations. Until 4b6530e spoken() left blank-line runs where it removed stacked
 # directions and aimeter.prose() read each run plus the next line as indented code, so assistant scripts lost 5% to 10% of
 # their narration in the meter and in the judges' text (human captions lost nothing). spoken() now closes those runs, the
 # script band files were recalibrated, and the same rewrites were judged again (no rewrite was redone). 'over' / 'aiside'
@@ -143,14 +143,14 @@ $ python3 eval/e2e/scriptstats.py scrh draft final
 draft        files= 10 measured= 10 mean_sentence_len=18.9 cv_sentence_len=0.606 first_person_1k=26.1 triads_1k=2.99 mattr50=0.804 imagine=0.00 reveals=0.19 comments=0.00 fillers=0.84 ellipses=0.95 leaks=0/10 lost=0.0% (>10%: 0, max 0%)
 final        files= 10 measured= 10 mean_sentence_len=15.3 cv_sentence_len=0.549 first_person_1k=25.9 triads_1k=2.56 mattr50=0.807 imagine=0.00 reveals=0.00 comments=0.00 fillers=0.83 ellipses=0.29 leaks=0/10 lost=0.0% (>10%: 0, max 0%)
 
-## Task 6b: what ships, measured end to end (whole narrations, rebuilt bands)
+## 455a6cc: what ships, measured end to end (whole narrations, rebuilt bands)
 # Snapshots, from the tree at 3095346 (sha256 over the snapshot's files, CRLF read as LF, first 8 hex):
 #   bands2 (a23be7a4) = harness.py snapshot bands2 --no-script-rules (register entry, band files, script checks off, no references/script.md);
 #   ship   (df3f6914) = harness.py snapshot ship (the tree as it ships: script checks on, no references/script.md); it differs from bands2 only in
 #            audit.py's '_new = ...' line;
 #   join   (e388d4dc) = ship plus references/script.md (below, verbatim) and the two SKILL.md lines of SCRIPT_RULE_EDITS in harness.py.
 # Rewrites: REWRITER=claude-sonnet-5-5 python3 eval/e2e/harness.py rewrite SNAP REP --set SET -j 6; reps r0 and r1 of bands2, ship and join on scr,
-#   of ship and bands2 on scr2; r0 of ship on scrh. bands2 is not byte-identical to the Task 6 bands snapshot (aimeter.py and the band files
+#   of ship and bands2 on scr2; r0 of ship on scrh. bands2 is not byte-identical to the bands snapshot (built on the band files of c2e6f98; aimeter.py and the band files
 #   changed), so it was rewritten on scr2 too. 210 rewrites in this language, none failed.
 # Decision rules, fixed in the brief before any number: noise = the larger |r0-r1| set mean of the two snapshots compared (--noise, Claude column).
 #   ship worse than bands2 by more than the noise -> the script checks stop running during a rewrite in this language; otherwise they stay on.
@@ -235,7 +235,7 @@ $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py mai
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
 main            20    20   71.6    95%   82.0                0.30   2.65
 ship            20    40   72.3    98%   81.9                0.23   1.52   Opus  +0.7 (worse 13/20, p=0.433)  GPT  -0.1 (p=0.968)  over -0.07 (higher 1, lower 3, p=0.273)
-# bands2 is the register with its checks off on the rebuilt band files (the snapshot the table in references/numbers.md calls "bands only"); bands is the earlier Task 6 snapshot of the same idea.
+# bands2 is the register with its checks off on the rebuilt band files (the snapshot the table in references/numbers.md calls "bands only"); bands is the earlier snapshot of the same idea (37a1cff, built on the band files of c2e6f98).
 $ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py main bands2 --set scr --k 2 --g 1
 snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs main
 main            20    20   71.6    95%   82.0                0.30   2.65

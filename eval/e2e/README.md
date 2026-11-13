@@ -27,8 +27,10 @@ Paths are relative to the repo.
 - `devnn` is `dev` without the notes.
 - `scr` and `scr2` have 20 assistant video scripts each, from `eval/ai/script/train-*`
   and `test-*`, with no notes and the video's title in the fourth column. `scr-es` and
-  `scr2-es` are the same in Spanish, from `eval/ai/script-es/`. Rules were chosen on `scr`
-  and `scr-es` and confirmed on the other two.
+  `scr2-es` are the same in Spanish, from `eval/ai/script-es/`. The pairs were built for
+  choosing a rule on `scr` and `scr-es` and confirming it on `scr2` and `scr2-es`. No rule
+  passed the first, so the second pair was used once, to confirm what ships against
+  untouched drafts.
 - `scrh` and `scrh-es` have 10 held-out human captions each, from `~/corpus/script` and
   `~/corpus/script-es`. They are local: their paths point into the corpus that
   `scripts/build-corpus-script.sh` fetches, and the captions are not in the repo. Nine of
@@ -68,8 +70,8 @@ python3 $H/report.py old new --set test --reps "rt*"
 ```
 
 The video-script rounds compared three snapshots. `main` is the skill before the script
-register, taken from `git archive origin/main` unpacked into a scratch folder and passed as
-SRC. `rules` is commit `37a1cff`, which has the rules in `references/script.md`. `bands`
+register, taken from `git archive 39b39c1` unpacked into a scratch folder and passed as
+SRC (a later `origin/main` contains the register). `rules` is commit `37a1cff`, which has the rules in `references/script.md`. `bands`
 is the same commit with `--no-script-rules`, which deletes `references/script.md`, takes
 out the two lines of `SKILL.md` that point to it and turns off the script checks (S1 to S7,
 SE1 to SE8) in the snapshot's `audit.py`. The band files and the register's entry stay. If
@@ -79,7 +81,7 @@ after that commit, so on a later tree the flag only turns the checks off. The nu
 in `eval/results/script-e2e.txt` and `script-es-e2e.txt`.
 
 ```sh
-git archive origin/main | tar -x -C /tmp/quiron-main
+git archive 39b39c1 | tar -x -C /tmp/quiron-main
 git archive 37a1cff | tar -x -C /tmp/quiron-rules
 python3 $H/harness.py snapshot main /tmp/quiron-main
 python3 $H/harness.py snapshot bands /tmp/quiron-rules --no-script-rules

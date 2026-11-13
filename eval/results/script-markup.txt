@@ -1,4 +1,4 @@
-# python3 eval/markup.py script C:/Users/jesus/corpus/script eval/results/script-markup.txt   (median per 1,000 spoken words)
+# python3 eval/markup.py script ~/corpus/script eval/results/script-markup.txt   (median per 1,000 spoken words)
 group              n     stage   speaker timestamp   heading
 human-train      144      0.00      0.00      0.00      0.00
 test-fable52       9     12.77      1.21      0.00      2.20

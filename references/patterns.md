@@ -338,7 +338,7 @@ Matches a sentence that starts with "imagine" or "picture this", also after "Now
 
 ### S2. Staged reveals [TELL]
 
-Matches "here's the" followed by thing, twist, catch, kicker, problem, best part, honest part, strange part, weird part, surprising part, part, real, key, deal or interesting; "here's where it gets"; "here's why", "here's how", "here's what"; a sentence that starts with "then there's", "and then there's" or "then comes"; "the honest answer", "the short answer", "the real answer", "the simple answer"; and "sounds" followed by simple, easy, logical, straightforward, reasonable, obvious, crazy, impossible, absurd or ridiculous. One check for the family. **Measured:** 6 of 49 held-out human scripts, 23 of 144 train, 49% of assistant scripts.
+Matches "here's the" followed by thing, twist, catch, kicker, problem, best part, honest part, strange part, weird part, surprising part, part, real, key, deal or interesting; "here's where it gets" and "here's where things get", each with or without the final s; "here's why", "here's how", "here's what"; a sentence that starts with "then there's", "and then there's" or "then comes"; "the honest answer", "the short answer", "the real answer", "the simple answer"; and "sounds" followed by simple, easy, logical, straightforward, reasonable, obvious, crazy, impossible, absurd or ridiculous. One check for the family. **Measured:** 6 of 49 held-out human scripts, 23 of 144 train, 49% of assistant scripts.
 
 ### S3. A request for comments [TELL]
 

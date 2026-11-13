@@ -22,7 +22,7 @@
 # human rate is the same as with the earlier ^-anchored version. spoken() now also drops a leading
 # "(B-roll: ...)" direction and source links and closing source lists: that changed 11 assistant
 # scripts (6 of them GPT-6.1 test or train, with inline "[Source: ...](url)" links) and no human one.
-# Rerun in task 6b on whole narrations: spoken() no longer leaves the blank-line runs after stacked
+# Rerun at 3095346 on whole narrations: spoken() no longer leaves the blank-line runs after stacked
 # directions that prose() took for indented code (assistant scripts had lost 5% to 10% of their
 # narration there; no human caption lost a word, so every human column is unchanged). The verdict
 # column is the script's rule; what ships is decided below with the brief's rule.
@@ -87,15 +87,15 @@ union: 3+ of the checks S1-S6                                           0/144   
 union: 3+ of S1-S6 without S3 (comments)                                0/144       0/49       3/12       0/12       2/12       3/12        0/9        1/9        0/9        1/9        0/9     0.04  out
 
 ## Decisions
-# (task 7: the figures in the "Out" paragraph below were corrected to the table above; four assistant rates were stale from before task 6b.)
+# (794b9d1: the figures in the "Out" paragraph below were corrected to the table above; four assistant rates were stale from before 3095346.)
 # Shipped as FAIL
 #   S7  three of S1-S6 in one script: 0/144 train and 0/49 held-out humans; Opus 5.5 and Sonnet 5.5
-#       3/9, GPT-6.1 and Terra 1/9, Fable 5.2 0/9 (18% pooled; 13% before task 6b). A combined check (evaluate.py COMBINED),
+#       3/9, GPT-6.1 and Terra 1/9, Fable 5.2 0/9 (18% pooled; 13% before 3095346). A combined check (evaluate.py COMBINED),
 #       like T1. Three, not two: when it was chosen two or more cost two held-out human scripts, so
 #       three was picked with the held-out row in view. S7 leans on S3: without the comment ask, three
 #       of the other five fire on 2 of 45 assistant test scripts (the row "without S3"), under the bar.
 # Shipped as TELL (held-out human, train human, pooled AI test)
-#   S1  Imagine / Picture this opens a sentence ............ 1/49, 8/144, 31% (29% before task 6b)
+#   S1  Imagine / Picture this opens a sentence ............ 1/49, 8/144, 31% (29% before 3095346)
 #   S2  staged reveals (here's the X / why / how / what, then there's, the honest answer, sounds
 #       simple), one check for the family ................... 6/49, 23/144, 49% (47%)
 #   S3  asking for comments, a request and not a mention ("tell me / let us know in the comments",
@@ -105,7 +105,7 @@ union: 3+ of S1-S6 without S3 (comments)                                0/144   
 #       3/49, 8/144, 31% (the row "first version" above). Narrowed, S3 meets the FAIL rule on held-out
 #       (0/49, and 4/9 of Opus) and is kept as a TELL because of the train rate: 5 of 144 human train
 #       captions ask for comments, and as a FAIL it took the train humans clean from 0.91 to 0.88, under
-#       the 0.90 of before this task. A human creator asking for comments is the channel's call, like
+#       the 0.90 before these checks (cafd8ed). A human creator asking for comments is the channel's call, like
 #       subscribe (controller ruling). As a TELL it still feeds S7.
 #   S4  next time you ....................................... 2/49, 1/144, 16% (11%)
 #   S5  a bare noun-phrase question (The catch?) ............ 1/49, 1/144, 9%
@@ -117,7 +117,7 @@ union: 3+ of S1-S6 without S3 (comments)                                0/144   
 #      everyframeapainting-jGc-K7giqKM (46 -> 44 of 49).
 #   two or more of S1-S6 (union 2+), a recorded option, not shipped: with S3 narrowed it no longer
 #      costs a held-out human (0/49, 5/144 train) and fires on 42% of the assistant test scripts,
-#      every model 3/9 to 5/9 (38% and 2/9 to 4/9 before task 6b), so it meets the FAIL rule. It was found after looking at the held-out
+#      every model 3/9 to 5/9 (38% and 2/9 to 4/9 before 3095346), so it meets the FAIL rule. It was found after looking at the held-out
 #      row, and it would fail 5 of 144 train captions; S7 stays at three (controller ruling).
 # Not computable in audit.py
 #   the closing question that restates the title (TELL by the rule: 0/49 and 2/144 humans, 9% of
@@ -125,7 +125,7 @@ union: 3+ of S1-S6 without S3 (comments)                                0/144   
 # Subsumed (TELL by the rule, kept inside a shipped check instead of on its own)
 #   Imagine opens 2+ sentences, Imagine you / a world ..., here's why / how / what, (and) then
 #   there's, the honest / short answer, sounds simple / logical: inside S1 or S2.
-#   Rows whose verdict moved in task 6b (whole narrations), none shipped on its own:
+#   Rows whose verdict moved at 3095346 (whole narrations), none shipped on its own:
 #   - Imagine in the first 3 sentences: out -> TELL (0/49, 2/144, 4%); inside S1.
 #   - here's the X (noun only): out -> TELL (4/49, 8/144, 18%); inside S2.
 #   - here's why / how / what: TELL -> FAIL by the script's rule (1/49, Sonnet 5.5 3/9), but 8/144
@@ -204,7 +204,7 @@ B2       0.061     0.111     0.111     0.222     0.444     0.111      0.200   3.
 # B1 still FAILs at four words. Kept: A17, A20 (curly quotes: GPT-6.1 and Terra only, 2.4x), A4b
 # (2.2x, one human text), A5, B2.
 
-## Existing checks re-applied on whole narrations (task 6b)
+## Existing checks re-applied on whole narrations (3095346)
 # The same rule on the TELL or FAIL table of an evaluation with nothing switched off: a copy of scripts/ whose
 # audit.py has SCRIPT_OFF = {} and SCRIPT_B1_TELL_OFF = set(), run as
 # QUIRON_BANDS=scripts/bands-script.json python3 <copy>/evaluate.py --human ~/corpus/script --ai-train eval/ai/script/train-gpt61,eval/ai/script/train-haiku55,eval/ai/script/train-opus55,eval/ai/script/train-sonnet55 human-train=$TRAIN opus55=eval/ai/script/test-opus55 sonnet55=eval/ai/script/test-sonnet55 fable52=eval/ai/script/test-fable52 gpt61=eval/ai/script/test-gpt61 terra=eval/ai/script/test-terra
@@ -230,4 +230,4 @@ B1       0.469    0.535    0.667     0.222     0.556     0.778     0.778      0.
 B2       0.061    0.090    0.111     0.222     0.222     0.444     0.111      0.222   3.64  keep  yes
 # Moved since cafd8ed: A3 0.022 -> 0.044 pooled (Fable 5.2 2/9), B2 0.200 -> 0.222; no ratio crosses 2.
 # A17, A20 and A5 would be off under the stricter rule (their AI rate is under twice the train rate): A20 was
-# kept by the held-out rule in task 5 and its train rate (0.16) is the same as then, so this is not new.
+# kept by the held-out rule at c2e6f98 and its train rate (0.16) is the same as then, so this is not new.

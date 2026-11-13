@@ -17,7 +17,7 @@
 
 ## Every candidate
 # python3 eval/script_candidates.py es
-# Rerun in task 6b on whole narrations: spoken() no longer leaves the blank-line runs after stacked
+# Rerun at 3095346 on whole narrations: spoken() no longer leaves the blank-line runs after stacked
 # directions that prose() took for indented code (assistant scripts had lost 5% to 10% of their
 # narration there; no human caption lost a word, so every human column is unchanged). No verdict
 # in the last column moved.
@@ -43,7 +43,7 @@ recapitulación: es decir,                                               41/80  
 transición: y aquí viene / lo curioso es que                             4/80       1/27       6/12       5/12       5/12       4/12        1/5        3/5        3/5        1/5        0/5     0.32  FAIL
 transición: pero ojo / atención / espera                                 2/80       0/27       3/12       0/12       4/12       1/12        1/5        0/5        0/5        0/5        0/5     0.04  out
 transición: empecemos / vamos allá                                      13/80       4/27       4/12       5/12       7/12       3/12        1/5        1/5        0/5        0/5        1/5     0.12  out
-cierre: entonces, ¿...?                                                  5/80       2/27       7/12       4/12       2/12       5/12        2/5        3/5        0/5        2/5        2/5     0.36  TELL
+una frase abre con 'entonces, ¿'                                         5/80       2/27       7/12       4/12       2/12       5/12        2/5        3/5        0/5        2/5        2/5     0.36  TELL
 cierre: pregunta con palabras del título en el último 10%                4/80       1/27       3/12       2/12       4/12       1/12        0/5        0/5        0/5        1/5        2/5     0.12  FAIL
 cierre: eco del comienzo en las 3 últimas frases                        12/80       3/27       0/12       0/12       0/12       0/12        0/5        1/5        0/5        0/5        0/5     0.04  out
 cierre: la próxima vez que                                               1/80       0/27       4/12       5/12       2/12       0/12        1/5        0/5        0/5        0/5        0/5     0.04  TELL
@@ -85,16 +85,16 @@ union: 3+ de SE1-SE7 sin SE6 (comentarios)                               0/80   
 #        different move from asking the viewer to stay, so it was dropped, with the held-out row in view.
 #   SE8  three of SE1-SE7 in one script: no human caption, train or held out (the one train caption
 #        it caught fell out when SE6 was narrowed); Sonnet 5.5 3/5, GPT-6.1, Opus 5.5 and Terra 2/5,
-#        Fable 5.2 1/5 (40% pooled; 36% before task 6b). A combined check, like T1. Without SE6 three
+#        Fable 5.2 1/5 (40% pooled; 36% before 3095346). A combined check, like T1. Without SE6 three
 #        of the other six still fire on 5 of 25 test scripts (GPT-6.1 and Sonnet 5.5 2/5), still a
 #        FAIL by the rule, at 20% (16%).
 # Shipped as TELL (held-out human, train human, pooled AI test)
 #   SE2  hoy te cuento / hoy vamos a ......................... 3/27, 8/80, 36%
-#   SE3  imagina abre una frase ............................... 2/27, 4/80, 44% (40% before task 6b)
+#   SE3  imagina abre una frase ............................... 2/27, 4/80, 44% (40% before 3095346)
 #        (adding imagínate / imagínense: 2/27, 6/80, still 44%; it keeps the TELL rule but adds two
 #        train captions and no assistant test script, so it is not added)
 #   SE4  y aquí viene / lo curioso es que / dato curioso ...... 1/27, 4/80, 32% (24%)
-#   SE5  entonces, ¿...? ...................................... 2/27, 5/80, 36%
+#   SE5  una frase abre con entonces, ¿ ...................... 2/27, 5/80, 36%
 #   SE6  pedir comentarios, a request and not a mention: the verb (cuéntame, déjanos, escríbeme,
 #        dime ...) and then "en los comentarios" .............. 1/27, 4/80, 52%
 #        The first version also had a bare "en los comentarios" (4/27, 11/80, 76%); it is a FAIL by the
@@ -160,7 +160,7 @@ E3       0.000     0.200     0.000     0.200     0.000     0.000      0.080    i
 E4       0.000     0.000     0.200     0.000     0.000     0.000      0.040    inf  keep
 # Switched off: A2b (2 of 27 held-out humans, 1 of 25 assistant scripts). Kept: B1 (2.5x), E1 (9.7x), E4.
 
-## Existing checks re-applied on whole narrations (task 6b)
+## Existing checks re-applied on whole narrations (3095346)
 # The same rule on the TELL or FAIL table of an evaluation with nothing switched off: a copy of scripts/ whose
 # audit.py has SCRIPT_OFF = {} and SCRIPT_B1_TELL_OFF = set(), run as
 # QUIRON_BANDS=scripts/bands-script-es.json python3 <copy>/evaluate.py --human ~/corpus/script-es --ai-train eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55 human-train=$TRAIN opus55=eval/ai/script-es/test-opus55 sonnet55=eval/ai/script-es/test-sonnet55 fable52=eval/ai/script-es/test-fable52 gpt61=eval/ai/script-es/test-gpt61 terra=eval/ai/script-es/test-terra

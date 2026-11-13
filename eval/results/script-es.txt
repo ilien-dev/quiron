@@ -8,14 +8,14 @@
 # QUIRON_BANDS=scripts/bands-script-es.json python3 scripts/aimeter.py --calibrate $TRAIN --ai eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55 --out scripts/bands-script-es.json --lang es --lexicon ai-lean-es.txt --plain human-lean-es.txt --spoken
 # (the file first held only the meta keys below, minus _corpus, _texts and _ai_texts; _corpus was then set by hand to script-es-train)
 # meta keys: {"_corpus": "script-es-train", "_texts": 80, "_ai_texts": 48, "_lexicon": "ai-lean-es.txt", "_thresholds": {"AI_SIDE_MAX": 6, "TELLS_MAX": 2}, "_lang": "es", "_plain": "human-lean-es.txt", "_skip": ["para_words", "headings_1k", "semicolons_1k", "em_dashes_1k"], "_register": "script", "_spoken": true}
-# Rebuilt in task 5 with the same command, train only, after spoken() learned to drop source links, closing source
+# Rebuilt at c2e6f98 with the same command, train only, after spoken() learned to drop source links, closing source
 # lists and leading "(Plano: ...)" directions (4 AI train scripts now read differently; no human caption does);
 # _corpus was set by hand again. Keys that moved: first_person_1k ai 2.985 -> 3.03; connective_openers ai 17.15 ->
 # 17.35, auc 0.453 -> 0.455; commas_1k auc 0.663 -> 0.661; ly_adverbs_1k auc 0.349 -> 0.35; passive_1k auc 0.388 ->
 # 0.389; plain_words_1k auc 0.355 -> 0.357; questions_1k auc 0.473 -> 0.474. No human band, no push, and no meta key
 # (_register, _spoken, _skip, _thresholds, _lang, _lexicon, _plain, _corpus) moved; the channel rule gives the same
-# _skip. _thresholds.TELLS_MAX is 4 since task 5 (see the end of this file).
-# Rebuilt in task 6b with the same command, train only, after spoken() stopped leaving the blank-line runs that
+# _skip. _thresholds.TELLS_MAX is 4 since c2e6f98 (see the end of this file).
+# Rebuilt at 3095346 with the same command, train only, after spoken() stopped leaving the blank-line runs that
 # prose() read as indented code (assistant train scripts regained their narration; no human caption changed);
 # _corpus was set by hand again. Keys that moved: cv_sentence_len auc 0.23 -> 0.239; mean_sentence_len auc 0.129 ->
 # 0.118; long_words_1k ai 290.665 -> 291.035; mean_word_len auc 0.678 -> 0.68; nominalizations_1k ai 25.69 ->
@@ -29,7 +29,7 @@
 # 31.54; plain_words_1k auc 0.357 -> 0.351; parens_1k auc 0.265 -> 0.271; para_words ai 36.7 -> 35.9. No human band
 # (p10, p50, p90, min, max) and no meta key moved; the one push that moved is passive_1k (AUC 0.389 -> 0.402, inside
 # 0.4-0.6, so two-sided now). The channel rule (eval/results/script-es-channels.txt, rerun) gives the same _skip.
-# The sections between here and the task-5 block are the state at commit cafd8ed, kept as the before.
+# The sections between here and the c2e6f98 block are the state at commit cafd8ed, kept as the before.
 
 ## Held-out evaluation with the shipped thresholds
 # QUIRON_BANDS=scripts/bands-script-es.json python3 scripts/evaluate.py --human ~/corpus/script-es --ai-train eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55 opus55=eval/ai/script-es/test-opus55 sonnet55=eval/ai/script-es/test-sonnet55 fable52=eval/ai/script-es/test-fable52 gpt61=eval/ai/script-es/test-gpt61 terra=eval/ai/script-es/test-terra
@@ -176,10 +176,10 @@ terra                5                     5           4.40      4 of 5 (80%)
 # QUIRON_BANDS=scripts/bands-script-es.json python3 eval/band_compare.py --detail human-heldout=~/corpus/script-es@heldout | grep 'checklist FAIL'
   academiaplay--mnRwShLmXc.md: 8 out (long_words_1k, mean_word_len, nominalizations_1k, first_person_1k, repeated_openers, connective_openers, triads_1k, plain_words_1k); checklist FAIL
 
-## Shape patterns (task 5): the script checks, switch-offs and T1, before and after on the same texts
-# Task 6b: the T1 grid and every 'after' table below were rerun with the same commands on whole narrations (spoken() fixed,
+## Shape patterns (c2e6f98): the script checks, switch-offs and T1, before and after on the same texts
+# 3095346: the T1 grid and every 'after' table below were rerun with the same commands on whole narrations (spoken() fixed,
 # bands rebuilt). Humans clean are unchanged (26 of 27 held out, 0.96 of train); no check changed state and _thresholds stay
-# (script-es-candidates.txt, the task 6b notes and the last block). The 'before' column is still cafd8ed.
+# (script-es-candidates.txt, the 3095346 notes and the last block). The 'before' column is still cafd8ed.
 # Optimistic, like the thresholds above: the verdicts, the switch-offs, the union size and T1 were chosen looking at the held-out humans and the test folders, so the after column is partly in-sample; the switch-off of A2b and the T1 value were chosen on that same held-out set.
 # New checks in audit.py, only under "_register": "script": SE1 (FAIL), SE2-SE7 (TELL) and SE8 (FAIL, three of SE1-SE7);
 # switched off here: A2b.
@@ -232,7 +232,7 @@ gpt61                5                     7           6.20       0 of 5 (0%)
 terra                5                     5           4.40      2 of 5 (40%)
 
 ## The shipped state, in full (added with the documentation: the first evaluation above is the state at cafd8ed, before the checks)
-# Same command as the first evaluation, run on the tree as it ships (band file rebuilt in task 6b, script checks on). The per-feature AUC table
+# Same command as the first evaluation, run on the tree as it ships (band file rebuilt at 3095346, script checks on). The per-feature AUC table
 # above is the old one; this is the current one, and the group rows end with the clean share of each group (audit_clean_share).
 # QUIRON_BANDS=scripts/bands-script-es.json python3 scripts/evaluate.py --human ~/corpus/script-es --ai-train eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55 opus55=eval/ai/script-es/test-opus55 sonnet55=eval/ai/script-es/test-sonnet55 fable52=eval/ai/script-es/test-fable52 gpt61=eval/ai/script-es/test-gpt61 terra=eval/ai/script-es/test-terra
 bands from 80 human texts, 27 held out

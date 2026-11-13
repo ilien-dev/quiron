@@ -17,9 +17,16 @@ def row(label, files):
         "%9.2f" % statistics.median(c[k] for c in counts) for k in KEYS)
 
 
+def shown(path):
+    """The path as printed in the header: the home folder as ~, so no local path reaches a results file."""
+    home = os.path.expanduser("~").replace("\\", "/")
+    p = path.replace("\\", "/")
+    return "~" + p[len(home):] if p.startswith(home + "/") else p
+
+
 def main():
     register, human, out = sys.argv[1:4]
-    lines = ["# python3 eval/markup.py %s %s %s   (median per 1,000 spoken words)" % (register, human, out),
+    lines = ["# python3 eval/markup.py %s %s %s   (median per 1,000 spoken words)" % (register, shown(human), out),
              "%-16s %3s " % ("group", "n") + " ".join("%9s" % k for k in KEYS)]
     files = sorted(glob.glob(os.path.join(os.path.expanduser(human), "*.md")))
     lines.append(row("human-train", [f for i, f in enumerate(files) if i % 4]))  # as gensamples --titles

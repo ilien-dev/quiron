@@ -299,7 +299,7 @@ CANDS_ES = [
     ("transición: y aquí viene / lo curioso es que", rx(ES["clave"])),
     ("transición: pero ojo / atención / espera", rx(ES["ojo"])),
     ("transición: empecemos / vamos allá", rx(ES["empecemos"])),
-    ("cierre: entonces, ¿...?", rx(ES["entonces"])),
+    ("una frase abre con 'entonces, ¿'", rx(ES["entonces"])),
     ("cierre: pregunta con palabras del título en el último 10%", title_question_at_end(STOP_ES)),
     ("cierre: eco del comienzo en las 3 últimas frases", bookend(STOP_ES)),
     ("cierre: la próxima vez que", rx(ES["proxima"])),
