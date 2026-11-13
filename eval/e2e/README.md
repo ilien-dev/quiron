@@ -42,12 +42,11 @@ judges read only the narration (`harness.narration`), with a prompt of their own
 features, the script patterns, fillers and ellipses, leftover markup, and how much of the
 narration the meter's text filter drops.
 
-That filter has a known gap. Where `spoken()` removes stacked stage directions it leaves
-four or more blank lines, and `aimeter.prose()` then takes the next paragraph for indented
-code and drops it. An assistant script loses 5% to 10% of its narration this way, and a
-human caption loses nothing. `QUIRON_FULL_NARRATION=1` makes `harness.narration` close those
-runs before the judges read the text. The default is unchanged, so the committed numbers
-reproduce. The script results give both readings.
+Until November 2026 that filter dropped some of it. Where `spoken()` took out stacked
+stage directions it left a run of blank lines, and `aimeter.prose()` read the run and the
+next line as indented code. Assistant scripts lost 5% to 10% of their narration that way,
+and human captions lost nothing. `spoken()` now closes those runs, so the `lost` column
+should read 0%.
 
 A row with no notes gets a prompt that says so and tells the rewriter not to stop and
 ask. Sonnet 5.5 otherwise refuses to write `final.md` until it has the notes.

@@ -457,7 +457,15 @@ def _spoken(text):
             if not l:
                 continue
         out.append(l)
-    return "\n".join(out), n
+    # Where lines were removed their blank neighbours pile up. prose() takes a line after four
+    # or more whitespace characters for indented code and drops it, so every run of blank lines
+    # becomes one and no line keeps its leading whitespace.
+    kept = []
+    for l in out:
+        l = l.lstrip()
+        if l or (kept and kept[-1]):
+            kept.append(l)
+    return "\n".join(kept), n
 
 
 def spoken(text):

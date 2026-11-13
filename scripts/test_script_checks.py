@@ -189,23 +189,13 @@ class ScriptSets(unittest.TestCase):
         other = {r[0] for s, rows in self.sets.items() if not s.startswith("scr") for r in rows}
         self.assertFalse(script_names & other)
 
-    def test_full_narration_keeps_the_paragraph_after_stacked_directions(self):
+    def test_narration_keeps_every_paragraph_after_stacked_directions(self):
         text = ("Every town on the river has a story about the water.\n\n---\n\n**[SECTION 1 - 0:45]**\n\n"
                 "*(Wide shot of a river.)*\n\nThe river floods every spring and the town knows it.\n\n"
                 "Nobody moved, and the levee went up in 1927.\n")
-        old = os.environ.pop("QUIRON_FULL_NARRATION", None)
-        try:
-            os.environ["QUIRON_FULL_NARRATION"] = "1"
-            full = self.h.narration(text)
-            del os.environ["QUIRON_FULL_NARRATION"]
-            default = self.h.narration(text)
-        finally:
-            if old is not None:
-                os.environ["QUIRON_FULL_NARRATION"] = old
-        self.assertIn("The river floods", full)
-        self.assertIn("levee went up", full)
-        self.assertNotIn("SECTION", full)
-        self.assertNotIn("The river floods", default)  # the gap the flag works around
+        self.assertEqual(self.h.narration(text),
+                         "Every town on the river has a story about the water. The river floods every "
+                         "spring and the town knows it. Nobody moved, and the levee went up in 1927.")
 
     def test_judge_prompt_follows_the_set_name(self):
         self.assertIs(self.h.script_prompt("scrh"), self.h.JPROMPT_SCR)

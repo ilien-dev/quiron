@@ -124,6 +124,32 @@ class Spoken(unittest.TestCase):
         self.assertEqual(aimeter.spoken("[PLANO: la ciudad de noche]\nNARRADOR: Ibas camino a casa.").strip(),
                          "Ibas camino a casa.")
 
+    def test_stacked_directions_keep_both_paragraphs(self):
+        # spoken() used to leave a run of blank lines where it removed the directions, and
+        # prose() read that run plus the next line as indented code and dropped the line
+        first = ("Every town on the river has a story about the water. Most of them are about the "
+                 "spring floods. The old people in town still talk about the year the bridge went "
+                 "under. They say the water came up to the church steps in one night. Nobody had "
+                 "a boat, so the baker rowed people across in a bathtub.")
+        second = ("The river floods every spring and the town knows it. Nobody moved, and the levee "
+                  "went up in 1927. It took two summers and most of the men in the county to build "
+                  "it. The levee held for sixty years before it gave way at the north end. After "
+                  "that the town built it again, higher this time, and it has held ever since.")
+        text = (first + "\n\n**[SECTION 1 - 0:45]**\n\n*(Wide shot of a river.)*\n\n[MUSIC SWELLS]\n\n"
+                + second + "\n")
+        kept = aimeter.prose(aimeter.spoken(text))
+        for para in (first, second):
+            for phrase in (" ".join(para.split()[:6]), " ".join(para.split()[-6:])):
+                self.assertIn(phrase, kept)
+        words = len(aimeter.PROFILES["en"]["word"].findall(first + " " + second))
+        self.assertEqual(aimeter.measure(aimeter.spoken(text))["_words"], words)
+
+    def test_spoken_leaves_no_blank_runs_or_indents(self):
+        out = aimeter.spoken("Hello there.\n\n[CUT]\n\n(Pause.)\n\n     Indented speech.\n  \n\n\nEnd.")
+        self.assertNotIn("\n\n\n", out)
+        self.assertFalse(any(l != l.lstrip() for l in out.split("\n")))
+        self.assertEqual(out.split(), "Hello there. Indented speech. End.".split())
+
     def test_mostly_markup_is_too_short(self):
         self.assertIsNone(aimeter.measure(aimeter.spoken("[SCENE]\n" * 200 + "Hello there.")))
 

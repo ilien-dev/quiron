@@ -12,7 +12,8 @@ For each snapshot, the mean over its final.md files of:
   "End of script", a word count, "Referencia técnica", "Guion original");
 - lost: the share of the narration that aimeter.prose() drops after spoken(), and the number
   of texts losing more than 10%. prose() reads four or more blank lines plus the next line as
-  indented code; spoken() leaves such runs where it removed stacked directions.
+  indented code; spoken() used to leave such runs where it removed stacked directions, and
+  since it closes them this should be 0%.
 """
 import glob, os, re, statistics as st, sys
 

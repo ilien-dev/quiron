@@ -196,14 +196,7 @@ def narration(text):
     """The spoken words of a script as one run of plain text."""
     sys.path.insert(0, os.path.join(REPO, "scripts"))
     import aimeter
-    t = aimeter.spoken(text)
-    # QUIRON_FULL_NARRATION=1: close the blank-line runs spoken() leaves where it removed lines.
-    # Without it, prose() reads four or more blank lines plus the next line as indented code and
-    # drops that paragraph (5% to 10% of an assistant script's narration; no human caption is
-    # touched). The default stays as it was, so the numbers judged with it still reproduce.
-    if os.environ.get("QUIRON_FULL_NARRATION") == "1":
-        t = re.sub(r"\n\s*\n", "\n\n", t)
-    t = aimeter.prose(t)
+    t = aimeter.prose(aimeter.spoken(text))
     t = t.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
     t = re.sub(r"\*+|(?<!\w)_+|_+(?!\w)", "", t)
     return re.sub(r"\s+", " ", t).strip()
