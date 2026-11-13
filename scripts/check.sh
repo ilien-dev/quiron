@@ -36,10 +36,10 @@ while [ $# -gt 0 ]; do
 done
 
 echo "=== rates"
-python3 "$HERE/aimeter.py" "${SAMPLE[@]}" "$FILE" | sed -n '3,/features inside/p'
+python3 "$HERE/aimeter.py" ${SAMPLE[@]+"${SAMPLE[@]}"} "$FILE" | sed -n '3,/features inside/p'
 echo
 echo "=== checklist"
-python3 "$HERE/audit.py" --brief "${SAMPLE[@]}" "$FILE"
+python3 "$HERE/audit.py" --brief ${SAMPLE[@]+"${SAMPLE[@]}"} "$FILE"
 FAILS=$?
 if [ ${#SOURCE[@]} -gt 0 ]; then
   echo
