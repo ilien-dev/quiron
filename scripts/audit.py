@@ -209,9 +209,10 @@ if LANG == "es":
 # and of scripts written on the same titles in November 2026 by five models; the rates are
 # of held-out humans and of the 45 (English) or 25 (Spanish) assistant test scripts pooled
 # (eval/results/script-candidates.txt, script-es-candidates.txt). A sentence starts at the
-# start of a line or after . ! ? and a space.
-_S = r"(?:^|(?<=[.!?]\s))"
-_SE = r"(?:^|(?<=[.!?…]\s)|(?<=[¿¡]))"
+# start of the text, after a blank line, or after . ! ? and a space or line break; a single
+# line break inside a sentence, as in a hard-wrapped script, is not a sentence start.
+_S = r"(?:\A\s*|(?<=\n\n)|(?<=[.!?]\s))"
+_SE = r"(?:\A\s*|(?<=\n\n)|(?<=[.!?…]\s)|(?<=[¿¡]))"
 CHECKS_SCRIPT = [
     ("S1", "opening a sentence with Imagine", "tell",
      _S + r"(?:now,? |so,? )?(?:imagine|picture this)\b",
@@ -223,10 +224,9 @@ CHECKS_SCRIPT = [
      r"|\bthe (?:honest|short|real|simple) answer\b"
      r"|\bsounds (?:simple|easy|logical|straightforward|reasonable|obvious|crazy|impossible|absurd|ridiculous)\b",
      "12% of held-out human scripts (16% of train), 47% of assistant scripts"),
-    ("S3", "asking for comments", "tell",
-     r"\b(?:tell|let) (?:me|us) (?:know )?(?:in the comments|below)\b|\bleave a comment\b|\bcomment below\b"
-     r"|\bin the comments\b",
-     "6% of held-out human scripts (6% of train), 31% of assistant scripts"),
+    ("S3", "asking for comments", "re",
+     r"\b(?:tell|let) (?:me|us) (?:know )?(?:in the comments|below)\b|\bleave a comment\b|\bcomment below\b",
+     "a request, not a mention: no held-out human script (3% of train), 24% of assistant scripts, 44% of Opus 5.5"),
     ("S4", "next time you ...", "tell", r"\bnext time you\b",
      "4% of held-out human scripts (1% of train), 11% of assistant scripts"),
     ("S5", "a bare noun-phrase question: The catch?", "tell",
@@ -237,11 +237,11 @@ CHECKS_SCRIPT = [
      + "|" + _S + r"maybe\b[^.!?]*[.!?]\s+maybe\b|" + _S + r"which\b[^.!?]*[.!?]\s+which\b",
      "none of the held-out human scripts (3% of train), 11% of assistant scripts"),
     ("S7", "three of S1-S6 in one script", "moves", ("S1", "S2", "S3", "S4", "S5", "S6"),
-     "no human script, train or held out; 33% of Opus 5.5 scripts, 16% of all assistant ones"),
+     "no human script, train or held out; 33% of Opus 5.5 scripts, 13% of all assistant ones"),
 ]
 CHECKS_SCRIPT_ES = [
     ("SE1", "quédate hasta el final", "re",
-     r"\bqu[eé]da(?:te|os) (?:hasta el final|conmigo)\b",
+     r"\bqu[eé]da(?:te|os) hasta el final\b",
      "no human script, train or held out; 40% of Opus 5.5 and 80% of Sonnet 5.5 scripts"),
     ("SE2", "la promesa: hoy te cuento, hoy vamos a", "tell",
      r"\bhoy (?:te (?:cuento|explico|voy a)|vamos a|veremos|descubriremos|os (?:cuento|explico|voy a)|repasamos"
@@ -258,13 +258,13 @@ CHECKS_SCRIPT_ES = [
     ("SE5", "cerrar con entonces, ¿...?", "tell", _SE + r"entonces, ¿",
      "7% of held-out human scripts (6% of train), 36% of assistant scripts"),
     ("SE6", "pedir comentarios", "tell",
-     r"\b(?:cu[eé]nta(?:me|nos)|d[eé]ja(?:me|nos|lo)|d[ée]jamelo|escr[ií]be(?:me|nos)|dinos|d[ií]me)\b[^.!?]{0,30}"
-     r"\bcomentarios\b|\ben los comentarios\b",
-     "15% of held-out human scripts (14% of train), 76% of assistant scripts"),
+     r"\b(?:cu[eé]nta(?:me|nos)|d[eé]ja(?:me|nos|lo)|d[eé]jamelo|escr[ií]be(?:me|nos)|dinos|d[ií]me)\b"
+     r"[^.!?]{0,30}\ben (?:los|la secci[oó]n de) comentarios\b",
+     "a request, not a mention: 4% of held-out human scripts (5% of train), 52% of assistant scripts"),
     ("SE7", "la próxima vez que ...", "tell", r"\bla pr[oó]xima vez que\b",
      "no held-out human script (1% of train), 4% of assistant scripts"),
     ("SE8", "tres de SE1-SE7 en un guion", "moves", ("SE1", "SE2", "SE3", "SE4", "SE5", "SE6", "SE7"),
-     "no held-out human script (1 of 80 in train); 40% to 80% of each model's scripts, 52% of all"),
+     "no human script, train or held out; 20% to 60% of each model's scripts, 36% of all"),
 ]
 # Checks from other registers that do not separate here: on held-out human scripts they fire
 # at least half as often as on the assistant test scripts, so a rewriter would be sent after

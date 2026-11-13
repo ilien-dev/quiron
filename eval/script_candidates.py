@@ -167,7 +167,7 @@ def either(*fs):
 
 
 # --- English -----------------------------------------------------------------------------
-S = r"(?:^|(?<=[.!?]\s))"
+S = r"(?:\A\s*|(?<=\n\n)|(?<=[.!?]\s))"
 STOP_EN = set("the a an of to in and or is are was were how why what who when where does do did can could would "
               "will you your we our it its this that for on with from by be not".split())
 EN = {
@@ -179,8 +179,7 @@ EN = {
     "sounds": r"\bsounds (?:simple|easy|logical|straightforward|reasonable|obvious|crazy|impossible|absurd|ridiculous)\b",
     "npq": S + r"(?:the|its|their|his|her|our|your|my|that|this) \w+(?: \w+)?\?",
     "nexttime": r"\bnext time you\b",
-    "comments": r"\b(?:tell|let) (?:me|us) (?:know )?(?:in the comments|below)\b|\bleave a comment\b|\bcomment below\b"
-                r"|\bin the comments\b",
+    "comments": r"\b(?:tell|let) (?:me|us) (?:know )?(?:in the comments|below)\b|\bleave a comment\b|\bcomment below\b",
     "anaphora": S + r"no \w+(?: \w+){0,2}[.!]\s+no \w+(?: \w+){0,2}[.!]|" + S + r"maybe\b[^.!?]*[.!?]\s+maybe\b|"
                 + S + r"which\b[^.!?]*[.!?]\s+which\b",
 }
@@ -191,7 +190,7 @@ CANDS_EN = [
     # the brief's starting list
     ("hook: Imagine/Picture this opens a sentence", rx(EN["imagine"])),
     ("hook: Imagine in the first 3 sentences", first(3, r"^(?:so,? |now,? )?(?:imagine|picture (?:this|yourself|a|an|the))\b")),
-    ("hook: Imagine opens 2+ sentences", count_rx(r"(?:^|(?<=[.!?]\s))(?:now,? |so,? |and )?(?:imagine|picture this)\b", 2)),
+    ("hook: Imagine opens 2+ sentences", count_rx(r"(?:\A\s*|(?<=\n\n)|(?<=[.!?]\s))(?:now,? |so,? |and )?(?:imagine|picture this)\b", 2)),
     ("hook: Imagine you/a world/being...", rx(S + r"(?:now,? |so,? )?imagine (?:you|your|a world|if you|being|waking|living|stepping|standing|walking)\b")),
     ("hook: first sentence is a question", first(1, r"\?$")),
     ("hook: a question in the first 3", first(3, r"\?$")),
@@ -225,6 +224,8 @@ CANDS_EN = [
     ("close: bookend (end echoes the first 3 sentences)", bookend(STOP_EN)),
     ("close: next time you", rx(EN["nexttime"])),
     ("close: asking for comments", rx(EN["comments"])),
+    ("close: asking for comments, with the bare 'in the comments' (first version)",
+     rx(EN["comments"] + r"|\bin the comments\b")),
     ("count only: subscribe", rx(r"\bsubscrib")),
     ("count only: sponsor read", rx(r"\bsponsor|\bskillshare\b|\bbrilliant\.org|\bnordvpn\b|\bsquarespace\b|\bpatreon\b"
                                     r"|\bcuriositystream\b|\bnebula\b|\baudible\b")),
@@ -237,7 +238,7 @@ CANDS_EN = [
     ("struct: under 8% of sentences open with And/But/So", opener_share_below(r"(?:and|but|so)\b", 0.08)),
     ("struct: under 1% of sentences open with Now/Well", opener_share_below(r"(?:now|well)\b", 0.01)),
     # from reading the texts and the judges' reasons
-    ("read: Really X. fragment", rx(r"(?:^|(?<=[.!?]\s))Really[^.!?]{0,30}[.!]")),
+    ("read: Really X. fragment", rx(r"(?:\A\s*|(?<=\n\n)|(?<=[.!?]\s))Really[^.!?]{0,30}[.!]")),
     ("read: No X. No Y. / Maybe... Maybe... / Which... Which...", rx(EN["anaphora"])),
     ("read: think of it like / as", rx(r"\bthink of (?:it|this|them) (?:like|as)\b")),
     ("read: welcome to / welcome back", rx(r"\bwelcome (?:back|to)\b")),
@@ -258,14 +259,15 @@ CANDS_EN = [
 ]
 
 # --- Spanish -----------------------------------------------------------------------------
-SE = r"(?:^|(?<=[.!?…]\s)|(?<=[¿¡]))"
+SE = r"(?:\A\s*|(?<=\n\n)|(?<=[.!?…]\s)|(?<=[¿¡]))"
 STOP_ES = set("el la los las un una unos unas de del al a en y o que es son fue por para con sin se su sus lo le les "
               "como qué cómo por qué quién cuál cuándo dónde no sí más muy este esta esto ese esa eso hay".split())
 ES = {
     "imagina": SE + r"(?:ahora )?imagin(?:a|e|emos|aos|en)\b",
+    "imaginate": SE + r"(?:ahora )?(?:imagin(?:a|e|emos|aos|en)|imag[ií]n(?:ate|ense))\b",
     "hoy": r"\bhoy (?:te (?:cuento|explico|voy a)|vamos a|veremos|descubriremos|os (?:cuento|explico|voy a)|repasamos"
            r"|conoceremos|hablamos)\b",
-    "quedate": r"\bqu[eé]da(?:te|os) (?:hasta el final|conmigo)\b",
+    "quedate": r"\bqu[eé]da(?:te|os) hasta el final\b",
     "empecemos": r"\bempecemos\b|\bcomencemos\b|\bvamos all[aá]\b",
     "clave": r"\by aqu[ií] (?:est[aá]|viene|aparece|entra)\b|\baqu[ií] (?:est[aá] la clave|viene lo (?:bueno|interesante|curioso)"
              r"|est[aá] el truco)|\bahora viene\b|\blo (?:fascinante|curioso|interesante|sorprendente|incre[ií]ble) es que\b"
@@ -273,21 +275,24 @@ ES = {
     "ojo": SE + r"pero (?:ojo|atenci[oó]n|cuidado|espera)\b",
     "proxima": r"\bla pr[oó]xima vez que\b",
     "entonces": SE + r"entonces, ¿",
-    "comentarios": r"\b(?:cu[eé]nta(?:me|nos)|d[eé]ja(?:me|nos|lo)|d[ée]jamelo|escr[ií]be(?:me|nos)|dinos|d[ií]me)\b[^.!?]{0,30}"
-                   r"\bcomentarios\b|\ben los comentarios\b",
+    "comentarios": r"\b(?:cu[eé]nta(?:me|nos)|d[eé]ja(?:me|nos|lo)|d[eé]jamelo|escr[ií]be(?:me|nos)|dinos|d[ií]me)\b"
+                   r"[^.!?]{0,30}\ben (?:los|la secci[oó]n de) comentarios\b",
 }
 CANDS_ES = [
     ("gancho: imagina abre una frase", rx(ES["imagina"])),
+    ("gancho: imagina o imagínate / imagínense abre una frase", rx(ES["imaginate"])),
     ("gancho: imagina en las 3 primeras frases", first(3, r"^(?:ahora )?¿?imagin(?:a|e|emos|aos|en)\b")),
     ("gancho: la primera frase es pregunta", first(1, r"\?$")),
     ("gancho: una pregunta en las 3 primeras", first(3, r"\?$")),
     ("promesa: hoy te cuento / hoy vamos a / en este video", rx(ES["hoy"] + r"|\ben este (?:v[ií]deo|episodio)\b")),
     ("promesa: hoy te cuento / hoy vamos a", rx(ES["hoy"])),
     ("promesa: quédate hasta el final / no te pierdas", rx(ES["quedate"] + r"|\bno te (?:lo )?pierdas\b")),
-    ("promesa: quédate hasta el final / conmigo", rx(ES["quedate"])),
+    ("promesa: quédate hasta el final / conmigo (first version)", rx(ES["quedate"] + r"|\bqu[eé]da(?:te|os) conmigo\b")),
+    ("promesa: quédate / quedaos hasta el final", rx(ES["quedate"])),
+    ("promesa: quédate / quedaos / quédense hasta el final", rx(r"\bqu[eé]d(?:a(?:te|os)|ense) hasta el final\b")),
     ("pregunta respondida: <=6 palabras y una afirmación", short_q_answered(6)),
     ("pregunta respondida: <=3 palabras y una afirmación", short_q_answered(3)),
-    ("pregunta respondida: ¿El resultado?", rx(r"(?:^|(?<=[.!?]\s))¿(?:el|la|los|las|su|sus|lo|y el|y la|y los|y las) \w+(?: \w+)?\?")),
+    ("pregunta respondida: ¿El resultado?", rx(r"(?:\A\s*|(?<=\n\n)|(?<=[.!?]\s))¿(?:el|la|los|las|su|sus|lo|y el|y la|y los|y las) \w+(?: \w+)?\?")),
     ("pregunta respondida: buena pregunta", rx(r"\bbuena pregunta\b")),
     ("recapitulación: en resumen / resumiendo", rx(r"\ben resumen\b|\bresumiendo\b|\brecapitulando\b|\bpara resumir\b")),
     ("recapitulación: es decir,", rx(r"\bes decir,")),
@@ -299,6 +304,10 @@ CANDS_ES = [
     ("cierre: eco del comienzo en las 3 últimas frases", bookend(STOP_ES)),
     ("cierre: la próxima vez que", rx(ES["proxima"])),
     ("cierre: pedir comentarios", rx(ES["comentarios"])),
+    ("cierre: pedir comentarios, también 'déjanos tu comentario'", rx(ES["comentarios"] + r"|\bd[eé]ja(?:me|nos)? (?:un|tu|vuestro|su) comentario\b")),
+    ("cierre: pedir comentarios, primera versión (con 'en los comentarios' suelto)",
+     rx(r"\b(?:cu[eé]nta(?:me|nos)|d[eé]ja(?:me|nos|lo)|d[ée]jamelo|escr[ií]be(?:me|nos)|dinos|d[ií]me)\b[^.!?]{0,30}"
+        r"\bcomentarios\b|\ben los comentarios\b")),
     ("count only: suscríbete", rx(r"\bsuscr[ií]b")),
     ("count only: patrocinio", rx(r"\bpatrocin|\bpatreon\b|\bpresentado por\b")),
     ("count only: nos vemos / gracias por ver", rx(r"\bnos vemos\b|\bgracias por (?:ver|vernos)\b")),
@@ -317,11 +326,11 @@ CANDS_ES = [
     ("leído: raya", rx(r"[—–]")),
     ("leído: puntos suspensivos", rx(r"…|\.\.\.")),
     ("leído: o sea / bueno, / pues / vale, / tipo", rx(r"\bo ?sea\b|\bbueno,|\bpues\b|\bvale,|\btipo\b")),
-    ("union: 2+ de todas las movidas de arriba", moves(ES, 2)),
-    ("union: 3+ de todas las movidas de arriba", moves(ES, 3)),
-    ("union: 2+ de los checks SE1-SE7", moves(ES, 2, ("empecemos", "ojo"))),
-    ("union: 3+ de los checks SE1-SE7", moves(ES, 3, ("empecemos", "ojo"))),
-    ("union: 3+ de SE1-SE7 sin SE6 (comentarios)", moves(ES, 3, ("empecemos", "ojo", "comentarios"))),
+    ("union: 2+ de todas las movidas de arriba", moves(ES, 2, ("imaginate",))),
+    ("union: 3+ de todas las movidas de arriba", moves(ES, 3, ("imaginate",))),
+    ("union: 2+ de los checks SE1-SE7", moves(ES, 2, ("empecemos", "ojo", "imaginate"))),
+    ("union: 3+ de los checks SE1-SE7", moves(ES, 3, ("empecemos", "ojo", "imaginate"))),
+    ("union: 3+ de SE1-SE7 sin SE6 (comentarios)", moves(ES, 3, ("empecemos", "ojo", "comentarios", "imaginate"))),
 ]
 
 

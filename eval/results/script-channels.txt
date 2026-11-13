@@ -53,7 +53,7 @@ em dashes /1k (em_dashes_1k): AI median 0, human median 0, 0 of 17 channels on t
 AI-lexicon words /1k (ai_lexicon_1k): AI median 1.43, human median 0.41, 17 of 17 channels on the human side
   3Blue1Brown 0.81, CGP Grey 0.6, Every Frame a Painting 0, Johnny Harris 0.195, Kurzgesagt 0, LEMMiNO 0.9, Nerdwriter1 0.435, Oversimplified 0.605, PBS Space Time 0.88, Real Engineering 0.8, TED-Ed 1.36, Tom Scott 0.88, Veritasium 0, Vox 0, Vsauce 0, Wendover Productions 0.39, exurb1a 0
 
-lists of three /1k (triads_1k): AI median 6.19, human median 2.08, 17 of 17 channels on the human side
+lists of three /1k (triads_1k): AI median 6.33, human median 2.08, 17 of 17 channels on the human side
   3Blue1Brown 1.01, CGP Grey 2.08, Every Frame a Painting 1.05, Johnny Harris 1.73, Kurzgesagt 4.17, LEMMiNO 2.7, Nerdwriter1 1.55, Oversimplified 1.81, PBS Space Time 1.01, Real Engineering 3.1, TED-Ed 3.5, Tom Scott 1.97, Veritasium 0.79, Vox 4.48, Vsauce 2.2, Wendover Productions 2.25, exurb1a 2.25
 
 participial clauses /1k (participles_1k): AI median 1.08, human median 0.995, 11 of 17 channels on the human side

@@ -159,42 +159,42 @@ terra                5                     5           4.40      4 of 5 (80%)
 # New checks in audit.py, only under "_register": "script": SE1 (FAIL), SE2-SE7 (TELL) and SE8 (FAIL, three of SE1-SE7);
 # switched off here: A2b.
 # Candidates, rates and every decision: eval/results/script-es-candidates.txt.
-# T1 (TELLS_MAX) is 4 (it was 2): at 2 the new TELLs fail 4 of 27 held-out humans; 3 drops train humans to 0.91; 4 catches one Opus script more than 5. Rule: of the values that keep the train humans as clean as before (0.95)
+# T1 (TELLS_MAX) is 4 (it was 2): at 2 the new TELLs fail held-out humans; 3 also keeps 26 of 27 held-out humans clean but leaves the train humans at 0.93; 4 keeps them at 0.96 and catches more assistant scripts than 5. Rule: of the values that keep the train humans as clean as before (0.95)
 # and the held-out humans no less clean, the one that catches the most assistant scripts; a tie goes
 # to the higher value. Grid with the new checks, human-train added:
 # V=$(mktemp); python3 -c "import json,sys;d=json.load(open('scripts/bands-script-es.json'));d['_thresholds'].update(json.loads(sys.argv[1]));json.dump(d,open(sys.argv[2],'w'))" '<variant>' $V
 # QUIRON_BANDS=$V python3 scripts/evaluate.py --human ~/corpus/script-es --ai-train eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55 human-train=$TRAIN opus55=eval/ai/script-es/test-opus55 sonnet55=eval/ai/script-es/test-sonnet55 fable52=eval/ai/script-es/test-fable52 gpt61=eval/ai/script-es/test-gpt61 terra=eval/ai/script-es/test-terra --json   (rows from the JSON: groups.*.audit_clean_share and checks.*.T1)
 TELLS_MAX    human-heldout   human-train        opus55      sonnet55       fable52         gpt61         terra
-2 clean               0.81          0.86           0.0           0.0           0.2           0.0           0.2
-2 T1 FAIL             0.15           0.1           1.0           0.8           0.8           0.8           0.6
-3 clean               0.96          0.91           0.2           0.0           0.2           0.0           0.2
-3 T1 FAIL                0          0.05           0.6           0.8           0.6           0.8           0.6
-4 clean               0.96          0.95           0.2           0.0           0.4           0.2           0.2
-4 T1 FAIL                0          0.01           0.4           0.6           0.2           0.2           0.4
-5 clean               0.96          0.95           0.4           0.0           0.4           0.2           0.2
+2 clean               0.89          0.86           0.0           0.0           0.2           0.0           0.2
+2 T1 FAIL             0.07           0.1           0.8           0.8           0.8           0.8           0.6
+3 clean               0.96          0.93           0.2           0.0           0.4           0.0           0.2
+3 T1 FAIL                0          0.04           0.6           0.6           0.4           0.8           0.6
+4 clean               0.96          0.96           0.2           0.0           0.6           0.2           0.4
+4 T1 FAIL                0             0           0.4           0.4           0.2             0           0.2
+5 clean               0.96          0.96           0.4           0.0           0.6           0.2           0.4
 5 T1 FAIL                0             0             0           0.2             0             0             0
 
 # before: the held-out evaluation above (commit cafd8ed, same command); after: QUIRON_BANDS=scripts/bands-script-es.json python3 scripts/evaluate.py --human ~/corpus/script-es --ai-train eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55 opus55=eval/ai/script-es/test-opus55 sonnet55=eval/ai/script-es/test-sonnet55 fable52=eval/ai/script-es/test-fable52 gpt61=eval/ai/script-es/test-gpt61 terra=eval/ai/script-es/test-terra
                                 before     after
 checklist AUC, opus55            0.733     0.985
-checklist AUC, sonnet55          0.711     0.941
-checklist AUC, fable52           0.711     0.941
-checklist AUC, gpt61             0.811     0.941
-checklist AUC, terra             0.589     0.881
+checklist AUC, sonnet55          0.711     0.952
+checklist AUC, fable52           0.711     0.944
+checklist AUC, gpt61             0.811     0.952
+checklist AUC, terra             0.589     0.904
 held-out humans clean         26 of 27  26 of 27
 share failing, opus55              0.4       0.8
 share failing, sonnet55            0.2       1.0
-share failing, fable52             0.2       0.6
+share failing, fable52             0.2       0.4
 share failing, gpt61               1.0       0.8
-share failing, terra               0.2       0.8
+share failing, terra               0.2       0.6
 # "share failing" is the share of a group's texts with at least one FAIL (1 - audit_clean_share).
 # after, the FAIL rate per check:
 FAIL rate per check   human-heldout          opus55        sonnet55         fable52           gpt61           terra
 C1                            0.04               0               0               0             0.8             0.2
 E3                               0             0.2               0             0.2               0               0
 SE1                              0             0.4             0.8               0               0               0
-SE8                              0             0.4             0.8             0.4             0.4             0.6
-T1                               0             0.4             0.6             0.2             0.2             0.4
+SE8                              0             0.4             0.6             0.2             0.2             0.4
+T1                               0             0.4             0.4             0.2               0             0.2
 
 # after: QUIRON_BANDS=scripts/bands-script-es.json python3 eval/band_compare.py human-heldout=~/corpus/script-es@heldout opus55=eval/ai/script-es/test-opus55 sonnet55=eval/ai/script-es/test-sonnet55 fable52=eval/ai/script-es/test-fable52 gpt61=eval/ai/script-es/test-gpt61 terra=eval/ai/script-es/test-terra
 bands: scripts/bands-script-es.json  (19 scored features)
@@ -202,6 +202,6 @@ group                n   out of band, median  AI side, mean   clean checklist
 human-heldout       27                     2           1.22    26 of 27 (96%)
 opus55               5                     2           1.80      1 of 5 (20%)
 sonnet55             5                     3           3.00       0 of 5 (0%)
-fable52              5                     2           2.20      2 of 5 (40%)
+fable52              5                     2           2.20      3 of 5 (60%)
 gpt61                5                     7           6.20      1 of 5 (20%)
-terra                5                     5           4.40      1 of 5 (20%)
+terra                5                     5           4.40      2 of 5 (40%)

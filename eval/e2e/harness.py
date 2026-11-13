@@ -140,7 +140,7 @@ SCRIPT_PROMPTS = (JPROMPT_SCR, JPROMPT_SCR_ES)
 
 def script_prompt(name):
     """JSCR=1 (or a set named scr*) gives the English prompt, JSCR=es (or scr*-es) the Spanish one."""
-    return JPROMPT_SCR_ES if name.endswith("es") else JPROMPT_SCR
+    return JPROMPT_SCR_ES if name == "es" or name.endswith("-es") else JPROMPT_SCR
 
 
 def narration(text):

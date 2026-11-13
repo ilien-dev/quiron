@@ -324,6 +324,21 @@ PROD_NOTE = re.compile(r"^(?:production\s+notes?|notes?\s+for\s+(?:the\s+)?produ
                        r"|sugerencias\s+de\s+edici[oó]n|editing\s+suggestions)\b", re.I)
 BARE_NOTE = re.compile(r"^(?:note|nota)s?\b", re.I)
 LIST_ITEM = re.compile(r"^\s*(?:[-*+•]|\d+[.)])\s+")
+# A parenthesis that opens a line with a production word and a colon, "(B-roll: a river)", is a
+# direction; "(about 40%)" or "(Yes, really.)" is speech and stays.
+PAREN_DIRECTION = re.compile(
+    r"^\s*[*_]*\((?:b-?roll|visuals?|cut to|on[- ]screen|sfx|sound(?: effects?)?|music|graphics?|footage|animation"
+    r"|text on screen|plano|en pantalla|m[uú]sica|corte a|gr[aá]ficos?|imagen|efectos?|sonido|animaci[oó]n)"
+    r"\s*:[^)\n]*\)[*_]*\s*", re.I)
+# Sources and references: a closing block that starts with "Sources:" or "Fuentes:", and a link
+# whose text opens that way, "[Research reference: Kim et al.](https://...)".
+_SRC = (r"(?:research\s+)?(?:sources?|references?|further reading|referencias?(?:\s+t[eé]cnicas?)?"
+        r"|fuentes?(?:\s+[a-záéíóúñ]+){0,3}|bibliograf[ií]a)")
+SOURCE_HEAD = re.compile(rf"^[*_\-•\s]*{_SRC}\s*[*_]*\s*:", re.I)
+SOURCE_LINK = re.compile(rf"\s*\[[*_]*{_SRC}\s*:(?:[^\[\]\n]|\[[^\]\n]*\]\([^)\n]*\))*\](?!\()"
+                         rf"|\s*\[[*_]*{_SRC}\s*:[^\]\n]*\]\([^)\n]*\)"
+                         r"(?:\s*[,;]\s*(?:and\s+|y\s+)?\[[^\]\n]*\]\([^)\n]*\))*\.?", re.I)
+URL_LINE = re.compile(r"^\s*[-*•]?\s*(?:<?https?://\S+>?|\[[^\]]*\]\([^)]*\))[.,;]?\s*$")
 
 
 def _trailers(lines, n):
@@ -339,6 +354,14 @@ def _trailers(lines, n):
             paras.append([l])
     if cur:
         paras.append(cur)
+    # a sources block at the end: it and everything after it that is only lists, links or blank
+    for k, p in enumerate(paras):
+        if p[0].strip() and SOURCE_HEAD.match(p[0]) and all(
+                not q[0].strip() or LIST_ITEM.match(q[0]) or SOURCE_HEAD.match(q[0]) or URL_LINE.match(q[0])
+                or RULE.match(q[0]) for q in paras[k + 1:]):
+            n["stage"] += sum(1 for q in paras[k:] if q[0].strip())
+            paras = paras[:k]
+            break
     out, notes = [], False
     for i, p in enumerate(paras):
         first = p[0].strip()
@@ -416,10 +439,18 @@ def _spoken(text):
             l = l[m.end():]
         l, k = STAGE_INLINE.subn("", l)  # before the label: "[B-ROLL] HOST: hi"
         n["stage"] += k
+        l, k = SOURCE_LINK.subn("", l)
+        n["stage"] += k
+        while PAREN_DIRECTION.match(l):
+            n["stage"] += 1
+            l = l[PAREN_DIRECTION.match(l).end():]
         m = SPEAKER.match(l)
         if m:
             n["speaker"] += 1
             l = l[m.end():]
+            while PAREN_DIRECTION.match(l):  # "HOST: (B-roll: a river) hi"
+                n["stage"] += 1
+                l = l[PAREN_DIRECTION.match(l).end():]
         l = MUSIC.sub("", l)
         if l != old:
             l = re.sub(r"[ \t]{2,}", " ", l).strip()

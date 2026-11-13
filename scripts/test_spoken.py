@@ -89,6 +89,37 @@ class Spoken(unittest.TestCase):
         c = aimeter.markup_counts("[B-ROLL]\nNARRATOR: " + "word " * 500)
         self.assertEqual((c["stage"], c["speaker"]), (2.0, 2.0))
 
+    def test_leading_production_parenthesis(self):
+        self.assertEqual(aimeter.spoken("(B-roll: here's the twist) The river is old."), "The river is old.")
+        self.assertEqual(aimeter.spoken("HOST: (On screen: a map) The river is old."), "The river is old.")
+        self.assertEqual(aimeter.spoken("(Plano: la ciudad) (En pantalla: un mapa) El río es viejo."), "El río es viejo.")
+        self.assertEqual(aimeter.spoken("(Música: suave) El río es viejo."), "El río es viejo.")
+        self.assertEqual(aimeter.markup_counts("(SFX: thunder) " + "word " * 500)["stage"], 2.0)
+
+    def test_spoken_parenthesis_at_line_start_is_kept(self):
+        for t in ("(About 40%) of it is water.", "(Yes, really.) It works.", "(And this matters: a lot.) Fine."):
+            self.assertEqual(aimeter.spoken(t), t)
+
+    def test_closing_sources_block(self):
+        src = "The river is old.\n\nSources:\n- [USGS](https://usgs.gov)\n- https://example.org/a\n"
+        self.assertEqual(aimeter.spoken(src).strip(), "The river is old.")
+        es = "El río es viejo.\n\n**Fuentes de consulta:** [Universidad](https://x.org)\n"
+        self.assertEqual(aimeter.spoken(es).strip(), "El río es viejo.")
+        self.assertEqual(aimeter.markup_counts("word " * 500 + "\n\nSources: [A](https://a.org)")["stage"], 2.0)
+
+    def test_sources_block_followed_by_speech_is_kept(self):
+        src = "Sources: my grandmother, mostly.\n\nAnd she was right about the river."
+        self.assertEqual(aimeter.spoken(src), src)
+
+    def test_inline_source_links(self):
+        self.assertEqual(aimeter.spoken("It fell by half. [Source: IMF](https://imf.org), [WB](https://wb.org)").strip(),
+                         "It fell by half.")
+        self.assertEqual(aimeter.spoken("Es así. [Referencia técnica: David Tong](https://x.org).").strip(), "Es así.")
+        self.assertEqual(aimeter.spoken("It stood. [Sources: *[Zoo](https://a.org)*; *[Flak](https://b.org)*.]").strip(),
+                         "It stood.")
+        self.assertEqual(aimeter.spoken("See [the source code](https://x.org) here."),
+                         "See [the source code](https://x.org) here.")
+
     def test_spanish_labels(self):
         self.assertEqual(aimeter.spoken("[PLANO: la ciudad de noche]\nNARRADOR: Ibas camino a casa.").strip(),
                          "Ibas camino a casa.")

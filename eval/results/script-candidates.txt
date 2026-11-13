@@ -17,6 +17,11 @@
 
 ## Every candidate
 # python3 eval/script_candidates.py en
+# A sentence start in these regexes is the start of the text, a blank line, or . ! ? and a space or a
+# line break (a hard-wrapped line is not a sentence start); captions are single lines, and every
+# human rate is the same as with the earlier ^-anchored version. spoken() now also drops a leading
+# "(B-roll: ...)" direction and source links and closing source lists: that changed 11 assistant
+# scripts (6 of them GPT-6.1 test or train, with inline "[Source: ...](url)" links) and no human one.
 candidate                                                             h-train     h-held   tr-gpt61 tr-haiku55  tr-opus55tr-sonnet55 te-fable52   te-gpt61  te-opus55te-sonnet55   te-terra  AI test  verdict
 texts                                                                     144         49         12         12         12         12          9          9          9          9          9       45
 hook: Imagine/Picture this opens a sentence                             8/144       1/49       8/12       5/12       5/12       4/12        0/9        6/9        1/9        2/9        4/9     0.29  FAIL
@@ -49,7 +54,8 @@ close: question with the title's words in the last 10%                  2/144   
 close: So, <question>? in the last 10%                                  4/144       0/49       2/12       0/12       0/12       0/12        1/9        1/9        0/9        0/9        0/9     0.04  out
 close: bookend (end echoes the first 3 sentences)                      35/144      10/49       2/12       1/12       3/12       1/12        1/9        1/9        1/9        1/9        1/9     0.11  out
 close: next time you                                                    1/144       2/49       0/12       2/12       1/12       3/12        0/9        0/9        1/9        1/9        3/9     0.11  FAIL
-close: asking for comments                                              8/144       3/49       2/12       8/12       7/12       7/12        3/9        1/9        4/9        5/9        1/9     0.31  TELL
+close: asking for comments                                              5/144       0/49       2/12       6/12       7/12       6/12        3/9        0/9        4/9        3/9        1/9     0.24  FAIL
+close: asking for comments, with the bare 'in the comments' (first      8/144       3/49       2/12       8/12       7/12       7/12        3/9        1/9        4/9        5/9        1/9     0.31  TELL
 count only: subscribe                                                  13/144       4/49       1/12       6/12       7/12      11/12        6/9        0/9        3/9        6/9        0/9     0.33  counted, not proposed
 count only: sponsor read                                               37/144      14/49       0/12       0/12       0/12       0/12        0/9        0/9        0/9        0/9        0/9     0.00  counted, not proposed
 count only: thanks for watching / see you next                         30/144      13/49       1/12       9/12       5/12       7/12        6/9        0/9        5/9        8/9        0/9     0.42  counted, not proposed
@@ -57,8 +63,8 @@ struct: questions are 10%+ of sentences                                27/144   
 struct: questions are 15%+ of sentences                                11/144       5/49       0/12       0/12       0/12       0/12        0/9        0/9        0/9        0/9        0/9     0.00  out
 struct: 4 sentences of <=4 words in a row                              16/144       5/49       2/12       1/12       2/12       3/12        2/9        2/9        0/9        3/9        0/9     0.16  out
 struct: 3 sentences of <=3 words in a row                              17/144       7/49       3/12       0/12       1/12       4/12        4/9        2/9        1/9        3/9        1/9     0.24  out
-struct: under 8% of sentences open with And/But/So                     33/144      13/49       6/12       9/12       5/12       1/12        3/9        3/9        2/9        2/9        1/9     0.24  out
-struct: under 1% of sentences open with Now/Well                       62/144      16/49      10/12       8/12      11/12       9/12        6/9        7/9        7/9        4/9        8/9     0.71  out
+struct: under 8% of sentences open with And/But/So                     33/144      13/49       6/12       9/12       5/12       1/12        3/9        1/9        2/9        2/9        1/9     0.20  out
+struct: under 1% of sentences open with Now/Well                       62/144      16/49      10/12       8/12      11/12       9/12        6/9        6/9        7/9        4/9        8/9     0.69  out
 read: Really X. fragment                                                0/144       0/49       1/12       0/12       1/12       0/12        0/9        0/9        2/9        0/9        0/9     0.04  out
 read: No X. No Y. / Maybe... Maybe... / Which... Which...               4/144       0/49       2/12       0/12       1/12       2/12        0/9        1/9        2/9        1/9        1/9     0.11  TELL
 read: think of it like / as                                             2/144       3/49       3/12       1/12       3/12       1/12        1/9        1/9        0/9        0/9        1/9     0.07  out
@@ -70,26 +76,31 @@ read: em or en dash                                                    22/144   
 read: ellipsis                                                         63/144      25/49       2/12       1/12       4/12       2/12        2/9        2/9        1/9        1/9        0/9     0.13  out
 read: you / your above 30 per 1,000 words                              22/144      10/49       3/12       1/12       1/12       0/12        1/9        2/9        1/9        2/9        3/9     0.20  out
 read: you know / kind of / basically / I mean                         108/144      35/49       0/12       1/12       6/12       4/12        4/9        3/9        4/9        2/9        7/9     0.44  out
-union: 2+ of the stock moves                                            7/144       2/49       3/12       6/12       9/12       7/12        2/9        4/9        3/9        5/9        3/9     0.38  FAIL
+union: 2+ of the stock moves                                            7/144       0/49       3/12       6/12       9/12       7/12        2/9        4/9        3/9        4/9        3/9     0.36  FAIL
 union: 3+ of the stock moves                                            0/144       0/49       3/12       3/12       4/12       4/12        0/9        2/9        2/9        2/9        1/9     0.16  out
-union: 2+ of the checks S1-S6                                           5/144       2/49       4/12       6/12       8/12       7/12        2/9        4/9        3/9        5/9        4/9     0.40  FAIL
-union: 3+ of the checks S1-S6                                           0/144       0/49       3/12       3/12       3/12       5/12        0/9        2/9        3/9        1/9        1/9     0.16  FAIL
+union: 2+ of the checks S1-S6                                           5/144       0/49       4/12       6/12       8/12       7/12        2/9        4/9        3/9        4/9        4/9     0.38  FAIL
+union: 3+ of the checks S1-S6                                           0/144       0/49       3/12       3/12       3/12       5/12        0/9        1/9        3/9        1/9        1/9     0.13  FAIL
 union: 3+ of S1-S6 without S3 (comments)                                0/144       0/49       3/12       0/12       2/12       3/12        0/9        1/9        0/9        1/9        0/9     0.04  out
 
 ## Decisions
 # Shipped as FAIL
-#   S7  three of S1-S6 in one script: 0/144 train and 0/49 held-out humans; Opus 5.5 3/9, GPT-6.1 2/9,
-#       Sonnet 5.5 1/9, Terra 1/9, Fable 5.2 0/9 (16% pooled). A combined check (evaluate.py COMBINED),
-#       like T1. Three, not two: train humans alone would have allowed two or more (5/144), but two
-#       costs two held-out human scripts (see the choices below), so three was picked with the
-#       held-out row in view. S7 leans on S3: without the comment ask, three of the other five fire on
-#       2 of 45 assistant test scripts (the row "without S3" above), under the FAIL bar. If S3 goes,
-#       S7 goes with it.
+#   S3  asking for comments, a request and not a mention ("tell me / let us know in the comments",
+#       "leave a comment", "comment below"): 0/49 held-out and 5/144 (3.5%) train humans; Opus 5.5 4/9,
+#       Fable 5.2 and Sonnet 5.5 3/9, Terra 1/9, GPT-6.1 0/9 (24% pooled). The first version also had a
+#       bare "in the comments", which a mention ("Someone in the comments pointed out ...") trips:
+#       3/49 and 8/144 humans, 31% of assistants (the row "first version" above), a TELL. Narrowed, it
+#       meets the FAIL rule with held-out and train humans both under 5%, and the held-out humans stay
+#       46 of 49 clean, so it ships as a FAIL (controller ruling). The cost is on train: the train
+#       humans clean fall from 0.91 to 0.88 (eval/results/script.txt, T1 grid).
+#   S7  three of S1-S6 in one script: 0/144 train and 0/49 held-out humans; Opus 5.5 3/9, GPT-6.1,
+#       Sonnet 5.5 and Terra 1/9, Fable 5.2 0/9 (13% pooled). A combined check (evaluate.py COMBINED),
+#       like T1. Three, not two: when it was chosen two or more cost two held-out human scripts, so
+#       three was picked with the held-out row in view. S7 leans on S3: without the comment ask, three
+#       of the other five fire on 2 of 45 assistant test scripts (the row "without S3"), under the bar.
 # Shipped as TELL (held-out human, train human, pooled AI test)
 #   S1  Imagine / Picture this opens a sentence ............ 1/49, 8/144, 29%
 #   S2  staged reveals (here's the X / why / how / what, then there's, the honest answer, sounds
 #       simple), one check for the family ................... 6/49, 23/144, 47%
-#   S3  asking for comments ................................. 3/49, 8/144, 31%
 #   S4  next time you ....................................... 2/49, 1/144, 11%
 #   S5  a bare noun-phrase question (The catch?) ............ 1/49, 1/144, 9%
 #   S6  No X. No Y. / Maybe... Maybe... / Which... Which... ... 0/49, 4/144, 11%
@@ -98,9 +109,10 @@ union: 3+ of S1-S6 without S3 (comments)                                0/144   
 #      out, clean now): held-out humans clean 46 -> 45 of 49. Train humans 8/144 (6%), over 5% there.
 #   S4 as a FAIL ("next time you"): Terra 3/9; costs everyframeapainting-FfGKNJ4mldE and
 #      everyframeapainting-jGc-K7giqKM (46 -> 44 of 49).
-#   two or more of S1-S6 (union 2+): 40% of the assistant test scripts, every model 2/9 to 5/9;
-#      costs pbsspacetime-w5TSfjvzMGs and veritasium-K7pQsR8WFSo (46 -> 44 of 49). S7 (three) is
-#      the version that costs no human script.
+#   two or more of S1-S6 (union 2+): with S3 narrowed it no longer costs a held-out human (0/49,
+#      5/144 train) and fires on 38% of the assistant test scripts, every model 2/9 to 4/9; it meets
+#      the FAIL rule now. Not shipped in this round: S7 at two would be a new choice made on the
+#      held-out row, and train humans would lose 5 of 144. The controller may take it.
 # Not computable in audit.py
 #   the closing question that restates the title (TELL by the rule: 0/49 and 1/144 humans, 7% of
 #   assistant scripts): it needs the title, which a caption or a user's script does not carry.
@@ -127,8 +139,8 @@ A21                              0            0.01               0              
 B1                            0.02            0.04             0.5            0.17            0.08            0.08               0               0            0.11            0.11            0.22
 C1                            0.02            0.05            0.92            0.08            0.17            0.42            0.44            0.33            0.11            0.67            0.56
 C2                            0.02               0               0               0               0               0               0               0               0               0               0
-S7                               0               0            0.25            0.25            0.25            0.42            0.33            0.11               0            0.22            0.11
-T1                               0               0               0               0               0            0.08               0               0               0               0               0
+S3                               0            0.03            0.17             0.5            0.58             0.5            0.44            0.33            0.33               0            0.11
+S7                               0               0            0.25            0.25            0.25            0.42            0.33            0.11               0            0.11            0.11
 
 TELL or FAIL rate    human-heldout     human-train        tr-gpt61      tr-haiku55       tr-opus55     tr-sonnet55          opus55        sonnet55         fable52           gpt61           terra
 A14                              0           0.007               0               0               0               0               0               0               0               0               0
@@ -142,7 +154,7 @@ B1                            0.02           0.042             0.5           0.1
 B2                           0.061            0.09           0.417           0.333           0.167           0.083           0.111           0.111           0.222           0.444           0.111
 S1                            0.02           0.056           0.667           0.417           0.417           0.333           0.111           0.222               0           0.667           0.444
 S2                           0.122            0.16            0.25           0.333            0.75           0.667           0.333           0.556           0.667           0.444           0.333
-S3                           0.061           0.056           0.167           0.667           0.583           0.583           0.444           0.556           0.333           0.111           0.111
+S3                               0           0.035           0.167             0.5           0.583             0.5           0.444           0.333           0.333               0           0.111
 S4                           0.041           0.007               0           0.167           0.083            0.25           0.111           0.111               0               0           0.333
 S5                            0.02           0.007           0.167               0           0.083               0           0.111           0.111               0           0.111           0.111
 S6                               0           0.028           0.167               0           0.083           0.167           0.222           0.111               0           0.111           0.111

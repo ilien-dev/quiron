@@ -33,8 +33,23 @@ class English(unittest.TestCase):
     def test_each_fires_and_stays_quiet(self):
         for cid, (yes, no) in self.CASES.items():
             with self.subTest(cid):
-                self.assertEqual(states(yes, EN)[cid], "TELL")
+                self.assertEqual(states(yes, EN)[cid], "FAIL" if cid == "S3" else "TELL")
                 self.assertEqual(states(no, EN)[cid], "PASS")
+
+    def test_a_mention_of_the_comments_is_not_a_request(self):
+        for t in ("Someone in the comments pointed out that I was wrong.",
+                  "As many of you said in the comments, the river is old."):
+            self.assertEqual(states(t, EN)["S3"], "PASS")
+
+    def test_a_line_break_inside_a_sentence_is_not_a_sentence_start(self):
+        self.assertEqual(states("You can't even\nimagine how big it is.", EN)["S1"], "PASS")
+        self.assertEqual(states("It was big.\nImagine how big.", EN)["S1"], "TELL")
+        self.assertEqual(states("Big rivers.\n\nImagine how big.", EN)["S1"], "TELL")
+        self.assertEqual(states("It costs more than\nthe catch? No.", EN)["S5"], "PASS")
+
+    def test_an_inline_production_parenthesis_is_not_read(self):
+        self.assertEqual(states("(B-roll: here's the twist) The river is old.", EN)["S2"], "PASS")
+        self.assertEqual(states("It fell. [Source: here's why](https://x.org)", EN)["S2"], "PASS")
 
     def test_stage_directions_are_not_read(self):
         for cid, (yes, _) in self.CASES.items():
@@ -82,6 +97,19 @@ class Spanish(unittest.TestCase):
                 self.assertEqual(states(yes, ES)[cid], "FAIL" if cid == "SE1" else "TELL")
                 self.assertEqual(states(no, ES)[cid], "PASS")
 
+    def test_a_mention_of_the_comments_is_not_a_request(self):
+        for t in ("Como dijeron en los comentarios, el río es viejo.",
+                  "Déjame decirte una cosa sobre los comentarios del otro día."):
+            self.assertEqual(states(t, ES)["SE6"], "PASS")
+        self.assertEqual(states("Déjame en los comentarios qué opinas.", ES)["SE6"], "TELL")
+
+    def test_staying_with_someone_is_dialogue(self):
+        self.assertEqual(states("Quédate conmigo, le dijo ella.", ES)["SE1"], "PASS")
+
+    def test_a_line_break_inside_a_sentence_is_not_a_sentence_start(self):
+        self.assertEqual(states("Nadie se\nimagina lo grande que es.", ES)["SE3"], "PASS")
+        self.assertEqual(states("Era grande.\nImagina cuánto.", ES)["SE3"], "TELL")
+
     def test_stage_directions_are_not_read(self):
         for cid, (yes, _) in self.CASES.items():
             with self.subTest(cid):
@@ -101,6 +129,18 @@ class Spanish(unittest.TestCase):
     def test_spanish_blog_bands_have_no_script_checks(self):
         got = states("Hoy te cuento por qué. Quédate hasta el final.", BLOG_ES)
         self.assertFalse([c for c in got if c.startswith("SE")])
+
+
+class JudgePrompt(unittest.TestCase):
+    """Only "es" or a name ending in "-es" gets the Spanish narration prompt."""
+
+    def test_prompt_choice(self):
+        sys.path.insert(0, os.path.join(HERE, "..", "eval", "e2e"))
+        import harness
+        for name in ("es", "scr-es", "scr2-es"):
+            self.assertIs(harness.script_prompt(name), harness.JPROMPT_SCR_ES)
+        for name in ("1", "yes", "scr", "scr2", "scr-titles", "scripts"):
+            self.assertIs(harness.script_prompt(name), harness.JPROMPT_SCR)
 
 
 class LanguageWarning(unittest.TestCase):

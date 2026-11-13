@@ -26,7 +26,7 @@ passive voice /1k (passive_1k): AI median 1.43, human median 2.05, 8 of 10 chann
 lexical diversity MATTR-50 (mattr50): AI median 0.822, human median 0.796, 10 of 10 channels on the human side
   C de Ciencia 0.784, CuriosaMente 0.796, Date un Vlog 0.757, El Robot de Platon 0.787, Jaime Altozano 0.76, La Hiperactina 0.783, Pero eso es otra historia 0.814, QuantumFracture 0.783, Un Mundo Inmenso 0.813, VisualPolitik 0.814
 
-first person /1k (first_person_1k): AI median 2.98, human median 5.31, 7 of 10 channels on the human side
+first person /1k (first_person_1k): AI median 3.03, human median 5.31, 7 of 10 channels on the human side
   C de Ciencia 4.78, CuriosaMente 1.4, Date un Vlog 7.27, El Robot de Platon 6.43, Jaime Altozano 6.77, La Hiperactina 12.2, Pero eso es otra historia 1.11, QuantumFracture 6.8, Un Mundo Inmenso 4.69, VisualPolitik 2.55
 
 contractions /1k (contractions_1k): AI median 0, human median 0, 0 of 10 channels on the human side
@@ -38,7 +38,7 @@ questions /1k (questions_1k): AI median 3.62, human median 3.64, 5 of 10 channel
 repeated openers /100 (repeated_openers): AI median 2.7, human median 2.35, 7 of 10 channels on the human side
   C de Ciencia 0, CuriosaMente 3.2, Date un Vlog 1.4, El Robot de Platon 1.5, Jaime Altozano 5, La Hiperactina 2, Pero eso es otra historia 1, QuantumFracture 3.5, Un Mundo Inmenso 1.5, VisualPolitik 2.6
 
-connective openers % (connective_openers): AI median 17.1, human median 18, 5 of 10 channels on the human side
+connective openers % (connective_openers): AI median 17.4, human median 18, 5 of 10 channels on the human side
   C de Ciencia 15.5, CuriosaMente 15.2, Date un Vlog 16.6, El Robot de Platon 11.9, Jaime Altozano 32.6, La Hiperactina 21.4, Pero eso es otra historia 11.6, QuantumFracture 20.8, Un Mundo Inmenso 19.1, VisualPolitik 20.6
 
 commas /1k (commas_1k): AI median 66.2, human median 59.9, 9 of 10 channels on the human side
