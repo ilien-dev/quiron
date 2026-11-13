@@ -231,6 +231,12 @@ class ScriptSets(unittest.TestCase):
         self.assertEqual(self.h.rewrite_prompt(en[0], "-"), self.h.PROMPT_SCR % en[3])
         self.assertEqual(len(self.sets["scr"][0]), 4)  # a set without samples has no fifth column
 
+    def test_combination_set_has_notes_and_samples(self):
+        for a, b, c in zip(self.sets["scrn-es"], self.sets["scrs-es"], self.sets["scrns-es"]):
+            self.assertEqual(c[:3], a[:3])
+            self.assertEqual(c[3], a[3])
+            self.assertEqual(c[4], b[4])
+
     def test_notes_and_samples_together_keep_both_sentences(self):
         """A row with notes and samples (a combination run) gets the notes prompt and the sample sentence."""
         en, es = self.sets["scrn"][0], self.sets["scrn-es"][0]

@@ -368,3 +368,6 @@ notes      scr2n    texts= 40 facts_not_in_sources=0.03/text kept_identical=0.9%
 #   N notes:   (a) holds (-44.6, noise 2.6); (b-original) fails (0.65 against 0.25); (b-amended) holds (0.65 against 1.00).
 #   S samples: (a) fails (-0.3, noise 1.9); overshot 0.20 holds both clauses. E edit: (a) fails (+8.7); overshot 0.03.
 # Held-out readings: N (a) holds, (b-original) fails, (b-amended) fails by 0.02 (1.02 against 1.00). S and E were not run on scr2.
+
+## Amendment note (13 November 2026)
+# English held-out scr2, notes: overshot 1.02 per text against the amended ceiling of 1.00, i.e. over it by 0.02, read as written (so "confirmed on the judges", not "confirmed without overshoot").

@@ -436,3 +436,32 @@ samp       scr2s-es texts= 40 facts_not_in_sources=0.00/text kept_identical=11.6
 #   S samples: (a) holds (-7.2, noise 0.7); (b-original) fails (0.68 against 0.60); (b-amended) holds (0.68 against 1.15).
 #   E edit:    (a) fails (+5.8, noise 0.2); overshot 0.30 holds both clauses.
 # Held-out readings: N (a) holds, (b-original) fails, (b-amended) fails (1.35 against 1.15). S (a) holds, (b-original) fails, (b-amended) holds (1.00 against 1.15). E was not run on scr2-es.
+
+## Rule 3: the combination of notes and samples, Spanish development set (13 November 2026)
+# Two arms were confirmed on the judges in Spanish, so the brief's third rule calls for their combination once on the development set: the notes prompt plus the
+# samples folder and its sentence, on the unchanged shipping tree. Snapshot combo-ns (fc7ef7c7, the same hash as ship2), set scrns-es (scrn-es rows with the fifth column of scrs-es,
+# built by mksets.py). Rewrites: REWRITER=claude-sonnet-5-5 python3 eval/e2e/harness.py rewrite combo-ns REP --set scrns-es -j 6, 2 reps, none failed.
+# Rule: it replaces the single arms only if it beats the best single arm (notes, 21.5) by more than the rep noise, and only then is it run once on scr2-es; otherwise the single arms stand.
+$ JUDGE=claude-sonnet-5-5 GPT_MODEL=gpt-6.1-terra python3 eval/e2e/report.py ship2 notes samp combo-ns --set scr-es --k 2 --g 1 --noise
+snap             n files   Opus   >50%    GPT   bino   desk  over aiside  vs ship2
+ship2           20    40   71.4    88%   80.3                0.60   2.02
+notes           20    40   21.5     2%   64.9                1.50   2.60   Opus -50.0 (worse 0/20, p=0.000)  GPT -15.4 (p=0.000)  over +0.90 (higher 14, lower 3, p=0.015)
+samp            20    40   64.2    72%   80.3                0.68   2.12   Opus  -7.2 (worse 4/20, p=0.008)  GPT  +0.0 (p=0.981)  over +0.07 (higher 3, lower 3, p=0.675)
+combo-ns        20    40   19.2     0%   62.2                1.62   2.73   Opus -52.2 (worse 0/20, p=0.000)  GPT -18.1 (p=0.000)  over +1.02 (higher 13, lower 2, p=0.002)
+
+ship2          noise: judge-judge sd  4.5   r0-r1: set mean  +0.2, per-title sd  8.8
+notes          noise: judge-judge sd  3.0   r0-r1: set mean  +2.5, per-title sd 10.6
+samp           noise: judge-judge sd  5.0   r0-r1: set mean  +0.7, per-title sd  9.7
+combo-ns       noise: judge-judge sd  4.7   r0-r1: set mean  -1.4, per-title sd  6.6
+$ python3 eval/e2e/overstats.py scrns-es combo-ns --facts
+combo-ns scrns-es: 40 texts, overshot 1.62 per text: mean_word_len 23, long_words_1k 19, plain_words_1k 13, nominalizations_1k 5, first_person_1k 5
+         scrns-es: AI side 2.73 per text: ly_adverbs_1k 32, mean_sentence_len 28, triads_1k 18, commas_1k 15, mattr50 7, first_person_1k 6, cv_sentence_len 3
+         scrns-es: 8 figures or links in neither draft nor notes
+$ python3 eval/e2e/armstats.py scrns-es draft combo-ns
+draft      scrns-es texts= 20 facts_not_in_sources=0.00/text kept_identical=100.0% mean_sentence_len 14.1 -> 14.1 cv 0.503 -> 0.503 not_lower_on_both=20/20
+combo-ns   scrns-es texts= 40 facts_not_in_sources=0.20/text kept_identical=1.0% mean_sentence_len 14.1 -> 13.2 cv 0.503 -> 0.532 not_lower_on_both=8/40
+# Combination: P(AI) 19.2 against ship2 71.4 (-52.2, worse on 0 of 20, p=0.000; GPT -18.1). Against the best single arm, notes 21.5: 2.3 points lower, rep noise 2.5 (notes +2.5, combo-ns -1.4): it does NOT beat it by more than the noise.
+#   So the single arms stand as documented and the combination was not run on scr2-es. Overshot 1.62 per text: (b-original) fails (1.62 against 0.60, p=0.002), (b-amended) fails (1.62 against the human 1.15).
+#   Figures and links in neither draft, notes nor samples: 0.20 per text. Overshoot below the band: mean word length 23 texts of 40, long words 19, nominalizations 5; above it: plain words 13, first person 5.
+# 5 of the 40 Spanish notes were written in English (see above); this inflates every count of figures and links in neither source in the Spanish notes arms, since a number in "209 billion" or "690k" is rewritten as 209.000 or 690.000.
+# English held-out: the notes miss the amended ceiling by 0.02 (1.02 against 1.00), read as written.

@@ -3,7 +3,8 @@
 
   mksets.py            write scr.tsv, scr2.tsv, scr-es.tsv, scr2-es.tsv, scrh.tsv, scrh-es.tsv,
                        then the notes sets scrn, scr2n, scrn-es, scr2n-es and the sample sets scrs,
-                       scr2s, scrs-es, scr2s-es (the November 2026 round)
+                       scr2s, scrs-es, scr2s-es, and scrns-es (notes and samples together; Spanish dev only)
+                       (the November 2026 round)
 
 The rule, the same for every set, so anyone gets the same rows:
 - scr / scr-es take 20 scripts from eval/ai/script[-es]/train-*, scr2 / scr2-es 20 from test-*.
@@ -124,6 +125,8 @@ def main():
             nsuf = name[3:]  # "" for scr, "2" for scr2
             write(f"scr{nsuf}n{suf}", with_notes(rows, f"eval/notes-script{suf}"))
             write(f"scr{nsuf}s{suf}", with_samples(rows, reg))
+            if name == "scr" and suf == "-es":  # rule 3: notes and samples together, Spanish dev only
+                write("scrns-es", with_samples(with_notes(rows, f"eval/notes-script{suf}"), reg))
         corpus = os.path.expanduser(f"~/corpus/{reg}")
         held = [p for i, p in enumerate(sorted(glob.glob(os.path.join(corpus, "*.md")))) if i % 4 == 0]
         held = [p for p in held if LO <= words(p) <= HI]
