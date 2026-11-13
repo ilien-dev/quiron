@@ -84,14 +84,6 @@ union: 3+ of S1-S6 without S3 (comments)                                0/144   
 
 ## Decisions
 # Shipped as FAIL
-#   S3  asking for comments, a request and not a mention ("tell me / let us know in the comments",
-#       "leave a comment", "comment below"): 0/49 held-out and 5/144 (3.5%) train humans; Opus 5.5 4/9,
-#       Fable 5.2 and Sonnet 5.5 3/9, Terra 1/9, GPT-6.1 0/9 (24% pooled). The first version also had a
-#       bare "in the comments", which a mention ("Someone in the comments pointed out ...") trips:
-#       3/49 and 8/144 humans, 31% of assistants (the row "first version" above), a TELL. Narrowed, it
-#       meets the FAIL rule with held-out and train humans both under 5%, and the held-out humans stay
-#       46 of 49 clean, so it ships as a FAIL (controller ruling). The cost is on train: the train
-#       humans clean fall from 0.91 to 0.88 (eval/results/script.txt, T1 grid).
 #   S7  three of S1-S6 in one script: 0/144 train and 0/49 held-out humans; Opus 5.5 3/9, GPT-6.1,
 #       Sonnet 5.5 and Terra 1/9, Fable 5.2 0/9 (13% pooled). A combined check (evaluate.py COMBINED),
 #       like T1. Three, not two: when it was chosen two or more cost two held-out human scripts, so
@@ -101,6 +93,15 @@ union: 3+ of S1-S6 without S3 (comments)                                0/144   
 #   S1  Imagine / Picture this opens a sentence ............ 1/49, 8/144, 29%
 #   S2  staged reveals (here's the X / why / how / what, then there's, the honest answer, sounds
 #       simple), one check for the family ................... 6/49, 23/144, 47%
+#   S3  asking for comments, a request and not a mention ("tell me / let us know in the comments",
+#       "leave a comment", "comment below") ................. 0/49, 5/144, 24%
+#       (Opus 5.5 4/9, Fable 5.2 and Sonnet 5.5 3/9, Terra 1/9, GPT-6.1 0/9). The first version also had
+#       a bare "in the comments", which a mention ("Someone in the comments pointed out ...") trips:
+#       3/49, 8/144, 31% (the row "first version" above). Narrowed, S3 meets the FAIL rule on held-out
+#       (0/49, and 4/9 of Opus) and is kept as a TELL because of the train rate: 5 of 144 human train
+#       captions ask for comments, and as a FAIL it took the train humans clean from 0.91 to 0.88, under
+#       the 0.90 of before this task. A human creator asking for comments is the channel's call, like
+#       subscribe (controller ruling). As a TELL it still feeds S7.
 #   S4  next time you ....................................... 2/49, 1/144, 11%
 #   S5  a bare noun-phrase question (The catch?) ............ 1/49, 1/144, 9%
 #   S6  No X. No Y. / Maybe... Maybe... / Which... Which... ... 0/49, 4/144, 11%
@@ -109,10 +110,10 @@ union: 3+ of S1-S6 without S3 (comments)                                0/144   
 #      out, clean now): held-out humans clean 46 -> 45 of 49. Train humans 8/144 (6%), over 5% there.
 #   S4 as a FAIL ("next time you"): Terra 3/9; costs everyframeapainting-FfGKNJ4mldE and
 #      everyframeapainting-jGc-K7giqKM (46 -> 44 of 49).
-#   two or more of S1-S6 (union 2+): with S3 narrowed it no longer costs a held-out human (0/49,
-#      5/144 train) and fires on 38% of the assistant test scripts, every model 2/9 to 4/9; it meets
-#      the FAIL rule now. Not shipped in this round: S7 at two would be a new choice made on the
-#      held-out row, and train humans would lose 5 of 144. The controller may take it.
+#   two or more of S1-S6 (union 2+), a recorded option, not shipped: with S3 narrowed it no longer
+#      costs a held-out human (0/49, 5/144 train) and fires on 38% of the assistant test scripts,
+#      every model 2/9 to 4/9, so it meets the FAIL rule. It was found after looking at the held-out
+#      row, and it would fail 5 of 144 train captions; S7 stays at three (controller ruling).
 # Not computable in audit.py
 #   the closing question that restates the title (TELL by the rule: 0/49 and 1/144 humans, 7% of
 #   assistant scripts): it needs the title, which a caption or a user's script does not carry.
@@ -139,7 +140,6 @@ A21                              0            0.01               0              
 B1                            0.02            0.04             0.5            0.17            0.08            0.08               0               0            0.11            0.11            0.22
 C1                            0.02            0.05            0.92            0.08            0.17            0.42            0.44            0.33            0.11            0.67            0.56
 C2                            0.02               0               0               0               0               0               0               0               0               0               0
-S3                               0            0.03            0.17             0.5            0.58             0.5            0.44            0.33            0.33               0            0.11
 S7                               0               0            0.25            0.25            0.25            0.42            0.33            0.11               0            0.11            0.11
 
 TELL or FAIL rate    human-heldout     human-train        tr-gpt61      tr-haiku55       tr-opus55     tr-sonnet55          opus55        sonnet55         fable52           gpt61           terra

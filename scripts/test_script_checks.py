@@ -33,7 +33,7 @@ class English(unittest.TestCase):
     def test_each_fires_and_stays_quiet(self):
         for cid, (yes, no) in self.CASES.items():
             with self.subTest(cid):
-                self.assertEqual(states(yes, EN)[cid], "FAIL" if cid == "S3" else "TELL")
+                self.assertEqual(states(yes, EN)[cid], "TELL")
                 self.assertEqual(states(no, EN)[cid], "PASS")
 
     def test_a_mention_of_the_comments_is_not_a_request(self):

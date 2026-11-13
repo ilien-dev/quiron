@@ -224,9 +224,10 @@ CHECKS_SCRIPT = [
      r"|\bthe (?:honest|short|real|simple) answer\b"
      r"|\bsounds (?:simple|easy|logical|straightforward|reasonable|obvious|crazy|impossible|absurd|ridiculous)\b",
      "12% of held-out human scripts (16% of train), 47% of assistant scripts"),
-    ("S3", "asking for comments", "re",
+    ("S3", "asking for comments", "tell",
      r"\b(?:tell|let) (?:me|us) (?:know )?(?:in the comments|below)\b|\bleave a comment\b|\bcomment below\b",
-     "a request, not a mention: no held-out human script (3% of train), 24% of assistant scripts, 44% of Opus 5.5"),
+     "a request, not a mention: no held-out human script (3% of train), 24% of assistant scripts; a TELL, not "
+     "a FAIL, because a human channel asking for comments is its own call (5 of 144 train captions)"),
     ("S4", "next time you ...", "tell", r"\bnext time you\b",
      "4% of held-out human scripts (1% of train), 11% of assistant scripts"),
     ("S5", "a bare noun-phrase question: The catch?", "tell",

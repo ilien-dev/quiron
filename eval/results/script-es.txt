@@ -8,6 +8,14 @@
 # QUIRON_BANDS=scripts/bands-script-es.json python3 scripts/aimeter.py --calibrate $TRAIN --ai eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55 --out scripts/bands-script-es.json --lang es --lexicon ai-lean-es.txt --plain human-lean-es.txt --spoken
 # (the file first held only the meta keys below, minus _corpus, _texts and _ai_texts; _corpus was then set by hand to script-es-train)
 # meta keys: {"_corpus": "script-es-train", "_texts": 80, "_ai_texts": 48, "_lexicon": "ai-lean-es.txt", "_thresholds": {"AI_SIDE_MAX": 6, "TELLS_MAX": 2}, "_lang": "es", "_plain": "human-lean-es.txt", "_skip": ["para_words", "headings_1k", "semicolons_1k", "em_dashes_1k"], "_register": "script", "_spoken": true}
+# Rebuilt in task 5 with the same command, train only, after spoken() learned to drop source links, closing source
+# lists and leading "(Plano: ...)" directions (4 AI train scripts now read differently; no human caption does);
+# _corpus was set by hand again. Keys that moved: first_person_1k ai 2.985 -> 3.03; connective_openers ai 17.15 ->
+# 17.35, auc 0.453 -> 0.455; commas_1k auc 0.663 -> 0.661; ly_adverbs_1k auc 0.349 -> 0.35; passive_1k auc 0.388 ->
+# 0.389; plain_words_1k auc 0.355 -> 0.357; questions_1k auc 0.473 -> 0.474. No human band, no push, and no meta key
+# (_register, _spoken, _skip, _thresholds, _lang, _lexicon, _plain, _corpus) moved; the channel rule gives the same
+# _skip. _thresholds.TELLS_MAX is 4 since task 5 (see the end of this file).
+# The sections between here and the task-5 block are the state at commit cafd8ed, kept as the before.
 
 ## Held-out evaluation with the shipped thresholds
 # QUIRON_BANDS=scripts/bands-script-es.json python3 scripts/evaluate.py --human ~/corpus/script-es --ai-train eval/ai/script-es/train-gpt61,eval/ai/script-es/train-haiku55,eval/ai/script-es/train-opus55,eval/ai/script-es/train-sonnet55 opus55=eval/ai/script-es/test-opus55 sonnet55=eval/ai/script-es/test-sonnet55 fable52=eval/ai/script-es/test-fable52 gpt61=eval/ai/script-es/test-gpt61 terra=eval/ai/script-es/test-terra
