@@ -1,8 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/hero/quiron-hero-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="assets/brand/hero/quiron-hero-light.png">
-    <img alt="Quirón: un centauro que sostiene en alto una estrella de ocho puntas" src="assets/brand/hero/quiron-hero-light.png" width="720">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
+    <img src="assets/hero-light.svg" alt="Quirón: páginas escritas por un chatbot, con sus manías subrayadas, pasan bajo una estrella a la que llegan las notas del autor y salen limpias; la cuenta de medidas que coinciden con cómo escribe la gente pasa de 13 de 23 a 23 de 23." width="100%">
   </picture>
 </p>
 
@@ -11,8 +10,8 @@
 <h1 align="center">Quirón: un skill para humanizar textos de IA que mide su propio trabajo</h1>
 
 <p align="center">
-  <b>Un skill para Claude Code, Codex y Cursor. Quita los hábitos que delatan un texto escrito por IA<br>
-  y después compara el resultado con escritura humana medida, no con una corazonada.</b>
+  <b>Un skill para Claude Code, Codex y Cursor que reescribe el borrador de un chatbot para que se lea como si lo hubiera escrito una persona,<br>
+  y después mide el resultado contra escritura humana real en vez de fiarse de una corazonada.</b>
 </p>
 
 <p align="center">
