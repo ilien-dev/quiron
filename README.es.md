@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
-    <img src="assets/hero-light.svg" alt="Quirón: páginas escritas por un chatbot, con sus manías subrayadas, pasan bajo una estrella a la que llegan las notas del autor y salen limpias; la cuenta de medidas que coinciden con cómo escribe la gente pasa de 13 de 23 a 23 de 23." width="100%">
+    <img src="assets/hero-light.svg" alt="Quirón, un humanizador de textos de IA que mide su propio trabajo: un borrador escrito por IA da paso a su reescritura, y en el medidor cinco medidas del texto (palabras largas, longitud de palabra, nominalizaciones, listas de tres, palabras llanas) pasan del lado de la IA a la franja humana, de 13 de 23 a 23 de 23." width="100%">
   </picture>
 </p>
 
