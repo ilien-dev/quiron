@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
-    <img src="assets/hero-light.svg" alt="Quirón: pages written by a chatbot, with their giveaway habits underlined, pass under a star where the author's own notes arrive and come out as clean pages; the count of measures that match how people write goes from 13 of 23 to 23 of 23." width="100%">
+    <img src="assets/hero-light.svg" alt="Quirón, an AI humanizer that measures its own work: an AI-written draft hands over to its rewrite, and on the meter five measures of the text (long words, word length, nominalizations, lists of three, plain words) move from the AI side into the human band, 13 of 23 becoming 23 of 23." width="100%">
   </picture>
 </p>
 
