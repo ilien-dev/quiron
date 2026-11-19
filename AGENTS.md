@@ -4,7 +4,7 @@ This checkout is the skill: the root `SKILL.md` is the instructions, `scripts/` 
 
 `.upstream/`: gitignored clones of similar skills, reference only, never shipped. Weekly intake: `/upstream-sync`.
 
-`main` is protected: work on a `feature/<lowercase-words-with-hyphens>` branch and open a pull request against `main`.
+`main` is protected: work on a `<type>/<lowercase-words-with-hyphens>` branch (`feat/`, `fix/`, `docs/`...) and open a pull request against `main`.
 
 ## The rule for every change
 

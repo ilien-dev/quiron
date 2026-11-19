@@ -52,10 +52,10 @@ Read big diffs in parts; never paste a whole diff into the context.
 
 ### 1. Branch
 
-- `gh pr list --state open --json headRefName,url --jq '.[] | select(.headRefName | test("^feature/upstream-[0-9]{4}-")) | .url'`:
+- `gh pr list --state open --json headRefName,url --jq '.[] | select(.headRefName | test("^feat/upstream-[0-9]{4}-")) | .url'`:
   if it prints a weekly PR, stop and ask the owner to merge or close it first; otherwise
   the version and `upstream.json` diverge.
-- From an up-to-date `main`: `git switch -c feature/upstream-YYYY-MM-DD`.
+- From an up-to-date `main`: `git switch -c feat/upstream-YYYY-MM-DD`.
 
 ### 2. Update
 
