@@ -8,9 +8,10 @@ scripts show, so read this before you open a pull request.
 Nobody pushes to `main` directly, me included. Every change arrives as a pull
 request against `main`.
 
-Name the branch `feature/` and then a few words that say what it does, joined by hyphens:
-`feature/spanish-fiction-bands` or `feature/fix-dash-count`. Lowercase letters, digits
-and hyphens only, and at least two words after the slash. Any other name fails a check on
+Name the branch with the Conventional Commit type of the change (`feat`, `fix`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `chore`, `style` or `revert`), a slash, and then a
+few words that say what it does, joined by hyphens: `feat/spanish-fiction-bands` or
+`fix/dash-count`. Lowercase letters, digits and hyphens only, and at least two words after
+the slash; `feature/` is not a type. Any other name fails a check on
 the pull request. You can't merge until you rename the branch.
 
 Every pull request also needs my approval, and once I've given it, either of us can merge

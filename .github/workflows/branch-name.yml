@@ -11,13 +11,13 @@ jobs:
   branch-name:
     runs-on: ubuntu-latest
     steps:
-      - name: Require feature/<descriptive-name>
+      - name: Require <type>/<descriptive-name>
         env:
           HEAD_REF: ${{ github.head_ref }}
         run: |
-          if [[ "$HEAD_REF" =~ ^feature/[a-z0-9]+(-[a-z0-9]+)+$ ]]; then
+          if [[ "$HEAD_REF" =~ ^(feat|fix|perf|refactor|docs|test|build|ci|chore|style|revert)/[a-z0-9]+(-[a-z0-9]+)+$ ]]; then
             echo "Branch name OK: $HEAD_REF"
           else
-            echo "::error::Branch '$HEAD_REF' must be named feature/<descriptive-name>: lowercase letters, digits and hyphens only, no uppercase or special characters, at least two words (e.g. feature/spanish-bands)."
+            echo "::error::Branch '$HEAD_REF' must be named <type>/<descriptive-name>, <type> being one of feat, fix, perf, refactor, docs, test, build, ci, chore, style, revert: lowercase letters, digits and hyphens only, no uppercase or special characters, at least two words (e.g. feat/spanish-bands)."
             exit 1
           fi
